@@ -11,7 +11,7 @@
         "air_leakage_value": 3,
         "ceiling_assembly_r": 39.3,
         "cooling_system_cooling_capacity": 24000.0,
-        "cooling_system_cooling_compressor_type": "single stage",
+        "cooling_system_compressor_type": "single stage",
         "cooling_system_cooling_efficiency": 13.0,
         "cooling_system_cooling_efficiency_type": "SEER",
         "cooling_system_type": "central air conditioner",
@@ -28,7 +28,7 @@
         "ducts_supply_surface_area": 150.0,
         "floor_over_foundation_assembly_r": 0,
         "floor_over_garage_assembly_r": 0,
-        "foundation_wall_insulation_r": 8.9,
+        "foundation_wall_insulation_r": 10.0,
         "geometry_attic_type": "UnventedAttic",
         "geometry_average_ceiling_height": 8.0,
         "geometry_eaves_depth": 0,
@@ -76,7 +76,8 @@
         "window_left_wwr": 0,
         "window_right_wwr": 0,
         "window_shgc": 0.45,
-        "window_ufactor": 0.33
+        "window_ufactor": 0.33,
+        "utility_bill_scenario_names": "Bills"
       },
       "measure_dir_name": "BuildResidentialHPXML"
     },
@@ -115,7 +116,6 @@
         "include_annual_component_loads": true,
         "include_annual_hot_water_uses": true,
         "include_annual_hvac_summary": true,
-        "include_annual_panel_summary": true,
         "include_annual_resilience": true,
         "timeseries_frequency": "none",
         "include_timeseries_total_consumptions": false,

@@ -198,32 +198,6 @@ class Material
   #
   # @param roof_pitch [TODO] TODO
   # @return [TODO] TODO
-  def self.AirFilmSlopeEnhancedReflective(roof_pitch)
-    # Correlation functions used to interpolate between values provided
-    # in ASHRAE 2005, F25.2, Table 1 - which only provides values for
-    # 0, 45, and 90 degrees. Values are for reflective materials of
-    # emissivity = 0.05.
-    rvalue = 0.00893 * Math::exp(0.0419 * roof_pitch) + 1.311 # hr-ft-F/Btu (evaluates to 1.32 at 0 degrees, 1.37 at 45 degrees, and 1.70 at 90 degrees)
-    return self.AirFilm(rvalue)
-  end
-
-  # TODO
-  #
-  # @param roof_pitch [TODO] TODO
-  # @return [TODO] TODO
-  def self.AirFilmSlopeReducedReflective(roof_pitch)
-    # Correlation functions used to interpolate between values provided
-    # in ASHRAE 2005, F25.2, Table 1 - which only provides values for
-    # 0, 45, and 90 degrees. Values are for reflective materials of
-    # emissivity = 0.05.
-    rvalue = 2.999 * Math::exp(-0.0333 * roof_pitch) + 1.551 # hr-ft-F/Btu (evaluates to 4.55 at 0 degrees, 2.22 at 45 degrees, and 1.70 at 90 degrees)
-    return self.AirFilm(rvalue)
-  end
-
-  # TODO
-  #
-  # @param roof_pitch [TODO] TODO
-  # @return [TODO] TODO
   def self.AirFilmRoof(roof_pitch)
     rvalue = (self.AirFilmSlopeEnhanced(roof_pitch).rvalue + self.AirFilmSlopeReduced(roof_pitch).rvalue) / 2.0 # hr-ft-F/Btu
     return self.AirFilm(rvalue)

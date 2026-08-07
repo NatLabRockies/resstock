@@ -6,6 +6,7 @@
 # Measures and testing-related files
 /measures/UpgradeCosts/tests/in*
 /measures/UpgradeCosts/tests/*.xml
+/measures/ResStockArguments/resources/electrical_panel/*
 
 # Project-specific files
 /project_national/national_baseline
@@ -31,6 +32,7 @@ buildstockbatch_crash_details.log
 # Development environment and system files
 .vscode/
 .DS_Store
+*.pyc
 **/.ipynb_checkpoints/*
 **/.bsq_cache/
 

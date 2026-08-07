@@ -210,12 +210,12 @@ module Airflow
     cfa = hpxml_bldg.building_construction.conditioned_floor_area
     measurement = get_infiltration_measurement_of_interest(hpxml_bldg)
 
+    default_infil_height, default_infil_volume = Defaults.get_infiltration_height_and_volume(hpxml_bldg)
     infil_volume = measurement.infiltration_volume
+    infil_volume = default_infil_volume if infil_volume.nil?
     infil_height = measurement.infiltration_height
-    if infil_height.nil?
-      infil_height = hpxml_bldg.inferred_infiltration_height(infil_volume)
-    end
-    infil_avg_ceil_height = infil_volume / cfa
+    infil_height = default_infil_height if infil_height.nil?
+    infil_avg_ceil_height = infil_volume / cfa # Per ANSI/RESNET/ICC 380
 
     sla, ach50, nach = nil
     if [HPXML::UnitsACH, HPXML::UnitsCFM].include?(measurement.unit_of_measure)
@@ -807,11 +807,17 @@ module Airflow
     if object.is_a? OpenStudio::Model::ZoneHVACFourPipeFanCoil
       supply_fan = object.supplyAirFan
     elsif object.is_a? OpenStudio::Model::AirLoopHVAC
-      system = HVAC.get_unitary_system_from_air_loop_hvac(object)
-      if system.nil? # Evaporative cooler supply fan directly on air loop
+      supply_fan = nil
+      if object.supplyFan.is_initialized
+        # Evaporative cooler supply fan directly on air loop
         supply_fan = object.supplyFan.get
       else
-        supply_fan = system.supplyFan.get
+        # Supply fan associated with AirLoopHVACUnitarySystem
+        object.supplyComponents.each do |comp|
+          next unless comp.to_AirLoopHVACUnitarySystem.is_initialized
+
+          supply_fan = comp.to_AirLoopHVACUnitarySystem.get.supplyFan.get
+        end
       end
     else
       fail 'Unexpected object type.'

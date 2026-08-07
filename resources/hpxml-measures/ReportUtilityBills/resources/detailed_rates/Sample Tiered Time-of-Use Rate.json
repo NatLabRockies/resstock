@@ -3,7 +3,7 @@
     {
       "name": "Sample Tiered Time-of-Use Rate",
       "sector": "Residential",
-      "description": "Sample file defined by BEopt.",
+      "description": "Sample file",
       "fixedchargeunits": "$/month",
       "fixedchargefirstmeter": 9,
       "energyweekdayschedule": [

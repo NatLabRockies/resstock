@@ -285,15 +285,49 @@ class WeatherFile
     epw_design_conditions = epw_file.designConditions
     if epw_design_conditions.length > 0
       epw_design_condition = epw_design_conditions[0]
-      if epw_design_conditions.length > 1
+      if epw_design_conditions.length > 1 && (not runner.nil?)
         runner.registerWarning("Multiple EPW design conditions found; the first one (#{epw_design_condition.titleOfDesignCondition}) will be used.")
       end
-      design.HeatingDrybulb = UnitConversions.convert(epw_design_condition.heatingDryBulb99, 'C', 'F')
-      design.CoolingDrybulb = UnitConversions.convert(epw_design_condition.coolingDryBulb1, 'C', 'F')
-      design.DailyTemperatureRange = UnitConversions.convert(epw_design_condition.coolingDryBulbRange, 'deltaC', 'deltaF')
+
+      incomplete_data = false
+      if epw_design_condition.heatingDryBulb99.is_initialized
+        hdb = epw_design_condition.heatingDryBulb99.get
+      else
+        incomplete_data = true
+      end
+      if epw_design_condition.coolingDryBulb1.is_initialized
+        cdb = epw_design_condition.coolingDryBulb1.get
+      else
+        incomplete_data = true
+      end
+      if epw_design_condition.coolingDryBulbRange.is_initialized
+        dtr = epw_design_condition.coolingDryBulbRange.get
+      else
+        incomplete_data = true
+      end
+      if epw_design_condition.coolingMeanCoincidentWetBulb1.is_initialized
+        mcwb = epw_design_condition.coolingMeanCoincidentWetBulb1.get
+      else
+        incomplete_data = true
+      end
+
+      if incomplete_data
+        if not runner.nil?
+          runner.registerWarning('Incomplete EPW design conditions found; calculating design conditions from EPW weather data.')
+        end
+        return false
+      end
+
+      design.HeatingDrybulb = UnitConversions.convert(hdb, 'C', 'F')
+      design.CoolingDrybulb = UnitConversions.convert(cdb, 'C', 'F')
+      design.DailyTemperatureRange = UnitConversions.convert(dtr, 'deltaC', 'deltaF')
       press_psi = Psychrometrics.Pstd_fZ(header.Elevation)
-      design.CoolingHumidityRatio = Psychrometrics.w_fT_Twb_P(design.CoolingDrybulb, UnitConversions.convert(epw_design_condition.coolingMeanCoincidentWetBulb1, 'C', 'F'), press_psi)
+      design.CoolingHumidityRatio = Psychrometrics.w_fT_Twb_P(design.CoolingDrybulb, UnitConversions.convert(mcwb, 'C', 'F'), press_psi)
       return true
+    end
+
+    if not runner.nil?
+      runner.registerWarning('No EPW design conditions found; calculating design conditions from EPW weather data.')
     end
     return false
   end
@@ -305,10 +339,6 @@ class WeatherFile
   # @param rowdata [Array<Hash>] Weather data for each EPW record
   # @return [nil]
   def calc_design_info(runner, rowdata)
-    if not runner.nil?
-      runner.registerWarning('No design condition info found; calculating design conditions from EPW weather data.')
-    end
-
     press_psi = Psychrometrics.Pstd_fZ(header.Elevation)
     annual_hd_sorted_by_db = rowdata.sort_by { |x| x['db'] }
 

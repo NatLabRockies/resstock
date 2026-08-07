@@ -24,7 +24,7 @@ Absolute/relative path of the HPXML file.
 
 **Schedules: Column Names**
 
-A comma-separated list of the column names to generate. If not provided, defaults to all columns. Possible column names are: occupants, lighting_interior, lighting_garage, cooking_range, dishwasher, clothes_washer, clothes_dryer, ceiling_fan, plug_loads_other, plug_loads_tv, hot_water_dishwasher, hot_water_clothes_washer, hot_water_fixtures.
+A comma-separated list of the column names to generate. If not provided, defaults to all columns. Possible column names are: occupants, lighting_interior, lighting_garage, cooking_range, dishwasher, clothes_washer, clothes_dryer, ceiling_fan, plug_loads_other, plug_loads_tv, hot_water_dishwasher, hot_water_clothes_washer, hot_water_fixtures, electric_vehicle.
 
 - **Name:** ``schedules_column_names``
 - **Type:** ``String``

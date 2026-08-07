@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+def cleanup_results_files
+  ['csv', 'json', 'msgpack'].each do |file_ext|
+    Dir["#{File.dirname(__FILE__)}/results_*.#{file_ext}"].each do |results_file|
+      File.delete(results_file)
+    end
+  end
+  if File.exist? File.join(File.dirname(__FILE__), 'in.schedules.csv')
+    File.delete(File.join(File.dirname(__FILE__), 'in.schedules.csv'))
+  end
+end
+
 def get_ems_values(ems_objects, name, parse_more_operators = false)
   values = {}
   ems_objects.each do |ems_object|

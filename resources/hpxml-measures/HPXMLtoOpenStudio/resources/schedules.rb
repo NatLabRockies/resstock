@@ -1017,7 +1017,7 @@ class SchedulesFile
     Battery: Column.new('battery', false, false, :neg_one_to_one),
     BatteryCharging: Column.new('battery_charging', true, false, nil),
     BatteryDischarging: Column.new('battery_discharging', true, false, nil),
-    ElectricVehicle: Column.new('electric_vehicle', false, false, :neg_one_to_one),
+    ElectricVehicle: Column.new('electric_vehicle', false, true, :neg_one_to_one),
     ElectricVehicleCharging: Column.new('electric_vehicle_charging', true, false, nil),
     ElectricVehicleDischarging: Column.new('electric_vehicle_discharging', true, false, nil),
     SpaceHeating: Column.new('space_heating', true, false, nil),

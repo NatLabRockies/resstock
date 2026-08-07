@@ -41,7 +41,7 @@ module PV
 
     if pv_system.is_shared_system
       # Apportion to single dwelling unit by # bedrooms
-      fail if pv_system.number_of_bedrooms_served.to_f <= nbeds.to_f # EPvalidator.xml should prevent this
+      fail if pv_system.number_of_bedrooms_served.to_f <= nbeds.to_f # EPvalidator.sch should prevent this
 
       max_power = max_power * nbeds.to_f / pv_system.number_of_bedrooms_served.to_f
     end

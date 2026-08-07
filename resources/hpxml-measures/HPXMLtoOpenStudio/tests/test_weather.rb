@@ -15,12 +15,11 @@ require_relative '../resources/location.rb'
 require_relative '../resources/calendar.rb'
 require_relative '../resources/defaults.rb'
 require_relative '../resources/math.rb'
+require_relative 'util.rb'
 
 class HPXMLtoOpenStudioWeatherTest < Minitest::Test
   def teardown
-    File.delete(File.join(File.dirname(__FILE__), 'in.schedules.csv')) if File.exist? File.join(File.dirname(__FILE__), 'in.schedules.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_annual.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_annual.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_design_load_details.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_design_load_details.csv')
+    cleanup_results_files
   end
 
   def weather_dir
@@ -259,6 +258,6 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
 
     # Check runner
     assert_equal(0, runner.result.stepErrors.size)
-    assert_equal(1, runner.result.stepWarnings.count { |w| w == 'No design condition info found; calculating design conditions from EPW weather data.' })
+    assert_equal(1, runner.result.stepWarnings.count { |w| w == 'No EPW design conditions found; calculating design conditions from EPW weather data.' })
   end
 end

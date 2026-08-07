@@ -26,16 +26,18 @@ class QOIReport < OpenStudio::Measure::ReportingMeasure
     return args
   end
 
-  def energyPlusOutputRequests(runner, user_arguments)
-    super(runner, user_arguments)
+  def modelOutputRequests(model, runner, user_arguments)
+    return false if runner.halted
 
-    return OpenStudio::IdfObjectVector.new if runner.halted
+    # use the built-in error checking
+    if !runner.validateUserArguments(arguments(model), user_arguments)
+      return false
+    end
 
-    results = OpenStudio::IdfObjectVector.new
-    results << OpenStudio::IdfObject.load('Output:Variable,*,Site Outdoor Air Drybulb Temperature,hourly;').get
-    results << OpenStudio::IdfObject.load('Output:Meter,Electricity:Facility,hourly;').get
+    Model.add_output_variable(model, key_value: '*', variable_name: 'Site Outdoor Air Drybulb Temperature', reporting_frequency: 'hourly')
+    Model.add_output_meter(model, meter_name: 'Electricity:Facility', reporting_frequency: 'hourly')
 
-    return results
+    return true
   end
 
   def seasons
