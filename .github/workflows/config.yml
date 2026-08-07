@@ -487,7 +487,7 @@ jobs:
 
       - name: Generate 550K Sample
         run: |
-          python3 samplers/stratified/sampler/run_sampler.py sample -p project_national -n 150000 -o ../project_national/resources/national_550ksamples.csv
+          python3 samplers/stratified/sampler/run_sampler.py sample -p project_national -n 1500 -o ../project_national/resources/national_550ksamples.csv
           cd project_national/resources
           gzip -c national_550ksamples.csv > national_550ksamples.csv.gz
 
