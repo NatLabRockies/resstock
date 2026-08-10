@@ -1,5 +1,6 @@
 import pandas as pd
 import networkx as nx
+import numpy as np
 import time
 import multiprocessing
 import click
@@ -12,8 +13,13 @@ from sampler.sampling_utils import get_param2tsv, get_samples, TSVTuple
 from sampler.utils import log_error_details, get_error_details
 import random
 
-# Set seeds for reproducibility
-RANDOM_SEED = 42  # Use a fixed seed
+# Seeds every draw the sampler makes: the per-TSV seeds handed to the worker pool and the
+# per-segment take that trims each segment to num_samples_per_segment buildings.
+RANDOM_SEED = 42
+
+# Buildings kept per segment when sampler_config.yaml does not say
+DEFAULT_NUM_SAMPLES_PER_SEGMENT = 12
+
 random.seed(RANDOM_SEED)
 
 
@@ -133,6 +139,35 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
     return sample_df
 
 
+def take_samples_per_segment(df: pl.DataFrame, segment_cols: list[str], num_samples_per_segment: int,
+                             random_seed: int = RANDOM_SEED) -> pl.DataFrame:
+    """Take a random `num_samples_per_segment` rows out of each segment.
+
+    Every row is given a uniform variate from a generator seeded with `random_seed`, and each
+    segment keeps the rows with the smallest variates, so the take is uniform over the segment
+    and reproducible for a given seed and input frame. Segments holding fewer rows than asked
+    for contribute all of them.
+
+    Args:
+        df: Frame of candidate buildings, one row per building
+        segment_cols: Columns whose combination defines a segment
+        num_samples_per_segment: Rows to keep per segment
+        random_seed: Seed making the take reproducible
+
+    Returns:
+        Frame holding min(num_samples_per_segment, segment size) rows per segment
+    """
+
+    rng = np.random.default_rng(random_seed)
+    return (
+        df.with_columns(pl.Series("_take_draw", rng.random(df.height), dtype=pl.Float64))
+        .sort("_take_draw")
+        .group_by(segment_cols, maintain_order=True)
+        .head(num_samples_per_segment)
+        .drop("_take_draw")
+    )
+
+
 @click.group()
 def cli():
     """Perform sampling or verify existing samples (in buildstock.csv).
@@ -166,7 +201,11 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
     segment_vars = set(config.get('segment_vars', []))
+    # Sorted so the segment grouping, and therefore the take within it, does not depend on set order
+    segment_cols = sorted(segment_vars)
     initial_sample_size = config.get('segment_selection_sample_size', 10000000)
+    num_samples_per_segment = config.get('num_samples_per_segment', DEFAULT_NUM_SAMPLES_PER_SEGMENT)
+    # initial_samples_df = read_csv('/Users/radhikar/Documents/buildstock2025/geographic sampling/starter_samples.csv')
     initial_samples_df = None
     init_start_time = time.time()
     print(project, num_datapoints, output, segment_vars)
@@ -174,24 +213,19 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     initial_samples_df = pl.from_pandas(sample_all(pathlib.Path(project), initial_sample_size, segment_vars=segment_vars))
     print(f"Initial sampling completed in {time.time() - init_start_time:.2f} seconds. Sample size: {initial_samples_df.shape}")
     initial_samples_df = initial_samples_df.drop("Building")
-    num_samples_per_segment = config.get('num_samples_per_segment', 12)
     num_segments = num_datapoints // num_samples_per_segment
-    top_segments = initial_samples_df.group_by(segment_vars).agg(pl.len().alias("count")).sort("count", descending=True).limit(num_segments)
-    new_df = initial_samples_df.join(top_segments, on=segment_vars, validate="m:1", how="left")
+    top_segments = initial_samples_df.group_by(segment_cols).agg(pl.len().alias("count")).sort("count", descending=True).limit(num_segments)
+    new_df = initial_samples_df.join(top_segments, on=segment_cols, validate="m:1", how="left")
     valid_df = new_df.filter(~pl.col('count').is_null())
     valid_df = valid_df.drop("count")
-    limited_df = (
-        valid_df
-        .group_by(segment_vars, maintain_order=True)   # keep incoming row-order inside groups
-        .head(num_samples_per_segment)
-    )
+    limited_df = take_samples_per_segment(valid_df, segment_cols, num_samples_per_segment)
     new_total = limited_df.shape[0]
     if new_total < num_datapoints:
         print(f"Will be sampling {new_total} samples instead of {num_datapoints} due to rounding")
     limited_df = limited_df.with_row_index("Building", offset=1)
     initial_samples_df = limited_df.to_pandas()
-    final_start_time = time.time()
-    print(f"Performing final sampling with {num_segments} segments")
+    start_time = time.time()
+    print(f"Performing final sampling with {num_segments} segments of {num_samples_per_segment} samples each")
     sample_df = sample_all(pathlib.Path(project), new_total, initial_samples_df=initial_samples_df)
     print(f"Final sampling completed in {time.time() - final_start_time:.2f} seconds")
     click.echo("Writing Buildstock CSV")
