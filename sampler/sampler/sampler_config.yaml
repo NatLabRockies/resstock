@@ -1,6 +1,5 @@
 segment_vars:
     - "Federal Poverty Level"
-    - "Geometry Floor Area Bin"
     - "Geometry Building Type RECS"
     - "Vintage"
     - "Heating Fuel"
