@@ -2,6 +2,7 @@ import boto3
 import datetime
 import json
 import logging
+import numpy as np
 from pathlib import Path
 import polars as pl
 from polars.lazyframe.frame import LazyFrame
@@ -16,6 +17,25 @@ logger = logging.getLogger(__name__)
 # Default seed for the random building-to-geography allocation so that identical
 # inputs produce identical publications. Pass seed=None for unseeded allocation.
 DEFAULT_ALLOCATION_SEED = 42
+
+# Fraction of catalogue rows allowed to go unallocated before the run is treated as broken
+DEFAULT_NULL_BUILDING_THRESHOLD = 0.005
+
+# Characteristics that define a pool of interchangeable buildings for an occupied household
+ALLOCATION_KEYS = [
+    "in.sampling_region_id",
+    "in.tenure",
+    "in.vacancy_status",
+    "in.geometry_building_type_recs",
+    "in.vintage",
+    "in.heating_fuel",
+    "in.federal_poverty_level",
+]
+
+# ACS only surveys the fuel of occupied units, so the catalogue's vacant rows carry no
+# heating fuel. Vacant rows draw across fuels instead, which reproduces the sample pool's
+# conditional fuel mix within the remaining keys.
+VACANT_ALLOCATION_KEYS = [key for key in ALLOCATION_KEYS if key != "in.heating_fuel"]
 
 # Truth data (catalogue, sampling regions, CEC climate zone lookups) is downloaded
 # from this bucket when not already present in the output directory. Environments
@@ -40,8 +60,38 @@ def _download_truth_file(local_path, s3_key, file_desc: str) -> None:
     logger.info(f"Downloaded {file_desc} to {local_path}")
 
 
+def coerce_vacant_join_keys(catalogue_df: pl.DataFrame) -> pl.DataFrame:
+    """Fill null tenure and federal poverty level on vacant catalogue rows with "Not Available".
+
+    Args:
+        catalogue_df: Catalogue data
+
+    Returns:
+        Catalogue data with vacant row join keys aligned to the buildstock sample's labels
+    """
+
+    is_vacant = pl.col("in.vacancy_status").eq_missing("Vacant")
+    for column in ["in.tenure", "in.federal_poverty_level"]:
+        coerced = catalogue_df.filter(is_vacant & pl.col(column).is_null()).height
+        if coerced:
+            logger.info(f"Coercing {column} to 'Not Available' on {coerced} vacant catalogue rows")
+            catalogue_df = catalogue_df.with_columns(
+                pl.when(is_vacant & pl.col(column).is_null())
+                .then(pl.lit("Not Available"))
+                .otherwise(pl.col(column))
+                .alias(column)
+            )
+
+    return catalogue_df
+
+
 def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str) -> pl.DataFrame:
     """Load and preprocess catalogue file, downloading from S3 if necessary.
+
+    Vacant rows are given the literal "Not Available" for tenure and federal poverty level so
+    they match the buildstock sample, which labels vacant buildings that way. Heating fuel is
+    left null on vacant rows and is handled by the two stage join in
+    allocate_buildings_to_geography.
 
     Args:
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
@@ -118,6 +168,9 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
         on="in.nhgis_state_gisjoin",
         how="left"
     )
+
+    # Align vacant row join keys with how the buildstock sample labels vacant buildings
+    catalogue_df = coerce_vacant_join_keys(catalogue_df)
 
     return catalogue_df
 
@@ -282,20 +335,14 @@ def merge_geographical_data(
     # Clean up temporary columns and rename to final column name
     df = df.drop(["in.sampling_region_id_cec2010"])  # , "in.sampling_region_id_cec2020"])
 
-    # Validate that all rows have been assigned a sampling region
-    if df.filter(pl.any_horizontal(pl.all().is_null())).shape[0] > 0:
-        missing_counties = (
-            df.filter(pl.col("in.sampling_region_id").is_null())
-            .select("in.nhgis_county_gisjoin")
-            .unique()
-        )
-        missing_tracts = (
-            df.filter(pl.col("in.sampling_region_id").is_null())
-            .select("in.nhgis_tract_gisjoin")
-            .unique()
-        )
+    # Validate that all rows have been assigned a sampling region. Only this column is checked
+    # because vacant rows legitimately carry a null heating fuel.
+    missing_region = df.filter(pl.col("in.sampling_region_id").is_null())
+    if missing_region.shape[0] > 0:
+        missing_counties = missing_region.select("in.nhgis_county_gisjoin").unique()
+        missing_tracts = missing_region.select("in.nhgis_tract_gisjoin").unique()
         raise ValueError(
-            f"\n{df.filter(pl.any_horizontal(pl.all().is_null())).shape[0]} rows are missing sampling regions.\n"
+            f"\n{missing_region.shape[0]} rows are missing sampling regions.\n"
             f"Missing counties: {missing_counties.to_series().to_list()}.\n"
             f"Missing tracts: {missing_tracts.to_series().to_list()}"
         )
@@ -307,60 +354,72 @@ def merge_geographical_data(
     return df
 
 
+def draw_from_pools(df: pl.DataFrame, rng: np.random.Generator) -> pl.DataFrame:
+    """Replace each row's list of candidate buildings with one building drawn from it.
+
+    Every row gets its own uniform variate, so the draw is independent row to row and uniform
+    over that row's pool. Rows whose pool is null, because the join found no matching buildings,
+    keep a null bldg_id.
+
+    Args:
+        df: Frame whose bldg_id column holds a list of candidate buildings per row
+        rng: Seeded generator supplying one uniform variate per row
+
+    Returns:
+        Frame with bldg_id reduced to a single drawn building per row
+    """
+
+    return (
+        df.with_columns(pl.Series("draw", rng.random(df.height), dtype=pl.Float64))
+        .with_columns(
+            pl.col("bldg_id").list.get(
+                (pl.col("draw") * pl.col("bldg_id").list.len()).floor().cast(pl.Int64),
+                null_on_oob=True,
+            )
+        )
+        .drop("draw")
+    )
+
+
 def allocate_buildings_to_geography(
     geo_df: pl.DataFrame, bs_df: pl.DataFrame, seed: int | None = DEFAULT_ALLOCATION_SEED
 ) -> tuple[pl.DataFrame, pl.DataFrame]:
     """Allocate buildings from sample to geographical units.
 
-    Groups buildings by key characteristics, then randomly samples one building
-    for each row in the geographical catalogue.
+    Groups buildings by key characteristics, then draws one building uniformly at random for
+    each row in the geographical catalogue. Occupied rows match on all of ALLOCATION_KEYS;
+    vacant rows match on VACANT_ALLOCATION_KEYS and so draw across the fuels present in the
+    sample's vacant buildings.
 
     Args:
         geo_df: Geographical data with sampling regions assigned
         bs_df: Buildstock sample data with building characteristics
-        seed: Seed for the random sampling so identical inputs produce identical
+        seed: Seed for the random draws so identical inputs produce identical
             allocations. Pass None for unseeded (non-reproducible) allocation.
 
     Returns:
         Tuple of (allocated_df, fkt) where:
             - allocated_df: Full allocation with all columns
-            - fkt: Foreign key table with Building, tract_gisjoin, and puma_gisjoin
+            - fkt: Foreign key table with bldg_id, tract_gisjoin, and puma_gisjoin
     """
 
     logger.info(f"Allocating simulated buildings to geographical units (seed={seed})")
+    rng = np.random.default_rng(seed)
+    is_vacant = pl.col("in.vacancy_status").eq_missing("Vacant")
 
-    # Group buildstock buildings by their key characteristics to create pools of similar buildings
-    grouped_df = bs_df.group_by(
-        [
-            "in.sampling_region_id",
-            "in.tenure",
-            "in.vacancy_status",
-            "in.geometry_building_type_recs",
-            "in.vintage",
-            "in.heating_fuel",
-            "in.federal_poverty_level",
-        ]
-    ).agg(pl.col("bldg_id").unique())
+    allocated_frames = []
+    for keys, geo_subset in [
+        (ALLOCATION_KEYS, geo_df.filter(~is_vacant)),
+        (VACANT_ALLOCATION_KEYS, geo_df.filter(is_vacant)),
+    ]:
+        # Group buildstock buildings by the key characteristics to create pools of similar
+        # buildings, then join those pools onto the catalogue rows that share them. Pool order
+        # is held stable so that a given seed reproduces a given allocation.
+        grouped_df = bs_df.group_by(keys).agg(pl.col("bldg_id").unique(maintain_order=True))
+        joined_df = geo_subset.lazy().join(grouped_df.lazy(), on=keys, how="left").collect()
+        allocated_frames.append(draw_from_pools(joined_df, rng))
 
-    # Join geography with building pools and randomly sample one building per geography row
-    allocated_df = (
-        geo_df.lazy()
-        .join(
-            grouped_df.lazy(),
-            on=[
-                "in.sampling_region_id",
-                "in.tenure",
-                "in.vacancy_status",
-                "in.geometry_building_type_recs",
-                "in.vintage",
-                "in.heating_fuel",
-                "in.federal_poverty_level",
-            ],
-            how="left",
-        )
-        .with_columns(pl.col("bldg_id").list.sample(n=1, seed=seed).list.first())
-        .collect()
-    )
+    allocated_df = pl.concat(allocated_frames, how="vertical")
 
     # Extract foreign key table with building-to-geography mappings
     fkt = allocated_df.select(
@@ -368,6 +427,71 @@ def allocate_buildings_to_geography(
     )
 
     return allocated_df, fkt
+
+
+def check_allocation_misses(
+    allocated_df: pl.DataFrame,
+    output_dir: FsspecOutputDir | None = None,
+    null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
+) -> pl.DataFrame:
+    """Report catalogue rows that found no building to draw from.
+
+    The miss report is written before the threshold is applied so the rows are on disk to
+    inspect even when the run is rejected.
+
+    Args:
+        allocated_df: Full allocation DataFrame
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem, or
+            None to skip writing the miss report
+        null_building_threshold: Fraction of unallocated rows tolerated before raising
+
+    Returns:
+        The unallocated rows
+
+    Raises:
+        ValueError: If the unallocated fraction exceeds null_building_threshold
+    """
+
+    misses = allocated_df.filter(pl.col("bldg_id").is_null())
+    miss_fraction = misses.shape[0] / allocated_df.shape[0] if allocated_df.shape[0] else 0.0
+    by_status = dict(misses.group_by("in.vacancy_status").len().iter_rows())
+    logger.info(
+        f"{misses.shape[0]} of {allocated_df.shape[0]} rows ({miss_fraction:.4%}) "
+        f"found no matching building. By vacancy status: {by_status}"
+    )
+
+    if output_dir is not None:
+        write_parquet_file(output_dir, misses, "allocation_miss_report.parquet")
+
+    if miss_fraction > null_building_threshold:
+        missing_regions = misses.select("in.sampling_region_id").unique()
+        raise ValueError(
+            f"\n{misses.shape[0]} rows ({miss_fraction:.4%}) found no matching building, "
+            f"above the {null_building_threshold:.4%} threshold.\n"
+            f"By vacancy status: {by_status}.\n"
+            f"Affected sampling regions: {missing_regions.to_series().to_list()}"
+        )
+
+    return misses
+
+
+def write_parquet_file(output_dir: FsspecOutputDir, df: pl.DataFrame, file_name: str) -> None:
+    """Write a DataFrame to parquet under the output directory, local or S3.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        df: DataFrame to write
+        file_name: Name of the parquet file within the output directory
+    """
+
+    logger.info(f"Writing {file_name} to {output_dir}")
+    file_path = Path(output_dir["fs_path"]) / file_name
+    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        file_path = f"s3://{file_path.as_posix()}"
+
+    with output_dir["fs"].open(str(file_path), "wb") as f:
+        LazyFrame(df).sink_parquet(f)
+    logger.info(f"Finished writing {file_name}")
 
 
 def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFrame, fkt: pl.DataFrame) -> None:
@@ -383,24 +507,8 @@ def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFram
         fkt: Foreign key table DataFrame
     """
 
-    # Construct file path for fkt output and handle S3 vs local paths
-    file_path = Path(output_dir["fs_path"]) / "fkt.parquet"
-    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
-        file_path = f"s3://{Path(output_dir['fs_path']).as_posix()}"
-
-    # Write fkt DataFrame to parquet format
-    with output_dir["fs"].open(str(file_path), "wb") as f:
-        LazyFrame(fkt).sink_parquet(f)
-    
-    # Construct file path for allocated weights output and handle S3 vs local paths
-    file_path = Path(output_dir["fs_path"]) / "cached_allocated_weights.parquet"
-    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
-        file_path = f"s3://{Path(output_dir['fs_path']).as_posix()}"
-
-    # Write allocated weights DataFrame to parquet format
-    with output_dir["fs"].open(str(file_path), "wb") as f:
-        LazyFrame(allocated_df).sink_parquet(f)
-    logger.info(f"Finished caching allocated weights to {file_path}")
+    write_parquet_file(output_dir, fkt, "fkt.parquet")
+    write_parquet_file(output_dir, allocated_df, "cached_allocated_weights.parquet")
     logger.info("Completed creating allocated weights artifacts")
 
 
@@ -455,6 +563,7 @@ def create_allocated_weights(
     catalogue_file_version="v0",
     sampling_region_version="v1",
     seed: int | None = DEFAULT_ALLOCATION_SEED,
+    null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
 ) -> None:
     """Create allocated weights table from raw sample file and write to output parquet.
 
@@ -464,7 +573,8 @@ def create_allocated_weights(
     3. Merges geographical data with sampling regions
     4. Loads buildstock sample data
     5. Allocates buildings to geographical units
-    6. Writes output files
+    6. Writes the miss report and checks the unallocated fraction
+    7. Writes output files
 
     Args:
         simulation_outputs_file: Path to the simulation outputs Parquet file
@@ -474,6 +584,7 @@ def create_allocated_weights(
         sampling_region_version: Version of sampling regions file to use (default 'v1')
         seed: Seed for the random building-to-geography allocation so identical
             inputs produce identical publications. Pass None for unseeded allocation.
+        null_building_threshold: Fraction of unallocated rows tolerated before raising
     """
 
     # Set up filesystem for local or S3 for output file
@@ -496,6 +607,9 @@ def create_allocated_weights(
 
     # Allocate buildings to geographical units
     allocated_df, fkt = allocate_buildings_to_geography(geo_df, sim_outs, seed=seed)
+
+    # Surface catalogue rows that matched no building before writing the allocation itself
+    check_allocation_misses(allocated_df, output_dir, null_building_threshold)
 
     # Add weight column (each row represents one housing unit)
     allocated_df = allocated_df.with_columns(pl.lit(1).alias("weight"))
