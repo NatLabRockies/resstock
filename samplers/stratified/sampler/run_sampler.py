@@ -228,7 +228,7 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
         print(f"Will be sampling {new_total} samples instead of {num_datapoints} due to rounding")
     limited_df = limited_df.with_row_index("Building", offset=1)
     initial_samples_df = limited_df.to_pandas()
-    start_time = time.time()
+    final_start_time = time.time()
     print(f"Performing final sampling with {num_segments} segments of {num_samples_per_segment} samples each")
     sample_df = sample_all(pathlib.Path(project), new_total, initial_samples_df=initial_samples_df)
     print(f"Final sampling completed in {time.time() - final_start_time:.2f} seconds")

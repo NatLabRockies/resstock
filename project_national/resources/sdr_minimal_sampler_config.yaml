@@ -1,10 +1,9 @@
 segment_vars:
     - "Federal Poverty Level"
-    - "Geometry Floor Area Bin"
     - "Geometry Building Type RECS"
     - "Vintage"
     - "Heating Fuel"
     - "Sampling Region"
 
 segment_selection_sample_size: 1000000  # Determine segments using 1M samples
-num_samples_per_segment: 8
+num_samples_per_segment: 12
