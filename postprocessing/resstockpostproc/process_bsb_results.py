@@ -29,6 +29,7 @@ from resstockpostproc.utils import (
 )
 from resstockpostproc.allocated_weights import (
     DEFAULT_ALLOCATION_SEED,
+    DEFAULT_NULL_BUILDING_THRESHOLD,
     create_allocated_weights,
     create_allocated_weights_for_quota_sampler,
     create_allocated_weights_plus_util_bills_for_upgrade
@@ -47,6 +48,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
                                        upgrade_files: list[str] | None = None,
                                        rename_upgrades_path: str | None = None,
                                        allocation_seed: int | None = DEFAULT_ALLOCATION_SEED,
+                                       null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
                                        ) -> None:
     """
     Export metadata and annual results for the given raw BuildStockBatch results.
@@ -71,6 +73,10 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         allocation_seed: Seed for the random building-to-geography allocation
             (stratified sampler only) so identical inputs produce identical
             publications. Pass None for unseeded allocation.
+        null_building_threshold: Fraction of catalogue rows allowed to match no
+            building (stratified sampler only) before the run is rejected. The
+            unallocated rows are written to allocation_miss_report.parquet in
+            output_dir either way.
     """
     if sampler_type not in SUPPORTED_SAMPLER_TYPES:
         raise ValueError(f"Unsupported sampler_type {sampler_type!r}; expected one of {SUPPORTED_SAMPLER_TYPES}")
@@ -156,7 +162,12 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     # Process and cache allocated weights
     bs_pub_df_path = get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir, 0)
     if sampler_type == "stratified":
-        create_allocated_weights(bs_pub_df_path, Path(f"{output_dir['fs_path']}"), seed=allocation_seed)
+        create_allocated_weights(
+            bs_pub_df_path,
+            Path(f"{output_dir['fs_path']}"),
+            seed=allocation_seed,
+            null_building_threshold=null_building_threshold,
+        )
     elif sampler_type == "quota":
         create_allocated_weights_for_quota_sampler(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
 
@@ -244,10 +255,20 @@ if __name__ == "__main__":
         default=DEFAULT_ALLOCATION_SEED,
         help="Seed for the random building-to-geography allocation (stratified sampler only)",
     )
+    parser.add_argument(
+        "--null_building_threshold",
+        type=float,
+        default=DEFAULT_NULL_BUILDING_THRESHOLD,
+        help=(
+            "Fraction of catalogue rows allowed to match no building before raising "
+            "(stratified sampler only)"
+        ),
+    )
     args = parser.parse_args()
     export_metadata_and_annual_results(
         args.raw_results_dir,
         args.output_dir,
         sampler_type=args.sampler_type,
         allocation_seed=args.allocation_seed,
+        null_building_threshold=args.null_building_threshold,
     )

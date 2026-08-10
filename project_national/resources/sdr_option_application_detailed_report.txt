@@ -3609,7 +3609,7 @@ Report of how the 2 options were applied to the buildings.
 --------------------------------------------------------------------------------
 Detailed report of how the 4 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
-|   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
+|   Number of options |   Applied options | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
 |                   1 | 2                 | 104636 (19.0%)      | 104636 (19.0%)   | 104636 (19.0%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+

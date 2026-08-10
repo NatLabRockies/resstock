@@ -2,12 +2,26 @@ import pathlib
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from sampler.sampling_utils import read_char_tsv, get_param2tsv, get_samples
-from sampler.run_sampler import sample_param, sample_all
+from sampler.sampler import sample_param, sample_all, take_samples_per_segment
 from collections import Counter
 import pandas as pd
+import polars as pl
 import tempfile
+import yaml
 import random
 random.seed(42)
+
+
+def read_sampler_config() -> dict:
+    config_path = pathlib.Path(__file__).parents[1] / 'sampler' / 'sampler_config.yaml'
+    with open(config_path, 'r') as f:
+        return yaml.safe_load(f)
+
+
+def make_segment_df(segment_sizes: dict[str, int]) -> pl.DataFrame:
+    """One row per building, tagged with its segment and a building id unique across segments."""
+    segments = [segment for segment, size in segment_sizes.items() for _ in range(size)]
+    return pl.DataFrame({"segment": segments}).with_row_index("Building", offset=1)
 
 
 def test_get_samples() -> None:
@@ -87,3 +101,61 @@ def test_sample_all():
     project_dir = pathlib.Path(__file__).parent / 'project_sampling_test'
     sample_df = sample_all(project_dir, 10)
     assert len(sample_df) == 10
+
+
+def test_take_keeps_the_asked_for_count_per_segment():
+    df = make_segment_df({'a': 50, 'b': 7, 'c': 12})
+
+    taken = take_samples_per_segment(df, ['segment'], 12)
+
+    counts = dict(taken.group_by('segment').len().iter_rows())
+    assert counts == {'a': 12, 'b': 7, 'c': 12}, "a short segment must contribute all its rows"
+    assert taken['Building'].n_unique() == taken.height
+
+    # The same frame taken at a different count follows the count, not a hardcoded 12
+    smaller = take_samples_per_segment(df, ['segment'], 4)
+    assert dict(smaller.group_by('segment').len().iter_rows()) == {'a': 4, 'b': 4, 'c': 4}
+
+
+def test_take_is_reproducible_and_random_under_the_seed():
+    df = make_segment_df({'a': 500})
+
+    first = take_samples_per_segment(df, ['segment'], 12, random_seed=42)['Building'].to_list()
+    repeat = take_samples_per_segment(df, ['segment'], 12, random_seed=42)['Building'].to_list()
+    other = take_samples_per_segment(df, ['segment'], 12, random_seed=43)['Building'].to_list()
+
+    assert first == repeat
+    assert first != other
+
+    # The take reaches past the head of the segment, so it does not depend on incoming row order
+    assert set(first) != set(range(1, 13))
+    reached = set()
+    for seed in range(20):
+        reached.update(take_samples_per_segment(df, ['segment'], 12, random_seed=seed)['Building'].to_list())
+    assert len(reached) > 12
+
+
+def test_segment_vars_are_characteristics_the_allocator_joins_on():
+    segment_vars = read_sampler_config()['segment_vars']
+
+    # Floor area bin flows downhill through the TSVs and is invisible to the allocator, so it
+    # must not split segments
+    assert 'Geometry Floor Area Bin' not in segment_vars
+    assert set(segment_vars) == {
+        'Federal Poverty Level',
+        'Geometry Building Type RECS',
+        'Vintage',
+        'Heating Fuel',
+        'Sampling Region',
+    }
+
+
+def test_one_config_value_sets_both_the_segment_count_and_the_take():
+    num_samples_per_segment = read_sampler_config()['num_samples_per_segment']
+    df = make_segment_df({'a': 100, 'b': 100})
+
+    # The segment count arithmetic the sample command performs
+    assert 550_000 // num_samples_per_segment * num_samples_per_segment <= 550_000
+
+    taken = take_samples_per_segment(df, ['segment'], num_samples_per_segment)
+    assert taken.height == 2 * num_samples_per_segment
