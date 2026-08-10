@@ -7,6 +7,7 @@ from resstockpostproc.allocated_weights import (
     allocate_buildings_to_geography,
     check_allocation_misses,
     coerce_vacant_join_keys,
+    stage_counts,
 )
 
 # Three cells with pools of different sizes, keyed only by sampling region since the other
@@ -128,6 +129,118 @@ def test_unmatched_rows_raise_above_the_threshold():
     assert check_allocation_misses(allocated_df, null_building_threshold=0.5).height == 1_000
     with pytest.raises(ValueError, match="found no matching building"):
         check_allocation_misses(allocated_df, null_building_threshold=0.005)
+
+
+# Buildings for the ladder cases: the wealthy 1980s shelf and the poorer 1960s shelf, both on
+# natural gas, so a row only reaches the second shelf once federal poverty level is released
+LADDER_POOLS = {
+    ("1980s", "400%+"): [1, 2, 3],
+    ("1960s", "100-150%"): [4, 5, 6],
+}
+
+# One catalogue row per ladder stage, each labelled with the stage it should reach
+LADDER_ROWS = {
+    "matched_full": {"in.vintage": "1980s", "in.federal_poverty_level": "400%+", "in.heating_fuel": "Natural Gas"},
+    "relaxed_vintage": {"in.vintage": "1900s", "in.federal_poverty_level": "400%+", "in.heating_fuel": "Natural Gas"},
+    "relaxed_vintage_fpl": {
+        "in.vintage": "1900s",
+        "in.federal_poverty_level": "0-100%",
+        "in.heating_fuel": "Natural Gas",
+    },
+    # No building burns fuel oil and the ladder never releases heating fuel
+    "unmatched": {"in.vintage": "1900s", "in.federal_poverty_level": "0-100%", "in.heating_fuel": "Fuel Oil"},
+}
+
+ROWS_PER_STAGE = 200
+
+
+def make_ladder_bs_df() -> pl.DataFrame:
+    return pl.DataFrame(
+        {
+            "bldg_id": [b for pool in LADDER_POOLS.values() for b in pool],
+            "in.vintage": [vintage for (vintage, _), pool in LADDER_POOLS.items() for _ in pool],
+            "in.federal_poverty_level": [fpl for (_, fpl), pool in LADDER_POOLS.items() for _ in pool],
+            "in.sampling_region_id": "1",
+            "in.tenure": "Owner",
+            "in.vacancy_status": "Occupied",
+            "in.geometry_building_type_recs": "Single-Family Detached",
+            "in.heating_fuel": "Natural Gas",
+        }
+    )
+
+
+def make_ladder_geo_df(rows_per_stage: int = ROWS_PER_STAGE) -> pl.DataFrame:
+    return pl.DataFrame(
+        {
+            "expected_stage": [stage for stage in LADDER_ROWS for _ in range(rows_per_stage)],
+            "in.vintage": [row["in.vintage"] for row in LADDER_ROWS.values() for _ in range(rows_per_stage)],
+            "in.federal_poverty_level": [
+                row["in.federal_poverty_level"] for row in LADDER_ROWS.values() for _ in range(rows_per_stage)
+            ],
+            "in.heating_fuel": [
+                row["in.heating_fuel"] for row in LADDER_ROWS.values() for _ in range(rows_per_stage)
+            ],
+            "in.sampling_region_id": "1",
+            "in.tenure": "Owner",
+            "in.vacancy_status": "Occupied",
+            "in.geometry_building_type_recs": "Single-Family Detached",
+            "in.nhgis_tract_gisjoin": "G0100010000100",
+            "in.nhgis_puma_gisjoin": "G01000100",
+        }
+    )
+
+
+def test_ladder_fills_rows_at_the_stage_that_can_reach_them():
+    allocated_df, _ = allocate_buildings_to_geography(make_ladder_geo_df(), make_ladder_bs_df(), seed=7)
+
+    assert allocated_df.height == ROWS_PER_STAGE * len(LADDER_ROWS)
+    for expected_stage in LADDER_ROWS:
+        reached = allocated_df.filter(pl.col("expected_stage") == expected_stage)["fallback_stage"]
+        assert reached.unique().to_list() == [expected_stage]
+
+    # A released key widens the pool rather than picking a fixed stand-in
+    full = allocated_df.filter(pl.col("fallback_stage") == "matched_full")["bldg_id"]
+    assert set(full.unique().to_list()) == set(LADDER_POOLS[("1980s", "400%+")])
+
+    vintage_only = allocated_df.filter(pl.col("fallback_stage") == "relaxed_vintage")["bldg_id"]
+    assert set(vintage_only.unique().to_list()) == set(LADDER_POOLS[("1980s", "400%+")])
+
+    both_released = allocated_df.filter(pl.col("fallback_stage") == "relaxed_vintage_fpl")["bldg_id"]
+    assert set(both_released.unique().to_list()) == {b for pool in LADDER_POOLS.values() for b in pool}
+
+    unmatched = allocated_df.filter(pl.col("fallback_stage") == "unmatched")
+    assert unmatched.height == ROWS_PER_STAGE
+    assert unmatched["bldg_id"].null_count() == ROWS_PER_STAGE
+
+    assert stage_counts(allocated_df) == dict.fromkeys(LADDER_ROWS, ROWS_PER_STAGE)
+
+
+def test_rows_the_ladder_cannot_fill_reach_the_miss_report_with_their_stage():
+    allocated_df, _ = allocate_buildings_to_geography(make_ladder_geo_df(), make_ladder_bs_df(), seed=7)
+
+    misses = check_allocation_misses(allocated_df, null_building_threshold=0.5)
+
+    assert misses.height == ROWS_PER_STAGE
+    assert misses["fallback_stage"].unique().to_list() == ["unmatched"]
+    assert misses["in.heating_fuel"].unique().to_list() == ["Fuel Oil"]
+
+    # The threshold judges the residue the ladder left, a quarter of the frame here
+    with pytest.raises(ValueError, match="after releasing vintage and federal poverty level"):
+        check_allocation_misses(allocated_df, null_building_threshold=0.2)
+
+
+def test_ladder_draws_are_reproducible_under_the_seed():
+    geo_df, bs_df = make_ladder_geo_df(), make_ladder_bs_df()
+
+    first = allocate_buildings_to_geography(geo_df, bs_df, seed=7)[0]
+    repeat = allocate_buildings_to_geography(geo_df, bs_df, seed=7)[0]
+    other = allocate_buildings_to_geography(geo_df, bs_df, seed=8)[0]
+
+    assert first["bldg_id"].to_list() == repeat["bldg_id"].to_list()
+    assert first["fallback_stage"].to_list() == repeat["fallback_stage"].to_list()
+    assert first["bldg_id"].to_list() != other["bldg_id"].to_list()
+    # The stage a row reaches is set by the keys, not by the draw
+    assert first["fallback_stage"].to_list() == other["fallback_stage"].to_list()
 
 
 def test_coerce_vacant_join_keys_leaves_occupied_rows_alone():

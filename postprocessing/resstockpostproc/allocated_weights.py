@@ -37,6 +37,22 @@ ALLOCATION_KEYS = [
 # conditional fuel mix within the remaining keys.
 VACANT_ALLOCATION_KEYS = [key for key in ALLOCATION_KEYS if key != "in.heating_fuel"]
 
+# Ladder of retries for catalogue rows whose shelf is empty. Each rung names the stage it
+# records and the keys it releases from the join, so the row draws from a pool that has been
+# widened over those characteristics. Vintage goes first because a building of the wrong
+# vintage distorts the stock less than one of the wrong income bracket.
+FALLBACK_LADDER = [
+    ("matched_full", []),
+    ("relaxed_vintage", ["in.vintage"]),
+    ("relaxed_vintage_fpl", ["in.vintage", "in.federal_poverty_level"]),
+]
+
+# Stage recorded for rows the whole ladder failed to fill
+UNMATCHED_STAGE = "unmatched"
+
+# Every value the fallback_stage column can take, in ladder order
+FALLBACK_STAGES = [stage for stage, _ in FALLBACK_LADDER] + [UNMATCHED_STAGE]
+
 # Truth data (catalogue, sampling regions, CEC climate zone lookups) is downloaded
 # from this bucket when not already present in the output directory. Environments
 # without AWS credentials or internet access (e.g. HPC compute nodes) can pre-stage
@@ -381,6 +397,74 @@ def draw_from_pools(df: pl.DataFrame, rng: np.random.Generator) -> pl.DataFrame:
     )
 
 
+def draw_on_keys(
+    geo_subset: pl.DataFrame, bs_df: pl.DataFrame, keys: list[str], rng: np.random.Generator
+) -> pl.DataFrame:
+    """Draw one building per catalogue row out of the pool sharing its values of `keys`.
+
+    Args:
+        geo_subset: Catalogue rows still needing a building
+        bs_df: Buildstock sample data with building characteristics
+        keys: Characteristics that must agree between a catalogue row and its building
+        rng: Seeded generator supplying one uniform variate per row
+
+    Returns:
+        The catalogue rows with a bldg_id column, null where the pool was empty
+    """
+
+    # Group buildstock buildings by the key characteristics to create pools of similar
+    # buildings, then join those pools onto the catalogue rows that share them. Pool order
+    # is held stable so that a given seed reproduces a given allocation.
+    grouped_df = bs_df.group_by(keys).agg(pl.col("bldg_id").unique(maintain_order=True))
+    joined_df = geo_subset.lazy().join(grouped_df.lazy(), on=keys, how="left").collect()
+
+    return draw_from_pools(joined_df, rng)
+
+
+def allocate_down_the_ladder(
+    geo_subset: pl.DataFrame, bs_df: pl.DataFrame, keys: list[str], rng: np.random.Generator
+) -> pl.DataFrame:
+    """Draw a building for every catalogue row, widening the pool for rows that find none.
+
+    Rows are first matched on the full `keys`. Whatever finds an empty shelf is retried on each
+    remaining rung of FALLBACK_LADDER, drawing from a pool widened over the keys that rung
+    releases. Rows the last rung still cannot fill keep a null bldg_id. The rung that filled a
+    row, or UNMATCHED_STAGE, is recorded in fallback_stage.
+
+    Args:
+        geo_subset: Catalogue rows sharing a matching regime, occupied or vacant
+        bs_df: Buildstock sample data with building characteristics
+        keys: Characteristics matched on the first rung
+        rng: Seeded generator supplying one uniform variate per row per rung
+
+    Returns:
+        The catalogue rows with bldg_id and fallback_stage columns
+    """
+
+    filled_frames = []
+    remaining = geo_subset
+    # The first rung always runs, so an empty subset still yields a frame carrying the columns
+    for stage, released_keys in FALLBACK_LADDER:
+        stage_keys = [key for key in keys if key not in released_keys]
+        drawn = draw_on_keys(remaining, bs_df, stage_keys, rng).with_columns(
+            pl.lit(stage).alias("fallback_stage")
+        )
+        filled_frames.append(drawn.filter(pl.col("bldg_id").is_not_null()))
+        remaining = drawn.filter(pl.col("bldg_id").is_null()).drop(["bldg_id", "fallback_stage"])
+        if remaining.height == 0:
+            break
+
+    if remaining.height:
+        filled_frames.append(
+            remaining.with_columns(
+                pl.lit(None, dtype=bs_df.schema["bldg_id"]).alias("bldg_id"),
+                pl.lit(UNMATCHED_STAGE).alias("fallback_stage"),
+            )
+        )
+
+    return pl.concat(filled_frames, how="vertical")
+
+
 def allocate_buildings_to_geography(
     geo_df: pl.DataFrame, bs_df: pl.DataFrame, seed: int | None = DEFAULT_ALLOCATION_SEED
 ) -> tuple[pl.DataFrame, pl.DataFrame]:
@@ -389,7 +473,8 @@ def allocate_buildings_to_geography(
     Groups buildings by key characteristics, then draws one building uniformly at random for
     each row in the geographical catalogue. Occupied rows match on all of ALLOCATION_KEYS;
     vacant rows match on VACANT_ALLOCATION_KEYS and so draw across the fuels present in the
-    sample's vacant buildings.
+    sample's vacant buildings. Rows that match no building on those keys walk the
+    FALLBACK_LADDER, which releases vintage and then federal poverty level as well.
 
     Args:
         geo_df: Geographical data with sampling regions assigned
@@ -399,7 +484,7 @@ def allocate_buildings_to_geography(
 
     Returns:
         Tuple of (allocated_df, fkt) where:
-            - allocated_df: Full allocation with all columns
+            - allocated_df: Full allocation with all columns, including fallback_stage
             - fkt: Foreign key table with bldg_id, tract_gisjoin, and puma_gisjoin
     """
 
@@ -407,19 +492,16 @@ def allocate_buildings_to_geography(
     rng = np.random.default_rng(seed)
     is_vacant = pl.col("in.vacancy_status").eq_missing("Vacant")
 
-    allocated_frames = []
-    for keys, geo_subset in [
-        (ALLOCATION_KEYS, geo_df.filter(~is_vacant)),
-        (VACANT_ALLOCATION_KEYS, geo_df.filter(is_vacant)),
-    ]:
-        # Group buildstock buildings by the key characteristics to create pools of similar
-        # buildings, then join those pools onto the catalogue rows that share them. Pool order
-        # is held stable so that a given seed reproduces a given allocation.
-        grouped_df = bs_df.group_by(keys).agg(pl.col("bldg_id").unique(maintain_order=True))
-        joined_df = geo_subset.lazy().join(grouped_df.lazy(), on=keys, how="left").collect()
-        allocated_frames.append(draw_from_pools(joined_df, rng))
+    allocated_frames = [
+        allocate_down_the_ladder(geo_subset, bs_df, keys, rng)
+        for keys, geo_subset in [
+            (ALLOCATION_KEYS, geo_df.filter(~is_vacant)),
+            (VACANT_ALLOCATION_KEYS, geo_df.filter(is_vacant)),
+        ]
+    ]
 
     allocated_df = pl.concat(allocated_frames, how="vertical")
+    log_fallback_stages(allocated_df)
 
     # Extract foreign key table with building-to-geography mappings
     fkt = allocated_df.select(
@@ -429,18 +511,48 @@ def allocate_buildings_to_geography(
     return allocated_df, fkt
 
 
+def stage_counts(allocated_df: pl.DataFrame) -> dict[str, int]:
+    """Count allocated rows by the ladder rung that filled them.
+
+    Args:
+        allocated_df: Allocation carrying a fallback_stage column
+
+    Returns:
+        Row count per stage, in ladder order and omitting stages no row reached
+    """
+
+    counts = dict(allocated_df.group_by("fallback_stage").len().iter_rows())
+
+    return {stage: counts[stage] for stage in FALLBACK_STAGES if stage in counts}
+
+
+def log_fallback_stages(allocated_df: pl.DataFrame) -> None:
+    """Log how many rows each rung of the fallback ladder filled.
+
+    Args:
+        allocated_df: Allocation carrying a fallback_stage column
+    """
+
+    total = allocated_df.height
+    for stage, count in stage_counts(allocated_df).items():
+        share = count / total if total else 0.0
+        logger.info(f"Fallback stage {stage}: {count} rows ({share:.4%})")
+
+
 def check_allocation_misses(
     allocated_df: pl.DataFrame,
     output_dir: FsspecOutputDir | None = None,
     null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
 ) -> pl.DataFrame:
-    """Report catalogue rows that found no building to draw from.
+    """Report catalogue rows the fallback ladder still left without a building.
 
+    The threshold is applied to the residue left after the ladder, not to the rows that missed
+    on the full keys, so it measures the stock that genuinely has nothing to stand in for it.
     The miss report is written before the threshold is applied so the rows are on disk to
-    inspect even when the run is rejected.
+    inspect even when the run is rejected, each carrying the fallback_stage it reached.
 
     Args:
-        allocated_df: Full allocation DataFrame
+        allocated_df: Full allocation DataFrame carrying a fallback_stage column
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem, or
             None to skip writing the miss report
         null_building_threshold: Fraction of unallocated rows tolerated before raising
@@ -455,9 +567,11 @@ def check_allocation_misses(
     misses = allocated_df.filter(pl.col("bldg_id").is_null())
     miss_fraction = misses.shape[0] / allocated_df.shape[0] if allocated_df.shape[0] else 0.0
     by_status = dict(misses.group_by("in.vacancy_status").len().iter_rows())
+    by_stage = stage_counts(allocated_df)
     logger.info(
-        f"{misses.shape[0]} of {allocated_df.shape[0]} rows ({miss_fraction:.4%}) "
-        f"found no matching building. By vacancy status: {by_status}"
+        f"{misses.shape[0]} of {allocated_df.shape[0]} rows ({miss_fraction:.4%}) found no "
+        f"matching building after the fallback ladder. By vacancy status: {by_status}. "
+        f"Rows by stage: {by_stage}"
     )
 
     if output_dir is not None:
@@ -466,9 +580,11 @@ def check_allocation_misses(
     if miss_fraction > null_building_threshold:
         missing_regions = misses.select("in.sampling_region_id").unique()
         raise ValueError(
-            f"\n{misses.shape[0]} rows ({miss_fraction:.4%}) found no matching building, "
-            f"above the {null_building_threshold:.4%} threshold.\n"
+            f"\n{misses.shape[0]} rows ({miss_fraction:.4%}) found no matching building even "
+            f"after releasing vintage and federal poverty level, above the "
+            f"{null_building_threshold:.4%} threshold.\n"
             f"By vacancy status: {by_status}.\n"
+            f"Rows by stage: {by_stage}.\n"
             f"Affected sampling regions: {missing_regions.to_series().to_list()}"
         )
 
@@ -572,8 +688,8 @@ def create_allocated_weights(
     2. Loads reference data (catalogue, sampling regions, climate zones)
     3. Merges geographical data with sampling regions
     4. Loads buildstock sample data
-    5. Allocates buildings to geographical units
-    6. Writes the miss report and checks the unallocated fraction
+    5. Allocates buildings to geographical units, walking the fallback ladder for empty shelves
+    6. Writes the miss report and checks the fraction the ladder still left unallocated
     7. Writes output files
 
     Args:
