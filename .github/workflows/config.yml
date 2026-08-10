@@ -325,7 +325,7 @@ jobs:
         run: |
           gunzip -v project_national/national_baseline/results_csvs/*.csv.gz
           gunzip -v project_testing/testing_baseline/results_csvs/*.csv.gz
-
+          
           tar -xvf project_national/national_baseline/simulation_output/*.tar.gz -C project_national/national_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw'
           tar -xvf project_testing/testing_baseline/simulation_output/*.tar.gz -C project_testing/testing_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw' --wildcards '*in.osm' --wildcards '*in.idf'
 
@@ -487,7 +487,7 @@ jobs:
 
       - name: Generate 550K Sample
         run: |
-          python3 samplers/stratified/sampler/run_sampler.py sample -p project_national -n 1500 -o ../project_national/resources/national_550ksamples.csv
+          python3 samplers/stratified/sampler/run_sampler.py sample -p project_national -n 100000 -c ../project_national/resources/sdr_minimal_sampler_config.yaml -o ../project_national/resources/national_550ksamples.csv
           cd project_national/resources
           gzip -c national_550ksamples.csv > national_550ksamples.csv.gz
 
