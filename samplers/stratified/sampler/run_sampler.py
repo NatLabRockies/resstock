@@ -157,15 +157,18 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     # Load config file
     if config:
         # from argument passed in
-        config_path = pathlib.Path(config)
+        if not pathlib.Path(config).is_absolute():
+            config_path = (pathlib.Path(__file__).resolve().parent / ".." / ".." / ".."/ "resources" / config).resolve()
+        else:
+            config_path = pathlib.Path(config)
     else:
         # from same directory as this script
         config_path = pathlib.Path(__file__).parent / "sampler_config.yaml"
-    segment_vars = None
     config = {}
     if config_path.exists():
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
+
     segment_vars = set(config.get('segment_vars', []))
     initial_sample_size = config.get('segment_selection_sample_size', 10000000)
     initial_samples_df = None
