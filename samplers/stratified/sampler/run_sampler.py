@@ -55,7 +55,8 @@ def sample_param(param_tuple: TSVTuple, sample_df: pd.DataFrame, param: str, num
             probs = group2values[()]
             samples = get_samples(probs, opt_cols, num_samples)
         else:
-            grouped_df = sample_df.groupby(dep_cols, sort=False)
+            by = dep_cols[0] if len(dep_cols) == 1 else dep_cols
+            grouped_df = sample_df.groupby(by, sort=False)
             flat_samples = [''] * num_samples
             for group_key, indexes in grouped_df.groups.items():
                 group_key = group_key if isinstance(group_key, tuple) else (str(group_key),)
