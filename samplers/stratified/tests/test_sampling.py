@@ -2,7 +2,7 @@ import pathlib
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from sampler.sampling_utils import read_char_tsv, get_param2tsv, get_samples
-from sampler.sampler import sample_param, sample_all, take_samples_per_segment
+from sampler.run_sampler import sample_param, sample_all, take_samples_per_segment
 from collections import Counter
 import pandas as pd
 import polars as pl
