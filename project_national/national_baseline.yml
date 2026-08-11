@@ -25,7 +25,7 @@ sampler:
       - Heating Fuel
       - Sampling Region
     segment_selection_sample_size: 5000000
-    num_samples_per_segment: 12
+    num_samples_per_segment: 10
 
 # NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)

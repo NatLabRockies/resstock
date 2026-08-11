@@ -6,4 +6,4 @@ segment_vars:
     - "Sampling Region"
 
 segment_selection_sample_size: 1000000  # Determine segments using 1M samples
-num_samples_per_segment: 12
+num_samples_per_segment: 10

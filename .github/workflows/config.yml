@@ -411,14 +411,14 @@ jobs:
           pip install pandas
           pip install plotly
           pip install kaleido
-          
+
           # baseline annual
           mkdir -p test/base_results/comparisons/baseline/annual
           python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
           python test/compare.py -a results -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
           python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
           python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
-          
+
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
           python test/compare.py -a timeseries -b base_results/baseline/timeseries -f baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
@@ -487,7 +487,7 @@ jobs:
 
       - name: Generate 550K Sample
         run: |
-          python3 samplers/stratified/sampler/run_sampler.py sample -p project_national -n 100000 -c ../project_national/resources/sdr_minimal_sampler_config.yaml -o ../project_national/resources/national_550ksamples.csv
+          python3 samplers/stratified/sampler/run_sampler.py sample -p project_national -n 550000 -c ../project_national/resources/sdr_minimal_sampler_config.yaml -o ../project_national/resources/national_550ksamples.csv
           cd project_national/resources
           gzip -c national_550ksamples.csv > national_550ksamples.csv.gz
 

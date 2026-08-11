@@ -202,6 +202,7 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     config = {}
     if config_path.exists():
         with open(config_path, 'r') as f:
+            print(f"Loading config from {config_path}")
             config = yaml.safe_load(f)
 
     segment_vars = set(config.get('segment_vars', []))
