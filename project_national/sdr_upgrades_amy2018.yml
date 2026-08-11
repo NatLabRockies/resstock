@@ -16,10 +16,18 @@ baseline:
 # Sampler type and number of data points per baseline or upgrade
 sampler:
   type: precomputed
-  # type: residential_quota # For production run
+  # type: residential_stratified # For production run
   args:
     sample_file: resources/sdr_minimal_buildstock.csv # For CI
     # n_datapoints: 550000 # For production run
+    # segment_vars: # For production run
+      # - Federal Poverty Level
+      # - Geometry Building Type RECS
+      # - Vintage
+      # - Heating Fuel
+      # - Sampling Region
+    # segment_selection_sample_size: 10000000 # For production run
+    # num_samples_per_segment: 12 # For production run
 
 # NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)

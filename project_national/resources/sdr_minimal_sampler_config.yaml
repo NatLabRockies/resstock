@@ -5,5 +5,5 @@ segment_vars:
     - "Heating Fuel"
     - "Sampling Region"
 
-segment_selection_sample_size: 5000000  # Determine segments using 5M samples
+segment_selection_sample_size: 2000000  # Determine segments using 2M samples
 num_samples_per_segment: 10
