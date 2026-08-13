@@ -8,7 +8,8 @@ uv run resstockpostproc/process_bsb_results.py "C:/Scratch/ResStock/efforts/full
 
 Note: bsb_raw_results folder must contain both baseline and upgrade files. Baseline file should be named
 results_up00.parquet and upgrade files should be named results_upXX.parquet where XX is the upgrade number. The can
-either be in their own folders (baseline and upgrades) or all be in the same folder.
+either be in their own folders (baseline and upgrades) or all be in the same folder. Only those locations are
+searched, so other parquet files under the directory (timeseries partitions in particular) are never listed.
 """
 
 import re
@@ -37,6 +38,34 @@ from resstockpostproc.allocated_weights import (
 
 SUPPORTED_SAMPLER_TYPES = ("stratified", "quota")
 
+# Glob for the results file naming convention. Deliberately narrower than *.parquet:
+# a raw results directory also holds the timeseries partitions, which outnumber the
+# results files by thousands to one on a full run.
+RESULTS_FILE_GLOB = "results_up*.parquet"
+
+# Where results files live relative to the raw results directory: in the baseline and
+# upgrades subdirectories, or flat in the directory itself ("" below). Each is listed
+# non-recursively, so discovery never walks into timeseries/ -- on a full run that
+# subtree holds tens of thousands of parquet files and listing it takes minutes, none
+# of which are results files.
+RESULTS_SEARCH_DIRS = ("baseline", "upgrades", "")
+
+# Anchored to the whole file name so a partition file can't be mistaken for a results
+# file -- "group0.parquet" contains the substring "up0", and "group00.parquet" contains
+# "up00". Also accepts the results_upgradeXX.parquet spelling.
+RESULTS_FILE_RE = re.compile(r"^results_up(?:grade)?(\d+)\.parquet$", re.IGNORECASE)
+
+
+def parse_upgrade_id(file_path: str) -> int | None:
+    """
+    Return the upgrade number encoded in a results file name.
+
+    Returns None when the name doesn't follow the results_upXX.parquet convention,
+    which callers treat as "not a results file".
+    """
+    match = RESULTS_FILE_RE.match(Path(file_path).name)
+    return int(match.group(1)) if match else None
+
 
 def export_metadata_and_annual_results(raw_results_dir: str,
                                        output_dir: str,
@@ -61,10 +90,10 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         slice_rows: Number of rows per slice when writing output files
         sampler_type: Type of sampler used for allocation ("stratified" or "quota")
         baseline_file: Optional explicit path to the baseline results parquet file
-            (results_up00.parquet). When omitted, raw_results_dir is globbed for
-            results files. Callers like buildstockbatch that know exactly which
-            files they wrote should pass explicit paths so the glob cannot pick up
-            unrelated parquet files (e.g. timeseries). Paths must be on the same
+            (results_up00.parquet). When omitted, the RESULTS_SEARCH_DIRS
+            subdirectories of raw_results_dir are listed for results files. Callers
+            like buildstockbatch that know exactly which files they wrote can pass
+            explicit paths to skip discovery entirely. Paths must be on the same
             filesystem as raw_results_dir.
         upgrade_files: Optional explicit paths to the upgrade results parquet files
             (results_upXX.parquet, XX > 0). Only used when baseline_file is given.
@@ -89,15 +118,21 @@ def export_metadata_and_annual_results(raw_results_dir: str,
 
     # Find the raw results files, unless the caller passed explicit paths
     if baseline_file is None:
-        pqt_glob = f'{raw_results_dir["fs_path"]}/**/*.parquet'
-        result_files = raw_results_dir["fs"].glob(pqt_glob)
-        baseline_files = [f for f in result_files if "up00" in Path(f).name.lower()]
-        upgrade_files = [f for f in result_files if "up00" not in Path(f).name.lower()]
+        search_roots = [
+            f'{raw_results_dir["fs_path"]}/{d}'.rstrip("/") for d in RESULTS_SEARCH_DIRS
+        ]
+        result_files = []
+        for search_root in search_roots:
+            result_files.extend(raw_results_dir["fs"].glob(f"{search_root}/{RESULTS_FILE_GLOB}"))
+        # Discovery is lenient: anything that doesn't parse isn't a results file.
+        discovered = {f: parse_upgrade_id(f) for f in result_files}
+        baseline_files = [f for f, up_id in discovered.items() if up_id == 0]
+        upgrade_files = [f for f, up_id in discovered.items() if up_id]
         if not baseline_files:
             raise FileNotFoundError(
-                f"No baseline results file (results_up00.parquet) found under "
-                f"{raw_results_dir['fs_path']}. The baseline is required: weights are "
-                f"allocated from baseline characteristics."
+                f"No baseline results file (results_up00.parquet) found in any of "
+                f"{search_roots}. The baseline is required: weights are allocated from "
+                f"baseline characteristics."
             )
         baseline_file = baseline_files[0]
     else:
@@ -105,6 +140,29 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         missing = [f for f in [baseline_file] + upgrade_files if not raw_results_dir["fs"].exists(f)]
         if missing:
             raise FileNotFoundError(f"Results files not found on the raw results filesystem: {missing}")
+
+    # Resolve the upgrade numbers before any data is read, so a misnamed or duplicated
+    # file fails fast instead of being silently dropped from the publication.
+    upgrade_id_by_file: dict[str, int] = {}
+    for upgrade_file in upgrade_files:
+        parsed_id = parse_upgrade_id(upgrade_file)
+        if parsed_id is None:
+            raise ValueError(
+                f"Upgrade results file {upgrade_file!r} does not follow the "
+                f"{RESULTS_FILE_GLOB} naming convention, so its upgrade number cannot "
+                f"be determined."
+            )
+        if parsed_id == 0:
+            raise ValueError(
+                f"Upgrade results file {upgrade_file!r} is upgrade 0; the baseline must "
+                f"be passed as baseline_file, not in upgrade_files."
+            )
+        if parsed_id in upgrade_id_by_file.values():
+            clash = next(f for f, up_id in upgrade_id_by_file.items() if up_id == parsed_id)
+            raise ValueError(
+                f"Two results files claim upgrade {parsed_id}: {clash!r} and {upgrade_file!r}"
+            )
+        upgrade_id_by_file[upgrade_file] = parsed_id
 
     # Information used across upgrades
     upgrade_renamer = get_upgrade_rename_dict(raw_results_dir, rename_upgrades_path)
@@ -133,11 +191,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
 
     # Process and cache the upgrade simulation outputs
     upgrade_ids = [0]
-    for upgrade_file in upgrade_files:
-        up_info = re.search(r"up(\d+)", Path(upgrade_file).name)
-        if up_info is None:
-            continue
-        upgrade_id = int(up_info.group(1))
+    for upgrade_file, upgrade_id in upgrade_id_by_file.items():
         upgrade_ids.append(upgrade_id)
         print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id} {'*'*100}")
         # Add s3:// prefix for polars if using S3

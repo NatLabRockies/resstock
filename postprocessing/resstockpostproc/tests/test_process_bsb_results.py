@@ -1,12 +1,17 @@
 """Tests for the export_metadata_and_annual_results entry point contract (Phase A)."""
 
 import json
+import re
 
 import polars as pl
 import pytest
 
 from resstockpostproc.allocated_weights import allocate_buildings_to_geography
-from resstockpostproc.process_bsb_results import export_metadata_and_annual_results
+from resstockpostproc.process_bsb_results import (
+    RESULTS_FILE_GLOB,
+    export_metadata_and_annual_results,
+    parse_upgrade_id,
+)
 from resstockpostproc.simulation_outputs import get_upgrade_rename_dict
 from resstockpostproc.utils import setup_fsspec_filesystem
 
@@ -45,6 +50,128 @@ def test_explicit_missing_files_raise(tmp_path):
             str(tmp_path),
             str(tmp_path / "out"),
             baseline_file=str(tmp_path / "nope" / "results_up00.parquet"),
+        )
+
+
+@pytest.mark.parametrize(
+    "file_name, expected",
+    [
+        ("results_up00.parquet", 0),
+        ("results_up0.parquet", 0),
+        ("results_up01.parquet", 1),
+        ("results_up13.parquet", 13),
+        ("results_upgrade02.parquet", 2),
+        # Timeseries partition files: "group0" contains "up0", "group00" contains "up00"
+        ("group0.parquet", None),
+        ("group00.parquet", None),
+        ("group10.parquet", None),
+        ("buildstock.csv", None),
+    ],
+)
+def test_parse_upgrade_id(file_name, expected):
+    assert parse_upgrade_id(file_name) == expected
+    assert parse_upgrade_id(f"s3://bucket/run/timeseries/upgrade=0/{file_name}") == expected
+
+
+def _write_timeseries_partitions(raw_dir):
+    """The layout BuildStockBatch writes alongside the results files."""
+    part_dir = raw_dir / "timeseries" / "upgrade=0" / "state=AK" / "county=AK, Anchorage Municipality"
+    part_dir.mkdir(parents=True)
+    for name in ("group0.parquet", "group00.parquet", "group10.parquet"):
+        (part_dir / name).touch()
+    return part_dir
+
+
+def test_timeseries_files_are_not_mistaken_for_results(tmp_path):
+    """A run with only timeseries parquet files has no baseline, and must say so."""
+    raw_dir = tmp_path / "raw"
+    raw_dir.mkdir()
+    _write_timeseries_partitions(raw_dir)
+    with pytest.raises(FileNotFoundError, match="results_up00"):
+        export_metadata_and_annual_results(str(raw_dir), str(tmp_path / "out"))
+
+
+def test_timeseries_subtree_is_never_listed(tmp_path, monkeypatch):
+    """Discovery must not walk timeseries/ -- on a full run that listing takes minutes."""
+    raw_dir = tmp_path / "raw"
+    (raw_dir / "baseline").mkdir(parents=True)
+    (raw_dir / "baseline" / "results_up00.parquet").touch()
+    _write_timeseries_partitions(raw_dir)
+
+    fs_cls = type(setup_fsspec_filesystem(str(raw_dir))["fs"])
+    listed = []
+    real_glob = fs_cls.glob
+    monkeypatch.setattr(fs_cls, "glob", lambda self, path, **kw: listed.append(path) or real_glob(self, path, **kw))
+
+    # Fails later (the touched file isn't real parquet); discovery itself is what's asserted.
+    with pytest.raises(Exception):
+        export_metadata_and_annual_results(str(raw_dir), str(tmp_path / "out"))
+
+    assert listed, "expected discovery to glob for results files"
+    # Relative to raw_dir -- tmp_path itself is named after this test.
+    globbed = [path.split("/raw/", 1)[-1] for path in listed]
+    assert not any("timeseries" in pattern for pattern in globbed), globbed
+    assert all("*" not in pattern.split("results_up")[0] for pattern in globbed), (
+        f"discovery must not use a recursive wildcard: {globbed}"
+    )
+
+
+@pytest.mark.parametrize("layout_dir", ["baseline", "upgrades", ""])
+def test_baseline_found_in_each_supported_layout(tmp_path, layout_dir):
+    raw_dir = tmp_path / "raw"
+    results_dir = raw_dir / layout_dir if layout_dir else raw_dir
+    results_dir.mkdir(parents=True)
+    (results_dir / "results_up00.parquet").touch()
+    _write_timeseries_partitions(raw_dir)
+
+    # Discovery finds the baseline, so this gets past the FileNotFoundError and fails
+    # later on the empty file instead.
+    with pytest.raises(Exception) as exc_info:
+        export_metadata_and_annual_results(str(raw_dir), str(tmp_path / "out"))
+    assert not isinstance(exc_info.value, FileNotFoundError), "baseline should have been discovered"
+
+
+def test_explicit_upgrade_file_with_unparseable_name_raises(tmp_path):
+    baseline = tmp_path / "results_up00.parquet"
+    baseline.touch()
+    bad = tmp_path / "group0.parquet"
+    bad.touch()
+    with pytest.raises(ValueError, match=re.escape(f"{RESULTS_FILE_GLOB} naming convention")):
+        export_metadata_and_annual_results(
+            str(tmp_path),
+            str(tmp_path / "out"),
+            baseline_file=str(baseline),
+            upgrade_files=[str(bad)],
+        )
+
+
+def test_baseline_passed_as_upgrade_raises(tmp_path):
+    baseline = tmp_path / "results_up00.parquet"
+    baseline.touch()
+    with pytest.raises(ValueError, match="is upgrade 0"):
+        export_metadata_and_annual_results(
+            str(tmp_path),
+            str(tmp_path / "out"),
+            baseline_file=str(baseline),
+            upgrade_files=[str(baseline)],
+        )
+
+
+def test_duplicate_upgrade_ids_raise(tmp_path):
+    baseline = tmp_path / "results_up00.parquet"
+    baseline.touch()
+    first = tmp_path / "a"
+    second = tmp_path / "b"
+    first.mkdir()
+    second.mkdir()
+    (first / "results_up01.parquet").touch()
+    (second / "results_up01.parquet").touch()
+    with pytest.raises(ValueError, match="claim upgrade 1"):
+        export_metadata_and_annual_results(
+            str(tmp_path),
+            str(tmp_path / "out"),
+            baseline_file=str(baseline),
+            upgrade_files=[str(first / "results_up01.parquet"), str(second / "results_up01.parquet")],
         )
 
 
