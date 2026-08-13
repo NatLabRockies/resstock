@@ -600,14 +600,13 @@ def write_parquet_file(output_dir: FsspecOutputDir, df: pl.DataFrame, file_name:
         file_name: Name of the parquet file within the output directory
     """
 
-    logger.info(f"Writing {file_name} to {output_dir}")
+    logger.info(f"Writing {file_name} to {output_dir['fs_path']}")
     file_path = Path(output_dir["fs_path"]) / file_name
     if isinstance(output_dir["fs"], s3fs.S3FileSystem):
         file_path = f"s3://{file_path.as_posix()}"
 
     with output_dir["fs"].open(str(file_path), "wb") as f:
         LazyFrame(df).sink_parquet(f)
-    logger.info(f"Finished writing {file_name}")
 
 
 def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFrame, fkt: pl.DataFrame) -> None:
