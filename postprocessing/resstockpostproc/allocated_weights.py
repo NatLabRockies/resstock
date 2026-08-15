@@ -675,7 +675,7 @@ def create_allocated_weights(
     simulation_outputs_file: str,
     output_dir: str,
     aws_profile_name=None,
-    catalogue_file_version="v0",
+    catalogue_file_version="v2",
     sampling_region_version="v1",
     seed: int | None = DEFAULT_ALLOCATION_SEED,
     null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
