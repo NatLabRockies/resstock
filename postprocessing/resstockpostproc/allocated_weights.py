@@ -3,11 +3,12 @@ import datetime
 import json
 import logging
 import numpy as np
+from collections.abc import Iterator, Sequence
 from pathlib import Path
 import polars as pl
-from polars.lazyframe.frame import LazyFrame
 from resstockpostproc.utils import FsspecOutputDir, setup_fsspec_filesystem
 import s3fs
+import zlib
 
 
 from resstockpostproc.simulation_outputs import get_cached_simulation_outputs_for_upgrade
@@ -59,6 +60,57 @@ FALLBACK_STAGES = [stage for stage, _ in FALLBACK_LADDER] + [UNMATCHED_STAGE]
 # the files in the output directory instead; files found there are never re-downloaded.
 TRUTH_DATA_BUCKET = "resstock-core"
 
+# The catalogue is one row per US housing unit -- around 137 million of them, some 15 GB
+# once it and its derived columns are in memory, and several times that again while a join
+# is in flight. It is therefore never held whole: it is staged to one parquet partition per
+# sampling region in a single streaming pass, and the allocation then runs a region at a
+# time, so peak memory is set by the largest single region instead of by the whole country.
+#
+# Chunking this way is exact rather than an approximation. in.sampling_region_id is an
+# allocation key, and FALLBACK_LADDER only ever releases vintage and federal poverty level,
+# so no catalogue row can draw a building from outside its own sampling region however the
+# work is divided up.
+CATALOGUE_PARTITION_DIR = "cached_catalogue_by_sampling_region"
+ALLOCATED_WEIGHTS_DIR = "cached_allocated_weights"
+
+# Directory name for one region's partition, in both of the directories above
+SAMPLING_REGION_PARTITION = "sampling_region"
+
+
+def _polars_path(output_dir: FsspecOutputDir, *parts: str) -> str:
+    """Join a path below the output directory into the form polars' scan/sink calls expect.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        parts: Path segments below the output directory
+
+    Returns:
+        The joined path, carrying the s3:// scheme when the output directory is on S3
+    """
+
+    path = "/".join([str(output_dir["fs_path"]).rstrip("/"), *(p.strip("/") for p in parts)])
+
+    return f"s3://{path}" if isinstance(output_dir["fs"], s3fs.S3FileSystem) else path
+
+
+def region_seed(seed: int | None, region_id: str) -> Sequence[int] | None:
+    """Derive the seed for one sampling region's draws.
+
+    Seeding per region, rather than running one generator across the whole catalogue, keeps a
+    region's allocation independent of the order the regions happen to be processed in, so the
+    same inputs reproduce the same allocation however the work is chunked. crc32 is used rather
+    than hash() because it is stable across processes, platforms and python versions.
+
+    Args:
+        seed: The run's seed, or None for unseeded (non-reproducible) allocation
+        region_id: The sampling region the draws are for
+
+    Returns:
+        A seed for np.random.default_rng, or None when seed is None
+    """
+
+    return None if seed is None else [seed, zlib.crc32(str(region_id).encode())]
+
 
 def _download_truth_file(local_path, s3_key, file_desc: str) -> None:
     """Download a truth-data file from S3, with an actionable error on failure."""
@@ -101,44 +153,63 @@ def coerce_vacant_join_keys(catalogue_df: pl.DataFrame) -> pl.DataFrame:
     return catalogue_df
 
 
-def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str) -> pl.DataFrame:
-    """Load and preprocess catalogue file, downloading from S3 if necessary.
-
-    Vacant rows are given the literal "Not Available" for tenure and federal poverty level so
-    they match the buildstock sample, which labels vacant buildings that way. Heating fuel is
-    left null on vacant rows and is handled by the two stage join in
-    allocate_buildings_to_geography.
+def _ensure_truth_file(output_dir: FsspecOutputDir, file_name: str, s3_key: str, file_desc: str) -> str:
+    """Return the path to a truth-data file below the output directory, downloading it if absent.
 
     Args:
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
-        catalogue_file_version: Version string for catalogue file (e.g., 'v0')
+        file_name: Name of the file within the output directory
+        s3_key: Key of the file within TRUTH_DATA_BUCKET
+        file_desc: Human readable description used in log and error messages
 
     Returns:
-        Polars DataFrame with catalogue data including county_gisjoin column
+        The path to the file on the output filesystem
     """
 
-    # Construct file path for catalogue file
+    local_path = f"{output_dir['fs_path']}/{file_name}"
+    if not output_dir["fs"].exists(local_path):
+        _download_truth_file(local_path, s3_key, file_desc)
+
+    return local_path
+
+
+def scan_catalogue(output_dir: FsspecOutputDir, catalogue_file_version: str) -> pl.LazyFrame:
+    """Scan the catalogue file, downloading it if necessary, and derive its geography columns.
+
+    Returned lazily: the catalogue is one row per US housing unit, so reading it whole costs
+    more memory than the rest of the pipeline put together. Callers that only need part of it,
+    or that stream it out again, should never materialise it.
+
+    Vacant row join keys are NOT coerced here, because doing so needs a row count to log and so
+    would force the frame. coerce_vacant_join_keys is applied per partition instead, once the
+    catalogue has been split into pieces small enough to hold.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        catalogue_file_version: Version string for catalogue file (e.g., 'v2')
+
+    Returns:
+        Polars LazyFrame over the catalogue, with the gisjoin and state columns derived
+    """
+
+    # Construct file path for catalogue file, downloading it if it isn't staged already
     catalogue_file = f"pums_2019_5yrs_acs_catalogue_{catalogue_file_version}.parquet"
-    catalogue_local_path = f"{output_dir['fs_path']}/{catalogue_file}"
-
-    # Download from S3 if not already cached locally
-    if not output_dir["fs"].exists(catalogue_local_path):
-        _download_truth_file(catalogue_local_path, f"truth_data/v01/StockE/{catalogue_file}", "Catalogue file")
-
-    # Read catalogue and add county_gisjoin derived from first 8 chars of tract_gisjoin
-    logger.info(f"Reading catalogue file from {catalogue_local_path}")
-    catalogue_df = pl.read_parquet(catalogue_local_path)
-    catalogue_df = catalogue_df.with_columns(
-        pl.col("tract_gisjoin").str.slice(0, 8).alias("county_gisjoin")
+    catalogue_path = _ensure_truth_file(
+        output_dir, catalogue_file, f"truth_data/v01/StockE/{catalogue_file}", "Catalogue file"
     )
 
-    # Add state_gisjoin derived from first 2 chars of tract_gisjoin
-    catalogue_df = catalogue_df.with_columns(
-        pl.col("tract_gisjoin").str.slice(0, 3).alias("state_gisjoin")
+    # Scan the catalogue and add county_gisjoin and state_gisjoin, the leading 8 and 3
+    # characters of the tract gisjoin respectively
+    logger.info(f"Scanning catalogue file from {catalogue_path}")
+    catalogue_lf = pl.scan_parquet(
+        _polars_path(output_dir, catalogue_file), storage_options=output_dir["storage_options"]
+    ).with_columns(
+        pl.col("tract_gisjoin").str.slice(0, 8).alias("county_gisjoin"),
+        pl.col("tract_gisjoin").str.slice(0, 3).alias("state_gisjoin"),
     )
 
     # Rename columns to match expected format
-    catalogue_df = catalogue_df.rename(
+    catalogue_lf = catalogue_lf.rename(
         {
             "tract_gisjoin": "in.nhgis_tract_gisjoin",
             "puma_gisjoin": "in.nhgis_puma_gisjoin",
@@ -154,41 +225,57 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
     )
 
     # Load state-census region map
-    state_table_file = "state_region_division_table.csv"
-    state_table_local_path = f"{output_dir['fs_path']}/{state_table_file}"
-
-    # Download from S3 if not already cached locally
-    if not output_dir["fs"].exists(state_table_local_path):
-        _download_truth_file(
-            state_table_local_path, "truth_data/v01/EIA/CBECS/state_region_division_table.csv", "State table file"
-        )
-
-    # Read state table
-    logger.info(f"Reading state table file from {state_table_local_path}")
-    state_table_df = pl.read_csv(state_table_local_path)
-
-    # Make the FIPS code a string with a "G" and leading zeros
-    state_table_df = state_table_df.with_columns(
-        (pl.lit("G") + pl.col("FIPS Code").cast(pl.Utf8).str.zfill(2)).alias("FIPS Code")
+    state_table_path = _ensure_truth_file(
+        output_dir,
+        "state_region_division_table.csv",
+        "truth_data/v01/EIA/CBECS/state_region_division_table.csv",
+        "State table file",
     )
 
-    # Map state FIPS codes to state abbreviations
+    # Read state table
+    logger.info(f"Reading state table file from {state_table_path}")
+    state_table_df = pl.read_csv(state_table_path)
+
+    # Make the FIPS code a string with a "G" and leading zeros, and map it to state abbreviations
     state_table_df = state_table_df.with_columns(
-        pl.col("FIPS Code").alias("in.nhgis_state_gisjoin"),
-        pl.col("State Code").alias("in.state")
+        (pl.lit("G") + pl.col("FIPS Code").cast(pl.Utf8).str.zfill(2)).alias("in.nhgis_state_gisjoin"),
+        pl.col("State Code").alias("in.state"),
     )
 
     # Join the state abbreviations onto the catalogue
-    catalogue_df = catalogue_df.join(
-        state_table_df.select(["in.nhgis_state_gisjoin", "in.state"]),
+    catalogue_lf = catalogue_lf.join(
+        state_table_df.select(["in.nhgis_state_gisjoin", "in.state"]).lazy(),
         on="in.nhgis_state_gisjoin",
-        how="left"
+        how="left",
     )
 
-    # Align vacant row join keys with how the buildstock sample labels vacant buildings
-    catalogue_df = coerce_vacant_join_keys(catalogue_df)
+    return catalogue_lf
 
-    return catalogue_df
+
+def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str) -> pl.DataFrame:
+    """Load and preprocess catalogue file, downloading from S3 if necessary.
+
+    Vacant rows are given the literal "Not Available" for tenure and federal poverty level so
+    they match the buildstock sample, which labels vacant buildings that way. Heating fuel is
+    left null on vacant rows and is handled by the two stage join in
+    allocate_buildings_to_geography.
+
+    This reads the whole catalogue into memory, which for the national catalogue is around
+    15 GB. create_allocated_weights does not use it; it streams through scan_catalogue
+    instead. It remains for callers working with a catalogue small enough to hold.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        catalogue_file_version: Version string for catalogue file (e.g., 'v2')
+
+    Returns:
+        Polars DataFrame with catalogue data including county_gisjoin column
+    """
+
+    catalogue_df = scan_catalogue(output_dir, catalogue_file_version).collect()
+
+    # Align vacant row join keys with how the buildstock sample labels vacant buildings
+    return coerce_vacant_join_keys(catalogue_df)
 
 def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: str) -> pl.DataFrame:
     """Load sampling regions mapping, downloading from S3 if necessary.
@@ -201,15 +288,14 @@ def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: 
         Polars DataFrame with county_gisjoin to sampling_region mapping
     """
 
-    # Construct file path for sampling regions JSON file
+    # Construct file path for sampling regions JSON file, downloading it if it isn't staged already
     sampling_regions_file = f"sampling_regions_{sampling_region_version}.json"
-    sample_regions_local_path = f"{output_dir['fs_path']}/{sampling_regions_file}"
-
-    # Download from S3 if not already cached locally
-    if not output_dir["fs"].exists(sample_regions_local_path):
-        _download_truth_file(
-            sample_regions_local_path, f"truth_data/v01/StockE/{sampling_regions_file}", "Sampling regions file"
-        )
+    sample_regions_local_path = _ensure_truth_file(
+        output_dir,
+        sampling_regions_file,
+        f"truth_data/v01/StockE/{sampling_regions_file}",
+        "Sampling regions file",
+    )
 
     # Load JSON file containing county to sampling region mappings
     logger.info(f"Reading sample file from {sample_regions_local_path}")
@@ -259,15 +345,14 @@ def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
         "CEC16": 110,
     }
 
-    # Construct file path for CEC climate zone lookup file
+    # Construct file path for CEC climate zone lookup file, downloading it if it isn't staged already
     cec_2010_cz_lkup_file = "cec_cz_by_tract_2010_lkup.json"
-    cec_2010_cz_lkup_local_path = f"{output_dir['fs_path']}/{cec_2010_cz_lkup_file}"
-
-    # Download from S3 if not already cached locally
-    if not output_dir["fs"].exists(cec_2010_cz_lkup_local_path):
-        _download_truth_file(
-            cec_2010_cz_lkup_local_path, f"truth_data/v01/StockE/{cec_2010_cz_lkup_file}", "CEC 2010 CZ lookup file"
-        )
+    cec_2010_cz_lkup_local_path = _ensure_truth_file(
+        output_dir,
+        cec_2010_cz_lkup_file,
+        f"truth_data/v01/StockE/{cec_2010_cz_lkup_file}",
+        "CEC 2010 CZ lookup file",
+    )
 
     # Load JSON file containing tract to CEC climate zone mappings
     logger.info(f"Reading CEC 2010 CZ lookup file from {cec_2010_cz_lkup_local_path}")
@@ -307,35 +392,37 @@ def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
 
     return cec_2010_cz_lkup_df
 
-def merge_geographical_data(
-    catalogue_df: pl.DataFrame, sampling_regions_df: pl.DataFrame, cec_2010_cz_lkup_df: pl.DataFrame,
-) -> pl.DataFrame:
-    """Merge catalogue with sampling region assignments.
+def assign_sampling_regions(
+    catalogue: pl.LazyFrame, sampling_regions_df: pl.DataFrame, cec_2010_cz_lkup_df: pl.DataFrame,
+) -> pl.LazyFrame:
+    """Attach the sampling region each catalogue row falls in.
 
     Uses county-based sampling regions for most of the US and CEC climate zone-based
     sampling regions for California tracts.
 
+    The assignment depends only on the tract and county gisjoins, so it can be applied
+    to the catalogue itself or to just its distinct geographies. Rows in neither lookup
+    keep a null region; validate_sampling_region_coverage is what rejects those.
+
     Args:
-        catalogue_df: Catalogue data with tract and county information
+        catalogue: Catalogue data with tract and county information
         sampling_regions_df: County to sampling region mapping
         cec_2010_cz_lkup_df: California tract to sampling region mapping via CEC climate zones
 
     Returns:
-        Merged DataFrame with 'Sampling Region' column assigned for all rows
-
-    Raises:
-        ValueError: If any rows are missing sampling region assignments
+        LazyFrame with an in.sampling_region_id column, as a string to match the type in bs_df
     """
+
     # Join catalogue with county-based sampling regions (covers most of US)
-    logger.info("Merging catalogue and sample regions data")
-    df = catalogue_df.join(sampling_regions_df, on="in.nhgis_county_gisjoin", how="left")
+    lf = catalogue.join(sampling_regions_df.lazy(), on="in.nhgis_county_gisjoin", how="left")
 
     # Join with CEC climate zone-based sampling regions (covers California)
-    df = df.join(cec_2010_cz_lkup_df, on="in.nhgis_tract_gisjoin", how="left", suffix="_cec2010")
-    # df = df.join(cec_2020_cz_lkup_df, on="in.nhgis_tract_gisjoin", how="left", suffix="_cec2020")
+    lf = lf.join(cec_2010_cz_lkup_df.lazy(), on="in.nhgis_tract_gisjoin", how="left", suffix="_cec2010")
+    # lf = lf.join(cec_2020_cz_lkup_df.lazy(), on="in.nhgis_tract_gisjoin", how="left", suffix="_cec2020")
 
-    # Use county-based region, falling back to CEC climate zone region for CA tracts
-    df = df.with_columns(
+    # Use county-based region, falling back to CEC climate zone region for CA tracts.
+    # Cast to string to match the type in bs_df, via Int64 so the label is "34" not "34.0".
+    lf = lf.with_columns(
         pl.coalesce(
             [
                 pl.col("in.sampling_region_id"),
@@ -345,29 +432,179 @@ def merge_geographical_data(
             ]
         )
         .cast(pl.Int64)
+        .cast(pl.Utf8)
         .alias("in.sampling_region_id")
     )
 
-    # Clean up temporary columns and rename to final column name
-    df = df.drop(["in.sampling_region_id_cec2010"])  # , "in.sampling_region_id_cec2020"])
+    # Clean up temporary columns
+    return lf.drop(["in.sampling_region_id_cec2010"])  # , "in.sampling_region_id_cec2020"])
 
-    # Validate that all rows have been assigned a sampling region. Only this column is checked
-    # because vacant rows legitimately carry a null heating fuel.
-    missing_region = df.filter(pl.col("in.sampling_region_id").is_null())
-    if missing_region.shape[0] > 0:
-        missing_counties = missing_region.select("in.nhgis_county_gisjoin").unique()
-        missing_tracts = missing_region.select("in.nhgis_tract_gisjoin").unique()
+
+def validate_sampling_region_coverage(
+    catalogue: pl.LazyFrame, sampling_regions_df: pl.DataFrame, cec_2010_cz_lkup_df: pl.DataFrame,
+) -> None:
+    """Check that every geography in the catalogue maps to a sampling region.
+
+    The check runs over the catalogue's distinct tract/county pairs rather than its rows.
+    A region is a function of those two columns alone, so this reaches the same verdict as
+    checking every row while reading two columns of the catalogue instead of all of them.
+
+    Args:
+        catalogue: Catalogue data with tract and county information
+        sampling_regions_df: County to sampling region mapping
+        cec_2010_cz_lkup_df: California tract to sampling region mapping via CEC climate zones
+
+    Raises:
+        ValueError: If any geography is missing a sampling region assignment
+    """
+
+    logger.info("Checking that every catalogue geography maps to a sampling region")
+    geographies = catalogue.select(
+        pl.col("in.nhgis_tract_gisjoin"), pl.col("in.nhgis_county_gisjoin")
+    ).unique()
+    assigned = assign_sampling_regions(geographies, sampling_regions_df, cec_2010_cz_lkup_df)
+
+    # Only the region column is checked because vacant rows legitimately carry a null heating fuel
+    missing_region = assigned.filter(pl.col("in.sampling_region_id").is_null()).collect(engine="streaming")
+    if missing_region.height > 0:
+        missing_counties = missing_region["in.nhgis_county_gisjoin"].unique().to_list()
+        missing_tracts = missing_region["in.nhgis_tract_gisjoin"].unique().to_list()
         raise ValueError(
-            f"\n{missing_region.shape[0]} rows are missing sampling regions.\n"
-            f"Missing counties: {missing_counties.to_series().to_list()}.\n"
-            f"Missing tracts: {missing_tracts.to_series().to_list()}"
+            f"\n{missing_region.height} census tracts are missing sampling regions.\n"
+            f"Missing counties: {missing_counties}.\n"
+            f"Missing tracts: {missing_tracts}"
         )
     logger.info("Successfully assigned sampling regions")
 
-    # Convert sampling_region_id to string to match the type in bs_df
-    df = df.with_columns(pl.col("in.sampling_region_id").cast(pl.Utf8))
 
-    return df
+def merge_geographical_data(
+    catalogue_df: pl.DataFrame, sampling_regions_df: pl.DataFrame, cec_2010_cz_lkup_df: pl.DataFrame,
+) -> pl.DataFrame:
+    """Merge catalogue with sampling region assignments, in memory.
+
+    create_allocated_weights does not use this; it streams the same assignment through
+    partition_catalogue_by_sampling_region instead. It remains for callers working with a
+    catalogue small enough to hold.
+
+    Args:
+        catalogue_df: Catalogue data with tract and county information
+        sampling_regions_df: County to sampling region mapping
+        cec_2010_cz_lkup_df: California tract to sampling region mapping via CEC climate zones
+
+    Returns:
+        Merged DataFrame with an in.sampling_region_id column assigned for all rows
+
+    Raises:
+        ValueError: If any rows are missing sampling region assignments
+    """
+
+    logger.info("Merging catalogue and sample regions data")
+    validate_sampling_region_coverage(catalogue_df.lazy(), sampling_regions_df, cec_2010_cz_lkup_df)
+
+    return assign_sampling_regions(catalogue_df.lazy(), sampling_regions_df, cec_2010_cz_lkup_df).collect()
+
+
+def _region_partition_path(region_id: str) -> str:
+    """Return the path of one region's partition, relative to the partition directory."""
+
+    return f"{SAMPLING_REGION_PARTITION}={region_id}/{SAMPLING_REGION_PARTITION}_{region_id}.parquet"
+
+
+def partition_catalogue_by_sampling_region(
+    output_dir: FsspecOutputDir,
+    catalogue_file_version: str = "v2",
+    sampling_region_version: str = "v1",
+    rewrite: bool = False,
+) -> str:
+    """Stage the catalogue as one parquet file per sampling region.
+
+    A single streaming pass, so the whole catalogue is never resident: only the morsels in
+    flight and one open writer per region are held. The result is the working set for the
+    allocation, which then reads a region at a time.
+
+    The pass is skipped when the partitions are already staged, so a rerun after a failure
+    later in the pipeline does not repeat it. Pass rewrite=True to force it, which is needed
+    if the catalogue version or the sampling region version changes.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        catalogue_file_version: Version of catalogue file to use
+        sampling_region_version: Version of sampling regions file to use
+        rewrite: Rebuild the partitions even when they are already present
+
+    Returns:
+        The path of the partition directory
+    """
+
+    partition_dir = _polars_path(output_dir, CATALOGUE_PARTITION_DIR)
+    existing = output_dir["fs"].glob(f"{partition_dir}/*/*.parquet")
+    if existing and not rewrite:
+        logger.info(f"Reusing {len(existing)} staged catalogue partitions in {partition_dir}")
+        return partition_dir
+
+    catalogue_lf = scan_catalogue(output_dir, catalogue_file_version)
+    sampling_regions_df = load_sampling_regions(output_dir, sampling_region_version)
+    cec_2010_cz_lkup_df = load_cec_climate_zones(output_dir)
+
+    # Reject a catalogue with geographies outside the lookups before spending a pass on it
+    validate_sampling_region_coverage(catalogue_lf, sampling_regions_df, cec_2010_cz_lkup_df)
+
+    logger.info(f"Staging the catalogue by sampling region to {partition_dir}")
+    tstart = datetime.datetime.now()
+    assign_sampling_regions(catalogue_lf, sampling_regions_df, cec_2010_cz_lkup_df).sink_parquet(
+        pl.PartitionBy(
+            f"{partition_dir}/",
+            key="in.sampling_region_id",
+            include_key=True,
+            file_path_provider=lambda args: _region_partition_path(args.partition_keys.row(0)[0]),
+        ),
+        compression="zstd",
+        storage_options=output_dir["storage_options"],
+        mkdir=True,
+    )
+    n_partitions = len(output_dir["fs"].glob(f"{partition_dir}/*/*.parquet"))
+    logger.info(
+        f"Staged the catalogue as {n_partitions} sampling region partitions in "
+        f"{(datetime.datetime.now() - tstart).total_seconds():.0f} seconds"
+    )
+
+    return partition_dir
+
+
+def iter_sampling_region_partitions(
+    output_dir: FsspecOutputDir, partition_dir: str
+) -> Iterator[tuple[str, pl.DataFrame]]:
+    """Yield each sampling region's catalogue rows in turn.
+
+    Only one region is held at a time, and the caller is expected to drop it before the next
+    is read. Regions are yielded in a stable order so a run's logs line up between reruns; the
+    allocation itself does not depend on the order, because each region draws off its own seed.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        partition_dir: Partition directory from partition_catalogue_by_sampling_region
+
+    Yields:
+        Tuples of (sampling region id, that region's catalogue rows)
+    """
+
+    # One directory per region, holding one or more parquet files
+    region_dirs = sorted({Path(p).parent.name for p in output_dir["fs"].glob(f"{partition_dir}/*/*.parquet")})
+    if not region_dirs:
+        raise FileNotFoundError(
+            f"No catalogue partitions found in {partition_dir}, "
+            f"call partition_catalogue_by_sampling_region() first."
+        )
+
+    for region_dir in region_dirs:
+        region_id = region_dir.split("=", 1)[1]
+        region_glob = f"{partition_dir}/{region_dir}/*.parquet"
+        # hive_partitioning is off so the region only ever arrives as the column inside the
+        # files, rather than also being parsed a second time out of the directory name
+        geo_df = pl.read_parquet(
+            region_glob, hive_partitioning=False, storage_options=output_dir["storage_options"]
+        )
+        yield region_id, geo_df
 
 
 def draw_from_pools(df: pl.DataFrame, rng: np.random.Generator) -> pl.DataFrame:
@@ -466,7 +703,10 @@ def allocate_down_the_ladder(
 
 
 def allocate_buildings_to_geography(
-    geo_df: pl.DataFrame, bs_df: pl.DataFrame, seed: int | None = DEFAULT_ALLOCATION_SEED
+    geo_df: pl.DataFrame,
+    bs_df: pl.DataFrame,
+    seed: int | Sequence[int] | None = DEFAULT_ALLOCATION_SEED,
+    log_stages: bool = True,
 ) -> tuple[pl.DataFrame, pl.DataFrame]:
     """Allocate buildings from sample to geographical units.
 
@@ -476,11 +716,19 @@ def allocate_buildings_to_geography(
     sample's vacant buildings. Rows that match no building on those keys walk the
     FALLBACK_LADDER, which releases vintage and then federal poverty level as well.
 
+    The frame passed in is held for the duration, and the join against the candidate pools
+    needs several times its size again while it runs, so callers with a national catalogue
+    should pass one sampling region at a time rather than the whole thing. See
+    CATALOGUE_PARTITION_DIR.
+
     Args:
         geo_df: Geographical data with sampling regions assigned
         bs_df: Buildstock sample data with building characteristics
         seed: Seed for the random draws so identical inputs produce identical
-            allocations. Pass None for unseeded (non-reproducible) allocation.
+            allocations. Pass None for unseeded (non-reproducible) allocation, or the
+            output of region_seed() when allocating a single sampling region.
+        log_stages: Log the fallback stage breakdown for this allocation. Callers running
+            a region at a time set this False and report the totals across regions instead.
 
     Returns:
         Tuple of (allocated_df, fkt) where:
@@ -492,16 +740,18 @@ def allocate_buildings_to_geography(
     rng = np.random.default_rng(seed)
     is_vacant = pl.col("in.vacancy_status").eq_missing("Vacant")
 
-    allocated_frames = [
-        allocate_down_the_ladder(geo_subset, bs_df, keys, rng)
-        for keys, geo_subset in [
-            (ALLOCATION_KEYS, geo_df.filter(~is_vacant)),
-            (VACANT_ALLOCATION_KEYS, geo_df.filter(is_vacant)),
-        ]
-    ]
+    # Built one at a time, and the subset dropped as soon as it has been allocated, so that
+    # only one vacancy subset of the catalogue is ever resident alongside geo_df itself
+    allocated_frames = []
+    for keys, vacancy_filter in [(ALLOCATION_KEYS, ~is_vacant), (VACANT_ALLOCATION_KEYS, is_vacant)]:
+        geo_subset = geo_df.filter(vacancy_filter)
+        allocated_frames.append(allocate_down_the_ladder(geo_subset, bs_df, keys, rng))
+        del geo_subset
 
     allocated_df = pl.concat(allocated_frames, how="vertical")
-    log_fallback_stages(allocated_df)
+    del allocated_frames
+    if log_stages:
+        log_fallback_stages(allocated_df)
 
     # Extract foreign key table with building-to-geography mappings
     fkt = allocated_df.select(
@@ -539,17 +789,70 @@ def log_fallback_stages(allocated_df: pl.DataFrame) -> None:
         logger.info(f"Fallback stage {stage}: {count} rows ({share:.4%})")
 
 
+def report_allocation_misses(
+    misses: pl.DataFrame,
+    allocated_rows: int,
+    by_stage: dict[str, int],
+    output_dir: FsspecOutputDir | None = None,
+    null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
+) -> pl.DataFrame:
+    """Report the catalogue rows the fallback ladder left without a building.
+
+    Takes the misses and the counts rather than the whole allocation, so that a run allocating
+    one sampling region at a time can hand over the misses it accumulated without ever holding
+    the full allocation. check_allocation_misses is the whole-frame form of this.
+
+    The threshold is applied to the residue left after the ladder, not to the rows that missed
+    on the full keys, so it measures the stock that genuinely has nothing to stand in for it.
+    The miss report is written before the threshold is applied so the rows are on disk to
+    inspect even when the run is rejected, each carrying the fallback_stage it reached.
+
+    Args:
+        misses: The unallocated rows, carrying a fallback_stage column
+        allocated_rows: Total rows allocated, the denominator for the miss fraction
+        by_stage: Row count per fallback stage across the whole allocation
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem, or
+            None to skip writing the miss report
+        null_building_threshold: Fraction of unallocated rows tolerated before raising
+
+    Returns:
+        The unallocated rows
+
+    Raises:
+        ValueError: If the unallocated fraction exceeds null_building_threshold
+    """
+
+    miss_fraction = misses.height / allocated_rows if allocated_rows else 0.0
+    by_status = dict(misses.group_by("in.vacancy_status").len().iter_rows())
+    logger.info(
+        f"{misses.height} of {allocated_rows} rows ({miss_fraction:.4%}) found no "
+        f"matching building after the fallback ladder. By vacancy status: {by_status}. "
+        f"Rows by stage: {by_stage}"
+    )
+
+    if output_dir is not None:
+        write_parquet_file(output_dir, misses, "allocation_miss_report.parquet")
+
+    if miss_fraction > null_building_threshold:
+        missing_regions = misses.select("in.sampling_region_id").unique()
+        raise ValueError(
+            f"\n{misses.height} rows ({miss_fraction:.4%}) found no matching building even "
+            f"after releasing vintage and federal poverty level, above the "
+            f"{null_building_threshold:.4%} threshold.\n"
+            f"By vacancy status: {by_status}.\n"
+            f"Rows by stage: {by_stage}.\n"
+            f"Affected sampling regions: {missing_regions.to_series().to_list()}"
+        )
+
+    return misses
+
+
 def check_allocation_misses(
     allocated_df: pl.DataFrame,
     output_dir: FsspecOutputDir | None = None,
     null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
 ) -> pl.DataFrame:
     """Report catalogue rows the fallback ladder still left without a building.
-
-    The threshold is applied to the residue left after the ladder, not to the rows that missed
-    on the full keys, so it measures the stock that genuinely has nothing to stand in for it.
-    The miss report is written before the threshold is applied so the rows are on disk to
-    inspect even when the run is rejected, each carrying the fallback_stage it reached.
 
     Args:
         allocated_df: Full allocation DataFrame carrying a fallback_stage column
@@ -564,31 +867,13 @@ def check_allocation_misses(
         ValueError: If the unallocated fraction exceeds null_building_threshold
     """
 
-    misses = allocated_df.filter(pl.col("bldg_id").is_null())
-    miss_fraction = misses.shape[0] / allocated_df.shape[0] if allocated_df.shape[0] else 0.0
-    by_status = dict(misses.group_by("in.vacancy_status").len().iter_rows())
-    by_stage = stage_counts(allocated_df)
-    logger.info(
-        f"{misses.shape[0]} of {allocated_df.shape[0]} rows ({miss_fraction:.4%}) found no "
-        f"matching building after the fallback ladder. By vacancy status: {by_status}. "
-        f"Rows by stage: {by_stage}"
+    return report_allocation_misses(
+        allocated_df.filter(pl.col("bldg_id").is_null()),
+        allocated_df.height,
+        stage_counts(allocated_df),
+        output_dir,
+        null_building_threshold,
     )
-
-    if output_dir is not None:
-        write_parquet_file(output_dir, misses, "allocation_miss_report.parquet")
-
-    if miss_fraction > null_building_threshold:
-        missing_regions = misses.select("in.sampling_region_id").unique()
-        raise ValueError(
-            f"\n{misses.shape[0]} rows ({miss_fraction:.4%}) found no matching building even "
-            f"after releasing vintage and federal poverty level, above the "
-            f"{null_building_threshold:.4%} threshold.\n"
-            f"By vacancy status: {by_status}.\n"
-            f"Rows by stage: {by_stage}.\n"
-            f"Affected sampling regions: {missing_regions.to_series().to_list()}"
-        )
-
-    return misses
 
 
 def write_parquet_file(output_dir: FsspecOutputDir, df: pl.DataFrame, file_name: str) -> None:
@@ -606,25 +891,65 @@ def write_parquet_file(output_dir: FsspecOutputDir, df: pl.DataFrame, file_name:
         file_path = f"s3://{file_path.as_posix()}"
 
     with output_dir["fs"].open(str(file_path), "wb") as f:
-        LazyFrame(df).sink_parquet(f)
+        df.lazy().sink_parquet(f)
 
 
-def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFrame, fkt: pl.DataFrame) -> None:
-    """Write allocation outputs to parquet files.
+def write_allocated_weights_partition(
+    output_dir: FsspecOutputDir, allocated_df: pl.DataFrame, region_id: str
+) -> None:
+    """Write one sampling region's allocation to the allocated weights cache.
 
-    Writes two files:
-        - fkt.parquet: Foreign key table mapping buildings to geography
-        - cached_allocated_weights.parquet: Full allocation data
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        allocated_df: That region's allocation, including its fallback_stage and weight columns
+        region_id: The sampling region the rows belong to
+    """
+
+    file_path = _polars_path(output_dir, ALLOCATED_WEIGHTS_DIR, _region_partition_path(region_id))
+    if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        output_dir["fs"].mkdirs(str(Path(file_path).parent), exist_ok=True)
+
+    with output_dir["fs"].open(file_path, "wb") as f:
+        allocated_df.write_parquet(f, compression="zstd")
+
+
+def write_allocated_weights(output_dir: FsspecOutputDir, allocated_df: pl.DataFrame) -> None:
+    """Write a whole allocation to the allocated weights cache, split by sampling region.
+
+    For allocations small enough to hold, such as the quota sampler's one row per simulated
+    building. create_allocated_weights writes each region as it finishes it instead.
 
     Args:
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
         allocated_df: Full allocation DataFrame
-        fkt: Foreign key table DataFrame
     """
 
-    write_parquet_file(output_dir, fkt, "fkt.parquet")
-    write_parquet_file(output_dir, allocated_df, "cached_allocated_weights.parquet")
-    logger.info("Completed creating allocated weights artifacts")
+    partitions = allocated_df.partition_by("in.sampling_region_id", as_dict=True)
+    for (region_id,), region_df in partitions.items():
+        write_allocated_weights_partition(output_dir, region_df, region_id)
+    logger.info(f"Wrote allocated weights for {len(partitions)} sampling regions")
+
+
+def write_foreign_key_table(output_dir: FsspecOutputDir) -> None:
+    """Write the building-to-geography foreign key table from the cached allocated weights.
+
+    Streamed straight from the partitioned cache rather than assembled in memory: at one row
+    per US housing unit the table is far too long to hold, and nothing needs it in memory.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+    """
+
+    logger.info(f"Writing fkt.parquet to {output_dir['fs_path']}")
+    fkt = get_cached_allocated_weights(output_dir).select(
+        [pl.col("bldg_id"), pl.col("in.nhgis_tract_gisjoin"), pl.col("in.nhgis_puma_gisjoin")]
+    )
+    fkt.sink_parquet(
+        _polars_path(output_dir, "fkt.parquet"),
+        compression="zstd",
+        storage_options=output_dir["storage_options"],
+        mkdir=True,
+    )
 
 
 def create_allocated_weights_for_quota_sampler(
@@ -663,12 +988,15 @@ def create_allocated_weights_for_quota_sampler(
             "in.vintage",
             "in.heating_fuel",
             "in.federal_poverty_level",
-            "in.state"            
+            "in.state"
         ]
     )
 
-    # Write output parquet files
-    write_parquet_outputs(output_dir, alloc_wts, alloc_wts)
+    # Write output parquet files. The quota sampler's simulation outputs carry no tract or
+    # puma gisjoin, so there is no building-to-geography mapping to write a real fkt from.
+    write_allocated_weights(output_dir, alloc_wts)
+    write_parquet_file(output_dir, alloc_wts, "fkt.parquet")
+    logger.info("Completed creating allocated weights artifacts")
 
 
 def create_allocated_weights(
@@ -684,21 +1012,31 @@ def create_allocated_weights(
 
     This is the top-level orchestration function that:
     1. Sets up the filesystem
-    2. Loads reference data (catalogue, sampling regions, climate zones)
-    3. Merges geographical data with sampling regions
-    4. Loads buildstock sample data
-    5. Allocates buildings to geographical units, walking the fallback ladder for empty shelves
-    6. Writes the miss report and checks the fraction the ladder still left unallocated
-    7. Writes output files
+    2. Stages the catalogue as one parquet partition per sampling region
+    3. Loads the allocation keys of the buildstock sample
+    4. For each sampling region, allocates its buildings to its geographical units, walking
+       the fallback ladder for empty shelves, and writes that region's weights
+    5. Writes the miss report and checks the fraction the ladder still left unallocated
+    6. Writes the foreign key table
+
+    The catalogue is never held whole. Peak memory is set by the largest single sampling
+    region, so it does not grow with the size of the country covered; see
+    CATALOGUE_PARTITION_DIR for why splitting the work this way is exact.
+
+    Because each region's weights are written as that region finishes, a run rejected by
+    null_building_threshold leaves a complete allocation on disk alongside the miss report
+    that explains why it was rejected. The rejection is still raised, so nothing downstream
+    consumes it by accident.
 
     Args:
         simulation_outputs_file: Path to the simulation outputs Parquet file
         output_dir: Path to write output parquet files (local or S3)
         aws_profile_name: Optional AWS profile name for S3 access
-        catalogue_file_version: Version of catalogue file to use (default 'v0')
+        catalogue_file_version: Version of catalogue file to use (default 'v2')
         sampling_region_version: Version of sampling regions file to use (default 'v1')
         seed: Seed for the random building-to-geography allocation so identical
-            inputs produce identical publications. Pass None for unseeded allocation.
+            inputs produce identical publications. Each region draws off a seed derived
+            from this one, see region_seed(). Pass None for unseeded allocation.
         null_building_threshold: Fraction of unallocated rows tolerated before raising
     """
 
@@ -706,43 +1044,100 @@ def create_allocated_weights(
     logger.debug(f"Setting up filesystem for output directory: {output_dir}")
     output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
 
-    # Load reference data files
-    catalogue_df = load_catalogue_file(output_dir, catalogue_file_version)
-    sampling_regions_df = load_sampling_regions(output_dir, sampling_region_version)
-    cec_2010_cz_lkup_df = load_cec_climate_zones(output_dir)
-
-    # Merge geographical data with sampling region assignments
-    geo_df = merge_geographical_data(
-        catalogue_df, sampling_regions_df, cec_2010_cz_lkup_df
+    # Stage the catalogue as one partition per sampling region, so the allocation can run a
+    # region at a time. Reused if a previous run already staged it.
+    partition_dir = partition_catalogue_by_sampling_region(
+        output_dir, catalogue_file_version, sampling_region_version
     )
 
-    # Load simulation outputs
-    logger.info(f"Reading simulation outputs from {simulation_outputs_file}")
-    sim_outs = pl.read_parquet(simulation_outputs_file)
+    # Load the simulation outputs' allocation keys. Only these columns take part in the
+    # allocation, and the full table runs to well over a thousand columns of results.
+    logger.info(f"Reading allocation keys from {simulation_outputs_file}")
+    bs_df = pl.read_parquet(
+        simulation_outputs_file,
+        columns=ALLOCATION_KEYS + ["bldg_id"],
+        storage_options=output_dir["storage_options"],
+    )
 
-    # Allocate buildings to geographical units
-    allocated_df, fkt = allocate_buildings_to_geography(geo_df, sim_outs, seed=seed)
+    # Allocate one sampling region at a time, keeping only the misses and the counts
+    logger.info(f"Allocating buildings to geographical units by sampling region (seed={seed})")
+    tstart = datetime.datetime.now()
+    miss_frames = []
+    allocated_rows = 0
+    by_stage = dict.fromkeys(FALLBACK_STAGES, 0)
+    for region_id, region_partition in iter_sampling_region_partitions(output_dir, partition_dir):
+        # Align vacant row join keys with how the buildstock sample labels vacant buildings
+        geo_df = coerce_vacant_join_keys(region_partition)
+        del region_partition
 
-    # Surface catalogue rows that matched no building before writing the allocation itself
-    check_allocation_misses(allocated_df, output_dir, null_building_threshold)
+        # Only this region's buildings can be drawn, so the pools are built from them alone
+        bs_region_df = bs_df.filter(pl.col("in.sampling_region_id") == region_id)
+        allocated_df, _ = allocate_buildings_to_geography(
+            geo_df, bs_region_df, seed=region_seed(seed, region_id), log_stages=False
+        )
+        del geo_df, bs_region_df
 
-    # Add weight column (each row represents one housing unit)
-    allocated_df = allocated_df.with_columns(pl.lit(1).alias("weight"))
+        # Accumulate what the miss report needs, which is far smaller than the allocation
+        allocated_rows += allocated_df.height
+        for stage, count in stage_counts(allocated_df).items():
+            by_stage[stage] += count
+        miss_frames.append(allocated_df.filter(pl.col("bldg_id").is_null()))
 
-    # Write output parquet files
-    write_parquet_outputs(output_dir, allocated_df, fkt)
+        # Add weight column (each row represents one housing unit) and write this region out
+        allocated_df = allocated_df.with_columns(pl.lit(1).alias("weight"))
+        write_allocated_weights_partition(output_dir, allocated_df, region_id)
+        logger.info(f"Allocated sampling region {region_id}: {allocated_df.height:,} rows")
+        del allocated_df
+
+    logger.info(
+        f"Allocated {allocated_rows:,} rows in "
+        f"{(datetime.datetime.now() - tstart).total_seconds():.0f} seconds"
+    )
+
+    # Report the ladder rungs across all regions, the same breakdown log_fallback_stages
+    # gives for an allocation done in one piece. Stages no row reached are omitted.
+    reached = {stage: count for stage, count in by_stage.items() if count}
+    for stage, count in reached.items():
+        share = count / allocated_rows if allocated_rows else 0.0
+        logger.info(f"Fallback stage {stage}: {count} rows ({share:.4%})")
+
+    # Surface catalogue rows that matched no building. Raises if too many did.
+    report_allocation_misses(
+        pl.concat(miss_frames, how="vertical"),
+        allocated_rows,
+        reached,
+        output_dir,
+        null_building_threshold,
+    )
+
+    # Write the building-to-geography foreign key table
+    write_foreign_key_table(output_dir)
+    logger.info("Completed creating allocated weights artifacts")
 
 
 def get_cached_allocated_weights(output_dir) -> pl.LazyFrame:
+    """Scan the allocated weights cache, which holds one parquet partition per sampling region.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+
+    Returns:
+        LazyFrame over the whole allocation, one row per housing unit in the catalogue
+    """
 
     # Read the cached allocated weights
-    cached_wts_path = f"{output_dir['fs_path']}/cached_allocated_weights.parquet"
-    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
-        cached_wts_path = f"s3://{Path(cached_wts_path).as_posix()}"
-    if not output_dir["fs"].exists(cached_wts_path):
+    cached_wts_dir = _polars_path(output_dir, ALLOCATED_WEIGHTS_DIR)
+    if not output_dir["fs"].glob(f"{cached_wts_dir}/*/*.parquet"):
         raise FileNotFoundError(
-        f"Cannot load allocated weights from {cached_wts_path}, call create_allocated_weights() first.")
-    alloc_weights = pl.scan_parquet(cached_wts_path, storage_options=output_dir["storage_options"])
+            f"Cannot load allocated weights from {cached_wts_dir}, call create_allocated_weights() first."
+        )
+    # hive_partitioning is off so the region only ever arrives as the column inside the files,
+    # rather than also being parsed a second time out of the directory name
+    alloc_weights = pl.scan_parquet(
+        f"{cached_wts_dir}/*/*.parquet",
+        hive_partitioning=False,
+        storage_options=output_dir["storage_options"],
+    )
 
     return alloc_weights
 
@@ -775,18 +1170,18 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
     # Read the cached simulation results
     sim_outs = get_cached_simulation_outputs_for_upgrade(output_dir, upgrade_id)
 
-    # Read the cached allocated weights
+    # Read the cached allocated weights. Kept lazy: at one row per housing unit this is
+    # around 18 GB in memory, and the only thing done to it here is a repartition by state.
+    # The upgrade id is not added as a column, it is read back off the upgrade= directory.
     alloc_wts = get_cached_allocated_weights(output_dir)
 
-    # Add the upgrade ID to the allocated weights
-    alloc_wts = alloc_wts.with_columns([
-            pl.lit(upgrade_id).cast(pl.Int64).alias("upgrade")
-        ])
-
     # Where the results will be cached
-    alloc_wts_bills_dir = f'{output_dir["fs_path"]}/cached_allocated_weights_plus_bills/upgrade={upgrade_id}'
+    alloc_wts_bills_dir = _polars_path(
+        output_dir, f"cached_allocated_weights_plus_bills/upgrade={upgrade_id}"
+    )
     logger.info(f"Creating allocated weights plus bills for upgrade {upgrade_id}")
-    
+
+
     logger.warning("TODO Calculate the bills once the per-state bill columns are availble")
     # # Unpivot the utility bill columns so that each row corresponds to a single utility bill/state pair
     # sim_outs = sim_outs.unpivot(
@@ -822,27 +1217,35 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
     #     ]
     # )
 
-    # Write to parquet file, hive partition on upgrade to make later processing faster
-    if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
-        output_dir["fs"].mkdirs(alloc_wts_bills_dir, exist_ok=True)
-    collect_tstart = datetime.datetime.now()
-    alloc_wts = alloc_wts.collect()
-    collect_tend = datetime.datetime.now()
-    elapsed_time = (collect_tend - collect_tstart).total_seconds()
-    logger.info(f"Collect time for upgrade {upgrade_id}: {elapsed_time} seconds")
-    alloc_wts = alloc_wts.drop("upgrade")  # upgrade column will be read from hive partition dir name
+    # Write to parquet, hive partitioned on upgrade and state to make later processing faster.
+    # Streamed rather than collected and grouped: collecting would hold the whole allocation
+    # and grouping it would hold a second copy of it alongside, for what is a repartition.
+    # The upgrade and state columns are recovered from the directory names on read.
     logger.info(f"Caching allocated weights plus bills for upgrade {upgrade_id} to: {alloc_wts_bills_dir}")
-    # Cache by state to enable faster reading
-    for state_abbv_tuple, state_alloc_wts in alloc_wts.group_by("in.state"):
-        state_abbv = state_abbv_tuple[0]
-        cached_file_name = f"cached_allocated_weights_plus_bills_upgrade{upgrade_id}_{state_abbv}.parquet"
-        logger.info(f"Caching {cached_file_name}")
-        alloc_wts_bills_state_dir = f"{alloc_wts_bills_dir}/state={state_abbv}"
-        if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
-            output_dir["fs"].mkdirs(alloc_wts_bills_state_dir, exist_ok=True)
-        cached_file_path = f"{alloc_wts_bills_state_dir}/{cached_file_name}"
-        with output_dir["fs"].open(cached_file_path, "wb") as f:
-            state_alloc_wts.write_parquet(f)
+    tstart = datetime.datetime.now()
+
+    def state_file_path(args) -> str:
+        state_abbv = args.partition_keys.row(0)[0]
+        return (
+            f"state={state_abbv}/"
+            f"cached_allocated_weights_plus_bills_upgrade{upgrade_id}_{state_abbv}.parquet"
+        )
+
+    alloc_wts.sink_parquet(
+        pl.PartitionBy(
+            f"{alloc_wts_bills_dir}/",
+            key="in.state",
+            include_key=True,
+            file_path_provider=state_file_path,
+        ),
+        compression="zstd",
+        storage_options=output_dir["storage_options"],
+        mkdir=True,
+    )
+    logger.info(
+        f"Cached allocated weights plus bills for upgrade {upgrade_id} in "
+        f"{(datetime.datetime.now() - tstart).total_seconds():.0f} seconds"
+    )
 
 
 def get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id) -> pl.LazyFrame:
