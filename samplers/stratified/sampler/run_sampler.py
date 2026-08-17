@@ -159,15 +159,27 @@ def take_samples_per_segment(df: pl.DataFrame, segment_cols: list[str], num_samp
         Frame holding min(num_samples_per_segment, segment size) rows per segment
     """
 
-    rng = np.random.default_rng(random_seed)
-    return (
-        df.with_columns(pl.Series("_take_draw", rng.random(df.height), dtype=pl.Float64))
-        .sort("_take_draw")
-        .group_by(segment_cols, maintain_order=True)
-        .head(num_samples_per_segment)
-        .drop("_take_draw")
+    # rng = np.random.default_rng(random_seed)
+    # return (
+        # df.with_columns(pl.Series("_take_draw", rng.random(df.height), dtype=pl.Float64))
+        # .sort("_take_draw")
+        # .group_by(segment_cols, maintain_order=True)
+        # .head(num_samples_per_segment)
+        # .drop("_take_draw")
+    # )
+
+    df_pd = df.to_pandas()
+
+    # Use apply with a lambda function to dynamically match the minimum threshold
+    sampled_pd = (
+        df_pd.groupby(segment_cols, group_keys=False)
+        .apply(lambda x: x.sample(n=min(len(x), num_samples_per_segment), random_state=random_seed))
     )
 
+    # Restore the original row sequence layout
+    sampled_pd = sampled_pd.sort_index()
+
+    return pl.from_pandas(sampled_pd)
 
 @click.group()
 def cli():
