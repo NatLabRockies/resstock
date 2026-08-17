@@ -1,195 +1,195 @@
 upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
-1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,1,"HVAC Heating Efficiency|Fuel Furnace, 95% AFUE",196270,57.8
-1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,2,HVAC Heating Type And Fuel|Natural Gas Fuel Furnace,119496,35.2
-1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,3,Heating Fuel|Natural Gas,116060,34.2
-1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,4,HVAC Secondary Heating Efficiency|None,14,0.0
-1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,-1,All,196270,57.8
-2,Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE,1,"HVAC Heating Efficiency|Fuel Furnace, 95% AFUE",27007,8.0
-2,Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE,2,"HVAC Heating Efficiency|Fuel Furnace, 88% AFUE",9786,2.9
-2,Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE,-1,All,36793,10.8
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,1,"HVAC Heating Efficiency|Electric Furnace, 100% AFUE",28983,8.5
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,2,"HVAC Heating Efficiency|Electric Boiler, 100% AFUE",211,0.1
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,3,"HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency",6060,1.8
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,4,"HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE",1171,0.3
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,5,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE",1519,0.4
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,6,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE",3169,0.9
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,7,"HVAC Heating Efficiency|Fuel Boiler, 80% AFUE",2119,0.6
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,8,"HVAC Heating Efficiency|Fuel Boiler, 83% AFUE",793,0.2
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,9,"HVAC Heating Efficiency|Fuel Boiler, 90% AFUE",670,0.2
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,10,"HVAC Heating Efficiency|Fuel Furnace, 80% AFUE",65647,19.3
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,11,"HVAC Heating Efficiency|Fuel Furnace, 83% AFUE",9786,2.9
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,12,"HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE",39437,11.6
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,13,"HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.4 HSPF2",36704,10.8
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,14,HVAC Cooling Efficiency|Ducted Heat Pump,36704,10.8
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,15,"HVAC Cooling Efficiency|AC, SEER2 14.3",54255,16.0
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,16,"HVAC Cooling Efficiency|AC, SEER2 13.4",41388,12.2
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,17,"HVAC Cooling Efficiency|AC, SEER2 14.3",32687,9.6
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,18,"HVAC Cooling Efficiency|Room AC, CEER 11.0",12186,3.6
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,-1,All,200131,58.9
-4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,1,"HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate",200132,58.9
-4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,200132,58.9
-4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,3,HVAC Cooling Efficiency|Ducted Heat Pump,200132,58.9
-4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,4,HVAC Cooling Partial Space Conditioning|100% Conditioned,200132,58.9
-4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,5,Heating Fuel|Electricity,125471,36.9
-4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,6,HVAC Heating Type And Fuel|Electricity ASHP,163428,48.1
-4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,7,HVAC Secondary Heating Efficiency|None,14,0.0
-4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,-1,All,200132,58.9
-5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",1,"HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate, Sizing is Duct Limited",200132,58.9
-5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,200132,58.9
-5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",3,HVAC Cooling Efficiency|Ducted Heat Pump,200132,58.9
-5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",4,HVAC Cooling Partial Space Conditioning|100% Conditioned,200132,58.9
-5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",5,Heating Fuel|Electricity,125471,36.9
-5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",6,HVAC Heating Type And Fuel|Electricity ASHP,163428,48.1
-5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",7,HVAC Secondary Heating Efficiency|None,14,0.0
-5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",-1,All,200132,58.9
-6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",1,"HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate, Use Existing System as Backup",200132,58.9
-6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,200132,58.9
-6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",3,HVAC Cooling Efficiency|Ducted Heat Pump,200132,58.9
-6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",4,HVAC Cooling Partial Space Conditioning|100% Conditioned,200132,58.9
-6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",5,Heating Fuel|Electricity,125471,36.9
-6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",6,HVAC Heating Type And Fuel|Electricity ASHP,163428,48.1
-6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",7,HVAC Secondary Heating Efficiency|None,14,0.0
-6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",-1,All,200132,58.9
-7,Dual Fuel Heat Pump System,1,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15, 7.6 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover",35124,10.3
-7,Dual Fuel Heat Pump System,2,HVAC Cooling Efficiency|Ducted Heat Pump,35124,10.3
-7,Dual Fuel Heat Pump System,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,35124,10.3
-7,Dual Fuel Heat Pump System,4,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15, 7.6 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover",67471,19.9
-7,Dual Fuel Heat Pump System,5,HVAC Cooling Efficiency|Ducted Heat Pump,67471,19.9
-7,Dual Fuel Heat Pump System,6,HVAC Cooling Partial Space Conditioning|100% Conditioned,67471,19.9
-7,Dual Fuel Heat Pump System,7,HVAC Secondary Heating Efficiency|None,14,0.0
-7,Dual Fuel Heat Pump System,-1,All,102600,30.2
-8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8",179275,52.8
-8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,179275,52.8
-8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,186742,55.0
-8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,4,HVAC Secondary Heating Efficiency|None,14,0.0
-8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,186742,55.0
-9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",179275,52.8
-9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,179275,52.8
-9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,186742,55.0
-9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,4,HVAC Secondary Heating Efficiency|None,14,0.0
-9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,186742,55.0
-10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4",179275,52.8
-10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,179275,52.8
-10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,186742,55.0
-10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,4,HVAC Secondary Heating Efficiency|None,14,0.0
-10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,186742,55.0
-11,Heat Pump Water Heater,1,Water Heater Fuel|Electricity,160526,47.3
-11,Heat Pump Water Heater,2,"Water Heater Efficiency|Electric Heat Pump, 3.75 UEF",156437,46.1
-11,Heat Pump Water Heater,3,"Water Heater Efficiency|Electric Heat Pump, 4.0 UEF",113144,33.3
-11,Heat Pump Water Heater,4,"Water Heater Efficiency|Electric Heat Pump, 4.0 UEF",67293,19.8
-11,Heat Pump Water Heater,-1,All,336874,99.2
-12,High Efficiency Natural Gas Tankless Water Heater,1,Water Heater Fuel|Natural Gas,47379,13.9
-12,High Efficiency Natural Gas Tankless Water Heater,2,"Water Heater Efficiency|High Efficiency Natural Gas Tankless, Condensing",161074,47.4
-12,High Efficiency Natural Gas Tankless Water Heater,-1,All,161074,47.4
-13,Air Sealing,1,Infiltration|5 ACH50,314311,92.5
-13,Air Sealing,-1,All,314311,92.5
-14,Attic Floor Insulation for Unfinished Attics,1,Insulation Ceiling|R-49,2088,0.6
-14,Attic Floor Insulation for Unfinished Attics,2,Insulation Ceiling|R-60,96258,28.3
-14,Attic Floor Insulation for Unfinished Attics,-1,All,98346,29.0
-15,Duct Sealing and Insulation,1,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",10052,3.0
-15,Duct Sealing and Insulation,2,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",13511,4.0
-15,Duct Sealing and Insulation,3,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",78539,23.1
-15,Duct Sealing and Insulation,-1,All,102102,30.1
-16,Drill and Fill Wall Insulation with Air Sealing,1,"Insulation Wall|Wood Stud, R-13",107441,31.6
-16,Drill and Fill Wall Insulation with Air Sealing,2,Infiltration|5 ACH50,314311,92.5
-16,Drill and Fill Wall Insulation with Air Sealing,-1,All,316000,93.0
-17,"Air Sealing, Attic Floor Insulation, and Duct sealing",1,Infiltration|5 ACH50,314311,92.5
-17,"Air Sealing, Attic Floor Insulation, and Duct sealing",2,Insulation Ceiling|R-49,2088,0.6
-17,"Air Sealing, Attic Floor Insulation, and Duct sealing",3,Insulation Ceiling|R-60,96258,28.3
-17,"Air Sealing, Attic Floor Insulation, and Duct sealing",4,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",10052,3.0
-17,"Air Sealing, Attic Floor Insulation, and Duct sealing",5,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",13511,4.0
-17,"Air Sealing, Attic Floor Insulation, and Duct sealing",6,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",78539,23.1
-17,"Air Sealing, Attic Floor Insulation, and Duct sealing",-1,All,327476,96.4
-18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",1,Infiltration|5 ACH50,314311,92.5
-18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",2,Insulation Ceiling|R-49,2088,0.6
-18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",3,Insulation Ceiling|R-60,96258,28.3
-18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",4,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",10052,3.0
-18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",5,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",13511,4.0
-18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",6,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",78539,23.1
-18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",7,"Insulation Wall|Wood Stud, R-13",107441,31.6
-18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",-1,All,328233,96.6
-19,ENERGY STAR Windows,1,"Windows|EnergyStar, Northern",133257,39.2
-19,ENERGY STAR Windows,2,"Windows|EnergyStar, North-Central",79899,23.5
-19,ENERGY STAR Windows,3,"Windows|EnergyStar, South-Central",91587,27.0
-19,ENERGY STAR Windows,4,"Windows|EnergyStar, Southern",34157,10.1
-19,ENERGY STAR Windows,5,Infiltration Reduction|30%,123094,36.2
-19,ENERGY STAR Windows,6,Infiltration Reduction|13%,216548,63.8
+1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,1,"HVAC Heating Efficiency|Fuel Furnace, 95% AFUE",224678,66.2
+1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,2,HVAC Heating Type And Fuel|Natural Gas Fuel Furnace,123543,36.4
+1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,3,Heating Fuel|Natural Gas,118761,35.0
+1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,4,HVAC Secondary Heating Efficiency|None,17,0.0
+1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,-1,All,224678,66.2
+2,Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE,1,"HVAC Heating Efficiency|Fuel Furnace, 95% AFUE",15472,4.6
+2,Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE,2,"HVAC Heating Efficiency|Fuel Furnace, 88% AFUE",8191,2.4
+2,Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE,-1,All,23663,7.0
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,1,"HVAC Heating Efficiency|Electric Furnace, 100% AFUE",35162,10.4
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,2,"HVAC Heating Efficiency|Electric Boiler, 100% AFUE",233,0.1
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,3,"HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency",7114,2.1
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,4,"HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE",1187,0.3
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,5,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE",1279,0.4
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,6,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE",2927,0.9
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,7,"HVAC Heating Efficiency|Fuel Boiler, 80% AFUE",2376,0.7
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,8,"HVAC Heating Efficiency|Fuel Boiler, 83% AFUE",755,0.2
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,9,"HVAC Heating Efficiency|Fuel Boiler, 90% AFUE",506,0.1
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,10,"HVAC Heating Efficiency|Fuel Furnace, 80% AFUE",72989,21.5
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,11,"HVAC Heating Efficiency|Fuel Furnace, 83% AFUE",8191,2.4
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,12,"HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE",44696,13.2
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,13,"HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.4 HSPF2",47263,13.9
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,14,HVAC Cooling Efficiency|Ducted Heat Pump,47263,13.9
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,15,"HVAC Cooling Efficiency|AC, SEER2 14.3",57544,16.9
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,16,"HVAC Cooling Efficiency|AC, SEER2 13.4",48208,14.2
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,17,"HVAC Cooling Efficiency|AC, SEER2 14.3",35205,10.4
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,18,"HVAC Cooling Efficiency|Room AC, CEER 11.0",14065,4.1
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,-1,All,229057,67.4
+4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,1,"HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate",229057,67.4
+4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,229057,67.4
+4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,3,HVAC Cooling Efficiency|Ducted Heat Pump,229057,67.4
+4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,4,HVAC Cooling Partial Space Conditioning|100% Conditioned,229057,67.4
+4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,5,Heating Fuel|Electricity,136145,40.1
+4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,6,HVAC Heating Type And Fuel|Electricity ASHP,181794,53.5
+4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,7,HVAC Secondary Heating Efficiency|None,19,0.0
+4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,-1,All,229059,67.4
+5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",1,"HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate, Sizing is Duct Limited",229057,67.4
+5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,229057,67.4
+5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",3,HVAC Cooling Efficiency|Ducted Heat Pump,229057,67.4
+5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",4,HVAC Cooling Partial Space Conditioning|100% Conditioned,229057,67.4
+5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",5,Heating Fuel|Electricity,136145,40.1
+5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",6,HVAC Heating Type And Fuel|Electricity ASHP,181794,53.5
+5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",7,HVAC Secondary Heating Efficiency|None,19,0.0
+5,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited",-1,All,229059,67.4
+6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",1,"HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate, Use Existing System as Backup",229057,67.4
+6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,229057,67.4
+6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",3,HVAC Cooling Efficiency|Ducted Heat Pump,229057,67.4
+6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",4,HVAC Cooling Partial Space Conditioning|100% Conditioned,229057,67.4
+6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",5,Heating Fuel|Electricity,136145,40.1
+6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",6,HVAC Heating Type And Fuel|Electricity ASHP,181794,53.5
+6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",7,HVAC Secondary Heating Efficiency|None,19,0.0
+6,"Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing",-1,All,229059,67.4
+7,Dual Fuel Heat Pump System,1,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15, 7.6 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover",49689,14.6
+7,Dual Fuel Heat Pump System,2,HVAC Cooling Efficiency|Ducted Heat Pump,49689,14.6
+7,Dual Fuel Heat Pump System,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,49689,14.6
+7,Dual Fuel Heat Pump System,4,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15, 7.6 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover",78845,23.2
+7,Dual Fuel Heat Pump System,5,HVAC Cooling Efficiency|Ducted Heat Pump,78845,23.2
+7,Dual Fuel Heat Pump System,6,HVAC Cooling Partial Space Conditioning|100% Conditioned,78845,23.2
+7,Dual Fuel Heat Pump System,7,HVAC Secondary Heating Efficiency|None,19,0.0
+7,Dual Fuel Heat Pump System,-1,All,128543,37.8
+8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8",204894,60.3
+8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,204894,60.3
+8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,212471,62.6
+8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,4,HVAC Secondary Heating Efficiency|None,18,0.0
+8,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,212471,62.6
+9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",204894,60.3
+9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,204894,60.3
+9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,212471,62.6
+9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,4,HVAC Secondary Heating Efficiency|None,18,0.0
+9,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,212471,62.6
+10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4",204894,60.3
+10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,204894,60.3
+10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,212471,62.6
+10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,4,HVAC Secondary Heating Efficiency|None,18,0.0
+10,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,212471,62.6
+11,Heat Pump Water Heater,1,Water Heater Fuel|Electricity,170654,50.2
+11,Heat Pump Water Heater,2,"Water Heater Efficiency|Electric Heat Pump, 3.75 UEF",156378,46.0
+11,Heat Pump Water Heater,3,"Water Heater Efficiency|Electric Heat Pump, 4.0 UEF",113617,33.5
+11,Heat Pump Water Heater,4,"Water Heater Efficiency|Electric Heat Pump, 4.0 UEF",67279,19.8
+11,Heat Pump Water Heater,-1,All,337274,99.3
+12,High Efficiency Natural Gas Tankless Water Heater,1,Water Heater Fuel|Natural Gas,45197,13.3
+12,High Efficiency Natural Gas Tankless Water Heater,2,"Water Heater Efficiency|High Efficiency Natural Gas Tankless, Condensing",179404,52.8
+12,High Efficiency Natural Gas Tankless Water Heater,-1,All,179404,52.8
+13,Air Sealing,1,Infiltration|5 ACH50,315982,93.0
+13,Air Sealing,-1,All,315982,93.0
+14,Attic Floor Insulation for Unfinished Attics,1,Insulation Ceiling|R-49,2171,0.6
+14,Attic Floor Insulation for Unfinished Attics,2,Insulation Ceiling|R-60,96315,28.4
+14,Attic Floor Insulation for Unfinished Attics,-1,All,98486,29.0
+15,Duct Sealing and Insulation,1,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",13038,3.8
+15,Duct Sealing and Insulation,2,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",10433,3.1
+15,Duct Sealing and Insulation,3,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",89144,26.2
+15,Duct Sealing and Insulation,-1,All,112615,33.2
+16,Drill and Fill Wall Insulation with Air Sealing,1,"Insulation Wall|Wood Stud, R-13",102848,30.3
+16,Drill and Fill Wall Insulation with Air Sealing,2,Infiltration|5 ACH50,315982,93.0
+16,Drill and Fill Wall Insulation with Air Sealing,-1,All,318095,93.7
+17,"Air Sealing, Attic Floor Insulation, and Duct sealing",1,Infiltration|5 ACH50,315982,93.0
+17,"Air Sealing, Attic Floor Insulation, and Duct sealing",2,Insulation Ceiling|R-49,2171,0.6
+17,"Air Sealing, Attic Floor Insulation, and Duct sealing",3,Insulation Ceiling|R-60,96315,28.4
+17,"Air Sealing, Attic Floor Insulation, and Duct sealing",4,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",13038,3.8
+17,"Air Sealing, Attic Floor Insulation, and Duct sealing",5,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",10433,3.1
+17,"Air Sealing, Attic Floor Insulation, and Duct sealing",6,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",89144,26.2
+17,"Air Sealing, Attic Floor Insulation, and Duct sealing",-1,All,328242,96.6
+18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",1,Infiltration|5 ACH50,315982,93.0
+18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",2,Insulation Ceiling|R-49,2171,0.6
+18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",3,Insulation Ceiling|R-60,96315,28.4
+18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",4,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",13038,3.8
+18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",5,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",10433,3.1
+18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",6,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",89144,26.2
+18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",7,"Insulation Wall|Wood Stud, R-13",102848,30.3
+18,"Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation",-1,All,329045,96.9
+19,ENERGY STAR Windows,1,"Windows|EnergyStar, Northern",133313,39.3
+19,ENERGY STAR Windows,2,"Windows|EnergyStar, North-Central",79814,23.5
+19,ENERGY STAR Windows,3,"Windows|EnergyStar, South-Central",91629,27.0
+19,ENERGY STAR Windows,4,"Windows|EnergyStar, Southern",34133,10.0
+19,ENERGY STAR Windows,5,Infiltration Reduction|30%,122830,36.2
+19,ENERGY STAR Windows,6,Infiltration Reduction|13%,216812,63.8
 19,ENERGY STAR Windows,-1,All,339642,100.0
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",179275,52.8
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",2,HVAC Cooling Efficiency|Ducted Heat Pump,179275,52.8
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",3,HVAC Cooling Partial Space Conditioning|100% Conditioned,186742,55.0
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",4,HVAC Secondary Heating Efficiency|None,14,0.0
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",5,Infiltration|5 ACH50,171315,50.4
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",6,Insulation Ceiling|R-49,1027,0.3
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",7,Insulation Ceiling|R-60,61795,18.2
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",8,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",7944,2.3
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",9,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",10995,3.2
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",10,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",65730,19.4
-20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",-1,All,186742,55.0
-21,Electric Vehicle Adoption with Level 1 Charging,1,Electric Vehicle Ownership|Yes,285585,84.1
-21,Electric Vehicle Adoption with Level 1 Charging,2,Electric Vehicle Charger|Level 1 charger,285585,84.1
-21,Electric Vehicle Adoption with Level 1 Charging,-1,All,285585,84.1
-22,Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,288779,85.0
-22,Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,288779,85.0
-22,Electric Vehicle Adoption with Level 2 Charging,-1,All,288779,85.0
-23,Efficient Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,288779,85.0
-23,Efficient Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,288779,85.0
-23,Efficient Electric Vehicle Adoption with Level 2 Charging,3,Electric Vehicle Efficiency Increase|15%,288779,85.0
-23,Efficient Electric Vehicle Adoption with Level 2 Charging,-1,All,288779,85.0
-24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,288779,85.0
-24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,288779,85.0
-24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Demand Flexibility Electric Vehicle|Enabled,288779,85.0
-24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Random Shift|30 minutes,288779,85.0
-24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,288779,85.0
-25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,288779,85.0
-25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,288779,85.0
-25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Electric Vehicle Efficiency Increase|15%,288779,85.0
-25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Electric Vehicle|Enabled,288779,85.0
-25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,5,Demand Flexibility Random Shift|30 minutes,288779,85.0
-25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,288779,85.0
-26,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset",334466,98.5
-26,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",2,Demand Flexibility Random Shift|30 minutes,334466,98.5
-26,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",-1,All,334466,98.5
-27,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",334466,98.5
-27,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,334466,98.5
-27,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",-1,All,334466,98.5
-28,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset",334466,98.5
-28,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",2,Demand Flexibility Random Shift|30 minutes,334466,98.5
-28,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",-1,All,334466,98.5
-29,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",334466,98.5
-29,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,334466,98.5
-29,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",-1,All,334466,98.5
-30,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",334466,98.5
-30,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,334466,98.5
-30,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",-1,All,334466,98.5
-31,General Air Sealing,1,Infiltration Reduction|25%,262785,77.4
-31,General Air Sealing,-1,All,262785,77.4
-32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",1,Infiltration Reduction|25%,262785,77.4
-32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",2,Insulation Ceiling|R-49,2088,0.6
-32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",3,Insulation Ceiling|R-60,96258,28.3
-32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",4,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",10052,3.0
-32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",5,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",13511,4.0
-32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",6,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",78539,23.1
-32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",-1,All,298114,87.8
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",179275,52.8
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",2,HVAC Cooling Efficiency|Ducted Heat Pump,179275,52.8
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",3,HVAC Cooling Partial Space Conditioning|100% Conditioned,186742,55.0
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",4,HVAC Secondary Heating Efficiency|None,14,0.0
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",5,Infiltration Reduction|25%,141007,41.5
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",6,Insulation Ceiling|R-49,1027,0.3
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",7,Insulation Ceiling|R-60,61795,18.2
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",8,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",7944,2.3
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",9,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",10995,3.2
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",10,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",65730,19.4
-33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",-1,All,186742,55.0
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",1,"HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4",179275,52.8
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",2,HVAC Cooling Efficiency|Ducted Heat Pump,179275,52.8
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",3,HVAC Cooling Partial Space Conditioning|100% Conditioned,186742,55.0
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",4,HVAC Secondary Heating Efficiency|None,14,0.0
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",5,Infiltration Reduction|25%,141007,41.5
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",6,Insulation Ceiling|R-49,1027,0.3
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",7,Insulation Ceiling|R-60,61795,18.2
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",8,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",7944,2.3
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",9,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",10995,3.2
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",10,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",65730,19.4
-34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",-1,All,186742,55.0
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",204894,60.3
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",2,HVAC Cooling Efficiency|Ducted Heat Pump,204894,60.3
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",3,HVAC Cooling Partial Space Conditioning|100% Conditioned,212471,62.6
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",4,HVAC Secondary Heating Efficiency|None,18,0.0
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",5,Infiltration|5 ACH50,196742,57.9
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",6,Insulation Ceiling|R-49,1228,0.4
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",7,Insulation Ceiling|R-60,73431,21.6
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",8,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",11397,3.4
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",9,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",9387,2.8
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",10,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",79276,23.3
+20,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing",-1,All,212471,62.6
+21,Electric Vehicle Adoption with Level 1 Charging,1,Electric Vehicle Ownership|Yes,285611,84.1
+21,Electric Vehicle Adoption with Level 1 Charging,2,Electric Vehicle Charger|Level 1 charger,285611,84.1
+21,Electric Vehicle Adoption with Level 1 Charging,-1,All,285611,84.1
+22,Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,288800,85.0
+22,Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,288800,85.0
+22,Electric Vehicle Adoption with Level 2 Charging,-1,All,288800,85.0
+23,Efficient Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,288800,85.0
+23,Efficient Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,288800,85.0
+23,Efficient Electric Vehicle Adoption with Level 2 Charging,3,Electric Vehicle Efficiency Increase|15%,288800,85.0
+23,Efficient Electric Vehicle Adoption with Level 2 Charging,-1,All,288800,85.0
+24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,288800,85.0
+24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,288800,85.0
+24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Demand Flexibility Electric Vehicle|Enabled,288800,85.0
+24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Random Shift|30 minutes,288800,85.0
+24,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,288800,85.0
+25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,288800,85.0
+25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,288800,85.0
+25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Electric Vehicle Efficiency Increase|15%,288800,85.0
+25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Electric Vehicle|Enabled,288800,85.0
+25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,5,Demand Flexibility Random Shift|30 minutes,288800,85.0
+25,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,288800,85.0
+26,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset",337055,99.2
+26,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",2,Demand Flexibility Random Shift|30 minutes,337055,99.2
+26,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",-1,All,337055,99.2
+27,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",337055,99.2
+27,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,337055,99.2
+27,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",-1,All,337055,99.2
+28,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset",337055,99.2
+28,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",2,Demand Flexibility Random Shift|30 minutes,337055,99.2
+28,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",-1,All,337055,99.2
+29,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",337055,99.2
+29,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,337055,99.2
+29,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",-1,All,337055,99.2
+30,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",337055,99.2
+30,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,337055,99.2
+30,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",-1,All,337055,99.2
+31,General Air Sealing,1,Infiltration Reduction|25%,263918,77.7
+31,General Air Sealing,-1,All,263918,77.7
+32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",1,Infiltration Reduction|25%,263918,77.7
+32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",2,Insulation Ceiling|R-49,2171,0.6
+32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",3,Insulation Ceiling|R-60,96315,28.4
+32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",4,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",13038,3.8
+32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",5,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",10433,3.1
+32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",6,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",89144,26.2
+32,"General Air Sealing, Attic Floor Insulation, and Duct Sealing",-1,All,299351,88.1
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",204894,60.3
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",2,HVAC Cooling Efficiency|Ducted Heat Pump,204894,60.3
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",3,HVAC Cooling Partial Space Conditioning|100% Conditioned,212471,62.6
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",4,HVAC Secondary Heating Efficiency|None,18,0.0
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",5,Infiltration Reduction|25%,162644,47.9
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",6,Insulation Ceiling|R-49,1228,0.4
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",7,Insulation Ceiling|R-60,73431,21.6
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",8,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",11397,3.4
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",9,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",9387,2.8
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",10,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",79276,23.3
+33,"Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",-1,All,212471,62.6
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",1,"HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4",204894,60.3
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",2,HVAC Cooling Efficiency|Ducted Heat Pump,204894,60.3
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",3,HVAC Cooling Partial Space Conditioning|100% Conditioned,212471,62.6
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",4,HVAC Secondary Heating Efficiency|None,18,0.0
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",5,Infiltration Reduction|25%,162644,47.9
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",6,Insulation Ceiling|R-49,1228,0.4
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",7,Insulation Ceiling|R-60,73431,21.6
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",8,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",11397,3.4
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",9,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",9387,2.8
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",10,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",79276,23.3
+34,"Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing",-1,All,212471,62.6
