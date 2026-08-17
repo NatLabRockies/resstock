@@ -8,6 +8,7 @@ import pathlib
 import yaml
 import polars as pl
 import os, sys
+import hashlib
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from sampler.sampling_utils import get_param2tsv, get_samples, TSVTuple
 from sampler.utils import log_error_details, get_error_details
@@ -119,9 +120,10 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
 
             # Prepare arguments for pool.map()
             task_args = []
-            for i, param in enumerate(remaining_params):
+            for param in remaining_params:
                 _, dep_cols, _ = param2tsv[param]
-                seed = RANDOM_SEED + i
+                param_seed = int.from_bytes(hashlib.blake2b(param.encode(), digest_size=4).digest(), "big")
+                seed = RANDOM_SEED + param_seed
                 task_args.append((param, param2tsv[param], sample_df[dep_cols], num_samples, seed))
 
             st = time.time()
@@ -231,8 +233,14 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     print(f"Initial sampling completed in {time.time() - init_start_time:.2f} seconds. Sample size: {initial_samples_df.shape}")
     initial_samples_df = initial_samples_df.drop("Building")
     num_segments = num_datapoints // num_samples_per_segment
-    top_segments = initial_samples_df.group_by(segment_cols).agg(pl.len().alias("count")).sort("count", descending=True).limit(num_segments)
-    new_df = initial_samples_df.join(top_segments, on=segment_cols, validate="m:1", how="left")
+    # Select the most populous segments, using segment values to break count ties reproducibly.
+    top_segments = (
+        initial_samples_df.group_by(segment_cols, maintain_order=True)
+        .agg(pl.len().alias("count"))
+        .sort(["count", *segment_cols], descending=[True, *([False] * len(segment_cols))])
+        .limit(num_segments)
+    )
+    new_df = initial_samples_df.join(top_segments, on=segment_cols, validate="m:1", how="left", maintain_order="left")
     valid_df = new_df.filter(~pl.col('count').is_null())
     valid_df = valid_df.drop("count")
     limited_df = take_samples_per_segment(valid_df, segment_cols, num_samples_per_segment)
