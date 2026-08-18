@@ -224,7 +224,6 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     segment_cols = sorted(segment_vars)
     initial_sample_size = config.get('segment_selection_sample_size', 10000000)
     num_samples_per_segment = config.get('num_samples_per_segment', DEFAULT_NUM_SAMPLES_PER_SEGMENT)
-    # initial_samples_df = read_csv('/Users/radhikar/Documents/buildstock2025/geographic sampling/starter_samples.csv')
     initial_samples_df = None
     init_start_time = time.time()
     print(project, num_datapoints, output, segment_vars)
