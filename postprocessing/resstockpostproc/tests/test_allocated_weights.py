@@ -86,8 +86,9 @@ def test_seed_controls_the_draw():
     assert first.to_list() != other.to_list()
 
 
-def test_vacant_rows_draw_across_fuels():
-    bs_df = pl.concat(
+def _vacant_bs_df() -> pl.DataFrame:
+    """The synthetic sample plus two vacant buildings, one gas and one electric."""
+    return pl.concat(
         [
             make_bs_df(),
             pl.DataFrame(
@@ -104,14 +105,21 @@ def test_vacant_rows_draw_across_fuels():
             ),
         ]
     )
+
+
+def _vacant_geo_df(heating_fuel: str | None) -> pl.DataFrame:
+    """Region 1's rows made vacant, carrying the given heating fuel or none."""
     is_cell_one = pl.col("in.sampling_region_id") == "1"
-    geo_df = make_geo_df(rows_per_cell=1_000).with_columns(
+    return make_geo_df(rows_per_cell=1_000).with_columns(
         pl.when(is_cell_one)
         .then(pl.lit("Vacant"))
         .otherwise(pl.col("in.vacancy_status"))
         .alias("in.vacancy_status"),
-        # The catalogue never models these three characteristics for a vacant unit
-        pl.when(is_cell_one).then(None).otherwise(pl.col("in.heating_fuel")).alias("in.heating_fuel"),
+        pl.when(is_cell_one)
+        .then(pl.lit(heating_fuel, dtype=pl.Utf8))
+        .otherwise(pl.col("in.heating_fuel"))
+        .alias("in.heating_fuel"),
+        # The catalogue never models tenure or poverty level for a vacant unit
         pl.when(is_cell_one).then(None).otherwise(pl.col("in.tenure")).alias("in.tenure"),
         pl.when(is_cell_one)
         .then(None)
@@ -119,7 +127,44 @@ def test_vacant_rows_draw_across_fuels():
         .alias("in.federal_poverty_level"),
     )
 
-    allocated_df, _ = allocate_buildings_to_geography(coerce_vacant_join_keys(geo_df), bs_df, seed=7)
+
+def test_vacant_rows_match_on_their_heating_fuel():
+    """A vacant row carrying a fuel draws only from the vacant buildings that share it."""
+    geo_df = coerce_vacant_join_keys(_vacant_geo_df("Electricity"))
+
+    allocated_df, _ = allocate_buildings_to_geography(geo_df, _vacant_bs_df(), seed=7)
+
+    vacant = allocated_df.filter(pl.col("in.vacancy_status") == "Vacant")
+    assert vacant.height == 1_000
+    assert vacant["bldg_id"].null_count() == 0
+    # Building 41 is the electric one; 40 burns gas and must not be drawn
+    assert set(vacant["bldg_id"].unique().to_list()) == {41}
+    assert vacant["fallback_stage"].unique().to_list() == ["matched_full"]
+
+
+def test_giving_the_vacant_rows_a_fuel_leaves_the_occupied_allocation_alone():
+    """The occupied draw is unchanged by what the catalogue's vacant rows carry."""
+    bs_df = _vacant_bs_df()
+
+    with_fuel = allocate_buildings_to_geography(
+        coerce_vacant_join_keys(_vacant_geo_df("Electricity")), bs_df, seed=7
+    )[0]
+    without_fuel = allocate_buildings_to_geography(
+        coerce_vacant_join_keys(_vacant_geo_df(None)), bs_df, seed=7
+    )[0]
+
+    def occupied(frame: pl.DataFrame) -> list:
+        return frame.filter(pl.col("in.vacancy_status") == "Occupied")["bldg_id"].to_list()
+
+    assert occupied(with_fuel) == occupied(without_fuel)
+    assert len(occupied(with_fuel)) == 2_000
+
+
+def test_vacant_rows_without_a_fuel_draw_across_fuels():
+    """A catalogue that leaves the fuel null still places its vacant rows, over both fuels."""
+    geo_df = coerce_vacant_join_keys(_vacant_geo_df(None))
+
+    allocated_df, _ = allocate_buildings_to_geography(geo_df, _vacant_bs_df(), seed=7)
 
     vacant = allocated_df.filter(pl.col("in.vacancy_status") == "Vacant")
     assert vacant.height == 1_000

@@ -33,9 +33,10 @@ ALLOCATION_KEYS = [
     "in.federal_poverty_level",
 ]
 
-# ACS only surveys the fuel of occupied units, so the catalogue's vacant rows carry no
-# heating fuel. Vacant rows draw across fuels instead, which reproduces the sample pool's
-# conditional fuel mix within the remaining keys.
+# Keys a vacant row falls back to when its catalogue carries no heating fuel for it.
+# Releasing the fuel makes the row draw across whatever fuels the sample's vacant buildings
+# happen to carry, which is the pool's design mix rather than the stock's, so it applies
+# only to the rows a catalogue has left null.
 VACANT_ALLOCATION_KEYS = [key for key in ALLOCATION_KEYS if key != "in.heating_fuel"]
 
 # Ladder of retries for catalogue rows whose shelf is empty. Each rung names the stage it
@@ -256,9 +257,9 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
     """Load and preprocess catalogue file, downloading from S3 if necessary.
 
     Vacant rows are given the literal "Not Available" for tenure and federal poverty level so
-    they match the buildstock sample, which labels vacant buildings that way. Heating fuel is
-    left null on vacant rows and is handled by the two stage join in
-    allocate_buildings_to_geography.
+    they match the buildstock sample, which labels vacant buildings that way. Heating fuel
+    needs no such coercion: the catalogue carries a real fuel on a vacant row, and a null
+    left in one is handled by allocate_buildings_to_geography's released join.
 
     This reads the whole catalogue into memory, which for the national catalogue is around
     15 GB. create_allocated_weights does not use it; it streams through scan_catalogue
@@ -464,7 +465,7 @@ def validate_sampling_region_coverage(
     ).unique()
     assigned = assign_sampling_regions(geographies, sampling_regions_df, cec_2010_cz_lkup_df)
 
-    # Only the region column is checked because vacant rows legitimately carry a null heating fuel
+    # Only the region column is checked; this frame carries the two geography columns alone
     missing_region = assigned.filter(pl.col("in.sampling_region_id").is_null()).collect(engine="streaming")
     if missing_region.height > 0:
         missing_counties = missing_region["in.nhgis_county_gisjoin"].unique().to_list()
@@ -711,10 +712,15 @@ def allocate_buildings_to_geography(
     """Allocate buildings from sample to geographical units.
 
     Groups buildings by key characteristics, then draws one building uniformly at random for
-    each row in the geographical catalogue. Occupied rows match on all of ALLOCATION_KEYS;
-    vacant rows match on VACANT_ALLOCATION_KEYS and so draw across the fuels present in the
-    sample's vacant buildings. Rows that match no building on those keys walk the
+    each row in the geographical catalogue. Every row carrying a heating fuel matches on all
+    of ALLOCATION_KEYS, vacant and occupied alike: heating fuel is a property of the dwelling,
+    so a vacant unit has one and the catalogue supplies it. Only a vacant row whose fuel is
+    null matches on VACANT_ALLOCATION_KEYS instead, drawing across the fuels the sample's
+    vacant buildings happen to carry. Rows that match no building on those keys walk the
     FALLBACK_LADDER, which releases vintage and then federal poverty level as well.
+
+    The occupied subset is allocated first and off the same generator, so a catalogue whose
+    vacant rows have changed reproduces its occupied allocation building for building.
 
     The frame passed in is held for the duration, and the join against the candidate pools
     needs several times its size again while it runs, so callers with a national catalogue
@@ -739,12 +745,31 @@ def allocate_buildings_to_geography(
     logger.info(f"Allocating simulated buildings to geographical units (seed={seed})")
     rng = np.random.default_rng(seed)
     is_vacant = pl.col("in.vacancy_status").eq_missing("Vacant")
+    has_fuel = pl.col("in.heating_fuel").is_not_null()
+
+    # A catalogue that supplies every vacant fuel leaves the third subset empty and never
+    # exercises the released join. It is kept for one that does not, so a null reaching here
+    # still places its row instead of dropping it — the same belt-and-braces
+    # coerce_vacant_join_keys applies to tenure and federal poverty level. Only vacant rows
+    # are eligible for it: an occupied row is expected to carry a fuel, and one that does not
+    # should surface as a miss rather than quietly draw from a wider pool.
+    fuelless_rows = geo_df.filter(is_vacant & ~has_fuel).height
+    if fuelless_rows:
+        logger.info(
+            f"Releasing in.heating_fuel from the join on {fuelless_rows} vacant catalogue "
+            f"rows that carry none"
+        )
 
     # Built one at a time, and the subset dropped as soon as it has been allocated, so that
-    # only one vacancy subset of the catalogue is ever resident alongside geo_df itself
+    # only one subset of the catalogue is ever resident alongside geo_df itself
     allocated_frames = []
-    for keys, vacancy_filter in [(ALLOCATION_KEYS, ~is_vacant), (VACANT_ALLOCATION_KEYS, is_vacant)]:
-        geo_subset = geo_df.filter(vacancy_filter)
+    subsets = [
+        (ALLOCATION_KEYS, ~is_vacant),
+        (ALLOCATION_KEYS, is_vacant & has_fuel),
+        (VACANT_ALLOCATION_KEYS, is_vacant & ~has_fuel),
+    ]
+    for keys, row_filter in subsets:
+        geo_subset = geo_df.filter(row_filter)
         allocated_frames.append(allocate_down_the_ladder(geo_subset, bs_df, keys, rng))
         del geo_subset
 
