@@ -5,7 +5,7 @@ segment_vars:
     - "Heating Fuel"
     - "Sampling Region"
 
-segment_selection_sample_size: 10000000  # Determine segments using 10M samples
+segment_selection_sample_size: 50000000  # Determine segments using 50M samples
 
 # Buildings kept per segment. Sets both the number of segments retained
 # (num_datapoints // num_samples_per_segment) and the take within each segment.
