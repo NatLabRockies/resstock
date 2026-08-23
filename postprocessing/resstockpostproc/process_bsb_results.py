@@ -8,99 +8,281 @@ uv run resstockpostproc/process_bsb_results.py "C:/Scratch/ResStock/efforts/full
 
 Note: bsb_raw_results folder must contain both baseline and upgrade files. Baseline file should be named
 results_up00.parquet and upgrade files should be named results_upXX.parquet where XX is the upgrade number. The can
-either be in their own folders (baseline and upgrades) or all be in the same folder.
+either be in their own folders (baseline and upgrades) or all be in the same folder. Only those locations are
+searched, so other parquet files under the directory (timeseries partitions in particular) are never listed.
 """
 
 import re
+import logging
 import polars as pl
 from pathlib import Path
-from resstockpostproc.process_metadata import (
+from resstockpostproc.simulation_outputs import (
+    get_failed_building_list,
     get_schema_superset,
     get_upgrade_rename_dict,
-    get_failed_building_list,
     process_simulation_outputs,
-    export_metadata_and_annual_results_for_upgrade,
-    cache_simulation_outputs_file
+    cache_simulation_outputs_file,
+    get_cached_simulation_outputs_file
 )
+from resstockpostproc.metadata_and_annual_results import export_metadata_and_annual_results_for_upgrade
 from resstockpostproc.utils import (
     setup_fsspec_filesystem
 )
+from resstockpostproc.allocated_weights import (
+    DEFAULT_ALLOCATION_SEED,
+    DEFAULT_NULL_BUILDING_THRESHOLD,
+    create_allocated_weights,
+    create_allocated_weights_for_quota_sampler,
+    create_allocated_weights_plus_util_bills_for_upgrade
+)
+
+SUPPORTED_SAMPLER_TYPES = ("stratified", "quota")
+
+# Glob for the results file naming convention. Deliberately narrower than *.parquet:
+# a raw results directory also holds the timeseries partitions, which outnumber the
+# results files by thousands to one on a full run.
+RESULTS_FILE_GLOB = "results_up*.parquet"
+
+# Where results files live relative to the raw results directory: in the baseline and
+# upgrades subdirectories, or flat in the directory itself ("" below). Each is listed
+# non-recursively, so discovery never walks into timeseries/ -- on a full run that
+# subtree holds tens of thousands of parquet files and listing it takes minutes, none
+# of which are results files.
+RESULTS_SEARCH_DIRS = ("baseline", "upgrades", "")
+
+# Anchored to the whole file name so a partition file can't be mistaken for a results
+# file -- "group0.parquet" contains the substring "up0", and "group00.parquet" contains
+# "up00". Also accepts the results_upgradeXX.parquet spelling.
+RESULTS_FILE_RE = re.compile(r"^results_up(?:grade)?(\d+)\.parquet$", re.IGNORECASE)
+
+
+def parse_upgrade_id(file_path: str) -> int | None:
+    """
+    Return the upgrade number encoded in a results file name.
+
+    Returns None when the name doesn't follow the results_upXX.parquet convention,
+    which callers treat as "not a results file".
+    """
+    match = RESULTS_FILE_RE.match(Path(file_path).name)
+    return int(match.group(1)) if match else None
+
 
 def export_metadata_and_annual_results(raw_results_dir: str,
                                        output_dir: str,
-                                       aws_profile_name = None) -> None:
+                                       aws_profile_name = None,
+                                       write_workers=4,
+                                       slice_rows=200_000,
+                                       sampler_type="stratified",
+                                       baseline_file: str | None = None,
+                                       upgrade_files: list[str] | None = None,
+                                       rename_upgrades_path: str | None = None,
+                                       allocation_seed: int | None = DEFAULT_ALLOCATION_SEED,
+                                       null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
+                                       ) -> None:
+    """
+    Export metadata and annual results for the given raw BuildStockBatch results.
+
+    Args:
+        raw_results_dir: Directory containing raw BuildStockBatch results (baseline and upgrades)
+        output_dir: Directory to write transformed results
+        aws_profile_name: Optional AWS profile name for S3 access
+        write_workers: Number of parallel workers for writing output files
+        slice_rows: Number of rows per slice when writing output files
+        sampler_type: Type of sampler used for allocation ("stratified" or "quota")
+        baseline_file: Optional explicit path to the baseline results parquet file
+            (results_up00.parquet). When omitted, the RESULTS_SEARCH_DIRS
+            subdirectories of raw_results_dir are listed for results files. Callers
+            like buildstockbatch that know exactly which files they wrote can pass
+            explicit paths to skip discovery entirely. Paths must be on the same
+            filesystem as raw_results_dir.
+        upgrade_files: Optional explicit paths to the upgrade results parquet files
+            (results_upXX.parquet, XX > 0). Only used when baseline_file is given.
+        rename_upgrades_path: Optional explicit path to rename_upgrades.json. When
+            omitted, raw_results_dir/rename_upgrades.json is used if present.
+        allocation_seed: Seed for the random building-to-geography allocation
+            (stratified sampler only) so identical inputs produce identical
+            publications. Pass None for unseeded allocation.
+        null_building_threshold: Fraction of catalogue rows allowed to match no
+            building (stratified sampler only) before the run is rejected. The
+            unallocated rows are written to allocation_miss_report.parquet in
+            output_dir either way.
+    """
+    if sampler_type not in SUPPORTED_SAMPLER_TYPES:
+        raise ValueError(f"Unsupported sampler_type {sampler_type!r}; expected one of {SUPPORTED_SAMPLER_TYPES}")
+    if baseline_file is None and upgrade_files is not None:
+        raise ValueError("baseline_file must be provided when upgrade_files are passed explicitly")
+
     # Set up filesystem objects for raw results and output directories
     raw_results_dir = setup_fsspec_filesystem(raw_results_dir, aws_profile_name)
     output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
 
-    # Find the raw results files
-    pqt_glob = f'{raw_results_dir["fs_path"]}/**/*.parquet'
-    result_files = raw_results_dir['fs'].glob(pqt_glob)
-    baseline_file = [f for f in result_files if "up00" in Path(f).name.lower()][0]
-    upgrade_ids = [int(re.search(r'up(\d+)', p).group(1)) for p in result_files]
-    upgrade_ids.sort()
+    # Find the raw results files, unless the caller passed explicit paths
+    if baseline_file is None:
+        search_roots = [
+            f'{raw_results_dir["fs_path"]}/{d}'.rstrip("/") for d in RESULTS_SEARCH_DIRS
+        ]
+        result_files = []
+        for search_root in search_roots:
+            result_files.extend(raw_results_dir["fs"].glob(f"{search_root}/{RESULTS_FILE_GLOB}"))
+        # Discovery is lenient: anything that doesn't parse isn't a results file.
+        discovered = {f: parse_upgrade_id(f) for f in result_files}
+        baseline_files = [f for f, up_id in discovered.items() if up_id == 0]
+        upgrade_files = [f for f, up_id in discovered.items() if up_id]
+        if not baseline_files:
+            raise FileNotFoundError(
+                f"No baseline results file (results_up00.parquet) found in any of "
+                f"{search_roots}. The baseline is required: weights are allocated from "
+                f"baseline characteristics."
+            )
+        baseline_file = baseline_files[0]
+    else:
+        upgrade_files = list(upgrade_files or [])
+        missing = [f for f in [baseline_file] + upgrade_files if not raw_results_dir["fs"].exists(f)]
+        if missing:
+            raise FileNotFoundError(f"Results files not found on the raw results filesystem: {missing}")
+
+    # Resolve the upgrade numbers before any data is read, so a misnamed or duplicated
+    # file fails fast instead of being silently dropped from the publication.
+    upgrade_id_by_file: dict[str, int] = {}
+    for upgrade_file in upgrade_files:
+        parsed_id = parse_upgrade_id(upgrade_file)
+        if parsed_id is None:
+            raise ValueError(
+                f"Upgrade results file {upgrade_file!r} does not follow the "
+                f"{RESULTS_FILE_GLOB} naming convention, so its upgrade number cannot "
+                f"be determined."
+            )
+        if parsed_id == 0:
+            raise ValueError(
+                f"Upgrade results file {upgrade_file!r} is upgrade 0; the baseline must "
+                f"be passed as baseline_file, not in upgrade_files."
+            )
+        if parsed_id in upgrade_id_by_file.values():
+            clash = next(f for f, up_id in upgrade_id_by_file.items() if up_id == parsed_id)
+            raise ValueError(
+                f"Two results files claim upgrade {parsed_id}: {clash!r} and {upgrade_file!r}"
+            )
+        upgrade_id_by_file[upgrade_file] = parsed_id
 
     # Information used across upgrades
-    upgrade_renamer = get_upgrade_rename_dict(raw_results_dir)
-    col_schema = get_schema_superset(result_files, raw_results_dir)
+    upgrade_renamer = get_upgrade_rename_dict(raw_results_dir, rename_upgrades_path)
+    col_schema  = get_schema_superset(upgrade_files, raw_results_dir)
     sim_out_cache_dir = Path(f"{output_dir['fs_path']}/cached_simulation_outputs")
 
-    # Process and cache the simulation outputs, starting with the baseline
-    baseline_df = pl.scan_parquet(baseline_file, storage_options=raw_results_dir['storage_options'])
+    # Process and cache the baseline simulation outputs
+    upgrade_id = 0
+    print(f"Processing baseline file: {baseline_file}")
+    # Add s3:// prefix for polars if using S3
+    baseline_path = f"s3://{baseline_file}" if raw_results_dir["storage_options"] is not None else baseline_file
+    baseline_df = pl.scan_parquet(baseline_path, storage_options=raw_results_dir["storage_options"])
     failed_bldgs = get_failed_building_list(baseline_df)
-    processed_baseline_df = None
-    for upgrade_id in upgrade_ids:
-        upgrade_file = f'{raw_results_dir["fs_path"]}/upgrades/upgrade={upgrade_id}/results_up{upgrade_id:02d}.parquet'
-        if upgrade_id == 0:
-            upgrade_file = f'{raw_results_dir["fs_path"]}/baseline/results_up{upgrade_id:02d}.parquet'
-
-        print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id} {'*'*100}")
-        raw_upgrade_df = pl.scan_parquet(upgrade_file, storage_options=raw_results_dir['storage_options'])
-        processed_upgrade_df = process_simulation_outputs(
+    bs_pub_df = process_simulation_outputs(
             failed_bldgs,
             baseline_df,
-            processed_baseline_df,
-            raw_upgrade_df,
+            None,
+            baseline_df,
             upgrade_id,
             upgrade_renamer,
-            col_schema
+            col_schema ,
+            # skip_if_cached # Add some argument here to skip if cached files already exist
         )
-        cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, processed_upgrade_df)
-        up_cols = set(sorted(processed_upgrade_df.collect_schema().names()))
+    cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, bs_pub_df)
+    base_cols = set(bs_pub_df.collect_schema().names())
 
-        if upgrade_id == 0:
-            processed_baseline_df = processed_upgrade_df
-            base_cols = set(sorted(processed_baseline_df.collect_schema().names()))
-
+    # Process and cache the upgrade simulation outputs
+    upgrade_ids = [0]
+    for upgrade_file, upgrade_id in upgrade_id_by_file.items():
+        upgrade_ids.append(upgrade_id)
+        print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id} {'*'*100}")
+        # Add s3:// prefix for polars if using S3
+        upgrade_path = f"s3://{upgrade_file}" if raw_results_dir["storage_options"] is not None else upgrade_file
+        upgrade_df = pl.scan_parquet(upgrade_path, storage_options=raw_results_dir["storage_options"])
+        up_df = process_simulation_outputs(
+            failed_bldgs,
+            baseline_df,
+            bs_pub_df,
+            upgrade_df,
+            upgrade_id,
+            upgrade_renamer,
+            col_schema ,
+            # skip_if_cached # Add some argument here to skip if cached files already exist
+        )
+        cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, up_df)
+        up_cols = set(up_df.collect_schema().names())
         if not base_cols == up_cols:
             raise ValueError("Column set in baseline and upgrade don't match")
+    upgrade_ids.sort()
 
-    # Export files to specified geographic partitions
+    # Process and cache allocated weights
+    bs_pub_df_path = get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir, 0)
+    if sampler_type == "stratified":
+        create_allocated_weights(
+            bs_pub_df_path,
+            Path(f"{output_dir['fs_path']}"),
+            seed=allocation_seed,
+            null_building_threshold=null_building_threshold,
+        )
+    elif sampler_type == "quota":
+        create_allocated_weights_for_quota_sampler(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
+
+    # Process and cache allocated weights plus utility bills
+    for upgrade_id in upgrade_ids:
+        create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
+
+    # Define the geographic partitions to export
+    # This is an example from ComStock SDR
     geo_exports = [
-    {
-        'geo_top_dir': 'national',
-        'partition_cols': {},
-        'data_types': ['full'],  # TODO add basic
-        'file_types': [ 'csv', 'parquet'],
+    {"geo_top_dir": "national",
+        "partition_cols": {},
+        "aggregation_levels": ["in.state"],
+        "data_types": ["full"],  # TODO add basic downselect method
+        "file_types": ["csv", "parquet"],
+    },
+    {"geo_top_dir": "by_state_and_county",
+        "partition_cols": {
+            "in.state": "state",
+            "in.nhgis_county_gisjoin": "county",
+        },
+        "aggregation_levels": ["in.nhgis_tract_gisjoin"],  # The only one by at full resolution (tract)
+        "data_types": ["full"],  # TODO add basic downselect method
+        "file_types": ["csv", "parquet"],
     },
     {
-        'geo_top_dir': 'by_state',
-        'partition_cols': {
-            'in.state': 'state'
+        "geo_top_dir": "by_state",
+        "partition_cols": {
+            "in.state": "state"
         },
-        'data_types': ['full'],  # TODO add basic
-        'file_types': ['csv', 'parquet'],
+        "aggregation_levels": ["in.state"],
+        "data_types": ["full"],  # TODO add basic downselect method
+        "file_types": ["csv", "parquet"],
+    },
+    {"geo_top_dir": "by_state_and_puma",
+        "partition_cols": {
+            "in.state": "state",
+            "in.nhgis_puma_gisjoin": "puma",
+        },
+        "aggregation_levels": ["in.nhgis_puma_gisjoin"],
+        "data_types": ["full"],  # TODO add basic downselect method
+        "file_types": ["csv", "parquet"],
     }
     ]
+
     for upgrade_id in upgrade_ids:
         export_metadata_and_annual_results_for_upgrade(
             output_dir,
             upgrade_id,
-            geo_exports)
+            geo_exports,
+            write_workers=write_workers,
+            slice_rows=slice_rows)
 
 
 if __name__ == "__main__":
     import argparse
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(name)s %(levelname)s: %(message)s",
+    )
 
     parser = argparse.ArgumentParser(
         description="Process raw BuildStock results and write transformed data"
@@ -115,5 +297,32 @@ if __name__ == "__main__":
         default="Users/radhikar/Documents/buildstock2025/resstock/postprocessing/resstockpostproc/upgrade_comparison/sdr_plots/s3_data/res-sdr/testing-sdr-fy25/ghp_envelope_0807_30k/annual_results",
         help="Directory to write transformed results",
     )
+    parser.add_argument(
+        "--sampler_type",
+        default="stratified",
+        choices=SUPPORTED_SAMPLER_TYPES,
+        help="Type of sampler used for the run, determines how weights are allocated",
+    )
+    parser.add_argument(
+        "--allocation_seed",
+        type=int,
+        default=DEFAULT_ALLOCATION_SEED,
+        help="Seed for the random building-to-geography allocation (stratified sampler only)",
+    )
+    parser.add_argument(
+        "--null_building_threshold",
+        type=float,
+        default=DEFAULT_NULL_BUILDING_THRESHOLD,
+        help=(
+            "Fraction of catalogue rows allowed to match no building before raising "
+            "(stratified sampler only)"
+        ),
+    )
     args = parser.parse_args()
-    export_metadata_and_annual_results(args.raw_results_dir, args.output_dir)
+    export_metadata_and_annual_results(
+        args.raw_results_dir,
+        args.output_dir,
+        sampler_type=args.sampler_type,
+        allocation_seed=args.allocation_seed,
+        null_building_threshold=args.null_building_threshold,
+    )

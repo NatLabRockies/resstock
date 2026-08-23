@@ -8,7 +8,7 @@ require 'time'
 require 'yaml'
 require 'zlib'
 
-require_relative '../resources/run_sampling_lib'
+require_relative '../samplers/quota/run_sampling_lib'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/util'
 
 $start_time = Time.now
@@ -26,7 +26,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     return false
   end
 
-  if !['residential_quota', 'residential_quota_downselect', 'precomputed'].include?(cfg['sampler']['type'])
+  if !['residential_quota', 'residential_quota_downselect', 'residential_stratified', 'precomputed'].include?(cfg['sampler']['type'])
     puts "Error: Sampler type '#{cfg['sampler']['type']}' is invalid or not supported."
     return false
   end
@@ -56,7 +56,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
 
   project_directory = cfg['project_directory']
   output_directory = cfg['output_directory']
-  n_datapoints = cfg['sampler']['args']['n_datapoints']
+  sampler = cfg['sampler']
 
   if (Pathname.new output_directory).absolute?
     results_dir = output_directory
@@ -72,13 +72,15 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
   Dir.mkdir(results_dir)
 
   # Create or read buildstock.csv
-  if !['precomputed'].include?(cfg['sampler']['type'])
+  if !['precomputed'].include?(sampler['type'])
     buildstock_csv_path = File.join(results_dir, 'buildstock.csv')
-    create_buildstock_csv(project_directory, n_datapoints, buildstock_csv_path)
+    create_buildstock_csv(project_directory, sampler, buildstock_csv_path)
     return if samplingonly
 
-    datapoints = (1..n_datapoints).to_a
-  else
+    buildstock_csv = CSV.read(buildstock_csv_path, headers: true)
+    datapoints = buildstock_csv['Building'].map { |x| Integer(x) }
+    n_datapoints = datapoints.size # Re-assign n_datapoints since stratified samples can be less than specified
+  else # precomputed
     buildstock_csv_path = cfg['sampler']['args']['sample_file']
     unless (Pathname.new buildstock_csv_path).absolute?
       buildstock_csv_path = File.expand_path(File.join(File.dirname(yml), buildstock_csv_path))
@@ -490,10 +492,36 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
   return true
 end
 
-def create_buildstock_csv(project_dir, num_samples, outfile)
-  r = RunSampling.new
-  r.run(project_dir, num_samples, outfile)
+def create_buildstock_csv(project_dir, sampler, outfile)
+  sampler_type = sampler['type']
+  num_samples = sampler['args']['n_datapoints']
+
+  if sampler_type == 'residential_quota'
+    r = RunSampling.new
+    r.run(project_dir, num_samples, outfile)
+  elsif sampler_type == 'residential_stratified'
+    sampler_args = sampler['args']
+    sampler_config = create_sampler_config(File.dirname(outfile), sampler_args['segment_vars'], sampler_args['segment_selection_sample_size'], sampler_args['num_samples_per_segment'])
+
+    command = "python #{File.dirname(__FILE__)}/../samplers/stratified/sampler/run_sampler.py sample"
+    command += " -p \"#{project_dir}\""
+    command += " -n \"#{num_samples}\""
+    command += " -c \"#{sampler_config}\""
+    command += " -o \"#{outfile}\""
+
+    system(command)
+  end
   puts "Sampling took: #{get_elapsed_time(Time.now, $start_time)}."
+end
+
+def create_sampler_config(folderpath, segment_vars = ['Federal Poverty Level', 'Geometry Floor Area Bin', 'Geometry Building Type RECS', 'Vintage', 'Heating Fuel', 'Sampling Region'], segment_selection_sample_size = 10000000, num_samples_per_segment = 8)
+  data = {}
+  data['segment_vars'] = segment_vars
+  data['segment_selection_sample_size'] = segment_selection_sample_size
+  data['num_samples_per_segment'] = num_samples_per_segment
+  filename = File.join(folderpath, 'sampler_config.yaml')
+  File.open(filename, 'w') { |f| YAML.dump(data, f) }
+  return filename
 end
 
 def get_elapsed_time(t1, t0)
