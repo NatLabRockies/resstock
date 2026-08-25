@@ -10,3 +10,14 @@ segment_selection_sample_size: 50000000  # Determine segments using 50M samples
 # Buildings kept per segment. Sets both the number of segments retained
 # (num_datapoints // num_samples_per_segment) and the take within each segment.
 num_samples_per_segment: 12
+
+# Characteristics whose combination defines a coverage floor cell. Absent, the selection is the
+# rank cut alone. Present, the cut's selection additionally keeps the most populous segment of
+# every floor cell it would otherwise have dropped, and the run builds past num_datapoints by
+# the amount that costs. See the README for the measured trade-off.
+# coverage_floor_vars:
+#     - "Sampling Region"
+#     - "Geometry Building Type RECS"
+#     - "Heating Fuel"
+#     - "Tenure"
+#     - "Vacancy Status"

@@ -2,7 +2,8 @@ import pathlib
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from sampler.sampling_utils import read_char_tsv, get_param2tsv, get_samples
-from sampler.run_sampler import sample_param, sample_all, take_samples_per_segment
+from sampler.run_sampler import add_coverage_floor_segments, sample_param, sample_all, take_samples_per_segment
+import pytest
 from collections import Counter
 import pandas as pd
 import polars as pl
@@ -148,6 +149,113 @@ def test_segment_vars_are_characteristics_the_allocator_joins_on():
         'Heating Fuel',
         'Sampling Region',
     }
+
+
+SEGMENT_COLS = ['Region', 'Fuel']
+
+
+def make_pilot(rows: list[tuple[str, str, str, int]]) -> pl.DataFrame:
+    """Pilot sample of (region, fuel, tenure) repeated the given number of times, one row a building."""
+    return pl.DataFrame({
+        'Region': [region for region, _, _, n in rows for _ in range(n)],
+        'Fuel': [fuel for _, fuel, _, n in rows for _ in range(n)],
+        'Tenure': [tenure for _, _, tenure, n in rows for _ in range(n)],
+    })
+
+
+def rank_cut(pilot: pl.DataFrame, num_segments: int) -> tuple[pl.DataFrame, pl.DataFrame]:
+    """The segment counts and the top-N selection, as the sample command forms them."""
+    segment_counts = pilot.group_by(SEGMENT_COLS, maintain_order=True).agg(pl.len().alias('count'))
+    top_segments = (
+        segment_counts
+        .sort(['count', *SEGMENT_COLS], descending=[True, *([False] * len(SEGMENT_COLS))])
+        .limit(num_segments)
+    )
+    return segment_counts, top_segments
+
+
+def segments_of(df: pl.DataFrame) -> list[tuple[str, str]]:
+    return list(df.select(SEGMENT_COLS).iter_rows())
+
+
+def test_coverage_floor_rescues_the_cells_the_rank_cut_dropped():
+    # Two regions, each with a populous gas segment and a rare oil segment; the cut keeps two
+    pilot = make_pilot([('A', 'Gas', 'Owner', 100), ('A', 'Oil', 'Owner', 3),
+                        ('B', 'Gas', 'Owner', 50), ('B', 'Oil', 'Owner', 2)])
+    segment_counts, top_segments = rank_cut(pilot, num_segments=2)
+    assert segments_of(top_segments) == [('A', 'Gas'), ('B', 'Gas')]
+
+    floored = add_coverage_floor_segments(pilot, segment_counts, top_segments, SEGMENT_COLS,
+                                          ['Region', 'Fuel'])
+
+    # Every (region, fuel) the pilot reached now has a segment, and the kept ones lead unchanged
+    assert segments_of(floored) == [('A', 'Gas'), ('B', 'Gas'), ('A', 'Oil'), ('B', 'Oil')]
+    assert floored.columns == top_segments.columns
+    assert dict(floored.select(['Fuel', 'count']).filter(pl.col('Fuel') == 'Oil')
+                .group_by('Fuel').agg(pl.col('count').sum()).iter_rows()) == {'Oil': 5}
+
+
+def test_a_floor_cell_may_be_finer_than_a_segment():
+    # Tenure is not a segment var, so one segment spans several floor cells
+    pilot = make_pilot([('A', 'Gas', 'Owner', 100), ('A', 'Oil', 'Renter', 3),
+                        ('B', 'Gas', 'Owner', 50), ('B', 'Oil', 'Renter', 2)])
+    segment_counts, top_segments = rank_cut(pilot, num_segments=2)
+
+    floored = add_coverage_floor_segments(pilot, segment_counts, top_segments, SEGMENT_COLS,
+                                          ['Region', 'Tenure'])
+
+    # The cut covers only the owner cells; the renter cells are rescued by the oil segments
+    assert segments_of(floored) == [('A', 'Gas'), ('B', 'Gas'), ('A', 'Oil'), ('B', 'Oil')]
+
+
+def test_a_segment_rescuing_two_cells_is_added_once():
+    # The rescued frame is joined onto the pilot with validate="m:1", so a repeat would fail there
+    pilot = make_pilot([('A', 'Gas', 'Owner', 100), ('A', 'Oil', 'Renter', 3),
+                        ('A', 'Oil', 'Vacant', 2)])
+    segment_counts, top_segments = rank_cut(pilot, num_segments=1)
+
+    floored = add_coverage_floor_segments(pilot, segment_counts, top_segments, SEGMENT_COLS,
+                                          ['Region', 'Tenure'])
+
+    assert segments_of(floored) == [('A', 'Gas'), ('A', 'Oil')]
+    assert floored.select(SEGMENT_COLS).n_unique() == floored.height
+
+
+def test_the_strongest_segment_rescues_a_cell_and_ties_break_on_segment_values():
+    # Oil and Propane both reach (A, Renter) with five pilot rows; the cut's own tie-break is the
+    # segment values ascending, so Oil is taken
+    pilot = make_pilot([('A', 'Gas', 'Owner', 100), ('A', 'Propane', 'Renter', 5),
+                        ('A', 'Oil', 'Renter', 5), ('A', 'Wood', 'Renter', 4)])
+    segment_counts, top_segments = rank_cut(pilot, num_segments=1)
+
+    floored = add_coverage_floor_segments(pilot, segment_counts, top_segments, SEGMENT_COLS,
+                                          ['Region', 'Tenure'])
+
+    assert segments_of(floored) == [('A', 'Gas'), ('A', 'Oil')]
+
+
+def test_a_floor_reaching_no_new_cell_returns_the_selection_untouched():
+    pilot = make_pilot([('A', 'Gas', 'Owner', 100), ('A', 'Oil', 'Owner', 3)])
+    segment_counts, top_segments = rank_cut(pilot, num_segments=2)
+
+    floored = add_coverage_floor_segments(pilot, segment_counts, top_segments, SEGMENT_COLS,
+                                          ['Region', 'Fuel'])
+
+    assert floored.equals(top_segments)
+
+
+def test_a_floor_cell_column_the_pilot_does_not_carry_is_rejected():
+    pilot = make_pilot([('A', 'Gas', 'Owner', 10)])
+    segment_counts, top_segments = rank_cut(pilot, num_segments=1)
+
+    with pytest.raises(ValueError, match='Vintage'):
+        add_coverage_floor_segments(pilot, segment_counts, top_segments, SEGMENT_COLS,
+                                    ['Region', 'Vintage'])
+
+
+def test_the_shipped_config_leaves_the_coverage_floor_off():
+    # Absent, the selection is the rank cut alone, which is what the shipped runs have produced
+    assert 'coverage_floor_vars' not in read_sampler_config()
 
 
 def test_one_config_value_sets_both_the_segment_count_and_the_take():

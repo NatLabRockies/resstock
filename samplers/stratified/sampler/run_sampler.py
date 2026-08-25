@@ -142,6 +142,76 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
     return sample_df
 
 
+def add_coverage_floor_segments(pilot_df: pl.DataFrame, segment_counts: pl.DataFrame,
+                                top_segments: pl.DataFrame, segment_cols: list[str],
+                                coverage_floor_vars: list[str]) -> pl.DataFrame:
+    """Add the segments needed to leave every pilot-reached floor cell with a selected segment.
+
+    The rank cut keeps the most populous `num_segments` segments and is all-or-nothing: a floor
+    cell whose segments all sit below the cut contributes no buildings at all, and the allocator's
+    fallback ladder releases only vintage and federal poverty level, so no other building can
+    stand in for it. This adds back one segment per floor cell the cut missed — the most populous
+    of the segments the pilot placed in that cell, with the same segment-value tie-break the cut
+    itself uses — so the selection reaches every floor cell the pilot reached.
+
+    A floor cell is read off the pilot rows rather than off the segment, so `coverage_floor_vars`
+    may name characteristics that are not `segment_vars`: a segment then spans several floor
+    cells, and the segment rescuing one of them is the most populous segment holding a pilot row
+    in it. That is what lets the floor be defined on tenure and vacancy status, which the
+    allocator joins on but which do not split a segment.
+
+    The added segments are additive. Nothing already selected is displaced, so every building the
+    rank cut alone would have produced is still produced and the run builds correspondingly more
+    than `num_datapoints`.
+
+    Args:
+        pilot_df: The pilot sample, one row per drawn building, carrying every floor cell column
+        segment_counts: One row per segment the pilot reached, carrying a `count` column
+        top_segments: The segments the rank cut kept, a subset of `segment_counts`
+        segment_cols: Columns whose combination defines a segment
+        coverage_floor_vars: Columns whose combination defines a floor cell
+
+    Returns:
+        `top_segments` with one added segment for each floor cell it did not already cover
+
+    Raises:
+        ValueError: If a name in `coverage_floor_vars` is not a column of the pilot sample
+    """
+
+    unknown = sorted(set(coverage_floor_vars) - set(pilot_df.columns))
+    if unknown:
+        raise ValueError(
+            f"coverage_floor_vars {unknown} are not sampled characteristics, so no pilot row "
+            f"carries them; every floor cell column must be a segment_var or an ancestor of one"
+        )
+
+    cell_cols = list(dict.fromkeys(coverage_floor_vars))
+    pair_cols = list(dict.fromkeys([*cell_cols, *segment_cols]))
+    # One row per (floor cell, segment) pair the pilot produced, carrying the segment's pilot count
+    cell_segments = pilot_df.select(pair_cols).unique().join(segment_counts, on=segment_cols, how="left")
+
+    covered_cells = cell_segments.join(top_segments.select(segment_cols), on=segment_cols, how="semi")
+    uncovered_cells = (
+        cell_segments.select(cell_cols).unique()
+        .join(covered_cells.select(cell_cols).unique(), on=cell_cols, how="anti")
+    )
+    if uncovered_cells.height == 0:
+        print(f"Coverage floor over {cell_cols} adds nothing: the rank cut already reaches every cell")
+        return top_segments
+
+    # A rescuing segment can be the strongest in more than one uncovered cell, so it is taken once
+    rescued = (
+        cell_segments.join(uncovered_cells, on=cell_cols, how="semi")
+        .sort(["count", *segment_cols], descending=[True, *([False] * len(segment_cols))])
+        .unique(subset=cell_cols, keep="first", maintain_order=True)
+        .select(top_segments.columns)
+        .unique(subset=segment_cols, keep="first", maintain_order=True)
+    )
+    print(f"Coverage floor over {cell_cols} adds {rescued.height} segments for the "
+          f"{uncovered_cells.height} cells the rank cut left uncovered")
+    return pl.concat([top_segments, rescued], how="vertical")
+
+
 def take_samples_per_segment(df: pl.DataFrame, segment_cols: list[str], num_samples_per_segment: int,
                              random_seed: int = RANDOM_SEED) -> pl.DataFrame:
     """Take a random `num_samples_per_segment` rows out of each segment.
@@ -224,6 +294,8 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     segment_cols = sorted(segment_vars)
     initial_sample_size = config.get('segment_selection_sample_size', 10000000)
     num_samples_per_segment = config.get('num_samples_per_segment', DEFAULT_NUM_SAMPLES_PER_SEGMENT)
+    # Absent, the selection is the rank cut alone; see add_coverage_floor_segments
+    coverage_floor_vars = list(config.get('coverage_floor_vars', []))
     initial_samples_df = None
     init_start_time = time.time()
     print(project, num_datapoints, output, segment_vars)
@@ -232,13 +304,16 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     print(f"Initial sampling completed in {time.time() - init_start_time:.2f} seconds. Sample size: {initial_samples_df.shape}")
     initial_samples_df = initial_samples_df.drop("Building")
     num_segments = num_datapoints // num_samples_per_segment
+    segment_counts = initial_samples_df.group_by(segment_cols, maintain_order=True).agg(pl.len().alias("count"))
     # Select the most populous segments, using segment values to break count ties reproducibly.
     top_segments = (
-        initial_samples_df.group_by(segment_cols, maintain_order=True)
-        .agg(pl.len().alias("count"))
+        segment_counts
         .sort(["count", *segment_cols], descending=[True, *([False] * len(segment_cols))])
         .limit(num_segments)
     )
+    if coverage_floor_vars:
+        top_segments = add_coverage_floor_segments(initial_samples_df, segment_counts, top_segments,
+                                                   segment_cols, coverage_floor_vars)
     new_df = initial_samples_df.join(top_segments, on=segment_cols, validate="m:1", how="left", maintain_order="left")
     valid_df = new_df.filter(~pl.col('count').is_null())
     valid_df = valid_df.drop("count")
