@@ -572,6 +572,73 @@ def partition_catalogue_by_sampling_region(
     return partition_dir
 
 
+def sampling_region_partition_ids(output_dir: FsspecOutputDir, partition_dir: str) -> list[str]:
+    """Return the sampling region ids the catalogue was staged into, in a stable order.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        partition_dir: Partition directory from partition_catalogue_by_sampling_region
+
+    Returns:
+        The region id of each staged partition
+
+    Raises:
+        FileNotFoundError: If the partition directory holds no partitions
+    """
+
+    # One directory per region, holding one or more parquet files
+    region_dirs = sorted({Path(p).parent.name for p in output_dir["fs"].glob(f"{partition_dir}/*/*.parquet")})
+    if not region_dirs:
+        raise FileNotFoundError(
+            f"No catalogue partitions found in {partition_dir}, "
+            f"call partition_catalogue_by_sampling_region() first."
+        )
+    return [region_dir.split("=", 1)[1] for region_dir in region_dirs]
+
+
+def report_buildstock_regions_without_a_partition(
+    bs_df: pl.DataFrame, partition_region_ids: Sequence[str]
+) -> pl.DataFrame:
+    """Report buildings whose sampling region has no catalogue partition to allocate them to.
+
+    The allocation walks the catalogue's region partitions and filters the buildstock to each,
+    so a building labelled with a region the catalogue never produced is offered to no pool at
+    all: it leaves the run without appearing anywhere, because the miss report counts catalogue
+    rows rather than buildings. The other two guards both look the other way down the join —
+    that every catalogue geography maps to a region, and that every catalogue row finds a
+    building — so this direction is the one nothing else covers.
+
+    It reports rather than raises: the buildstock legitimately carries regions the catalogue
+    does not when the two are versioned apart, and the count is what separates that from a
+    region label gone wrong.
+
+    Args:
+        bs_df: The buildstock's allocation keys, carrying in.sampling_region_id
+        partition_region_ids: The region ids the catalogue was staged into
+
+    Returns:
+        Buildings per orphan region id, empty when every region the buildstock names has one
+    """
+
+    staged = pl.DataFrame(
+        {"in.sampling_region_id": list(partition_region_ids)},
+        schema={"in.sampling_region_id": bs_df.schema["in.sampling_region_id"]},
+    )
+    orphans = (
+        bs_df.group_by("in.sampling_region_id")
+        .len(name="buildings")
+        .join(staged, on="in.sampling_region_id", how="anti")
+        .sort("buildings", descending=True)
+    )
+    if orphans.height:
+        logger.warning(
+            f"{orphans['buildings'].sum()} of {bs_df.height} buildings sit in {orphans.height} "
+            f"sampling regions the catalogue has no partition for, so no catalogue row can draw "
+            f"them: {dict(orphans.iter_rows())}"
+        )
+    return orphans
+
+
 def iter_sampling_region_partitions(
     output_dir: FsspecOutputDir, partition_dir: str
 ) -> Iterator[tuple[str, pl.DataFrame]]:
@@ -589,17 +656,8 @@ def iter_sampling_region_partitions(
         Tuples of (sampling region id, that region's catalogue rows)
     """
 
-    # One directory per region, holding one or more parquet files
-    region_dirs = sorted({Path(p).parent.name for p in output_dir["fs"].glob(f"{partition_dir}/*/*.parquet")})
-    if not region_dirs:
-        raise FileNotFoundError(
-            f"No catalogue partitions found in {partition_dir}, "
-            f"call partition_catalogue_by_sampling_region() first."
-        )
-
-    for region_dir in region_dirs:
-        region_id = region_dir.split("=", 1)[1]
-        region_glob = f"{partition_dir}/{region_dir}/*.parquet"
+    for region_id in sampling_region_partition_ids(output_dir, partition_dir):
+        region_glob = f"{partition_dir}/{SAMPLING_REGION_PARTITION}={region_id}/*.parquet"
         # hive_partitioning is off so the region only ever arrives as the column inside the
         # files, rather than also being parsed a second time out of the directory name
         geo_df = pl.read_parquet(
@@ -1039,10 +1097,11 @@ def create_allocated_weights(
     1. Sets up the filesystem
     2. Stages the catalogue as one parquet partition per sampling region
     3. Loads the allocation keys of the buildstock sample
-    4. For each sampling region, allocates its buildings to its geographical units, walking
+    4. Reports any sampling region the buildstock names that the catalogue has no partition for
+    5. For each sampling region, allocates its buildings to its geographical units, walking
        the fallback ladder for empty shelves, and writes that region's weights
-    5. Writes the miss report and checks the fraction the ladder still left unallocated
-    6. Writes the foreign key table
+    6. Writes the miss report and checks the fraction the ladder still left unallocated
+    7. Writes the foreign key table
 
     The catalogue is never held whole. Peak memory is set by the largest single sampling
     region, so it does not grow with the size of the country covered; see
@@ -1083,6 +1142,9 @@ def create_allocated_weights(
         columns=ALLOCATION_KEYS + ["bldg_id"],
         storage_options=output_dir["storage_options"],
     )
+
+    # Surface buildings the region-at-a-time allocation can never offer to a pool, before it runs
+    report_buildstock_regions_without_a_partition(bs_df, sampling_region_partition_ids(output_dir, partition_dir))
 
     # Allocate one sampling region at a time, keeping only the misses and the counts
     logger.info(f"Allocating buildings to geographical units by sampling region (seed={seed})")
