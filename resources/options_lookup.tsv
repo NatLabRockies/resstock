@@ -9194,7 +9194,7 @@ Duct Leakage and Insulation	30% Leakage to Outside, Uninsulated	ResStockArgument
 Duct Leakage and Insulation	5% Leakage to Outside, R-4	ResStockArguments	hvac_ducts=5% Leakage, R-4
 Duct Leakage and Insulation	5% Leakage to Outside, R-6	ResStockArguments	hvac_ducts=5% Leakage, R-6
 Duct Leakage and Insulation	5% Leakage to Outside, R-8	ResStockArguments	hvac_ducts=5% Leakage, R-8
-Duct Leakage and Insulation	5% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=10% Leakage, Uninsulated
+Duct Leakage and Insulation	5% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=5% Leakage, Uninsulated
 Duct Leakage and Insulation	None	ResStockArguments	hvac_ducts=None
 Duct Location	Attic	ResStockArguments	hvac_ducts_supply_location=Attic	hvac_ducts_return_location=Attic
 Duct Location	Crawlspace	ResStockArguments	hvac_ducts_supply_location=Crawlspace	hvac_ducts_return_location=Crawlspace
