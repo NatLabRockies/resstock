@@ -61,6 +61,9 @@ data_source_labels:
 - `table_name` — Athena table name of the baseline results.
 - `db_schema` — schema alias used to resolve column names. See `DBSchema` in `shared_utils/db_column_names.py` for valid values (`resstock_oedi_new`, `resstock_oedi_vu`, etc.). Pick the one that matches how your run was published in Athena.
 - `baseline_metadata_and_annual_results_parquet_url` — S3 URL to the baseline parquet, downloaded once on first run and cached under `<output_dir>/<run_name>/data/`. Enables the raw-parquet fast path; Athena is still used for timeseries queries.
+- `skip_missing_enduses` (default `false`) — if `true`, silently skip end-use columns not present in the Athena table instead of raising. Useful for partial or baseline-only runs.
+- `has_upgrades` (default `true`) — set to `false` for baseline-only runs that have no upgrades table, so BuildStockQuery doesn't try to query one.
+- `skip_timestamp_offset_validation` (default `false`) — if `true`, skips validation of timeseries timestamp offsets. Set to `true` when your timeseries data has non-standard intervals (e.g. aggregated to hourly instead of minute-level/timestep).
 
 Listing two or more sources produces side-by-side plots across ResStock releases.
 
@@ -407,9 +410,22 @@ cd postprocessing
 uv run pytest resstockpostproc/baseline_validation/tests
 ```
 
-The `tests/test_data.py` suite requires live AWS SSO credentials; everything
-else is hermetic. Use `--ignore=resstockpostproc/baseline_validation/tests/test_data.py`
-if your SSO session has expired.
+Two test files require live AWS SSO credentials:
+
+- `tests/test_data.py` — reference data loading (EIA, LRD raw data files)
+- `tests/test_pipeline_smoke.py` — end-to-end smoke test; one essential plot per
+  reference dataset (EIA, RECS, LRD) and one query per required Athena table/view
+  (`_md_national_parquet` baseline table and `_ts_by_state` timeseries table).
+  This is the quickest way to verify that all data sources and Athena views are
+  accessible after a table change, and that no source is silently skipped.
+
+Everything else is hermetic. Skip the live tests when AWS credentials are unavailable:
+
+```bash
+uv run pytest \
+  --ignore=resstockpostproc/baseline_validation/tests/test_data.py \
+  --ignore=resstockpostproc/baseline_validation/tests/test_pipeline_smoke.py
+```
 
 ## Pre-commit
 
