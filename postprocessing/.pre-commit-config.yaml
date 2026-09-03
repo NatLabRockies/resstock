@@ -1,4 +1,5 @@
 files: ^postprocessing/resstockpostproc/(upgrade_comparison|baseline_validation)/
+exclude: ^postprocessing/resstockpostproc/baseline_validation/dashboard/vendor/
 repos:
   - repo: https://github.com/crate-ci/typos
     rev: v1.34.0

@@ -146,7 +146,6 @@ in.natural_ventilation,,in.natural_ventilation
 in.neighbors,,in.neighbors
 in.occupants,,in.occupants
 in.orientation,,in.orientation
-in.overhangs,,in.overhangs
 in.plug_load_diversity,,in.plug_load_diversity
 in.plug_loads,,in.plug_loads
 in.puma,,in.puma

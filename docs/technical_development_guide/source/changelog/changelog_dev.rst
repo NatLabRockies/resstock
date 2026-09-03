@@ -7,6 +7,21 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: postprocessing, technical reference guide
+        :pullreq: 1561
+
+        **Date**: 2026-07-13
+
+        Title:
+        Fix units for utility bills in SDR resources
+
+        Description:
+        Fix units for utility bill arguments in sdr_column_definitions.csv.
+        Make some variable rate updates in the technical reference guide.
+
+        Assignees: Joe Robertson
+
+    .. change::
         :tags: feature, software, postprocessing
         :pullreq: 1529
 
@@ -23,6 +38,21 @@ Development Changelog
         uploads the generated dashboard as a CI artifact for review.
 
         Assignees: Rajendra Adhikari
+
+    .. change::
+        :tags: feature
+        :pullreq: 1503
+
+        **Date**: 2026-04-27
+
+        Title:
+        Add four upgrades to the SDR
+
+        Description:
+        Add four upgrades to the SDR.
+        These are upgrade IDs 29-32 in ResStock 2025 Release 1.
+
+        Assignees: Andrew Parker
 
     .. change::
         :tags: workflow, options, hpxml
