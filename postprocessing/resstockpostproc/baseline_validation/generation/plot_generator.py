@@ -103,103 +103,108 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # sources, missing columns, and other non-fatal issues are reviewable after
     # the run completes (worker stderr is silenced; without this they are lost).
     log_file_path = output_root / "run.log"
-    _log_file_handler = logging.FileHandler(log_file_path, mode="w", encoding="utf-8")
-    _log_file_handler.setLevel(logging.WARNING)
-    _log_file_handler.setFormatter(
+    log_file_handler = logging.FileHandler(log_file_path, mode="w", encoding="utf-8")
+    log_file_handler.setLevel(logging.WARNING)
+    log_file_handler.setFormatter(
         logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - %(message)s")
     )
-    logging.getLogger().addHandler(_log_file_handler)
-    logger.info("Run log: %s", log_file_path)
+    root_logger = logging.getLogger()
+    root_logger.addHandler(log_file_handler)
 
-    # Chrome Trace Event Format — streaming writes for Perfetto UI visualization
     trace_path = trace_output_path(output_root)
-    TimingStats.start_trace(trace_path)
+    try:
+        logger.info("Run log: %s", log_file_path)
 
-    # Incremental appends (TSV/shard/combo/dashboard-HTML) let users preview
-    # partial output on a full run. They're dead weight on --test since every
-    # item goes through handle_plot_result but most are dry-run-only (path
-    # strings only, no real files to show). Skip them under --test; the final
-    # `write_canonical_index` pass materializes everything in one shot.
-    stream_incremental = not test_only
-    index_state = None
-    if stream_incremental:
-        with open(csv_path, "w", newline="") as f:
-            csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t").writeheader()
-        index_state = init_html_index(html_path, OUTPUT_COLUMNS, data_dir=index_data_dir)
+        # Chrome Trace Event Format — streaming writes for Perfetto UI visualization
+        TimingStats.start_trace(trace_path)
 
-    # Expand templates into work items via slot triples. Always fully expand —
-    # `--test` gating happens per-work-item downstream (via `render_keys`),
-    # not at expansion time.
-    work_items = expand_templates(templates, test_only=False)
-    total = len(work_items)
-    logger.info(f"Total plot groups to generate: {total}")
+        # Incremental appends (TSV/shard/combo/dashboard-HTML) let users preview
+        # partial output on a full run. They're dead weight on --test since every
+        # item goes through handle_plot_result but most are dry-run-only (path
+        # strings only, no real files to show). Skip them under --test; the final
+        # `write_canonical_index` pass materializes everything in one shot.
+        stream_incremental = not test_only
+        index_state = None
+        if stream_incremental:
+            with open(csv_path, "w", newline="") as f:
+                csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t").writeheader()
+            index_state = init_html_index(html_path, OUTPUT_COLUMNS, data_dir=index_data_dir)
 
-    results, plot_args, stacking_groups = build_plot_args(work_items, render_keys)
+        # Expand templates into work items via slot triples. Always fully expand —
+        # `--test` gating happens per-work-item downstream (via `render_keys`),
+        # not at expansion time.
+        work_items = expand_templates(templates, test_only=False)
+        total = len(work_items)
+        logger.info(f"Total plot groups to generate: {total}")
 
-    # Pass 3: Generate plots — parallel or sequential
-    render_all_work_items(
-        plot_args,
-        parallel=parallel,
-        output_formats=output_formats,
-        link_format=link_format,
-        output_root=output_root,
-        source_labels=source_labels or None,
-        plotly_asset_path=plotly_asset_path,
-        needs_persistent_kaleido=needs_persistent_kaleido,
-        results=results,
-        index_state=index_state,
-        csv_path=csv_path,
-        log_file_path=log_file_path,
-    )
+        results, plot_args, stacking_groups = build_plot_args(work_items, render_keys)
 
-    # Pass 4: Assemble synthetic "All Enduses (Stacked)" pages by combining
-    # the raw Plotly HTML files already written in Pass 3. View-agnostic: for
-    # each view position in focused_entries, transpose across quantities.
-    stacked_count = generate_stacked_pages(
-        stacking_groups,
-        output_root=output_root,
-        link_format=link_format,
-        source_labels=source_labels,
-        plotly_asset_path=plotly_asset_path,
-        results=results,
-        index_state=index_state,
-        csv_path=csv_path,
-    )
-    if stacked_count:
-        logger.info(f"Generated {stacked_count} synthetic 'All Enduses (Stacked)' pages")
+        # Pass 3: Generate plots — parallel or sequential
+        render_all_work_items(
+            plot_args,
+            parallel=parallel,
+            output_formats=output_formats,
+            link_format=link_format,
+            output_root=output_root,
+            source_labels=source_labels or None,
+            plotly_asset_path=plotly_asset_path,
+            needs_persistent_kaleido=needs_persistent_kaleido,
+            results=results,
+            index_state=index_state,
+            csv_path=csv_path,
+            log_file_path=log_file_path,
+        )
 
-    _cleanup_raw_plot_html(output_root, link_format)
+        # Pass 4: Assemble synthetic "All Enduses (Stacked)" pages by combining
+        # the raw Plotly HTML files already written in Pass 3. View-agnostic: for
+        # each view position in focused_entries, transpose across quantities.
+        stacked_count = generate_stacked_pages(
+            stacking_groups,
+            output_root=output_root,
+            link_format=link_format,
+            source_labels=source_labels,
+            plotly_asset_path=plotly_asset_path,
+            results=results,
+            index_state=index_state,
+            csv_path=csv_path,
+        )
+        if stacked_count:
+            logger.info(f"Generated {stacked_count} synthetic 'All Enduses (Stacked)' pages")
 
-    if stream_incremental:
-        finalize_html_index(index_state)
-    else:
-        # No incremental writes happened. Materialize the TSV from in-memory
-        # results so write_canonical_index has something to rewrite.
-        _write_results_tsv(csv_path, results)
+        _cleanup_raw_plot_html(output_root, link_format)
 
-    # Rows were appended in worker-completion order, which is non-deterministic.
-    # Re-read the TSV, sort by Index (stacked rows with empty Index go last in
-    # their original write order), and rewrite TSV + shards + combinations.js +
-    # dashboard HTML so repeat runs produce byte-identical output. Also handles
-    # the non-streaming case: it's still the single place that writes shards
-    # and dashboard HTML from the materialized TSV.
-    write_canonical_index(csv_path, html_path, index_data_dir)
+        if stream_incremental:
+            finalize_html_index(index_state)
+        else:
+            # No incremental writes happened. Materialize the TSV from in-memory
+            # results so write_canonical_index has something to rewrite.
+            _write_results_tsv(csv_path, results)
 
-    ok, failed = _count_plot_outcomes(results)
-    logger.info(f"Done: {ok} succeeded, {failed} failed, {ok + failed} total")
+        # Rows were appended in worker-completion order, which is non-deterministic.
+        # Re-read the TSV, sort by Index (stacked rows with empty Index go last in
+        # their original write order), and rewrite TSV + shards + combinations.js +
+        # dashboard HTML so repeat runs produce byte-identical output. Also handles
+        # the non-streaming case: it's still the single place that writes shards
+        # and dashboard HTML from the materialized TSV.
+        write_canonical_index(csv_path, html_path, index_data_dir)
 
-    # Timing profiling summary
-    wall_elapsed = time.perf_counter() - wall_start
-    logger.info(
-        "\n=== Timing Summary ===\n%s\n%s\nTotal wall clock time: %.2fs",
-        TimingStats.summary(),
-        "-" * 95,
-        wall_elapsed,
-    )
+        ok, failed = _count_plot_outcomes(results)
+        logger.info(f"Done: {ok} succeeded, {failed} failed, {ok + failed} total")
 
-    # Close trace file
-    TimingStats.stop_trace()
-    logger.info(f"Trace file: {trace_path} (open in https://ui.perfetto.dev)")
+        # Timing profiling summary
+        wall_elapsed = time.perf_counter() - wall_start
+        logger.info(
+            "\n=== Timing Summary ===\n%s\n%s\nTotal wall clock time: %.2fs",
+            TimingStats.summary(),
+            "-" * 95,
+            wall_elapsed,
+        )
+
+        logger.info(f"Trace file: {trace_path} (open in https://ui.perfetto.dev)")
+    finally:
+        TimingStats.stop_trace()
+        root_logger.removeHandler(log_file_handler)
+        log_file_handler.close()
 
 
 def _cleanup_raw_plot_html(output_root: Path, link_format: FileType) -> None:

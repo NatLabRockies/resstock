@@ -1,8 +1,11 @@
 """Tests for plot_generator discrepancy math and list unnesting."""
 
+import logging
+
 import polars as pl
 import pytest
 
+from resstockpostproc.baseline_validation.generation import plot_generator
 from resstockpostproc.baseline_validation.plot_helpers.footnotes import (
     RECS_ANNUAL_CI_NOTE,
     RECS_OCCUPIED_UNITS_NOTE,
@@ -212,6 +215,42 @@ class TestComputeDiscrepancy:
         spec = _make_spec(resolution=Resolution.month)
         mape = compute_discrepancy(data, spec)["ResStock 2024"]
         assert mape == pytest.approx(10.0)
+
+
+def test_generate_plots_closes_run_log_handler(monkeypatch, tmp_path):
+    created_handlers = []
+    real_file_handler = logging.FileHandler
+
+    def tracking_file_handler(*args, **kwargs):
+        handler = real_file_handler(*args, **kwargs)
+        created_handlers.append(handler)
+        return handler
+
+    monkeypatch.setattr(plot_generator.logging, "FileHandler", tracking_file_handler)
+    monkeypatch.setattr(plot_generator, "generate_all_templates", lambda: [])
+    monkeypatch.setattr(plot_generator, "build_render_gate", lambda templates, test_only: set())
+    monkeypatch.setattr(plot_generator, "dashboard_output_root", lambda workflow: tmp_path)
+    monkeypatch.setattr(plot_generator, "comparisons_index_tsv_path", lambda output_root: output_root / "comparisons_index.tsv")
+    monkeypatch.setattr(plot_generator, "dashboard_html_path", lambda output_root: output_root / "comparison_dashboard.html")
+    monkeypatch.setattr(plot_generator, "comparisons_index_data_dir", lambda output_root: output_root / "dashboard_data")
+    monkeypatch.setattr(plot_generator, "dashboard_assets_dir", lambda output_root: output_root / "assets")
+    monkeypatch.setattr(plot_generator, "ensure_plotly_asset", lambda path: path / "plotly.min.js")
+    monkeypatch.setattr(plot_generator, "expand_templates", lambda templates, test_only=False: [])
+    monkeypatch.setattr(plot_generator, "build_plot_args", lambda work_items, render_keys: ({}, [], {}))
+    monkeypatch.setattr(plot_generator, "render_all_work_items", lambda *args, **kwargs: None)
+    monkeypatch.setattr(plot_generator, "generate_stacked_pages", lambda *args, **kwargs: 0)
+    monkeypatch.setattr(plot_generator, "_cleanup_raw_plot_html", lambda *args, **kwargs: None)
+    monkeypatch.setattr(plot_generator, "write_canonical_index", lambda *args, **kwargs: None)
+    monkeypatch.setattr(plot_generator.TimingStats, "start_trace", lambda *args, **kwargs: None)
+    monkeypatch.setattr(plot_generator.TimingStats, "stop_trace", lambda *args, **kwargs: None)
+    monkeypatch.setattr(plot_generator.TimingStats, "summary", lambda: "timing summary")
+
+    plot_generator.generate_plots(test_only=True)
+
+    assert len(created_handlers) == 1
+    handler = created_handlers[0]
+    assert handler not in logging.getLogger().handlers
+    assert handler.stream is None
 
 
 class TestAllEndusesHelpers:
