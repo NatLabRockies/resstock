@@ -6,6 +6,7 @@ pivoted shape consumed by the HTML page builder.
 
 from __future__ import annotations
 
+import logging
 import polars as pl
 
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -24,6 +25,8 @@ from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import (
     resolve_timeseries_column,
 )
 from resstockpostproc.shared_utils.timing import timed
+
+logger = logging.getLogger(__name__)
 
 
 # Columns and suffixes to always drop from the table

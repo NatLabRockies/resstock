@@ -342,8 +342,12 @@ def plot_tilemap(
             fig.update_xaxes(title_text=f"{entity}<br>{x_axis_title_bottom_row}", row=nrows, col=col)
 
     fig.update_yaxes(showgrid=False, showline=False, zeroline=True, zerolinewidth=2, zerolinecolor="darkgray")
+    # Set explicit figure height so tall tilemaps (e.g. 7-row state grid) are not
+    # clipped by Plotly's 450 px default.
+    fig_height = max(600, nrows * 140)
     fig.update_layout(
         title_text=title_text,
+        height=fig_height,
     )
 
     return fig

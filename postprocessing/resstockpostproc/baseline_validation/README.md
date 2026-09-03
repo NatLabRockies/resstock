@@ -61,6 +61,9 @@ data_source_labels:
 - `table_name` — Athena table name of the baseline results.
 - `db_schema` — schema alias used to resolve column names. See `DBSchema` in `shared_utils/db_column_names.py` for valid values (`resstock_oedi_new`, `resstock_oedi_vu`, etc.). Pick the one that matches how your run was published in Athena.
 - `baseline_metadata_and_annual_results_parquet_url` — S3 URL to the baseline parquet, downloaded once on first run and cached under `<output_dir>/<run_name>/data/`. Enables the raw-parquet fast path; Athena is still used for timeseries queries.
+- `skip_missing_enduses` (default `false`) — if `true`, silently skip end-use columns not present in the Athena table instead of raising. Useful for partial or baseline-only runs.
+- `has_upgrades` (default `true`) — set to `false` for baseline-only runs that have no upgrades table, so BuildStockQuery doesn't try to query one.
+- `skip_timestamp_offset_validation` (default `false`) — if `true`, skips validation of timeseries timestamp offsets. Set to `true` when your timeseries data has non-standard intervals (e.g. aggregated to hourly instead of minute-level/timestep).
 
 Listing two or more sources produces side-by-side plots across ResStock releases.
 
@@ -126,6 +129,69 @@ Edit `workflow.yaml` (next to `main.py`) to point at the data sources and output
 ```bash
 uv run resstockpostproc/baseline_validation/main.py
 ```
+
+### AWS & Athena Configuration
+
+BuildStockQuery automatically fetches your Athena workgroup's configured query output location. You should not need to manually configure `query_unload_s3_bucket` in `workflow.yaml` unless:
+
+1. Your AWS credentials don't have access to the workgroup configuration
+2. You need to override the workgroup's default location
+3. You get S3 permission errors during queries
+
+If you need to override the default, add `query_unload_s3_bucket` to a data source in `workflow.yaml`:
+
+```yaml
+data_sources:
+  - db_name: buildstock_sdr
+    table_name: my_run
+    name: my_data
+    query_unload_s3_bucket: "my-personal-bucket"  # Optional override
+    # ... other fields
+```
+
+The bucket should be one where you have S3 write permissions for temporary query results.
+
+## Clearing Caches
+
+The baseline validation tool maintains multiple caches to speed up subsequent runs. **If you modify `workflow.yaml` to change data sources or settings, you may need to clear caches** to ensure your changes take effect.
+
+### When to Clear Caches
+
+- ✓ After adding, removing, or changing `data_sources` in `workflow.yaml`
+- ✓ After changing the `workgroup` setting
+- ✓ If plots are showing old data despite configuration changes
+- ✓ If you encounter S3 access errors during query execution
+
+### Cache Locations
+
+The tool maintains two types of caches:
+
+1. **Query result cache** (`.bsq_cache/`) — stores Athena query results
+2. **Data loading cache** (`.cache/resstock_*_data_cache/`) — stores processed ResStock data aggregations
+
+Both are stored in the `postprocessing/` directory.
+
+### How to Clear Caches
+
+Clear all baseline validation caches:
+
+```bash
+rm -rf /path/to/resstock/postprocessing/.bsq_cache
+rm -rf /path/to/resstock/postprocessing/.cache/resstock_annual_data_cache
+rm -rf /path/to/resstock/postprocessing/.cache/resstock_timeseries_data_cache
+```
+
+Or using a convenience command from the `postprocessing/` directory:
+
+```bash
+# Remove all BSQ and data loading caches
+rm -rf .bsq_cache .cache/resstock_*_data_cache
+```
+
+The next run will recreate caches as needed with your new configuration.
+
+**Note**: Reference data caches (`eia_annual_data_cache`, `recs_annual_data_cache_v2`) are safe to keep unless you're updating reference datasets.
+
 
 ## Developing and Testing
 
@@ -344,9 +410,22 @@ cd postprocessing
 uv run pytest resstockpostproc/baseline_validation/tests
 ```
 
-The `tests/test_data.py` suite requires live AWS SSO credentials; everything
-else is hermetic. Use `--ignore=resstockpostproc/baseline_validation/tests/test_data.py`
-if your SSO session has expired.
+Two test files require live AWS SSO credentials:
+
+- `tests/test_data.py` — reference data loading (EIA, LRD raw data files)
+- `tests/test_pipeline_smoke.py` — end-to-end smoke test; one essential plot per
+  reference dataset (EIA, RECS, LRD) and one query per required Athena table/view
+  (`_md_national_parquet` baseline table and `_ts_by_state` timeseries table).
+  This is the quickest way to verify that all data sources and Athena views are
+  accessible after a table change, and that no source is silently skipped.
+
+Everything else is hermetic. Skip the live tests when AWS credentials are unavailable:
+
+```bash
+uv run pytest \
+  --ignore=resstockpostproc/baseline_validation/tests/test_data.py \
+  --ignore=resstockpostproc/baseline_validation/tests/test_pipeline_smoke.py
+```
 
 ## Pre-commit
 
