@@ -196,7 +196,7 @@ def scan_catalogue(output_dir: FsspecOutputDir, catalogue_file_version: str) -> 
 
     Args:
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
-        catalogue_file_version: Version string for catalogue file (e.g., 'v2')
+        catalogue_file_version: Version string for catalogue file (e.g., 'v3')
 
     Returns:
         Polars LazyFrame over the catalogue, with the gisjoin and state columns derived
@@ -277,7 +277,7 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
 
     Args:
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
-        catalogue_file_version: Version string for catalogue file (e.g., 'v2')
+        catalogue_file_version: Version string for catalogue file (e.g., 'v3')
 
     Returns:
         Polars DataFrame with catalogue data including county_gisjoin column
@@ -523,7 +523,7 @@ def _region_partition_path(region_id: str) -> str:
 
 def partition_catalogue_by_sampling_region(
     output_dir: FsspecOutputDir,
-    catalogue_file_version: str = "v2",
+    catalogue_file_version: str = "v3",
     sampling_region_version: str = "v1",
     rewrite: bool = False,
 ) -> str:
@@ -1038,7 +1038,7 @@ def create_allocated_weights(
     simulation_outputs_file: str,
     output_dir: str,
     aws_profile_name=None,
-    catalogue_file_version="v2",
+    catalogue_file_version="v3",
     sampling_region_version="v1",
     seed: int | None = DEFAULT_ALLOCATION_SEED,
     null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
@@ -1067,7 +1067,7 @@ def create_allocated_weights(
         simulation_outputs_file: Path to the simulation outputs Parquet file
         output_dir: Path to write output parquet files (local or S3)
         aws_profile_name: Optional AWS profile name for S3 access
-        catalogue_file_version: Version of catalogue file to use (default 'v2')
+        catalogue_file_version: Version of catalogue file to use (default 'v3')
         sampling_region_version: Version of sampling regions file to use (default 'v1')
         seed: Seed for the random building-to-geography allocation so identical
             inputs produce identical publications. Each region draws off a seed derived
