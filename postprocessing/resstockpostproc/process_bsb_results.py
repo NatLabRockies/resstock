@@ -215,15 +215,20 @@ def export_metadata_and_annual_results(raw_results_dir: str,
 
     # Process and cache allocated weights
     bs_pub_df_path = get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir, 0)
+    # The allocation functions rebuild the filesystem from a URL, so the scheme must be kept:
+    # passing the bare fs_path of an S3 output would resolve to a local directory instead
+    alloc_output_url = (
+        f"s3://{output_dir['fs_path']}" if output_dir["storage_options"] is not None else output_dir["fs_path"]
+    )
     if sampler_type == "stratified":
         create_allocated_weights(
             bs_pub_df_path,
-            Path(f"{output_dir['fs_path']}"),
+            alloc_output_url, aws_profile_name=aws_profile_name,
             seed=allocation_seed,
             null_building_threshold=null_building_threshold,
         )
     elif sampler_type == "quota":
-        create_allocated_weights_for_quota_sampler(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
+        create_allocated_weights_for_quota_sampler(bs_pub_df_path, alloc_output_url, aws_profile_name=aws_profile_name)
 
     # Process and cache allocated weights plus utility bills
     for upgrade_id in upgrade_ids:

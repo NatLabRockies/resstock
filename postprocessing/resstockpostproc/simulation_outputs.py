@@ -676,7 +676,7 @@ def get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir: pathlib.Pa
     file_path = upgrade_cache_dir / file_name
     if isinstance(output_dir["fs"], s3fs.S3FileSystem):
         file_path = f"s3://{file_path.as_posix()}"
-    if not upgrade_cache_dir.exists():
+    if not output_dir["fs"].exists(str(file_path)):
         raise Exception(f"{file_path} does not exist. Ensure cache_simulation_outputs_file has been called previously.")
     return file_path
 

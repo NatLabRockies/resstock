@@ -113,20 +113,29 @@ def region_seed(seed: int | None, region_id: str) -> Sequence[int] | None:
     return None if seed is None else [seed, zlib.crc32(str(region_id).encode())]
 
 
-def _download_truth_file(local_path, s3_key, file_desc: str) -> None:
-    """Download a truth-data file from S3, with an actionable error on failure."""
-    logger.info(f"{file_desc} not found locally, downloading from S3")
+def _download_truth_file(output_dir: FsspecOutputDir, dest_path: str, s3_key: str, file_desc: str) -> None:
+    """Copy a truth-data file from S3 to the output filesystem, with an actionable error on failure.
+
+    When the output directory is itself on S3 the file is copied server-side; otherwise it is
+    downloaded to the local output directory.
+    """
+    src = f"s3://{TRUTH_DATA_BUCKET}/{s3_key}"
+    logger.info(f"{file_desc} not found in output directory, copying from {src}")
     try:
-        s3_client = boto3.client("s3")
-        s3_client.download_file(TRUTH_DATA_BUCKET, s3_key, str(local_path))
+        if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+            output_dir["fs"].copy(src, dest_path)
+        else:
+            Path(dest_path).parent.mkdir(parents=True, exist_ok=True)
+            s3_client = boto3.client("s3")
+            s3_client.download_file(TRUTH_DATA_BUCKET, s3_key, str(dest_path))
     except Exception as err:
         raise RuntimeError(
-            f"Could not download {file_desc} from s3://{TRUTH_DATA_BUCKET}/{s3_key}. "
+            f"Could not copy {file_desc} from {src}. "
             f"If this machine has no AWS credentials or no internet access, pre-stage "
-            f"the file at {local_path} and rerun; files already present locally are "
-            f"not re-downloaded."
+            f"the file at {dest_path} and rerun; files already present in the output "
+            f"directory are not re-downloaded."
         ) from err
-    logger.info(f"Downloaded {file_desc} to {local_path}")
+    logger.info(f"Copied {file_desc} to {dest_path}")
 
 
 def coerce_vacant_join_keys(catalogue_df: pl.DataFrame) -> pl.DataFrame:
@@ -169,7 +178,7 @@ def _ensure_truth_file(output_dir: FsspecOutputDir, file_name: str, s3_key: str,
 
     local_path = f"{output_dir['fs_path']}/{file_name}"
     if not output_dir["fs"].exists(local_path):
-        _download_truth_file(local_path, s3_key, file_desc)
+        _download_truth_file(output_dir, local_path, s3_key, file_desc)
 
     return local_path
 
@@ -235,7 +244,8 @@ def scan_catalogue(output_dir: FsspecOutputDir, catalogue_file_version: str) -> 
 
     # Read state table
     logger.info(f"Reading state table file from {state_table_path}")
-    state_table_df = pl.read_csv(state_table_path)
+    with output_dir["fs"].open(state_table_path, "rb") as f:
+        state_table_df = pl.read_csv(f)
 
     # Make the FIPS code a string with a "G" and leading zeros, and map it to state abbreviations
     state_table_df = state_table_df.with_columns(
@@ -300,7 +310,7 @@ def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: 
 
     # Load JSON file containing county to sampling region mappings
     logger.info(f"Reading sample file from {sample_regions_local_path}")
-    with open(sample_regions_local_path) as f:
+    with output_dir["fs"].open(sample_regions_local_path, "r") as f:
         sampling_regions_dict = json.load(f)
 
     # Manually add in Oglala Lakota County, SD which used to be Shannon county (G4601130)
@@ -357,7 +367,7 @@ def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
 
     # Load JSON file containing tract to CEC climate zone mappings
     logger.info(f"Reading CEC 2010 CZ lookup file from {cec_2010_cz_lkup_local_path}")
-    with open(cec_2010_cz_lkup_local_path) as f:
+    with output_dir["fs"].open(cec_2010_cz_lkup_local_path, "r") as f:
         cec_2010_cz_lkup_dict = json.load(f)
 
     # Convert to DataFrame and map CEC zones to sampling region numbers
