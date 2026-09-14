@@ -51,8 +51,14 @@ def _make_col(name, partition=False):
     return ns
 
 
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    return_value=[],
+)
 @patch("postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client")
-def test_baseline_query_skips_list_typed_columns(mock_boto3_client):
+def test_baseline_query_skips_list_typed_columns(
+    mock_boto3_client, mock_list_tables
+):
     bsq = MagicMock()
     bsq.table_name = "test_run"
     bsq.db_name = "test_database"
@@ -62,6 +68,7 @@ def test_baseline_query_skips_list_typed_columns(mock_boto3_client):
             "StorageDescriptor": {
                 "Columns": [
                     {"Name": "building_id", "Type": "bigint"},
+                    {"Name": "upgrade", "Type": "integer"},
                     {"Name": "in.representative_income", "Type": "type:[float]"},
                     {"Name": "in.sqft", "Type": "double"},
                 ]
@@ -73,17 +80,79 @@ def test_baseline_query_skips_list_typed_columns(mock_boto3_client):
 
     assert '"building_id"' in query
     assert '"in.sqft"' in query
-    assert 'CAST(0 AS INTEGER) AS "upgrade"' in query
+    assert 'CAST("upgrade" AS INTEGER) AS "upgrade"' in query
+    assert "UNION ALL" not in query
+    assert "WHERE" not in query
     assert '"in.representative_income"' not in query
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    return_value=[],
+)
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client")
+def test_pub_annual_query_filters_requested_upgrade(
+    mock_boto3_client, mock_list_tables
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    bsq.db_name = "test_database"
+    bsq.run_params.region_name = "us-west-2"
+    mock_boto3_client.return_value.get_table.return_value = {
+        "Table": {
+            "StorageDescriptor": {
+                "Columns": [
+                    {"Name": "building_id", "Type": "bigint"},
+                    {"Name": "upgrade", "Type": "integer"},
+                ]
+            }
+        }
+    }
+
+    query = create_query_oedi_baseline_from_pub_annual(bsq, upgrade_filter="3")
+
+    assert 'CAST("upgrade" AS VARCHAR) = \'3\'' in query
+    assert "UNION ALL" not in query
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    return_value=[],
+)
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client")
+def test_pub_annual_query_preserves_partitioned_upgrade_column(
+    mock_boto3_client, mock_list_tables
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    bsq.db_name = "test_database"
+    bsq.run_params.region_name = "us-west-2"
+    mock_boto3_client.return_value.get_table.return_value = {
+        "Table": {
+            "StorageDescriptor": {
+                "Columns": [{"Name": "building_id", "Type": "bigint"}]
+            },
+            "PartitionKeys": [{"Name": "upgrade", "Type": "integer"}],
+        }
+    }
+
+    query = create_query_oedi_baseline_from_pub_annual(bsq)
+
+    assert 'CAST("upgrade" AS INTEGER) AS "upgrade"' in query
+    assert 'CAST(0 AS INTEGER) AS "upgrade"' not in query
 
 
 @patch(
     "postprocessing.resstockpostproc.create_athena_views_from_results._load_baseline_to_pub_annual_mapping",
     return_value={"raw.kwh": ("out.electricity.total.energy_consumption..kwh", 1.0)},
 )
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    return_value=[],
+)
 @patch("postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client")
 def test_baseline_query_from_baseline_adds_upgrade_zero(
-    mock_boto3_client, mock_mapping
+    mock_boto3_client, mock_list_tables, mock_mapping
 ):
     bsq = MagicMock()
     bsq.table_name = "test_run"
@@ -105,6 +174,80 @@ def test_baseline_query_from_baseline_adds_upgrade_zero(
     assert '"raw.kwh" AS "out.electricity.total.energy_consumption..kwh"' in query
     assert 'CAST(0 AS INTEGER) AS "upgrade"' in query
     assert '"upgrade"' not in query.split('CAST(0 AS INTEGER) AS "upgrade"')[0]
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results._load_baseline_to_pub_annual_mapping",
+    return_value={"raw.kwh": ("out.electricity.total.energy_consumption..kwh", 1.0)},
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    return_value=["test_run_upgrade"],
+)
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client")
+def test_baseline_query_combines_upgrade_table_rows(
+    mock_boto3_client, mock_list_tables, mock_mapping
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    bsq.db_name = "test_database"
+    bsq.workgroup = "test_workgroup"
+    bsq.run_params.region_name = "us-west-2"
+    mock_boto3_client.return_value.get_table.side_effect = [
+        {
+            "Table": {
+                "StorageDescriptor": {
+                    "Columns": [{"Name": "raw.kwh", "Type": "double"}]
+                }
+            }
+        },
+        {
+            "Table": {
+                "StorageDescriptor": {
+                    "Columns": [
+                        {"Name": "raw.kwh", "Type": "double"},
+                        {"Name": "upgrade", "Type": "integer"},
+                    ]
+                }
+            }
+        },
+    ]
+
+    query = create_query_oedi_baseline_from_baseline(bsq)
+
+    assert "UNION ALL" in query
+    assert "FROM test_run_baseline" in query
+    assert "FROM test_run_upgrade" in query
+    assert 'CAST(0 AS INTEGER) AS "upgrade"' in query
+    assert 'CAST("upgrade" AS INTEGER) AS "upgrade"' in query
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results._load_baseline_to_pub_annual_mapping",
+    return_value={"raw.kwh": ("out.electricity.total.energy_consumption..kwh", 1.0)},
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    return_value=["test_run_upgrade"],
+)
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client")
+def test_baseline_query_filters_requested_upgrade_rows(
+    mock_boto3_client, mock_list_tables, mock_mapping
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    bsq.db_name = "test_database"
+    bsq.workgroup = "test_workgroup"
+    bsq.run_params.region_name = "us-west-2"
+    mock_boto3_client.return_value.get_table.side_effect = [
+        {"Table": {"StorageDescriptor": {"Columns": [{"Name": "raw.kwh", "Type": "double"}]}}},
+        {"Table": {"StorageDescriptor": {"Columns": [{"Name": "raw.kwh", "Type": "double"}, {"Name": "upgrade", "Type": "integer"}]}}},
+    ]
+
+    query = create_query_oedi_baseline_from_baseline(bsq, upgrade_filter="1")
+
+    assert "FROM test_run_baseline WHERE FALSE" in query
+    assert 'FROM test_run_upgrade WHERE CAST("upgrade" AS VARCHAR) = \'1\'' in query
 
 
 def test_check_view_table_oedi_baseline_requires_upgrade_column():
@@ -162,10 +305,61 @@ def test_materialized_baseline_table_uses_upgrade_partitioned_ctas(
     mock_boto3_client.return_value.get_table.assert_called_once()
 
 
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results._delete_s3_prefix"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.create_query_oedi_baseline_from_pub_annual",
+    return_value='SELECT "building_id", "upgrade" FROM test_run_pub_annual',
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    side_effect=[["test_run_md_national_parquet"], ["test_run_pub_annual"]],
+)
+def test_force_recreates_existing_materialized_baseline_table(
+    mock_list_tables,
+    mock_baseline_query,
+    mock_boto3_client,
+    mock_delete_s3_prefix,
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    bsq.db_name = "test_database"
+    bsq.workgroup = "test_workgroup"
+    bsq.run_params.region_name = "us-west-2"
+    bsq._aws_athena.start_query_execution.return_value = {"QueryExecutionId": "query-id"}
+    bsq._aws_athena.get_query_execution.return_value = {
+        "QueryExecution": {"Status": {"State": "SUCCEEDED"}}
+    }
+    mock_boto3_client.return_value.get_table.side_effect = [
+        {
+            "Table": {
+                "TableType": "EXTERNAL_TABLE",
+                "StorageDescriptor": {"Location": "s3://bucket/baseline/"},
+            }
+        },
+        {"Table": {"StorageDescriptor": {"Location": "s3://bucket/baseline/"}}},
+    ]
+
+    create_materialized_baseline_table(bsq, force=True)
+
+    mock_delete_s3_prefix.assert_called_once_with("s3://bucket/baseline/", "us-west-2")
+    mock_boto3_client.return_value.delete_table.assert_called_once_with(
+        DatabaseName="test_database",
+        Name="test_run_md_national_parquet",
+    )
+    assert "CREATE TABLE test_database.test_run_md_national_parquet" in (
+        bsq._aws_athena.start_query_execution.call_args.kwargs["QueryString"]
+    )
+
+
 @patch("postprocessing.resstockpostproc.create_athena_views_from_results.pq.ParquetWriter")
-@patch("postprocessing.resstockpostproc.create_athena_views_from_results.pa.Table.from_pandas")
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.pa.Table")
 def test_export_baseline_to_single_parquet(
-    mock_from_pandas,
+    mock_table,
     mock_parquet_writer,
 ):
     bsq = MagicMock()
@@ -192,17 +386,20 @@ def test_export_baseline_to_single_parquet(
     )
 
     bsq._aws_athena.start_query_execution.assert_called_once()
+    assert bsq._aws_athena.start_query_execution.call_args.kwargs["QueryString"] == (
+        'SELECT * FROM test_run_md_national_parquet WHERE "upgrade" = 0'
+    )
     bsq.execute.assert_not_called()
-    mock_from_pandas.assert_called_once()
+    mock_table.from_pandas.assert_called_once()
     assert mock_parquet_writer.call_args.args[0] == Path("/tmp/results_up00.parquet")
     mock_parquet_writer.return_value.write_table.assert_called_once()
     mock_parquet_writer.return_value.close.assert_called_once()
 
 
 @patch("postprocessing.resstockpostproc.create_athena_views_from_results.pq.ParquetWriter")
-@patch("postprocessing.resstockpostproc.create_athena_views_from_results.pa.Table.from_pandas")
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.pa.Table")
 def test_export_baseline_to_single_parquet_uses_default_name_for_directory(
-    mock_from_pandas,
+    mock_table,
     mock_parquet_writer,
 ):
     bsq = MagicMock()
@@ -304,7 +501,7 @@ def test_materialized_baseline_table_omits_external_location_when_workgroup_enfo
 
 
 @patch(
-    "postprocessing.resstockpostproc.create_athena_views_from_results.check_view_oedi_baseline"
+    "postprocessing.resstockpostproc.create_athena_views_from_results.check_view_table_oedi_baseline"
 )
 @patch(
     "postprocessing.resstockpostproc.create_athena_views_from_results._log_materialized_table_location"
@@ -340,6 +537,7 @@ def test_main_materialize_baseline_when_baseline_and_final_flags_are_used(
         "-t", "test_run",
         "-b",
         "-m", "s3://bucket/baseline/",
+        "-u", "1",
         "--check",
     ]):
         from postprocessing.resstockpostproc.create_athena_views_from_results import main
@@ -350,6 +548,7 @@ def test_main_materialize_baseline_when_baseline_and_final_flags_are_used(
         bsq,
         s3_output_location="s3://bucket/baseline/",
         force=False,
+        upgrade_filter="1",
     )
     mock_create_view.assert_not_called()
     mock_log_location.assert_called_once_with(

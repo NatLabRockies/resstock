@@ -7,7 +7,8 @@ For OCHRE workflow, use the --reduced-workflow (-r) flag to pass through unmappe
 Views created:
   - Timeseries view: <table>_ts_by_state (default, omitted when --baseline-view flag is used)
     - Baseline view:   <table>_md_national_parquet (only with --baseline-view flag)
-        - Includes an "upgrade" column with value 0.
+        - Includes an "upgrade" column: 0 for baseline rows and source upgrade
+          values for any processed <table>_upgrade rows.
         - With --baseline-view and --materialize-final, a baseline table named
                 <table>_md_national_parquet is created instead and partitioned by upgrade.
 
@@ -113,8 +114,8 @@ Flags
   -b, --baseline-view           Create only the baseline view from <table>_pub_annual or <table>_baseline.
   --export-baseline-parquet LOCAL_PATH
                                 With --baseline-view, export the resulting baseline view or
-                                table as exactly one local Parquet file at LOCAL_PATH. If
-                                LOCAL_PATH is a directory, a default filename
+                                table's upgrade=0 rows as exactly one local Parquet file at
+                                LOCAL_PATH. If LOCAL_PATH is a directory, a default filename
                                 ("results_up00.parquet") will be appended to it.
   --materialize-intermediate S3_LOCATION
                                 Arg for timeseries view creation only.
@@ -144,7 +145,7 @@ Flags
                                 appended; if only S3 files remain, the table is recreated over
                                 those files before resuming. With --baseline-view, materialize
                                 a <table>_md_national_parquet baseline table partitioned by upgrade instead.
-  -u, --upgrade-filter <FILTER> Arg for timeseries view creation only.
+    -u, --upgrade-filter <FILTER> Filter upgrades for timeseries and baseline view creation.
                                 Apply an upgrade filter to the materialized table, if needed.
                                 Default to all, meaning no filter is applied.
                                 To preserve only the baseline (upgrade=0), use --upgrade-filter 0.
@@ -210,8 +211,10 @@ Main steps for timeseries view creation:
 
 - Optionally, run basic validation checks on the created timeseries view.
 
-[2] The baseline view is a simple passthrough (SELECT *) from <table>_pub_annual.
-No validation checks.
+[2] The baseline view/table is built from the processed baseline annual rows
+(upgrade=0) and, when present, the processed <table>_upgrade or
+<table>_upgrades rows. The materialized baseline table is partitioned by
+upgrade.
 
 ===================================================================================
 OCHRE-defrost project cmd for reference:
@@ -223,7 +226,8 @@ uv run resstockpostproc/create_athena_views_from_results.py -w resstock-panels -
 
 # create baseline table for baseline comparison dashboard workflow + export baseline parquet to local
 uv run resstockpostproc/create_athena_views_from_results.py -w resstock-panels -d resstock_panels \
-    -t sdr2025_r1_full_nodefco_15min_aug8 --reduced-workflow -f --check -b
+    -t sdr2025_r1_full_nodefco_15min_aug8 --reduced-workflow -f --check -b \
+    --export-baseline-parquet '/Users/lliu2/baseline_dashboards/ochre_baseline_validation_outputs/data/ResStock Data/ochre_sdr2025_r1_nodefco/'
 
 ===================================================================================
 ResStock Heating Calibration project cmd for reference:
@@ -235,7 +239,7 @@ uv run resstockpostproc/create_athena_views_from_results.py \
   --reduced-workflow \
   -f \
   --check \
-  -b -export-baseline-parquet '/Users/lliu2/baseline_dashboards/heating_calibration/data/ResStock Data/ob_resstock_sheltered_flue/'
+  -b --export-baseline-parquet '/Users/lliu2/baseline_dashboards/heating_calibration/data/ResStock Data/ob_resstock_sheltered_flue/'
 
 # [2] create materialized timeseries table for baseline comparison dashboard workflow
 uv run resstockpostproc/create_athena_views_from_results.py \
@@ -2217,7 +2221,11 @@ def _get_supported_baseline_columns(bsq: BuildStockQuery, source_table: str) -> 
     table_info = glue.get_table(DatabaseName=bsq.db_name, Name=source_table)
     supported = []
     skipped = []
-    for column in table_info["Table"]["StorageDescriptor"]["Columns"]:
+    table = table_info["Table"]
+    columns = table["StorageDescriptor"]["Columns"] + table.get(
+        "PartitionKeys", []
+    )
+    for column in columns:
         column_name = column["Name"]
         col_type = str(column["Type"]).lower()
         if (
@@ -2237,7 +2245,153 @@ def _get_supported_baseline_columns(bsq: BuildStockQuery, source_table: str) -> 
     return supported
 
 
-def create_query_oedi_baseline_from_pub_annual(bsq: BuildStockQuery) -> str:
+def _get_upgrade_table_name(bsq: BuildStockQuery) -> Optional[str]:
+    """Return the run upgrade table name, if one exists."""
+    tables = list_tables_boto3(
+        database=bsq.db_name,
+        workgroup=bsq.workgroup,
+        region_name=bsq.run_params.region_name,
+    )
+    for table_name in (f"{bsq.table_name}_upgrade", f"{bsq.table_name}_upgrades"):
+        if table_name in tables:
+            return table_name
+    return None
+
+
+def _sql_literal(value: str) -> str:
+    """Return a safely escaped SQL string literal."""
+    return f"'{str(value).replace(chr(39), chr(39) * 2)}'"
+
+
+def _build_select_from_expr_map(
+    source_table: str,
+    aliases: list[str],
+    expr_by_alias: dict[str, str],
+    upgrade_expr: str,
+    where_sql: Optional[str] = None,
+) -> str:
+    """Build a SELECT with aligned aliases and upgrade last for CTAS partitioning."""
+    col_exprs = [
+        f'{expr_by_alias.get(alias, "NULL")} AS "{alias}"'
+        for alias in aliases
+    ]
+    col_exprs.append(f'{upgrade_expr} AS "upgrade"')
+    query = f"SELECT {', '.join(col_exprs)} FROM {source_table}"
+    if where_sql is not None:
+        query += f" WHERE {where_sql}"
+    return query
+
+
+def _build_raw_annual_expr_map(
+    bsq: BuildStockQuery,
+    source_table: str,
+    source_label: str,
+) -> dict[str, str]:
+    """Build {published_column: SQL expression} for raw annual result tables."""
+    columns = _get_supported_baseline_columns(bsq, source_table)
+    baseline_to_pub = _load_baseline_to_pub_annual_mapping()
+
+    expr_by_alias: dict[str, str] = {}
+    mapped_cols: list[tuple[str, str]] = []
+    skipped_cols: list[str] = []
+
+    for col in columns:
+        if col == "upgrade":
+            continue
+        if col not in baseline_to_pub:
+            skipped_cols.append(col)
+            logger.debug("%s column not in SDR mapping (skipping): %s", source_label, col)
+            continue
+
+        pub_col, factor = baseline_to_pub[col]
+        mapped_cols.append((col, pub_col))
+
+        if factor != 1.0:
+            expr_by_alias[pub_col] = f'{factor} * "{col}"'
+        else:
+            expr_by_alias[pub_col] = f'"{col}"'
+
+    logger.info(
+        "%s → pub_annual mapping: %d mapped, %d skipped",
+        source_label,
+        len(mapped_cols),
+        len(skipped_cols),
+    )
+    logger.debug("Skipped %s columns: %s", source_label, skipped_cols)
+
+    if not expr_by_alias:
+        msg = (
+            f"No {source_label} columns matched the SDR mapping. "
+            f"Table '{source_table}' has {len(columns)} columns but none matched "
+            f"the {len(baseline_to_pub)} entries in {sdr_column_definitions_file}. "
+            f"First 10 table columns: {columns[:10]}"
+        )
+        raise ValueError(msg)
+
+    return expr_by_alias
+
+
+def _combine_baseline_with_upgrade_rows(
+    bsq: BuildStockQuery,
+    baseline_source_table: str,
+    baseline_expr_by_alias: dict[str, str],
+    baseline_where_sql: Optional[str] = None,
+    upgrade_filter: Optional[str] = None,
+) -> str:
+    """Union processed baseline rows with processed upgrade rows when available."""
+    if upgrade_filter is not None and str(upgrade_filter) != "0":
+        baseline_where_sql = "FALSE"
+
+    upgrade_table = _get_upgrade_table_name(bsq)
+    if upgrade_table is None:
+        aliases = list(baseline_expr_by_alias)
+        return _build_select_from_expr_map(
+            baseline_source_table,
+            aliases,
+            baseline_expr_by_alias,
+            "CAST(0 AS INTEGER)",
+            where_sql=baseline_where_sql,
+        )
+
+    upgrade_expr_by_alias = _build_raw_annual_expr_map(
+        bsq,
+        upgrade_table,
+        "Upgrade",
+    )
+    aliases = list(baseline_expr_by_alias)
+    aliases.extend(
+        alias for alias in upgrade_expr_by_alias if alias not in baseline_expr_by_alias
+    )
+    baseline_select = _build_select_from_expr_map(
+        baseline_source_table,
+        aliases,
+        baseline_expr_by_alias,
+        "CAST(0 AS INTEGER)",
+        where_sql=baseline_where_sql,
+    )
+    upgrade_select = _build_select_from_expr_map(
+        upgrade_table,
+        aliases,
+        upgrade_expr_by_alias,
+        'CAST("upgrade" AS INTEGER)',
+        where_sql=(
+            f'CAST("upgrade" AS VARCHAR) = {_sql_literal(upgrade_filter)}'
+            if upgrade_filter is not None
+            else None
+        ),
+    )
+    logger.info(
+        "Combining baseline source '%s' with upgrade table '%s'.",
+        baseline_source_table,
+        upgrade_table,
+    )
+    return f"{baseline_select} UNION ALL {upgrade_select}"
+
+
+def create_query_oedi_baseline_from_pub_annual(
+    bsq: BuildStockQuery,
+    upgrade_filter: Optional[str] = None,
+) -> str:
     """Build a SELECT statement that renames baseline columns in _pub_annual table to OEDI convention.
 
     Queries the pub_annual table schema, then for each ``out.*`` column
@@ -2256,24 +2410,35 @@ def create_query_oedi_baseline_from_pub_annual(bsq: BuildStockQuery) -> str:
     """
     source_table = f"{bsq.table_name}_pub_annual"
 
-    # Use Glue to get column names — bsq.execute() wraps with UNLOAD which
-    # produces a 0-row Parquet that loses all schema information.
-    glue = boto3.client("glue", region_name=bsq.run_params.region_name)
     columns = _get_supported_baseline_columns(bsq, source_table)
 
-    col_exprs = []
+    expr_by_alias: dict[str, str] = {}
     for col in columns:
         if col == "upgrade":
             continue
         new_col = _reformat_baseline_column_pub_annual_schema(col)
         if new_col is not None:
-            col_exprs.append(f'"{col}" AS "{new_col}"')
+            expr_by_alias[new_col] = f'"{col}"'
         else:
-            col_exprs.append(f'"{col}"')
-    col_exprs.append('CAST(0 AS INTEGER) AS "upgrade"')
+            expr_by_alias[col] = f'"{col}"'
 
-    select_sql = f"SELECT {', '.join(col_exprs)} FROM {source_table}"
-    return select_sql
+    upgrade_expr = (
+        'CAST("upgrade" AS INTEGER)'
+        if "upgrade" in columns
+        else "CAST(0 AS INTEGER)"
+    )
+    where_sql = (
+        f'CAST("upgrade" AS VARCHAR) = {_sql_literal(upgrade_filter)}'
+        if upgrade_filter is not None and "upgrade" in columns
+        else None
+    )
+    return _build_select_from_expr_map(
+        source_table,
+        list(expr_by_alias),
+        expr_by_alias,
+        upgrade_expr,
+        where_sql=where_sql,
+    )
 
 
 def _load_baseline_to_pub_annual_mapping() -> dict[str, tuple[str, float]]:
@@ -2308,7 +2473,10 @@ def _load_baseline_to_pub_annual_mapping() -> dict[str, tuple[str, float]]:
     return mapping
 
 
-def create_query_oedi_baseline_from_baseline(bsq: BuildStockQuery) -> str:
+def create_query_oedi_baseline_from_baseline(
+    bsq: BuildStockQuery,
+    upgrade_filter: Optional[str] = None,
+) -> str:
     """Build a SELECT that converts _baseline columns to _pub_annual naming.
 
     Uses the SDR column definitions CSV to map raw ``build_existing_model.*``,
@@ -2332,59 +2500,20 @@ def create_query_oedi_baseline_from_baseline(bsq: BuildStockQuery) -> str:
     """
     source_table = f"{bsq.table_name}_baseline"
 
-    # Use Glue to get column names — bsq.execute() wraps with UNLOAD which
-    # produces a 0-row Parquet that loses all schema information.
-    glue = boto3.client("glue", region_name=bsq.run_params.region_name)
-    columns = _get_supported_baseline_columns(bsq, source_table)
-
-    baseline_to_pub = _load_baseline_to_pub_annual_mapping()
-
-    col_exprs: list[str] = []
-    mapped_cols: list[tuple[str, str]] = []
-    skipped_cols: list[str] = []
-
-    for col in columns:
-        if col == "upgrade":
-            continue
-        if col not in baseline_to_pub:
-            skipped_cols.append(col)
-            logger.debug("Baseline column not in SDR mapping (skipping): %s", col)
-            continue
-
-        pub_col, factor = baseline_to_pub[col]
-        mapped_cols.append((col, pub_col))
-
-        if factor != 1.0:
-            col_exprs.append(f'{factor} * "{col}" AS "{pub_col}"')
-        else:
-            col_exprs.append(f'"{col}" AS "{pub_col}"')
-
-    logger.info(
-        "Baseline → pub_annual mapping: %d mapped, %d skipped",
-        len(mapped_cols),
-        len(skipped_cols),
+    expr_by_alias = _build_raw_annual_expr_map(bsq, source_table, "Baseline")
+    return _combine_baseline_with_upgrade_rows(
+        bsq,
+        source_table,
+        expr_by_alias,
+        upgrade_filter=upgrade_filter,
     )
-    logger.debug("Skipped baseline columns: %s", skipped_cols)
-
-    if not col_exprs:
-        msg = (
-            f"No baseline columns matched the SDR mapping. "
-            f"Table '{source_table}' has {len(columns)} columns but none matched "
-            f"the {len(baseline_to_pub)} entries in {sdr_column_definitions_file}. "
-            f"First 10 table columns: {columns[:10]}"
-        )
-        raise ValueError(msg)
-
-    col_exprs.append('CAST(0 AS INTEGER) AS "upgrade"')
-
-    select_sql = f"SELECT {', '.join(col_exprs)} FROM {source_table}"
-    return select_sql
 
 
 def create_view_oedi_baseline(
     bsq: BuildStockQuery,
     view_name: str,
     force: bool = False,
+    upgrade_filter: Optional[str] = None,
 ) -> None:
     """Create an Athena view with OEDI baseline schema.
 
@@ -2412,9 +2541,9 @@ def create_view_oedi_baseline(
         workgroup=bsq.workgroup, 
         region_name=bsq.region_name
         ):
-        select_sql = create_query_oedi_baseline_from_pub_annual(bsq)
+        select_sql = create_query_oedi_baseline_from_pub_annual(bsq, upgrade_filter)
     else:
-        select_sql = create_query_oedi_baseline_from_baseline(bsq)
+        select_sql = create_query_oedi_baseline_from_baseline(bsq, upgrade_filter)
     create_view(bsq, view_name, select_sql, force)
 
 
@@ -2423,7 +2552,7 @@ def export_baseline_to_single_parquet(
     source_name: str,
     output_path: str,
 ) -> None:
-    """Export a baseline Athena view or table in Athena result pages.
+    """Export upgrade 0 from a baseline Athena view or table in Athena result pages.
 
     Each result page is appended to one local Parquet file, avoiding a full
     result DataFrame and the S3 connection pool used by ``bsq.execute``.
@@ -2445,7 +2574,7 @@ def export_baseline_to_single_parquet(
 
     logger.info("Exporting baseline '%s' to one local Parquet file at '%s'.", source_name, path)
     execution_id = bsq._aws_athena.start_query_execution(
-        QueryString=f"SELECT * FROM {source_name}",
+        QueryString=f'SELECT * FROM {source_name} WHERE "upgrade" = 0',
         QueryExecutionContext={"Database": bsq.db_name},
         WorkGroup=bsq.workgroup,
     )["QueryExecutionId"]
@@ -2514,16 +2643,37 @@ def export_baseline_to_single_parquet(
     logger.info("Exported %d baseline row(s) to '%s'.", row_count, path)
 
 
+def _delete_s3_prefix(s3_location: str, region_name: str) -> None:
+    """Delete all objects at an S3 location before replacing a CTAS table."""
+    if not s3_location.startswith("s3://"):
+        msg = f"Expected an S3 location, got '{s3_location}'."
+        raise ValueError(msg)
+
+    bucket_and_prefix = s3_location.removeprefix("s3://")
+    bucket, _, prefix = bucket_and_prefix.partition("/")
+    s3 = boto3.client("s3", region_name=region_name)
+    paginator = s3.get_paginator("list_objects_v2")
+    for page in paginator.paginate(Bucket=bucket, Prefix=prefix):
+        objects = [{"Key": obj["Key"]} for obj in page.get("Contents", [])]
+        for start in range(0, len(objects), 1000):
+            s3.delete_objects(
+                Bucket=bucket,
+                Delete={"Objects": objects[start : start + 1000], "Quiet": True},
+            )
+
+
 def create_materialized_baseline_table(
     bsq: BuildStockQuery,
     s3_output_location: Optional[str] = None,
     force: bool = False,
+    upgrade_filter: Optional[str] = None,
 ) -> str:
     """Materialize the OEDI baseline as an upgrade-partitioned Athena table.
 
     The table is named ``<table>_md_national_parquet`` and partitioned by the
-    synthetic baseline ``upgrade`` column with value 0. Athena controls the
-    number and names of CTAS output objects.
+    ``upgrade`` column. Published annual sources are converted directly;
+    otherwise baseline and upgrade source tables are combined. Athena controls
+    the number and names of CTAS output objects.
     """
     baseline_table = f"{bsq.table_name}{BL_VIEW_SUFFIX}"
     table_exists = baseline_table in list_tables_boto3(
@@ -2532,8 +2682,16 @@ def create_materialized_baseline_table(
     if table_exists:
         glue = boto3.client("glue", region_name=bsq.run_params.region_name)
         table_info = glue.get_table(DatabaseName=bsq.db_name, Name=baseline_table)
-        if table_info["Table"].get("TableType") == "VIRTUAL_VIEW" and force:
-            logger.info("Deleting existing baseline view '%s' before CTAS materialization.", baseline_table)
+        table_type = table_info["Table"].get("TableType")
+        if force:
+            if table_type == "VIRTUAL_VIEW":
+                logger.info("Deleting existing baseline view '%s' before CTAS materialization.", baseline_table)
+            else:
+                location = table_info["Table"]["StorageDescriptor"].get("Location")
+                if location:
+                    logger.info("Deleting existing baseline table output at '%s'.", location)
+                    _delete_s3_prefix(location, bsq.run_params.region_name)
+                logger.info("Deleting existing baseline table '%s' before CTAS materialization.", baseline_table)
             glue.delete_table(DatabaseName=bsq.db_name, Name=baseline_table)
         else:
             logger.info("Materialized baseline table '%s' already exists; reusing it.", baseline_table)
@@ -2545,9 +2703,9 @@ def create_materialized_baseline_table(
         workgroup=bsq.workgroup,
         region_name=bsq.run_params.region_name,
     ):
-        select_sql = create_query_oedi_baseline_from_pub_annual(bsq)
+        select_sql = create_query_oedi_baseline_from_pub_annual(bsq, upgrade_filter)
     else:
-        select_sql = create_query_oedi_baseline_from_baseline(bsq)
+        select_sql = create_query_oedi_baseline_from_baseline(bsq, upgrade_filter)
 
     s3_loc = _resolve_materialization_location(
         bsq,
@@ -3525,6 +3683,11 @@ def main() -> None:
 
     if args.baseline_view:
         bl_view_name = f"{args.table}{BL_VIEW_SUFFIX}"
+        baseline_upgrade_filter = (
+            None
+            if args.upgrade_filter is None or args.upgrade_filter.lower() == "all"
+            else args.upgrade_filter
+        )
         if args.materialize_final is not None:
             baseline_s3_loc = (
                 args.materialize_final
@@ -3536,6 +3699,7 @@ def main() -> None:
                 bsq,
                 s3_output_location=baseline_s3_loc,
                 force=args.force,
+                upgrade_filter=baseline_upgrade_filter,
             )
             logger.info("Materialized baseline table ready: '%s'", baseline_table)
             _log_materialized_table_location(bsq, baseline_table, "baseline")
@@ -3549,7 +3713,12 @@ def main() -> None:
                 )
         else:
             logger.info(f"Creating baseline view: {bl_view_name}")
-            create_view_oedi_baseline(bsq, view_name=bl_view_name, force=args.force)
+            create_view_oedi_baseline(
+                bsq,
+                view_name=bl_view_name,
+                force=args.force,
+                upgrade_filter=baseline_upgrade_filter,
+            )
             logger.info(f"Successfully created baseline view: {bl_view_name}")
             if args.check:
                 check_view_table_oedi_baseline(bsq, view_name=bl_view_name)
