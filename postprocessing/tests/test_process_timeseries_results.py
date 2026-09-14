@@ -8,6 +8,7 @@ string assertions and optionally sqlglot for syntax validation.
 
 import re
 import sys
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 from types import SimpleNamespace
 
@@ -26,8 +27,13 @@ from postprocessing.resstockpostproc.create_athena_views_from_results import (
     UNIT_CONVERSIONS as _UNIT_CONVERSIONS,
     create_query_oedi_timeseries,
     create_query_oedi_baseline_from_pub_annual,
+    create_query_oedi_baseline_from_baseline,
     create_materialized_hourly_timeseries_table,
     create_materialized_final_timeseries_table,
+    create_materialized_baseline_table,
+    export_baseline_to_single_parquet,
+    check_intermediate_hourly_table,
+    check_view_table_oedi_baseline,
     _get_county_utc_offset,
     _read_options_lookup,
     options_lookup_file,
@@ -67,7 +73,294 @@ def test_baseline_query_skips_list_typed_columns(mock_boto3_client):
 
     assert '"building_id"' in query
     assert '"in.sqft"' in query
+    assert 'CAST(0 AS INTEGER) AS "upgrade"' in query
     assert '"in.representative_income"' not in query
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results._load_baseline_to_pub_annual_mapping",
+    return_value={"raw.kwh": ("out.electricity.total.energy_consumption..kwh", 1.0)},
+)
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client")
+def test_baseline_query_from_baseline_adds_upgrade_zero(
+    mock_boto3_client, mock_mapping
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    bsq.db_name = "test_database"
+    bsq.run_params.region_name = "us-west-2"
+    mock_boto3_client.return_value.get_table.return_value = {
+        "Table": {
+            "StorageDescriptor": {
+                "Columns": [
+                    {"Name": "raw.kwh", "Type": "double"},
+                    {"Name": "upgrade", "Type": "integer"},
+                ]
+            }
+        }
+    }
+
+    query = create_query_oedi_baseline_from_baseline(bsq)
+
+    assert '"raw.kwh" AS "out.electricity.total.energy_consumption..kwh"' in query
+    assert 'CAST(0 AS INTEGER) AS "upgrade"' in query
+    assert '"upgrade"' not in query.split('CAST(0 AS INTEGER) AS "upgrade"')[0]
+
+
+def test_check_view_table_oedi_baseline_requires_upgrade_column():
+    bsq = MagicMock()
+    bsq.execute.return_value = pd.DataFrame({"building_id": [1]})
+
+    with pytest.raises(ValueError, match="missing required 'upgrade' column"):
+        check_view_table_oedi_baseline(bsq, "test_run_md_national_parquet")
+
+
+def test_check_view_table_oedi_baseline_accepts_upgrade_column():
+    bsq = MagicMock()
+    bsq.execute.return_value = pd.DataFrame(
+        {"building_id": [1], "upgrade": [0]}
+    )
+
+    check_view_table_oedi_baseline(bsq, "test_run_md_national_parquet")
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.create_query_oedi_baseline_from_pub_annual",
+    return_value='SELECT "building_id", CAST(0 AS INTEGER) AS "upgrade" FROM test_run_pub_annual',
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    side_effect=[[], ["test_run_pub_annual"]],
+)
+def test_materialized_baseline_table_uses_upgrade_partitioned_ctas(
+    mock_list_tables, mock_baseline_query, mock_boto3_client
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    bsq.db_name = "test_database"
+    bsq.workgroup = "test_workgroup"
+    bsq.run_params.region_name = "us-west-2"
+
+    bsq._aws_athena.start_query_execution.return_value = {"QueryExecutionId": "query-id"}
+    bsq._aws_athena.get_query_execution.return_value = {
+        "QueryExecution": {"Status": {"State": "SUCCEEDED"}}
+    }
+
+    result = create_materialized_baseline_table(
+        bsq,
+        s3_output_location="s3://bucket/baseline/",
+    )
+
+    ctas_sql = bsq._aws_athena.start_query_execution.call_args.kwargs["QueryString"]
+    assert result == "test_run_md_national_parquet"
+    assert "CREATE TABLE test_database.test_run_md_national_parquet" in ctas_sql
+    assert "external_location = 's3://bucket/baseline/'" in ctas_sql
+    assert "partitioned_by = ARRAY['upgrade']" in ctas_sql
+    mock_boto3_client.return_value.get_table.assert_called_once()
+
+
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.pq.ParquetWriter")
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.pa.Table.from_pandas")
+def test_export_baseline_to_single_parquet(
+    mock_from_pandas,
+    mock_parquet_writer,
+):
+    bsq = MagicMock()
+    bsq.db_name = "test_database"
+    bsq.workgroup = "test_workgroup"
+    bsq._aws_athena.start_query_execution.return_value = {"QueryExecutionId": "query-id"}
+    bsq._aws_athena.get_query_execution.return_value = {
+        "QueryExecution": {"Status": {"State": "SUCCEEDED"}}
+    }
+    bsq._aws_athena.get_query_results.return_value = {
+        "ResultSet": {
+            "ResultSetMetadata": {"ColumnInfo": [{"Name": "building_id"}]},
+            "Rows": [
+                {"Data": [{"VarCharValue": "building_id"}]},
+                {"Data": [{"VarCharValue": "1"}]},
+            ],
+        }
+    }
+
+    export_baseline_to_single_parquet(
+        bsq,
+        "test_run_md_national_parquet",
+        "/tmp/results_up00.parquet",
+    )
+
+    bsq._aws_athena.start_query_execution.assert_called_once()
+    bsq.execute.assert_not_called()
+    mock_from_pandas.assert_called_once()
+    assert mock_parquet_writer.call_args.args[0] == Path("/tmp/results_up00.parquet")
+    mock_parquet_writer.return_value.write_table.assert_called_once()
+    mock_parquet_writer.return_value.close.assert_called_once()
+
+
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.pq.ParquetWriter")
+@patch("postprocessing.resstockpostproc.create_athena_views_from_results.pa.Table.from_pandas")
+def test_export_baseline_to_single_parquet_uses_default_name_for_directory(
+    mock_from_pandas,
+    mock_parquet_writer,
+):
+    bsq = MagicMock()
+    bsq.db_name = "test_database"
+    bsq.workgroup = "test_workgroup"
+    bsq._aws_athena.start_query_execution.return_value = {"QueryExecutionId": "query-id"}
+    bsq._aws_athena.get_query_execution.return_value = {
+        "QueryExecution": {"Status": {"State": "SUCCEEDED"}}
+    }
+    bsq._aws_athena.get_query_results.return_value = {
+        "ResultSet": {
+            "ResultSetMetadata": {"ColumnInfo": [{"Name": "building_id"}]},
+            "Rows": [
+                {"Data": [{"VarCharValue": "building_id"}]},
+                {"Data": [{"VarCharValue": "1"}]},
+            ],
+        }
+    }
+
+    export_baseline_to_single_parquet(
+        bsq,
+        "test_run_md_national_parquet",
+        "/tmp/exports/",
+    )
+
+    assert mock_parquet_writer.call_args.args[0] == Path("/tmp/exports/results_up00.parquet")
+
+
+def test_export_baseline_to_single_parquet_rejects_other_file_types():
+    bsq = MagicMock()
+
+    with pytest.raises(ValueError, match="directory or a local file path"):
+        export_baseline_to_single_parquet(
+            bsq,
+            "test_run_md_national_parquet",
+            "/tmp/exports/results.csv",
+        )
+
+
+def test_export_baseline_to_single_parquet_rejects_s3_uri():
+    bsq = MagicMock()
+
+    with pytest.raises(ValueError, match="only accepts a local"):
+        export_baseline_to_single_parquet(
+            bsq,
+            "test_run_md_national_parquet",
+            "s3://bucket/exports/results_up00.parquet",
+        )
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.create_query_oedi_baseline_from_pub_annual",
+    return_value='SELECT "building_id", CAST(0 AS INTEGER) AS "upgrade" FROM test_run_pub_annual',
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    side_effect=[[], ["test_run_pub_annual"]],
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client"
+)
+def test_materialized_baseline_table_omits_external_location_when_workgroup_enforces_output(
+    mock_boto3_client,
+    mock_list_tables,
+    mock_baseline_query,
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    bsq.db_name = "test_database"
+    bsq.workgroup = "test_workgroup"
+    bsq.run_params.region_name = "us-west-2"
+    bsq._aws_athena.get_work_group.return_value = {
+        "WorkGroup": {
+            "Configuration": {
+                "EnforceWorkGroupConfiguration": True,
+                "ResultConfiguration": {"OutputLocation": "s3://bucket/query-results/"},
+            }
+        }
+    }
+    bsq._aws_athena.start_query_execution.return_value = {"QueryExecutionId": "query-id"}
+    bsq._aws_athena.get_query_execution.return_value = {
+        "QueryExecution": {"Status": {"State": "SUCCEEDED"}}
+    }
+    mock_boto3_client.return_value.get_table.return_value = {
+        "Table": {
+            "StorageDescriptor": {"Location": "s3://bucket/query-results/tables/query-id/"}
+        }
+    }
+
+    create_materialized_baseline_table(
+        bsq,
+        s3_output_location="s3://bucket/requested-baseline/",
+    )
+
+    ctas_sql = bsq._aws_athena.start_query_execution.call_args.kwargs["QueryString"]
+    assert "external_location" not in ctas_sql
+    assert "format = 'PARQUET'" in ctas_sql
+    assert "partitioned_by = ARRAY['upgrade']" in ctas_sql
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.check_view_oedi_baseline"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results._log_materialized_table_location"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.create_view_oedi_baseline"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.create_materialized_baseline_table",
+    return_value="test_run_md_national_parquet",
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.ensure_eiaid_weights_table"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.initialize_buildstock_query"
+)
+def test_main_materialize_baseline_when_baseline_and_final_flags_are_used(
+    mock_init_bsq,
+    mock_ensure_eiaid,
+    mock_create_table,
+    mock_create_view,
+    mock_log_location,
+    mock_check_baseline,
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    mock_init_bsq.return_value = bsq
+
+    with patch.object(sys, "argv", [
+        "create_athena_views_from_results.py",
+        "-d", "test_database",
+        "-t", "test_run",
+        "-b",
+        "-m", "s3://bucket/baseline/",
+        "--check",
+    ]):
+        from postprocessing.resstockpostproc.create_athena_views_from_results import main
+
+        main()
+
+    mock_create_table.assert_called_once_with(
+        bsq,
+        s3_output_location="s3://bucket/baseline/",
+        force=False,
+    )
+    mock_create_view.assert_not_called()
+    mock_log_location.assert_called_once_with(
+        bsq,
+        "test_run_md_national_parquet",
+        "baseline",
+    )
+    mock_check_baseline.assert_called_once_with(
+        bsq,
+        view_name="test_run_md_national_parquet",
+    )
 
 
 @patch(
@@ -226,6 +519,97 @@ def test_materialized_hourly_table_fans_out_all_upgrades(
 
     query = bsq.execute.call_args_list[1].args[0]
     assert 'SELECT DISTINCT "state", "upgrade"' in query
+
+
+def test_check_intermediate_hourly_table_retries_empty_sample():
+    bsq = MagicMock()
+    empty_sample = pd.DataFrame(columns=["building_id", "time", "upgrade"])
+    valid_sample = pd.DataFrame(
+        {
+            "building_id": [1],
+            "time": pd.to_datetime(["2018-01-01 00:00:00"]),
+            "upgrade": [0],
+        }
+    )
+    timestamps = pd.DataFrame(
+        {"time": pd.to_datetime(["2018-01-01 00:00:00", "2018-01-01 01:00:00"])}
+    )
+    bsq.execute.side_effect = [empty_sample, valid_sample, timestamps]
+
+    check_intermediate_hourly_table(
+        bsq,
+        "test_run_timeseries_hourly",
+        expected_upgrade="0",
+        retry_attempts=2,
+        retry_wait_seconds=0,
+    )
+
+    sample_queries = [call.args[0] for call in bsq.execute.call_args_list[:2]]
+    assert sample_queries == [
+        'SELECT * FROM test_run_timeseries_hourly WHERE "upgrade" = \'0\' LIMIT 10',
+        'SELECT * FROM test_run_timeseries_hourly WHERE "upgrade" = \'0\' LIMIT 10',
+    ]
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.create_view_oedi_timeseries"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results._drop_materialized_hourly_table"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.check_intermediate_hourly_table",
+    side_effect=ValueError("validation failed"),
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.create_materialized_hourly_timeseries_table",
+    return_value="test_run_timeseries_hourly",
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.ensure_eiaid_weights_table"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.initialize_buildstock_query"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    return_value=["test_run_timeseries_hourly"],
+)
+def test_main_preserves_intermediate_table_when_validation_fails(
+    mock_list_tables,
+    mock_init_bsq,
+    mock_ensure_eiaid,
+    mock_create_hourly,
+    mock_check_hourly,
+    mock_drop_hourly,
+    mock_create_view,
+):
+    bsq = MagicMock()
+    bsq.db_name = "test_database"
+    bsq.workgroup = "test_workgroup"
+    bsq.run_params.region_name = "us-west-2"
+    bsq.table_name = "test_run"
+    mock_init_bsq.return_value = bsq
+
+    with patch.object(sys, "argv", [
+        "create_athena_views_from_results.py",
+        "-d",
+        "test_database",
+        "-t",
+        "test_run",
+        "-w",
+        "test_workgroup",
+        "--materialize-intermediate",
+        "s3://bucket/hourly/",
+        "--check-intermediate",
+    ]):
+        from postprocessing.resstockpostproc.create_athena_views_from_results import main
+
+        with pytest.raises(RuntimeError, match="failed validation and was preserved"):
+            main()
+
+    mock_drop_hourly.assert_not_called()
+    mock_create_view.assert_not_called()
 
 
 @patch(
@@ -434,6 +818,9 @@ def test_materialized_hourly_table_force_resumes_missing_partitions(
     "postprocessing.resstockpostproc.create_athena_views_from_results.check_view_oedi_timeseries"
 )
 @patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results._log_materialized_table_location"
+)
+@patch(
     "postprocessing.resstockpostproc.create_athena_views_from_results.create_view_oedi_timeseries"
 )
 @patch(
@@ -456,6 +843,7 @@ def test_main_materialize_final_creates_table_and_checks_table(
     mock_ensure_eiaid,
     mock_create_final,
     mock_create_view,
+    mock_log_location,
     mock_check_view,
 ):
     bsq = MagicMock()
@@ -489,6 +877,7 @@ def test_main_materialize_final_creates_table_and_checks_table(
 
     mock_create_final.assert_called_once()
     mock_create_view.assert_not_called()
+    mock_log_location.assert_called_once_with(bsq, "test_run_ts_by_state", "final")
     mock_check_view.assert_called_once_with(
         bsq,
         view_name="test_run_ts_by_state",
@@ -560,6 +949,69 @@ def test_materialized_final_table_uses_requested_external_location(
     assert "AND \"state\" = 'CO'" in ctas_sql or "AND \"state\" = 'NY'" in ctas_sql
     assert "external_location = 's3://bucket/requested-destination/" in ctas_sql
     assert "external_location = 's3://bucket/workgroup-default/" not in ctas_sql
+
+
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.boto3.client"
+)
+@patch(
+    "postprocessing.resstockpostproc.create_athena_views_from_results.list_tables_boto3",
+    return_value=[],
+)
+def test_materialized_final_table_uses_workgroup_location_when_enforced(
+    mock_list_tables, mock_boto3_client
+):
+    bsq = MagicMock()
+    bsq.table_name = "test_run"
+    bsq.db_name = "test_database"
+    bsq.workgroup = "test_workgroup"
+    bsq.run_params.region_name = "us-west-2"
+    bsq.ts_table.columns = [
+        _make_col("building_id"),
+        _make_col("upgrade", partition=True),
+        _make_col("state", partition=True),
+        _make_col("time"),
+        _make_col("end_use__electricity__heating__kwh"),
+    ]
+
+    def mock_execute(query):
+        if 'SELECT DISTINCT "upgrade", "state"' in query:
+            return pd.DataFrame({"upgrade": ["0"], "state": ["CO"]})
+        if 'SELECT DISTINCT "time" FROM test_run_timeseries' in query:
+            return pd.DataFrame(
+                {"time": pd.to_datetime(["2018-01-01 00:00:00", "2018-01-01 01:00:00"])}
+            )
+        return pd.DataFrame()
+
+    bsq.execute.side_effect = mock_execute
+    bsq._aws_athena.start_query_execution.return_value = {"QueryExecutionId": "query-id"}
+    bsq._aws_athena.get_query_execution.return_value = {
+        "QueryExecution": {"Status": {"State": "SUCCEEDED"}}
+    }
+    bsq._aws_athena.get_work_group.return_value = {
+        "WorkGroup": {
+            "Configuration": {
+                "EnforceWorkGroupConfiguration": True,
+                "ResultConfiguration": {
+                    "OutputLocation": "s3://bucket/workgroup-default/"
+                },
+            }
+        }
+    }
+    mock_boto3_client.return_value.get_table.return_value = {
+        "Table": {
+            "StorageDescriptor": {"Location": "s3://bucket/workgroup-default/tables/query-id/"}
+        }
+    }
+
+    create_materialized_final_timeseries_table(
+        bsq,
+        s3_output_location="s3://bucket/requested-destination/",
+        upgrade_filter="0",
+    )
+
+    ctas_sql = bsq._aws_athena.start_query_execution.call_args.kwargs["QueryString"]
+    assert "external_location" not in ctas_sql
 
 
 @patch(
