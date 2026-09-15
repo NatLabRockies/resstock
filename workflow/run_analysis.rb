@@ -501,7 +501,11 @@ def create_buildstock_csv(project_dir, sampler, outfile)
     r.run(project_dir, num_samples, outfile)
   elsif sampler_type == 'residential_stratified'
     sampler_args = sampler['args']
-    sampler_config = create_sampler_config(File.dirname(outfile), sampler_args['segment_vars'], sampler_args['segment_selection_sample_size'], sampler_args['num_samples_per_segment'])
+    # A key the YAML omits comes back nil, which would bypass the method defaults if passed through.
+    sampler_config = create_sampler_config(File.dirname(outfile),
+                                           sampler_args['segment_vars'] || DEFAULT_SEGMENT_VARS,
+                                           sampler_args['segment_selection_sample_size'] || DEFAULT_SEGMENT_SELECTION_SAMPLE_SIZE,
+                                           sampler_args['num_samples_per_segment'] || DEFAULT_NUM_SAMPLES_PER_SEGMENT)
 
     command = "python #{File.dirname(__FILE__)}/../samplers/stratified/sampler/run_sampler.py sample"
     command += " -p \"#{project_dir}\""
@@ -514,7 +518,15 @@ def create_buildstock_csv(project_dir, sampler, outfile)
   puts "Sampling took: #{get_elapsed_time(Time.now, $start_time)}."
 end
 
-def create_sampler_config(folderpath, segment_vars = ['Federal Poverty Level', 'Geometry Floor Area Bin', 'Geometry Building Type RECS', 'Vintage', 'Heating Fuel', 'Sampling Region'], segment_selection_sample_size = 10000000, num_samples_per_segment = 8)
+# Defaults match samplers/stratified/sampler/sampler_config.yaml: the segment variables are the
+# characteristics the allocator joins on (Geometry Floor Area Bin flows downhill through the TSVs
+# and is invisible to the allocator, so it must not split segments), and the take per segment is
+# run_sampler.py's DEFAULT_NUM_SAMPLES_PER_SEGMENT.
+DEFAULT_SEGMENT_VARS = ['Federal Poverty Level', 'Geometry Building Type RECS', 'Vintage', 'Heating Fuel', 'Sampling Region'].freeze
+DEFAULT_SEGMENT_SELECTION_SAMPLE_SIZE = 10000000
+DEFAULT_NUM_SAMPLES_PER_SEGMENT = 12
+
+def create_sampler_config(folderpath, segment_vars = DEFAULT_SEGMENT_VARS, segment_selection_sample_size = DEFAULT_SEGMENT_SELECTION_SAMPLE_SIZE, num_samples_per_segment = DEFAULT_NUM_SAMPLES_PER_SEGMENT)
   data = {}
   data['segment_vars'] = segment_vars
   data['segment_selection_sample_size'] = segment_selection_sample_size
