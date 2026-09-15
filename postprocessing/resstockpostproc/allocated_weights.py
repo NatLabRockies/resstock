@@ -548,6 +548,9 @@ def partition_catalogue_by_sampling_region(
     """
 
     partition_dir = _polars_path(output_dir, CATALOGUE_PARTITION_DIR)
+    # s3fs caches directory listings, and the partitions are written by polars' own object
+    # store rather than through this handle, so every glob here reads a fresh listing
+    output_dir["fs"].invalidate_cache()
     existing = output_dir["fs"].glob(f"{partition_dir}/*/*.parquet")
     if existing and not rewrite:
         logger.info(f"Reusing {len(existing)} staged catalogue partitions in {partition_dir}")
@@ -573,6 +576,7 @@ def partition_catalogue_by_sampling_region(
         storage_options=output_dir["storage_options"],
         mkdir=True,
     )
+    output_dir["fs"].invalidate_cache()
     n_partitions = len(output_dir["fs"].glob(f"{partition_dir}/*/*.parquet"))
     logger.info(
         f"Staged the catalogue as {n_partitions} sampling region partitions in "
@@ -599,7 +603,9 @@ def iter_sampling_region_partitions(
         Tuples of (sampling region id, that region's catalogue rows)
     """
 
-    # One directory per region, holding one or more parquet files
+    # One directory per region, holding one or more parquet files. The listing cache is
+    # dropped first: the partitions may have been written moments ago by a different client
+    output_dir["fs"].invalidate_cache()
     region_dirs = sorted({Path(p).parent.name for p in output_dir["fs"].glob(f"{partition_dir}/*/*.parquet")})
     if not region_dirs:
         raise FileNotFoundError(
