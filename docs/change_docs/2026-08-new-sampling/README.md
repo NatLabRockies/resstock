@@ -8,7 +8,7 @@ title:                Stratified sampler and catalogue-allocated weights replace
 change_type:          workflow_mechanics   # also carries a data_distribution component: dwelling-unit weights now come from an ACS 2019 5-year housing-unit catalogue rather than from n_buildings_represented / n_datapoints
 status:               draft
 
-implementer:          Joe Robertson, Rajendra Adhikari (stratified sampler, buildstockbatch integration, Sampling Region bills), Henry Horsey, Hernan Rozenfeld, Anthony Fontanini (ACS catalogue, allocation fixes, sampling_step_enablement notebook), Andrew Parker (resstockpostproc allocation and publication pipeline)
+implementer:          Joe Robertson, Rajendra Adhikari (stratified sampler, buildstockbatch integration, Sampling Region bills), Henry Horsey, Hernan Rozenfeld, Anthony Fontanini (ACS catalogue, allocation fixes, comparison analysis of the two runs), Andrew Parker (resstockpostproc allocation and publication pipeline)
 document_author:      Andrew Parker
 reviewer:             Elaina Present
 sme_reviewer:         TBD
@@ -27,9 +27,9 @@ pull_requests:
   sightglass:           none
 
 comparison:
-  delta_convention:   "New - Baseline"   # sampling - hpxml, in the notebook's vocabulary
+  delta_convention:   "New - Baseline"
   baseline_run:
-    run_id:           new_sampling_test_0_amy2018_2   # "hpxml" in the notebook
+    run_id:           new_sampling_test_0_amy2018_2   # "Baseline" throughout this document ("hpxml" in figures reproduced from the implementers' analysis)
     results_path:     C:/Scratch/ResStock/efforts/new_sampling/new_sampling_test_0_amy2018_2_output/metadata_and_annual_results_aggregates/national/full/parquet/upgrade0_agg.parquet
     s3_path:          s3://resstock-core/new_sampling/new_sampling_test_0_amy2018_2/
     kestrel_log:      /projects/enduse/logs/new_sampling/new_sampling_test_0_amy2018_2.log
@@ -39,7 +39,7 @@ comparison:
     buildstockbatch:  59bf7bf311f9f2726c3ff56ce683e30b203d2e77
     publication:      resstockpostproc at 595b4d0608 in quota mode (weight = n_buildings_represented / n_datapoints = 253.9 per building)
   new_run:
-    run_id:           new_sampling_test_4   # "sampling" in the notebook
+    run_id:           new_sampling_test_4   # "New" throughout this document ("sampling" in figures reproduced from the implementers' analysis)
     results_path:     s3://resstock-core/new_sampling/new_sampling_test_4_output/metadata_and_annual_results_aggregates/national/full/parquet/upgrade0_agg.parquet
     local_copy:       C:/Scratch/ResStock/efforts/new_sampling/new_sampling_test_4_output/
     raw_results:      s3://resstock-core/new_sampling/new_sampling_test_4/  (buildstock.csv and results_up00.parquet uploaded 2026-08-22)
@@ -66,10 +66,10 @@ comparison:
       (b) Publication code. The baseline was published by resstockpostproc at 595b4d0608 in quota
           mode; the new run by the same package in stratified mode. Both produce the same
           1,079-column schema, so no column mapping is needed.
-  # The 14 notebook figures (images/nb_*.png) were produced from the notebook's own local
-  # publication of the same allocation (results_sampling.parquet: 924,991 rows, 538,221 buildings,
-  # 136,871,390 units); the S3 publication has 924,770 rows over 538,200 buildings, the difference
-  # being the by-state re-aggregation.
+  # The figures reproduced from the implementers' comparison analysis (images/nb_*.png) were
+  # produced from that analysis's own local publication of the same allocation (924,991 rows,
+  # 538,221 buildings, 136,871,390 units); the S3 publication has 924,770 rows over 538,200
+  # buildings, the difference being the by-state re-aggregation.
 ```
 
 ---
@@ -111,8 +111,13 @@ Technical Reference Guide.
 5-year housing-unit catalogue and the vacant-fuel renormalization it carries, the allocation of
 simulated buildings onto that catalogue (`resstockpostproc/allocated_weights.py`), the publication
 of allocated weights at national, state, county, PUMA and tract resolution, and the measured effect
-of all of that on annual baseline results. Everything the `sampling_step_enablement` notebook
-measures is in scope; that notebook is the basis of §4.
+of all of that on annual baseline results. The implementers measured the change in a comparison
+analysis of their own (a Jupyter notebook, `sampling_step_enablement`, kept with the working
+files for this change) that sets the two runs beside ResStock 2025 Release 1 and beside ACS,
+RECS and AHS, and that reruns the allocation with the AHS vacant-fuel renormalization switched
+off as a control. Everything that analysis measures is in scope and is the basis of §4; this
+document recomputes its national results from the published parquets and reproduces its figures
+only where the quantity cannot be recomputed from those files.
 
 **Out of scope:**
 - The `in.utility_bill_*` columns and the "Sampling Region" bill scenario. The implementer is
@@ -128,9 +133,9 @@ measures is in scope; that notebook is the basis of §4.
 
 ## 1.3 Expected Impact
 
-Authoring note: the notebook's results were available when this register was written. The
-hypotheses are recorded as they were reasoned from the mechanism, with magnitudes left qualitative
-where the notebook had already fixed the number.
+Authoring note: the implementers' comparison analysis had been completed when this register was
+written. The hypotheses are recorded as they were reasoned from the mechanism, with magnitudes left
+qualitative where that analysis had already fixed the number.
 
 | # | Quantity | Segment | Expected direction | Expected magnitude | Reasoning |
 |---|---|---|---|---|---|
@@ -140,7 +145,7 @@ where the notebook had already fixed the number.
 | H4 | Natural gas space heating per gas-heated home | Occupied | no change | <0.5% | No building is simulated differently; the allocation only re-weights. A move here would mean the draw within a fuel is biased |
 | H5 | Propane and wood heating counts | National | increase | +0.5 M propane, +0.4 M wood households | B25040 carries more propane, wood, "None" and "Other Fuel" households than the quota sample |
 | H6 | Electricity | National, all units | decrease, but less than the stock | about −2% total, per-unit within ±0.5% | Electricity is spread across all homes; the fuel margin moves it less than gas |
-| H7 | Cooling per dwelling unit | National | small increase | <1% | The allocation puts more weight in the counties that hold more housing units, which lean southern (notebook §4.1: county mix +18.5 kWh per unit, county intensity −10.4) |
+| H7 | Cooling per dwelling unit | National | small increase | <1% | The allocation puts more weight in the counties that hold more housing units, which lean southern (the implementers' county grouping of the cooling step, §4.6 T5: county mix +18.5 kWh per unit, county intensity −10.4) |
 | H8 | EV share of occupied households | National | increase | 1.19% → about 1.66% | The stratified sampler and allocation reproduce the characteristic table's ≈1.66% target rather than the quota draw's realisation |
 | H9 | Plug loads, lighting, refrigerator per dwelling unit | National | no change | <0.5% | Driven by floor area and occupants, which are not allocation keys; a move means floor area or occupancy shifted with the allocation — negative control |
 | H10 | Within-cell intensities after composition control | Every fuel and end use | no change | <1% | The whole change is stock and mix; nothing is simulated differently |
@@ -274,9 +279,9 @@ allocator can join on it.
 **Source:** `samplers/stratified/sampler/run_sampler.py` and `README.md`;
 `postprocessing/resstockpostproc/allocated_weights.py` (ALLOCATION_KEYS, FALLBACK_LADDER,
 DEFAULT_NULL_BUILDING_THRESHOLD, DEFAULT_ALLOCATION_SEED) and `postprocessing/README.md` on
-`sampling_regions` at `69831e6c1d`; the notebook's §0–§3 for the renormalization; resstock-estimation
+`sampling_regions` at `69831e6c1d`; the implementers' comparison analysis for the renormalization; resstock-estimation
 `sources/pums/pums2019_5yrs/tsv_maker.py` (`AHS_2023_VACANT_SHARE`, `AHS_2023_OCCUPIED_SHARE`,
-`VACANCY_FUEL_TILT`) and `IPF_IMPLEMENTATION.md` on the catalogue branch, as cited by the notebook
+`VACANCY_FUEL_TILT`) and `IPF_IMPLEMENTATION.md` on the catalogue branch, as cited by that analysis
 (not re-read here; the branch is not in the local checkout).
 
 ## 2.4 Data Sources and Lineage
@@ -290,14 +295,15 @@ DEFAULT_NULL_BUILDING_THRESHOLD, DEFAULT_ALLOCATION_SEED) and `postprocessing/RE
 | ResStock housing-characteristic TSVs | unchanged | — | — | — | — |
 
 **Source:** `truth_data/v01/StockE/` on `s3://resstock-core` (catalogue v3 dated 2026-08-27,
-v2 2026-08-10, v1 2026-08-06, v0 2025-10-28); the notebook's `references/SOURCES.md`;
+v2 2026-08-10, v1 2026-08-06, v0 2025-10-28); the reference tables assembled for the implementers'
+comparison analysis (`references/SOURCES.md` in its working folder);
 `allocated_weights.py` (`load_sampling_regions`, `load_cec_climate_zones`).
 
 **Interpretation:** The catalogue is the same ACS vintage the PUMS-derived TSVs come from, so the
 allocation is fitting the sample to a target the TSVs were also built from; agreement with B25040
 in §4.2 and §4.9 is agreement with a construction target, not out-of-sample accuracy. The one
 external quantity that is not ACS is the AHS vacant-fuel ratio, and it is the one whose `None`
-category the notebook flags as least trustworthy (AHS 0.38% of occupied units on no fuel against
+category the implementers flag as least trustworthy (AHS 0.38% of occupied units on no fuel against
 ACS 1.13%, giving a ratio of 10.5).
 
 ## 2.5 Remaining Limitations
@@ -308,27 +314,30 @@ ACS 1.13%, giving a ratio of 10.5).
   253,364 vacant rows whose renormalized fuel the sample's vacant buildings do not carry (§4.4).
 - **A building's simulated location is not its units' location.** Within a sampling region a
   building drawn for a tract may have been simulated in another county of that region, with that
-  county's weather; in California, in another county of the same CEC zone. The notebook measures
-  that a quarter of the national weight sits on a unit whose state differs from its building's
+  county's weather; in California, in another county of the same CEC zone. The implementers'
+  comparison analysis measured that a quarter of the national weight sits on a unit whose state
+  differs from its building's
   state. Every `in.as_simulated_*` column describes the building, and the national table carries
   no county for the units (only `in.state` and the GISJOIN state).
 - **Twelve buildings per segment** is a cap, not a floor: 7,735 of the 76,980 allocation pools hold
   a single building and 413 pools hold buildings no catalogue row ever drew (§4.4). Because a
   pool's weight is its catalogue count, weights per building run from 1 to 44,134 units (median
-  32) and the published stock's effective sample size is 42,900 buildings of 540,037 — 8% — and
-  12,600 of the 245,000 gas-heated occupied buildings. Any per-unit intensity that depends on
+  32). Unequal weights cost precision: a weighted mean over the 540,037 simulated buildings has
+  the sampling variance of a plain average over only (Σw)²/Σw² = 42,900 equally weighted
+  buildings — the *effective sample size*, 8% of the buildings simulated — because a few thousand
+  heavily weighted buildings dominate every total; among the 245,000 gas-heated occupied buildings
+  the effective sample is 12,600. Any per-unit intensity that depends on
   characteristics the allocation does not key on carries a design standard error of about 1%
   (§4.6 T9), against 0.2% for the quota sample.
 - **The sample is stocked without a vacancy dependency on heating fuel.** Vacant buildings in the
   sample carry the occupied fuel mix, while the catalogue asks for the AHS-renormalized one, so
-  vacant rows on rare fuels find thin pools. The notebook shows the renormalization doubles the
-  vacant miss count on the catalogue it was measured on (110,362 → 253,364).
+  vacant rows on rare fuels find thin pools. The implementers' control allocation, with the
+  renormalization switched off, shows it doubles the vacant miss count (110,362 → 253,364).
 - **The renormalization is a national ratio applied everywhere.** AHS does not publish vacant fuel
   by state, so a vacant unit in Maine and one in Arizona get the same gas-to-electric tilt.
 - **The vacant stock's energy is small but its fuel draw is the least certain part of the change.**
   Vacant units are 12% of the stock and 4% of site energy; their natural-gas heating falls 13 TWh
-  (41.0 → 27.8) on the step, and a publication allocated on a catalogue without vacant fuels moved
-  it a further 10.5 TWh (§4.10 U1).
+  (41.0 → 27.8) on the step, 9.9 TWh of which is the renormalization alone (§4.6 T3).
 - **The national dwelling-unit count is now an output of the data, not a YAML constant**, and it is
   ACS 2019 rather than 2021. Anything downstream that expected 139.6 M will see 136.9 M.
 - **Utility bills are not yet right** for allocated units (TODO, §3.7).
@@ -541,10 +550,18 @@ One reading rule is specific to this change. The sampling step changes the numbe
 units (−2.0%) and which units carry weight, but simulates nothing differently, so a national total
 can move by the "Notable" band while every per-unit intensity is "Negligible". Every table in §4.5
 and §4.6 therefore carries the per-dwelling-unit intensity beside the total, and the bands are
-applied to whichever quantity the row is about. The notebook's vocabulary is used throughout: a
-total moves through **stock** (fewer units), **mix** (different units) or **intensity** (a given
-kind of unit burning more or less), and the symmetric split `ΔE = Δn·(i₀+i₁)/2 + (n₀+n₁)/2·Δi`
+applied to whichever quantity the row is about. Three words are used throughout for how a total
+moves: through **stock** (fewer units), **mix** (different units) or **intensity** (a given kind
+of unit burning more or less), and the symmetric split `ΔE = Δn·(i₀+i₁)/2 + (n₀+n₁)/2·Δi`
 assigns the cross term equally.
+
+**Series names.** **Baseline** is `new_sampling_test_0_amy2018_2` (quota sampler, uniform
+weights) and **New** is `new_sampling_test_4` (stratified sampler, catalogue-allocated weights);
+every delta is New − Baseline. **ResStock 2025 Release 1**, the previous public release, appears
+only in figures reproduced from the implementers' comparison analysis (§1.2). Those figures label
+the series `old` (ResStock 2025 Release 1), `hpxml` (Baseline) and `sampling` (New), and are
+marked as reproduced wherever they appear; every other figure and every table was computed for
+this document from the published parquets.
 
 ## 4.1 Test Plan and Run Configuration
 
@@ -566,12 +583,8 @@ station per county), run period, `upgrade0` only, OpenStudio 3.10.0 image, build
    is distributional, and the composition control in §4.6 (direct standardisation on state ×
    building type × vintage × heating fuel × vacancy) is the instrument that separates "different
    buildings were drawn" from "the same kind of building burns differently".
-2. **Two publications of the new run exist.** The first (2026-09-14 15:58) was allocated on
-   catalogue v2, whose vacant rows carry no heating fuel; it is superseded and described in §4.10
-   U1. Every number in this document is from the v3 publication (19:31), which reproduces the
-   notebook's series (§0). The occupied allocation is identical across both.
-3. **The utility-bill columns** are excluded (§3.7 TODO).
-4. **The as-simulated geography** of a building is not its units' geography below state, so
+2. **The utility-bill columns** are excluded (§3.7 TODO).
+3. **The as-simulated geography** of a building is not its units' geography below state, so
    segment cuts on climate zone, county or weather station are cuts on where buildings were
    simulated, not where units are. They are labelled "as simulated" where used.
 
@@ -579,11 +592,11 @@ station per county), run period, `upgrade0` only, OpenStudio 3.10.0 image, build
 |---|---|---|---|
 | Stock-level annual end-use comparison, total and per unit | simulation | weighted sums of `out.<fuel>.<end_use>.energy_consumption..kwh` over both parquets (§4.5) | complete |
 | Input distribution shift on every shared `in.*` column | simulation | total variation distance on weighted dwelling-unit fractions (§4.2) | complete — fitted characteristics move as designed, the rest within 0.05 |
-| Occupied heating fuel against ACS B25040, national and per state | external | weighted counts vs the tract-file sums in the notebook's `references/` (§4.2, §4.9) | pass — TVD 0.0183 → 0.0025; state gap 6.95 M → 0.64 M |
+| Occupied heating fuel against ACS B25040, national and per state | external | weighted counts vs state sums of the ACS tract file, from the reference tables built for the implementers' analysis (§4.2, §4.9) | pass — TVD 0.0183 → 0.0025; state gap 6.95 M → 0.64 M |
 | Stock against ACS B25001, national and per state | external | weighted counts vs B25001 (§4.6 T5, §4.9.1) | pass — +1.6% → −0.4% nationally; 41 of 51 states closer |
-| Composition control (direct standardisation) | simulation | sampling intensities on hpxml cell weights (§4.6 T2) | pass — every intensity within ±1% except EV charging (+38%, H8), HP backup (−4%, U6) and NG heating (+1.05%, U2) |
-| Degree days per weather station, and the U2 residual against geography and non-key characteristics | simulation | HDD65F / CDD65F recomputed from every county EPW in the AMY2018 archive, joined on the simulated building's county; composition control with degree-day bins, station, region, the remaining allocation keys and four non-key characteristics added to the cells (§4.6 T8) | gas-heated stock HDD −0.8%; residual unchanged with all seven keys (+1.03%); about half removed by floor area, wall insulation, setpoint and heating efficiency |
-| Sampler validation against the TSV conditionals (F3) | simulation | realised conditional of floor area, wall insulation, heating setpoint and heating efficiency against their TSVs, given each TSV's own dependencies, for both samples unweighted, the published stock weighted, a Monte Carlo noise benchmark, a pool-uniform reweighting and a design standard error (§4.6 T9) | pass — the stratified sample sits at the noise benchmark on all four; the published stock's excess is weight dispersion; the U2 residual is 1.0 SE |
+| Composition control (direct standardisation) | simulation | New within-cell intensities on Baseline cell weights (§4.6 T2) | pass — every intensity within ±1% except EV charging (+38%, H8), HP backup (−4%, U5) and NG heating (+1.05%, U1) |
+| Degree days per weather station, and the U1 residual against geography and non-key characteristics | simulation | HDD65F / CDD65F recomputed from every county EPW in the AMY2018 archive, joined on the simulated building's county; composition control with degree-day bins, station, region, the remaining allocation keys and four non-key characteristics added to the cells (§4.6 T8) | gas-heated stock HDD −0.8%; residual unchanged with all seven keys (+1.03%); about half removed by floor area, wall insulation, setpoint and heating efficiency |
+| Sampler validation against the TSV conditionals (F3) | simulation | realised conditional of floor area, wall insulation, heating setpoint and heating efficiency against their TSVs, given each TSV's own dependencies, for both samples unweighted, the published stock weighted, a Monte Carlo noise benchmark, a pool-uniform reweighting and a design standard error (§4.6 T9) | pass — the stratified sample sits at the noise benchmark on all four; the published stock's excess is weight dispersion; the U1 residual is 1.0 SE |
 | Allocation health | pipeline | fallback-stage counts from `cached_allocated_weights`, `allocation_miss_report.parquet` (§4.4) | 0.40% of catalogue rows unmatched, below the 0.5% threshold |
 | Sampler unit tests | unit | `samplers/stratified/tests/test_sampling.py` in CI | pass (CI on the branch) |
 | Allocation unit tests | unit | `postprocessing/resstockpostproc/tests/test_allocated_weights.py`, `test_process_bsb_results.py` | pass (CI on the branch) |
@@ -598,7 +611,7 @@ stock unchanged" but "did the fitted characteristics move to the Census and did 
 more than the fit requires". Weighted marginal distributions were compared on the 157 housing
 characteristics shared by the two runs (192 `in.*` columns, less the 8 `in.utility_bill_*` lookups
 excluded per §3.7 and the 27 as-simulated geography columns reported separately), using total
-variation distance (TVD = ½·Σ|p_sampling − p_hpxml| on weighted dwelling-unit fractions; 0 identical,
+variation distance (TVD = ½·Σ|p_New − p_Baseline| on weighted dwelling-unit fractions; 0 identical,
 1 disjoint).
 
 **Distribution of TVD across the 157 housing characteristics:**
@@ -641,7 +654,7 @@ plus tenure and vacancy):
 | `in.air_leakage_to_outside_ach50` | 0.0278 | A derived field with 2,566 / 2,832 distinct values; TVD on a near-continuous column measures which buildings were drawn, not a shift in the distribution. Not further examined |
 | `in.heating_fuel` | 0.0270 | Fitted, above |
 | `in.geometry_space_combination` | 0.0181 | 129 options of foundation × attic × garage; reweighted through vintage, building type and state |
-| `in.water_heater_efficiency`, `in.water_heater_fuel` | 0.0161, 0.0151 | Water-heater fuel follows heating fuel (notebook §6.1: the conditional P(water-heater fuel \| heating fuel) moves 0.002–0.006 on the two fuels holding 88% of the stock; the joint moves with the marginal) |
+| `in.water_heater_efficiency`, `in.water_heater_fuel` | 0.0161, 0.0151 | Water-heater fuel follows heating fuel (the implementers' analysis shows the conditional P(water-heater fuel \| heating fuel) moves only 0.002–0.006 on the two fuels holding 88% of the stock; the joint moves with the marginal) |
 | `in.hvac_heating_efficiency`, `in.hvac_heating_type` | 0.0150, 0.0138 | Follow heating fuel |
 | `in.cooling_unavailable_period`, `in.heating_unavailable_period` | 0.0128, 0.0105 | ~1,900 distinct schedule strings; same reading as air leakage |
 | `in.duct_leakage_and_insulation`, `in.duct_location` | 0.0124, 0.0114 | Depend on vintage, building type and heating type; the occupied-only TVDs are 0.011 and 0.010 |
@@ -654,15 +667,15 @@ whose TSV depends on a key, or a near-continuous derived field. `in.state` moves
 
 **As-simulated geography** moves by construction and is reported apart: `in.as_simulated_county`
 0.065, `in.as_simulated_puma` 0.086, `in.as_simulated_county_and_puma` 0.102,
-`in.weather_file_city` 0.042, `in.as_simulated_state` 0.0089. In the hpxml series these columns
-are the dwelling units' geography; in the sampling series they are the simulated building's, and
+`in.weather_file_city` 0.042, `in.as_simulated_state` 0.0089. In the Baseline these columns
+are the dwelling units' geography; in the New series they are the simulated building's, and
 the units it stands for may sit in another county of its sampling region. The allocated-unit state
 (`in.state`) moves only 0.0050.
 
 **Heating fuel by vacancy status** — the cross-tab that matters, because the catalogue's vacant
 fuel is a modelled quantity (§2.3):
 
-| Fuel | Occupied, hpxml | Occupied, sampling | ACS B25040 | Vacant, hpxml | Vacant, sampling | AHS 2023 |
+| Fuel | Occupied, Baseline | Occupied, New | ACS B25040 | Vacant, Baseline | Vacant, New | AHS 2023 |
 |---|---|---|---|---|---|---|
 | Natural Gas | 48.91% | 48.05% | 47.96% | 38.75% | 25.09% | 24.39% |
 | Electricity | 39.74% | 39.02% | 38.87% | 46.44% | 49.16% | 57.05% |
@@ -671,18 +684,17 @@ fuel is a modelled quantity (§2.3):
 | Wood | 1.42% | 1.76% | 1.81% | 2.54% | 3.38% | 1.80% |
 | None | 0.73% | 1.06% | 1.13% | 0.76% | 4.91% | 3.98% |
 | Other Fuel | 0.34% | 0.68% | 0.73% | 0.35% | 0.70% | 0.55% |
-| TVD sampling vs hpxml | | 0.0158 | | | 0.1366 | |
+| TVD New vs Baseline | | 0.0158 | | | 0.1366 | |
 
 ![4.2c heating fuel by vacancy status](images/fig_4_2_c_heating_fuel_by_vacancy.png)
 
-*Left: occupied households, where the sampling series lands on the Census to within a point on
-every fuel. Right: vacant units, where the quota sample carried the occupied mix and the catalogue
-carries the AHS-renormalized one. The light-blue "notebook publication" bars coincide with the S3
-bars because the two are the same v3 allocation (§4.10 U1).*
+*Left: occupied households against ACS 2019 5-year B25040, where the New series lands on the
+Census to within a point on every fuel. Right: vacant units against AHS 2023, where the quota
+sample carried the occupied mix and the catalogue carries the AHS-renormalized one.*
 
 **Occupied heating fuel against ACS B25040, nationally** (millions of households):
 
-| Fuel | hpxml | sampling | ACS B25040 | step | sampling − ACS |
+| Fuel | Baseline | New | ACS B25040 | step | New − ACS |
 |---|---|---|---|---|---|
 | Natural Gas | 60.030 | 57.878 | 57.913 | −2.152 | −0.035 |
 | Electricity | 48.769 | 47.003 | 46.932 | −1.765 | +0.072 |
@@ -695,21 +707,32 @@ bars because the two are the same v3 allocation (§4.10 U1).*
 
 National TVD against B25040 falls from 0.0183 to 0.0025; the absolute state-by-fuel gap summed
 over 51 states falls from 6.95 M to 0.64 M households, and on natural gas alone from 2.55 M to
-0.12 M. The notebook's county-grain comparison (7 counties in the v3 catalogue above 0.10
-distance against 1,734 for hpxml; household-weighted mean 0.006 against 0.043) is reproduced
-below from its figure; it is not recomputed here because the national table carries no county for
-the allocated units.
+0.12 M. The county grain was measured by the implementers' comparison analysis, which read each
+catalogue row's own county and compared every county's occupied heating-fuel mix with its B25040
+mix (7 counties above 0.10 total variation distance for the New series against 1,734 for the
+Baseline; household-weighted mean 0.006 against 0.043). Its two figures are reproduced below; the
+comparison is not recomputed here because the national table carries no county for the allocated
+units.
 
-![notebook: occupied heating-fuel margin against ACS](images/nb_heating_fuel_margin.png)
+![reproduced: occupied heating-fuel counts by fuel and distance to ACS B25040 summed over states, three series](images/nb_heating_fuel_margin.png)
 
-![notebook: per-county heating-fuel distance to ACS B25040](images/nb_county_heating_fuel.png)
+*Reproduced from the implementers' comparison analysis; series labels `old` = ResStock 2025 Release 1, `hpxml` = Baseline, `sampling` = New.* Left: occupied households heating with each fuel, log scale, against B25040 (`reference`).
+Right: the absolute gap to B25040 summed over the 51 states, in millions of households and in
+percentage points of share, for all fuels and for natural gas alone.*
+
+![reproduced: per-county heating-fuel distance to ACS B25040](images/nb_county_heating_fuel.png)
+
+*Reproduced from the implementers' comparison analysis; series labels `old` = ResStock 2025 Release 1, `hpxml` = Baseline, `sampling` = New.* Left: the cumulative share of counties at or below each total variation distance from
+the county's own B25040 fuel mix; the `v3 catalogue` line is the New series, keyed on each
+catalogue row's own tract because the publication carries no county for the units. Right: the
+mean, median, household-weighted mean and 90th percentile of the same three distributions.*
 
 **Source:** the two run parquets named in §0, weighted `group_by` on every `in.*` column present
 in both, converted to dwelling-unit fractions with `weight`, then TVD; occupied and vacant cuts on
-`in.vacancy_status`. ACS B25040 and B25001 state sums from the notebook's `references/` (built
-from the tract file by `references/build_acs_references.py`); AHS 2023 shares from
-`references/ahs_2023_vacancy_renormalization.csv`. County figures are the notebook's (§3.1–3.2),
-which read the v3 catalogue's own county column. The eight `in.utility_bill_*` columns are
+`in.vacancy_status`. ACS B25040 and B25001 state sums and AHS 2023 shares from the reference
+tables built for the implementers' comparison analysis (`references/` in its working folder,
+built from the ACS tract file and the AHS 2023 National PUF). County figures are the
+implementers', which read the v3 catalogue's own county column. The eight `in.utility_bill_*` columns are
 excluded and no other filter is applied.
 
 **Weighting:** weighted to dwelling-unit counts by `weight` throughout.
@@ -722,8 +745,8 @@ was built to do and did not disturb characteristics it does not key on beyond wh
 dependencies on the keys imply. The 0.87-point fall in the 0–100% poverty share is the catalogue's
 FPL marginal replacing the quota sample's, which was itself PUMS-derived; whether the two ACS
 products should agree more closely is a question for the catalogue, not this change (F5).
-Everything below the state — county, PUMA, weather station — is where the sampling series'
-as-simulated columns stop describing the units, and §4.6 T5 and the notebook's county exhibit are
+Everything below the state — county, PUMA, weather station — is where the New series'
+as-simulated columns stop describing the units, and §4.6 T5 and the implementers' county comparison are
 the only places geography below state is checked.
 
 ## 4.3 Individual Model Verification
@@ -735,11 +758,11 @@ What replaces it is the composition control in §4.6 T2, which asks the question
 "does a building of a given kind produce the same result on both sides?" — at the level of 6,419
 occupied cells rather than 5–10 buildings, and answers yes to within ±1% on every fuel and end use
 except EV charging, where the cell definition does not include EV ownership (H8), heat-pump
-backup (−4%, U6) and gas heating (+1.0%, U2).
+backup (−4%, U5) and gas heating (+1.0%, U1).
 
 ## 4.4 Simulation Success, Warnings, and Runtime
 
-| Metric | Baseline (hpxml) | New (sampling) | Δ |
+| Metric | Baseline | New | Δ |
 |---|---|---|---|
 | Buildings requested (`n_datapoints`) | 550,000 | 550,000 | — |
 | Buildings sampled | 550,000 | 540,037 (45,833 segments, most holding 12) | −9,963 by construction |
@@ -749,7 +772,6 @@ backup (−4%, U6) and gas heating (+1.0%, U2).
 | Buildings carrying weight in the national publication | 549,999 | 538,200 | 1,837 simulated buildings (0.34%) were never drawn |
 | Rows in the national publication | 549,999 | 924,770 | one row per building per state |
 | New or changed warning types | not examined | not examined | — |
-| Median runtime per simulation | not recorded (no BSB log for the new run) | not recorded | — |
 
 **Failure analysis.** No simulation failed in the new run; the one baseline failure is inherited
 from the previous change document. What replaces failure analysis for this change is *allocation*
@@ -774,8 +796,9 @@ propane, 87,616 `Other Fuel`, 56,283 wood and 53,050 fuel oil; only 4,985 are na
 state: California 91,964, Texas 43,089, Alaska 26,911, Georgia 22,025, Nevada 17,436. Alaska's
 misses are 8.5% of its 317,000 units, the largest relative loss of any state (§4.6 T5). Every
 vacant miss is a row whose tenure and poverty level are `Not Available` and whose fuel the sample's
-vacant buildings do not carry in that region, type and vintage — the price of the renormalization
-that the notebook measured (110,362 → 253,364 vacant misses when it is switched on).
+vacant buildings do not carry in that region, type and vintage — the price of the renormalization:
+the implementers' control allocation, with it switched off, has 110,362 vacant misses against
+253,364 with it on.
 
 **Simulated buildings never drawn.** 1,837 of the 540,037 simulated buildings received no
 catalogue unit, 0.34%, concentrated where the catalogue is thin relative to the sample: 2010s
@@ -785,7 +808,7 @@ drawn from at all.
 
 ![4.4a simulated buildings never drawn, by characteristic](images/fig_4_4_a_unallocated_buildings.png)
 
-**Source:** `completed_status` in the two national parquets and in the sampling run's
+**Source:** `completed_status` in the two national parquets and in the New run's
 `cached_simulation_outputs/upgrade=0/`; `cached_allocated_weights/*/*.parquet` and
 `allocation_miss_report.parquet` in the S3 output named in §0 (2026-09-14 19:29 publication);
 Kestrel job JSONs for the 540,037 count.
@@ -803,7 +826,7 @@ rare fuels, or seeding the vacant sample with the AHS mix, would close most of i
 
 **Stock** (weighted dwelling units):
 
-| Quantity | Baseline (hpxml) | New (sampling) | Δ abs | Δ % |
+| Quantity | Baseline | New | Δ abs | Δ % |
 |---|---|---|---|---|
 | Dwelling units, all | 139,646,766 | 136,871,390 | −2,775,376 | −1.99% |
 | Occupied households | 122,726,625 | 120,453,231 | −2,273,394 | −1.85% |
@@ -811,7 +834,11 @@ rare fuels, or seeding the vacant sample with the AHS mix, would close most of i
 | Floor area, bn ft² | 230.49 | 226.40 | −4.09 | −1.77% |
 | Floor area per unit, ft² | 1,650 | 1,654 | +4 | +0.25% |
 
-![notebook: stock across the three series](images/nb_stock.png)
+![reproduced: dwelling units, conditioned floor area and site energy, three series](images/nb_stock.png)
+
+*Reproduced from the implementers' comparison analysis; series labels `old` = ResStock 2025 Release 1, `hpxml` = Baseline, `sampling` = New.* Dwelling units against ACS 2019 5-year B25001 (`reference`), conditioned floor area
+and site energy for all three series; ResStock 2025 Release 1 and the Baseline share the quota
+sample's constant stock.*
 
 **By fuel** (TWh, weighted to dwelling-unit counts; all dwelling units), with the per-unit
 intensity beside the total:
@@ -879,7 +906,8 @@ intensity beside the total:
 
 ![4.5b absolute change by end use and fuel](images/fig_4_5_b_enduse_absolute.png)
 
-*4.5a ranks by percent and 4.5b by TWh. The dashed line in 4.5a is the stock change, −1.99%: the
+*4.5a ranks by percent and 4.5b by TWh, in two columns read top-left to bottom-right. The dashed
+line in 4.5a is the stock change, −1.99%: the
 cluster of appliance, lighting and plug-load end uses that sits on it is moving with the unit
 count and nothing else. The
 rows that leave it are the fuel margins — propane up on every end use, natural gas and electric
@@ -920,8 +948,8 @@ gross of PV; PV appears as its own row. The end-use grouping partitions all 46 s
 with none ungrouped or double-counted, and the grouped sum reconciles against
 `out.site_energy.total` to within 0.0002% on both sides. Cuts on `in.vacancy_status`.
 
-**Weighting:** weighted to dwelling-unit counts by `weight` (Float64 in hpxml, Int32 unit counts
-in sampling, cast to Float64). Weighted stock totals are in the first table.
+**Weighting:** weighted to dwelling-unit counts by `weight` (Float64 in the Baseline, Int32 unit
+counts in the New series, cast to Float64). Weighted stock totals are in the first table.
 
 **Interpretation:** Observation — total site energy falls 2.48% against a 1.99% fall in units,
 so per unit it falls 0.50%. Thirteen of the 46 end uses move within ±0.5% per unit and 28 within
@@ -978,21 +1006,22 @@ three sum to the measured step exactly.
 carries the whole of the natural-gas and propane movement and nothing of the appliance and
 plug-load rows. Intensity is within ±1% everywhere except HP backup (−3.4%, on a 22 TWh base) and
 EV charging (the retarget), *and* natural-gas space heating at +1.1% — a +11.8 TWh within-cell
-increase that runs against the step. This is the notebook's "residual we have not attributed"
-(+2.99 TWh on its two-group occupancy split; larger here because finer cells push more of the
-within-state geography into the intensity term). §4.6.2 confirms it survives composition control
-and §4.10 U2 carries it.
+increase that runs against the step. The implementers' own decomposition of the same step
+(reproduced below) leaves +2.99 TWh unattributed on its two-group occupancy split; the residual is
+larger here because finer cells push more of the within-state geography into the intensity term.
+§4.6.2 confirms it survives composition control and §4.10 U1 carries it.
 
-![notebook: the natural-gas step in four parts](images/nb_natural_gas_step.png)
+![reproduced: the natural-gas space-heating step in four mutually exclusive parts](images/nb_natural_gas_step.png)
 
-*The notebook's own decomposition of the same −51.7 TWh on occupancy alone: A stock scale −21.9,
-B occupied fuel margin −17.8, C1 renormalization −9.9, C2 rest of the vacant draw −5.2, D residual
-+3.0. The stock term agrees with T1 to 0.02 TWh; the two documents split the rest differently
-because they group differently.*
+*Reproduced from the implementers' comparison analysis; series labels `old` = ResStock 2025 Release 1, `hpxml` = Baseline, `sampling` = New.* The implementers' decomposition of the same −51.7 TWh, splitting on occupancy only and
+using their control allocation to isolate the renormalization: A stock scale −21.9, B occupied
+fuel margin −17.8, C1 the renormalization −9.9, C2 the rest of the vacant fuel draw −5.2, D
+residual +3.0, shown as a total, per dwelling unit and per gas-heated home. The stock term agrees
+with T1 to 0.02 TWh; the two analyses split the rest differently because they group differently.*
 
 ### 4.6.2 T2 — Composition control
 
-*Prediction:* applying the sampling run's within-cell intensities to the hpxml run's cell weights
+*Prediction:* applying the New run's within-cell intensities to the Baseline run's cell weights
 (direct standardisation on the same 11,114 cells) removes every movement except EV charging.
 
 | End use | kWh/unit, baseline | kWh/unit, new | Raw Δ % | Composition-controlled Δ % | Occupied only: raw | controlled |
@@ -1021,8 +1050,8 @@ because they group differently.*
 **Verdict: confirmed.** Holding the stock mix at the baseline's removes the propane movement
 (+11.4 → +0.7%), the gas hot-water movement (−2.1 → 0.0%), the electric heating movement and the
 fan movements; EV charging is untouched by construction (+37.7%) because EV ownership is not a cell
-key, which is the intended effect of H8. Two residuals: natural-gas heating +1.05% (U2) and HP
-backup −3.65% (U6), both within-cell and both present on occupied households alone.
+key, which is the intended effect of H8. Two residuals: natural-gas heating +1.05% (U1) and HP
+backup −3.65% (U5), both within-cell and both present on occupied households alone.
 
 ### 4.6.3 T3 — Occupied against vacant; the vacant fuel draw
 
@@ -1042,11 +1071,19 @@ vacant fuel is 20 points less gas and 5 points more propane than the quota draw.
 | Electric-heated units, M | 48.769 | 47.003 | | 7.858 | 8.071 | |
 | Electric heating (incl. backup) per electric-heated unit, kWh | 5,225 | 5,182 | −0.8% | 1,574 | 1,817 | +15% |
 
-![notebook: renormalization, vacant fuel shares](images/nb_renormalization.png)
+![reproduced: vacant heating-fuel shares with and without the renormalization, against AHS 2023](images/nb_renormalization.png)
 
-![notebook: what switching the renormalization off costs, by fuel](images/nb_renormalization_delta.png)
+*Reproduced from the implementers' comparison analysis; series labels `old` = ResStock 2025 Release 1, `hpxml` = Baseline, `sampling` = New.* `control` is the New allocation rerun with the renormalization switched off. Left: the
+share of vacant units heating with each fuel; the diamonds are AHS 2023's vacant shares and the
+ticks the New series' own occupied shares. Right: total variation distance of each vacant mix
+from AHS 2023.*
 
-*The notebook's control allocation, with the AHS renormalization switched off and nothing else
+![reproduced: energy the control allocation has and the New series does not, by fuel](images/nb_renormalization_delta.png)
+
+*Reproduced from the implementers' comparison analysis. Space heating and hot water on the vacant
+stock, control minus New, by fuel: positive is energy the renormalization removed.*
+
+*The implementers' control allocation, with the AHS renormalization switched off and nothing else
 changed, puts 9.86 TWh of natural-gas space heating and 1.31 TWh of gas hot water back on the
 vacant stock, takes 5.04 TWh of propane and 2.34 TWh of electric heating off it, and moves the
 vacant fuel mix from 0.08 to 0.15 total variation from AHS. That is the size of the one modelling
@@ -1057,7 +1094,7 @@ allocation reweights and does not resimulate. The vacant stock does what the ren
 2.44 M fewer gas-heated vacant units, 13 TWh less gas heating, 7 TWh more propane heating. The
 rise in gas heating per gas-heated *vacant* unit (+8%) and per electric-heated vacant unit (+15%)
 is composition within the vacant stock (which vacant buildings were drawn, by region, type and
-vintage) and is the vacant share of U2.
+vintage) and is the vacant share of U1.
 
 ### 4.6.4 T4 — By heating fuel
 
@@ -1087,7 +1124,7 @@ a change in how any home burns.
 *Prediction:* every state's unit count moves to ACS B25001 (2019 5-year); gas heating falls most
 in the gas-heavy northern states where the quota sample over-counted units.
 
-| | hpxml | sampling |
+| | Baseline | New |
 |---|---|---|
 | Σ over states of \|units − B25001\|, M | 2.466 | 0.558 |
 | States closer to B25001 | — | 41 of 51 |
@@ -1123,14 +1160,21 @@ movements:
 ![4.6d gas heating change by state](images/fig_4_6_d_state_gas.png)
 
 **Verdict: confirmed on stock; the within-state term is the fuel margin inside the state.**
-Michigan's −6.9 TWh within-state term on a 95 TWh base is not the U2 residual: its gas-heated share
+Michigan's −6.9 TWh within-state term on a 95 TWh base is not the U1 residual: its gas-heated share
 falls from 77.2% to 72.3% of units as the state's heating-fuel mix moves to B25040, and gas
 heating per gas-heated unit falls 1.2% (3.6% on occupied households) while those units' mean
 degree days fall 6% (T8) — weight moved toward Michigan's milder, more populous counties, which
-is the notebook's county cooling mechanism (mix +18.5 kWh per unit, county intensity −10.4) acting
-on heating. Michigan therefore runs against the national +1% residual, not with it.
+is the county-mix mechanism the implementers found in cooling (reproduced below: county mix
++18.5 kWh per unit, county intensity −10.4) acting on heating. Michigan therefore runs against
+the national +1% residual, not with it.
 
-![notebook: the cooling step grouped by county](images/nb_cooling_step.png)
+![reproduced: the cooling step grouped by county](images/nb_cooling_step.png)
+
+*Reproduced from the implementers' comparison analysis; series labels `old` = ResStock 2025 Release 1, `hpxml` = Baseline, `sampling` = New.* Electric cooling, Baseline to New, grouped by the simulated building's county: A the
+stock scale, B the change in county shares at fixed per-county intensity, C the change in
+per-county intensity, D the 3% of stock in counties with fewer than 30 buildings, which the
+grouping does not cover. Per dwelling unit the county mix adds 18.5 kWh and the within-county
+intensity removes 10.4.*
 
 ### 4.6.6 T6 — By building type, vintage and climate zone
 
@@ -1186,12 +1230,16 @@ floor area per household moves (+0.37%).
 
 Occupied floor area falls 1.49% in total and rises 0.37% per household (1,692 → 1,698 ft²).
 
-![notebook: every electricity end use per dwelling unit](images/nb_electricity_end_uses.png)
+![reproduced: change in electricity per dwelling unit by end use](images/nb_electricity_end_uses.png)
+
+*Reproduced from the implementers' comparison analysis. New minus Baseline in kWh per dwelling
+unit for every electricity end use, all dwelling units; the dashed line is the change over all
+end uses (+12.3). Electric space heating falls further than any single end use rises.*
 
 **Verdict: pass.** Per square foot the three controls move by 0.3% or less; per household by
 under 0.5%; after composition control by under 0.35%. EV charging is the one intended exception.
 
-### 4.6.8 T8 — Degree days per weather station, and where the U2 residual lives
+### 4.6.8 T8 — Degree days per weather station, and where the U1 residual lives
 
 Neither publication carries degree days. OS-HPXML computes HDD65F and CDD65F from the EPW
 (`HPXMLtoOpenStudio/resources/weather.rb`, daily mean dry bulb, base 65 °F) but does not report
@@ -1199,7 +1247,7 @@ them, so they were recomputed the same way for all 3,132 county EPWs in the AMY2
 joined onto both series on the simulated building's county (the leading GISJOIN of
 `in.as_simulated_county_and_puma`, which is the EPW file name; 0.01% of weight has no match).
 
-*Prediction, from the geography reading of U2:* the gas-heated stock's weighted mean HDD rises,
+*Prediction, from the geography reading of U1:* the gas-heated stock's weighted mean HDD rises,
 and adding degree days or the weather station to the composition-control cells removes the +1.05%
 residual.
 
@@ -1233,7 +1281,7 @@ Composition control for natural-gas space heating per unit, with cells added to 
 | A + heating efficiency | +0.43% | +0.37% | 98.9% | |
 | A + floor area + setpoint + wall + efficiency | +0.41% | +0.40% | 49.4% | |
 
-![4.6f degree days and the U2 residual](images/fig_4_6_f_degree_days.png)
+![4.6f degree days and the U1 residual](images/fig_4_6_f_degree_days.png)
 
 *Left: gas-heated units by the degree days of their simulated county; the two series lie on top
 of each other. Right: the residual as geography is added to the cells. Only the variants that
@@ -1254,7 +1302,7 @@ they do not all push the same way, which is why no single one closes the gap. Fl
 is flat within cells (+0.05% composition-controlled on occupied households), so it is the
 *distribution*, not the mean, that moved. T9 settles whether these within-cell differences are
 sampling noise or a sampler defect. The same test moves HP backup from −3.65% to −2.28% when the
-keys are added (U6 shares the mechanism in part).
+keys are added (U5 shares the mechanism in part).
 
 **Source:** `C:/Projects/WeatherData/BuildStock_2018_FIPS_HI.zip`, every `G*.epw`, dry bulb from
 column 7, daily means, HDD = Σ max(65 − T, 0) and CDD = Σ max(T − 65, 0) in °F-days over 365 days
@@ -1301,20 +1349,20 @@ Unit-weighted, the published stock sits at roughly twice the sample's distance (
 | Effective sample size, (Σw)²/Σw² | 42,908 of 540,037 buildings (8%); 12,610 of the 245,000 gas-heated occupied buildings (5%). Weight per building runs 1 to 44,134 units, median 32, against 253.9 for every quota building |
 | Weighted unbiased draw: TSV options redrawn per building, real weights applied | 0.125 / 0.126 / 0.124 on floor area against the published 0.151; the other three within a few thousandths of the published value. The weights are close to independent of the option; most of the excess is dispersion |
 | Pool-uniform reweighting: each pool's weight spread equally over its buildings | NG heating per unit moves −0.01% on every cut; the composition-controlled residual is +1.06% against +1.05%. Which building in a pool got drawn is not the cause |
-| Design standard error of the published mean, sqrt(Σw²(x − x̄)²)/Σw | NG heating per gas-heated occupied unit: **186 kWh, 1.04%** on the sampling side against 35 kWh, 0.19%, on the quota side; 1.33% and 1.32% on occupied and all units |
+| Design standard error of the published mean, sqrt(Σw²(x − x̄)²)/Σw | NG heating per gas-heated occupied unit: **186 kWh, 1.04%** on the New side against 35 kWh, 0.19%, on the Baseline side; 1.33% and 1.32% on occupied and all units |
 
 For gas-heated occupied households the within-cell difference between the two series decomposes
 as the dependency mix (what the TSV predicts from each side's own income, metro status, region,
 heating type mix) plus the residual against the TSV:
 
-| TSV | Realised, hpxml vs sampling | TSV-predicted from each side's dependency mix | hpxml realised vs predicted | sampling realised vs predicted |
+| TSV | Realised, Baseline vs New | TSV-predicted from each side's dependency mix | Baseline realised vs predicted | New realised vs predicted |
 |---|---|---|---|---|
 | Geometry Floor Area | 0.0158 | 0.0077 | 0.0010 | 0.0149 |
 | Insulation Wall | 0.0156 | 0.0141 | 0.0015 | 0.0067 |
 | Heating Setpoint | 0.0095 | 0.0017 | 0.0013 | 0.0084 |
 | HVAC Heating Efficiency | 0.0045 | 0.0027 | 0.0006 | 0.0032 |
 
-**Verdict: U2 is sampling noise at the effective sample size the allocation weights leave, not a
+**Verdict: U1 is sampling noise at the effective sample size the allocation weights leave, not a
 sampler or allocation defect.** The stratified sample reproduces the TSVs. The published stock
 departs from them by an amount a weighted unbiased draw also produces, because a pool's weight is
 its catalogue count and pools hold 1 to 12 buildings, so a few thousand buildings carry most of
@@ -1340,34 +1388,36 @@ units. Noise benchmarks are `random.choices` draws from the TSV row at the reali
 
 ### 4.6.10 What this section did not resolve
 
-- **U6 — HP backup −3.7% within cell, −2.3% with all keys.** Small base (22 TWh); the same
-  weight-dispersion noise as U2 applies with a larger coefficient of variation, and it was not
+- **U5 — HP backup −3.7% within cell, −2.3% with all keys.** Small base (22 TWh); the same
+  weight-dispersion noise as U1 applies with a larger coefficient of variation, and it was not
   quantified separately.
-- **Nothing below the state for the allocated units** other than the notebook's two county
-  exhibits; T8 uses the simulated building's county, which is the right key for weather but not
+- **Nothing below the state for the allocated units** other than the implementers' two county
+  comparisons; T8 uses the simulated building's county, which is the right key for weather but not
   for where the units are.
 
 **Source:** the two run parquets named in §0, weighted by `weight`; cells and segments on the
-columns named in each table; ACS B25001 state sums from the notebook's `references/`. The
+columns named in each table; ACS B25001 state sums from the reference tables built for the
+implementers' analysis. The
 symmetric split is `ΔE = Δn·(i₀+i₁)/2 + (n₀+n₁)/2·Δi` per cell, collected into stock (national Δn
 at national mean intensity), mix (cell count terms less stock) and intensity (cell intensity
 terms). Composition control is direct standardisation: Σ_cells i_new × n_base / Σ n_base against
 Σ i_base × n_base / Σ n_base over cells present on both sides (99.9% coverage, 100% for occupied).
-Notebook figures are reproduced from `sampling_step_enablement/figures/`.
+Figures marked as reproduced come from the implementers' comparison analysis
+(`sampling_step_enablement/figures/` in the working folder).
 
 ## 4.7 Timeseries and Peak Impacts
 
 TBD — required, not N/A. The allocation moves weight between counties and states within a sampling
 region and changes the vacant fuel mix, both of which can shift the timing of seasonal peaks even
 though no building's hourly profile changed. Specific reasons: the county-mix term in cooling is
-+18.5 kWh per unit against a −10.4 kWh intensity term (notebook §4.1), so the national cooling
++18.5 kWh per unit against a −10.4 kWh intensity term (§4.6 T5), so the national cooling
 profile is being assembled from a different geographic mix; and the vacant stock's heating fuel
 draw changed by construction.
 
 **What would produce it:** the timeseries aggregates of both runs, weighted by the allocated
 weights, compared on seasonal peak magnitude and timing and on winter and summer average daily
 profiles. The `timeseries/` outputs of both runs are on S3 (§0); the allocated-weights join for
-the sampling series is what the `timeseries_aggregates` step of `resstockpostproc` produces.
+the New series is what the `timeseries_aggregates` step of `resstockpostproc` produces.
 
 ## 4.8 Upgrade Impacts
 
@@ -1392,8 +1442,8 @@ segment.
 ## 4.9 External Validation
 
 No `baseline_validation` dashboard has been produced for this pair of runs yet; the implementer
-will supply one later as supplementary material. This section uses the outside references the
-notebook carries: **ACS 2019 5-year** B25001 and B25040 (the catalogue's own construction
+will supply one later as supplementary material. This section uses the outside references
+assembled for the implementers' comparison analysis: **ACS 2019 5-year** B25001 and B25040 (the catalogue's own construction
 target), **EIA RECS 2020** fuel totals on occupied primary residences (supplier-reported, so close
 to observed), and **AHS 2023** vacant heating-fuel shares. Error is `e = (ResStock − reference) /
 reference`; "closer" means `|e_new| < |e_baseline|`.
@@ -1409,9 +1459,9 @@ reference`; "closer" means `|e_new| < |e_baseline|`.
 | ACS 2019 5-yr B25040 | Electric-heated households | 46.93 M | 48.77 M | 47.00 M | +3.91% | +0.15% | closer |
 | ACS 2019 5-yr B25040 | Propane / wood / None / Other households | 5.75 / 2.18 / 1.36 / 0.89 M | −10 / −20 / −34 / −52% | −1 / −3 / −6 / −8% | | | closer on all four |
 | ACS 2019 5-yr B25040 | National heating-fuel TVD | — | 0.0183 | 0.0025 | | | closer |
-| ACS 2019 5-yr B25040 | Per-county heating-fuel distance, household-weighted mean (notebook) | — | 0.043 | 0.006 | | | closer in 3,120 of 3,136 counties |
+| ACS 2019 5-yr B25040 | Per-county heating-fuel distance, household-weighted mean (implementers' county comparison, §4.2) | — | 0.043 | 0.006 | | | closer in 3,120 of 3,136 counties |
 
-**Source:** §4.2 tables; the notebook's §3.1–3.2 for the county line. B25001 counts all housing
+**Source:** §4.2 tables; the implementers' county comparison (§4.2) for the county line. B25001 counts all housing
 units including vacant; B25040 counts occupied units only. The YAML's `n_buildings_represented`
 (139,647,020) is ACS 2021 5-year B25001, which is why the baseline over-counts a 2019 reference.
 
@@ -1438,7 +1488,10 @@ RECS 2020 covers 123.53 M occupied primary residences; the series carry 122.73 M
 occupied households, so both the total and the per-household error are shown. Weather is AMY2018
 on the ResStock side and calendar 2020 on RECS's; neither is adjusted.
 
-![notebook: fuel totals against RECS](images/nb_fuel_totals.png)
+![reproduced: fuel totals and per-household fuel use against RECS 2020, three series](images/nb_fuel_totals.png)
+
+*Reproduced from the implementers' comparison analysis; series labels `old` = ResStock 2025 Release 1, `hpxml` = Baseline, `sampling` = New.* Occupied households; totals in TWh (top) and kWh per household (bottom) for each fuel
+against RECS 2020 (`reference`), with each series' error against RECS under its bar.*
 
 **Conditioned on main heating fuel**, per household (occupied), the level the comparison was
 already at before this change:
@@ -1450,10 +1503,14 @@ already at before this change:
 | Propane | 5.21 M vs 5.17 → 5.68 M | 17,569 | 25,144 | 23,745 | +43.1% → +35.2% |
 | Fuel oil | 4.93 M vs 5.70 → 5.68 M | 22,168 | 28,434 | 27,925 | +28.3% → +26.0% |
 
-![notebook: fuel totals conditioned on main heating fuel](images/nb_fuel_totals_conditioned.png)
+![reproduced: per-household fuel use conditioned on main heating fuel, three series](images/nb_fuel_totals_conditioned.png)
 
-**Source:** RECS 2020 public microdata v7, as the notebook computed it (§5, with EIA's two
-published estimates reproduced as a check); series totals are weighted sums of
+*Reproduced from the implementers' comparison analysis; series labels `old` = ResStock 2025 Release 1, `hpxml` = Baseline, `sampling` = New.* Top row: kWh per household of each fuel among the households that heat with it;
+bottom row: among every other household, where the fuel serves water heating, cooking and drying.
+The count under each bar is the group's size.*
+
+**Source:** RECS 2020 public microdata v7, as computed for the implementers' comparison analysis
+(which reproduced EIA's two published estimates as a check); series totals are weighted sums of
 `out.<fuel>.total.energy_consumption..kwh` on `in.vacancy_status == Occupied`, per-household values
 divided by weighted household counts. `FUELHEAT` → `in.heating_fuel` per the repository's
 `map_heating_fuel`.
@@ -1463,7 +1520,7 @@ divided by weighted household counts. `FUELHEAT` → `in.heating_fuel` per the r
 count fell and are unchanged per household; propane moves 5 points further on the total and 8 per
 household. Conditioned on heating fuel, nothing moves except propane (+43 → +35%) and fuel oil
 (+28 → +26%), which improve. Inference — the per-household intensity of every fuel is as
-over-predicted after this change as before, by 17–41%, and the notebook is explicit that this is
+over-predicted after this change as before, by 17–41%, and the implementers' analysis is explicit that this is
 the engine's result and not the sampler's. The propane total moves further because the stock now
 holds 0.5 M more propane-heated households (B25040's 5.75 M against RECS's own 5.21 M): the two
 references disagree on how many homes heat with propane, and the allocation was fitted to the ACS
@@ -1490,8 +1547,8 @@ parquets on `in.vacancy_status == Vacant`, weighted.
 `None`; propane, fuel oil and wood overshoot. Inference — the renormalization is a ratio applied
 to the occupied conditional, so it lands on AHS only where the occupied conditional is close to
 AHS's occupied mix; on propane and wood the two disagree, and the ratio over-corrects. Electricity
-stays 8 points short for the same reason. This is the notebook's finding restated on the
-republished data (F4).
+stays 8 points short for the same reason. This restates the implementers' finding on the S3
+publication (F4).
 
 ### 4.9.4 EV share against the published bracket
 
@@ -1500,11 +1557,15 @@ republished data (F4).
 | EV households, share of occupied | 1.1% (RECS 2020) to 2.5% (Experian 2023 registrations) | 1.194% | 1.665% |
 | EV charging, TWh | — | 3.07 | 4.14 |
 
-![notebook: electric vehicles across the three series](images/nb_electric_vehicles.png)
+![reproduced: EV share of occupied households against the published bracket, and EV charging energy](images/nb_electric_vehicles.png)
+
+*Reproduced from the implementers' comparison analysis; series labels `old` = ResStock 2025 Release 1, `hpxml` = Baseline, `sampling` = New.* Left: share of occupied households with an electric vehicle, against the 1.1–2.5%
+bracket (RECS 2020 to Experian 2023 registrations). Right: EV charging energy over all dwelling
+units.*
 
 **Interpretation.** The new run lands 40% of the way across the bracket and on the characteristic
 table's ≈1.66% target; the quota draw sat at the bottom of it. The maintainer's ruling, recorded in
-the notebook, is to keep the target as it stands and revisit it at the next TSV refresh.
+the implementers' analysis, is to keep the target as it stands and revisit it at the next TSV refresh.
 
 ### 4.9.5 What this section changes
 
@@ -1517,42 +1578,14 @@ which this change was never going to move.
 
 ## 4.10 Unexpected Results
 
-### U1 — The first S3 publication carried a near-uniform vacant fuel mix
-
-**Expected?** no  |  **Status:** **resolved** — republished
-
-**Observation.** The publication written to S3 at 15:58 on 2026-09-14 had 137,123,629 units and a
-vacant fuel mix of 26% electricity, 25% gas, 16% propane, 10% wood, 8% `None`, 7% `Other Fuel`,
-against the notebook's 49 / 25 / 11 / 3 / 5 / 1. Vacant natural-gas heating was 17.3 TWh against the
-notebook's 27.9. Occupied households and their heating-fuel counts were identical to the notebook's
-to the household.
-
-**Explanation.** That publication was allocated on catalogue **v2**, whose 16,671,523 vacant rows
-carry a null heating fuel (the vacancy-aware fuel was made opt-in in the catalogue emitter and
-shipped only from v3, dated 2026-08-27). `allocate_buildings_to_geography` releases the fuel key
-for a vacant row with no fuel and draws across whatever fuels the sample's vacant buildings carry
-in that region, type and vintage — and the stratified sample is balanced across fuels by design, so
-the draw is near-uniform. The publication finished two minutes before the commit that made v3 the
-default (`69831e6c1d`, 16:00). The rerun on v3 first failed on a stale s3fs directory listing after
-staging the partitions (fixed by `invalidate_cache()` calls in `allocated_weights.py`, uncommitted
-on `sampling_regions`), then completed at 19:31 and reproduces the notebook's series: 136,871,390
-units, the same 555,763 unmatched rows, and every energy total within 0.1%.
-
-**Evidence.** `cached_allocated_weights` of the 15:58 publication (every vacant row with null
-catalogue fuel); `pums_2019_5yrs_acs_catalogue_v2.parquet` (vacant `Heating Fuel` null) against
-`_v3.parquet` (populated); `republication_check_output.txt`. Two things follow for the pipeline:
-the catalogue version should be recorded in the publication (it is not, anywhere in the output),
-and a run whose catalogue supplies no vacant fuel should say so loudly rather than fall through to
-the released join (F1).
-
-### U2 — Natural-gas space heating per unit rises 1.05% within cells after composition control
+### U1 — Natural-gas space heating per unit rises 1.05% within cells after composition control
 
 **Expected?** no  |  **Status:** **explained** — sampling noise at the effective sample size; Minor band, +11.8 TWh against the −51.9 TWh step
 
 **Observation.** Holding the stock at the baseline's mix on state × building type × vintage ×
 heating fuel × vacancy, gas heating per unit is +1.05% (all units) and +1.00% (occupied), and
-+1.03% with all seven allocation keys as cells. The notebook records the same residual as +2.99 TWh
-on its two-group split.
++1.03% with all seven allocation keys as cells. The implementers' decomposition records the same
+residual as +2.99 TWh on its two-group split (§4.6 T1).
 
 **Explanation.** Not geography: the gas-heated stock's mean degree days fall 0.8%, and adding
 degree-day bins, the sampling region or the remaining allocation keys to the cells leaves the
@@ -1570,7 +1603,7 @@ acting on a twelve-building take, not the draw within pools.
 `sampler_validation_f3_output.txt`. F3 closed; the design question (effective sample size under
 flat twelve-per-segment takes) is F13.
 
-### U3 — Propane per propane-heated unit falls 10.5% while propane-heated units rise 22%
+### U2 — Propane per propane-heated unit falls 10.5% while propane-heated units rise 22%
 
 **Expected?** partly  |  **Status:** explained — accepted
 
@@ -1580,7 +1613,7 @@ occupied one does. Occupied propane per household is +0.6% after composition con
 
 **Evidence.** §4.6 T3, T4; §4.2 vacant cross-tab.
 
-### U4 — Alaska's stock falls 8.5% below ACS B25001; every other state is within 2.2%
+### U3 — Alaska's stock falls 8.5% below ACS B25001; every other state is within 2.2%
 
 **Expected?** no  |  **Status:** explained — accepted, carried as a follow-up
 
@@ -1592,7 +1625,7 @@ the same at 1–2%.
 
 **Evidence.** `allocation_miss_report.parquet` by state; §4.4; §4.6 T5. Tracked as F2.
 
-### U5 — The 0–100% federal-poverty share falls 0.87 points
+### U4 — The 0–100% federal-poverty share falls 0.87 points
 
 **Expected?** no  |  **Status:** explained — accepted
 
@@ -1604,13 +1637,13 @@ non-key characteristic).
 
 **Evidence.** §4.2 marginals table.
 
-### U6 — Heat-pump backup energy falls 3.7% within cells
+### U5 — Heat-pump backup energy falls 3.7% within cells
 
 **Expected?** no  |  **Status:** explained in kind — Notable band on a 22 TWh base, 0.02% of site energy
 
 **Explanation.** With all seven allocation keys as cells the residual is −2.3% rather than −3.7%
 (§4.6 T8), so a third of it is the poverty-level and tenure mix within the base cells. Degree
-days do not move it. The rest is the same weight-dispersion noise as U2 (§4.6 T9) on an intensity
+days do not move it. The rest is the same weight-dispersion noise as U1 (§4.6 T9) on an intensity
 with a larger coefficient of variation — backup energy is set by heat-pump sizing and envelope,
 neither of which the allocation keys on. Its own design standard error was not computed.
 
@@ -1626,7 +1659,7 @@ upgrade side (§4.8) was not run.
 
 ## 5.1 Hypothesis Reconciliation
 
-Reconciliation is weakened by the §1.3 authoring note — the notebook's results were available
+Reconciliation is weakened by the §1.3 authoring note — the implementers' results were available
 when the hypotheses were written.
 
 | # | Hypothesis | Expected | Observed | Match? | Note |
@@ -1635,12 +1668,12 @@ when the hypotheses were written.
 | H2 | Occupied heating-fuel counts move to B25040 | TVD <0.005; state gap to hundreds of thousands | TVD 0.0183 → 0.0025; state gap 6.95 → 0.64 M | yes | Gas within 35,000 households of the Census nationally |
 | H3 | Natural-gas space heating falls more than the stock | decrease >2% | −4.65% total, −2.71% per unit | yes | Stock −21.9, mix −41.8, intensity +11.8 TWh |
 | H4 | Gas heating per gas-heated occupied household unchanged | <0.5% | −0.02% (17,913 → 17,909 kWh) | yes | The cleanest single number in the document |
-| H5 | Propane and wood households rise | +0.5 M / +0.4 M | +0.51 M / +0.39 M occupied | yes | Vacant propane-heated units also rise, 1.0 → 1.9 M (U3) |
+| H5 | Propane and wood households rise | +0.5 M / +0.4 M | +0.51 M / +0.39 M occupied | yes | Vacant propane-heated units also rise, 1.0 → 1.9 M (U2) |
 | H6 | Electricity falls less than the stock; per unit within ±0.5% | ~−2%, ±0.5% | −1.88%; +0.11% per unit | yes | |
-| H7 | Cooling per unit rises slightly | <1% | +0.30% per unit; +0.22% after composition control | yes | Notebook: county mix +18.5, county intensity −10.4 kWh per unit |
+| H7 | Cooling per unit rises slightly | <1% | +0.30% per unit; +0.22% after composition control | yes | Implementers' county grouping: county mix +18.5, county intensity −10.4 kWh per unit |
 | H8 | EV share rises to ~1.66% | 1.19 → ~1.66% | 1.194 → 1.665% | yes | Survives composition control by construction |
 | H9 | Plug loads, lighting, refrigerator per unit unchanged | <0.5% | +0.23 / +0.50 / +0.34% per unit; +0.10 / +0.36 / +0.43% per household; ≤0.3% per ft² | yes, marginally on lighting | Floor area per household +0.37% explains it |
-| H10 | Within-cell intensities unchanged after composition control | <1% everywhere | within ±0.7% on every row except NG heating +1.05% (U2), HP backup −3.65% (U6), EV +37.7% (H8) | partial | The two residuals are Minor and Notable on small bases; T8 rules out geography and T9 shows they are sampling noise at the effective sample size the weights leave (SE 1.04% on gas heating per gas-heated occupied unit) |
+| H10 | Within-cell intensities unchanged after composition control | <1% everywhere | within ±0.7% on every row except NG heating +1.05% (U1), HP backup −3.65% (U5), EV +37.7% (H8) | partial | The two residuals are Minor and Notable on small bases; T8 rules out geography and T9 shows they are sampling noise at the effective sample size the weights leave (SE 1.04% on gas heating per gas-heated occupied unit) |
 | H11 | Vacant fuel mix moves to AHS | TVD <0.10 | 0.159 → 0.079 | yes | Propane, fuel oil and wood overshoot; electricity 8 points short |
 
 ## 5.2 Acceptance Criteria
@@ -1652,8 +1685,8 @@ when the hypotheses were written.
 - [x] No unexplained simulation failures (§4.4); allocation misses explained and below threshold
 - [x] An end-use-level comparison is present, not only fuel or total (§4.5)
 - [x] Every §1.3 hypothesis is reconciled (§5.1) — with the post-hoc caveat
-- [x] No unexplained Notable or Major result remains (§4.10) — U2 is explained as sampling noise
-      at the effective sample size (T9); U6 (−3.7% HP backup, Notable on a 22 TWh base) shares the
+- [x] No unexplained Notable or Major result remains (§4.10) — U1 is explained as sampling noise
+      at the effective sample size (T9); U5 (−3.7% HP backup, Notable on a 22 TWh base) shares the
       mechanism and is not material at national scale
 - [x] Backward compatibility is assessed, and breaks have migration steps (§3.8)
 - [ ] Documentation obligations are identified and tracked to completion (§3.9) — **the Technical
@@ -1673,7 +1706,7 @@ the intended EV retarget — and the reweighting lands on the Census: 136.87 M u
 sevenfold. The −83 TWh site-energy step is 67 TWh of fewer units, 36 TWh of the fuel margins moving
 to the Census and AHS, and +20 TWh of within-cell intensity that T8 and T9 show to be sampling
 noise at the effective sample size the allocation weights leave, not geography and not a sampler
-defect (U2).
+defect (U1).
 
 What holds the verdict at `REVIEW NEEDED` is four things that are not results defects but are not
 finished either:
@@ -1683,9 +1716,9 @@ finished either:
 2. **The allocation drops 0.4% of the stock and drops it unevenly** — 8.5% of Alaska, and 43% of
    all misses are `None`-fuel households. The threshold is met but the fix (more sample in the
    rare-fuel pools) is a decision about `num_samples_per_segment` or a fuel-aware take (F2).
-3. **The pipeline let a v2 catalogue through** with no record of which catalogue was used and no
-   guard against a vacant row with no fuel; the s3fs cache fix that unblocked the v3 rerun is
-   uncommitted (F1).
+3. **The publication does not record which catalogue it was allocated on**, and the allocator
+   releases the fuel key for a catalogue row that carries none without a warning; a catalogue
+   without vacant fuels would publish silently (F1).
 4. **The code has not merged**: `sampling_regions` in resstock and buildstockbatch and the
    catalogue branch in resstock-estimation are all unreleased, and the Technical Reference Guide
    does not yet describe the sampler, the catalogue or the weight semantics (§3.9). The published
@@ -1699,12 +1732,12 @@ with a control, and the maintainer has ruled to keep it.
 
 | # | Item | Owner | Issue | Blocking? |
 |---|---|---|---|---|
-| F1 | Harden the allocation pipeline: record the catalogue version and file hash in the publication; raise (or at least warn loudly) when a catalogue supplies no fuel for its vacant rows rather than silently releasing the key; commit the `invalidate_cache()` fix in `allocated_weights.py` (§4.10 U1) | Andrew Parker | TBD | **yes** |
-| F2 | Reduce allocation misses on rare fuels and small regions (Alaska 8.5%, `None` 240k rows): raise `num_samples_per_segment` for rare-fuel segments or seed the vacant sample with the AHS mix (§4.4, U4) | TBD | TBD | no |
-| F3 | Sampler validation for U2 (§4.6 T9) | Done | — | no — closed: the stratified sample reproduces every tested TSV conditional at the multinomial-noise level |
+| F1 | Harden the allocation pipeline: record the catalogue version and file hash in the publication; raise (or at least warn loudly) when a catalogue supplies no fuel for its vacant rows rather than silently releasing the key (§2.3, §5.3) | Andrew Parker | TBD | **yes** |
+| F2 | Reduce allocation misses on rare fuels and small regions (Alaska 8.5%, `None` 240k rows): raise `num_samples_per_segment` for rare-fuel segments or seed the vacant sample with the AHS mix (§4.4, U3) | TBD | TBD | no |
+| F3 | Sampler validation for U1 (§4.6 T9) | Done | — | no — closed: the stratified sample reproduces every tested TSV conditional at the multinomial-noise level |
 | F13 | Effective sample size of the published stock: 8% of buildings overall and 5% of gas-heated occupied ones, because pool weights are catalogue counts and the take is a flat twelve per segment (§4.6 T9). Decide whether to raise `num_samples_per_segment` for the pools that carry the most weight, or make the take proportional to the segment's expected stock, so per-unit intensities on non-key characteristics carry less than the current ~1% design error | TBD | TBD | no |
 | F4 | Decide the renormalization's treatment of propane, fuel oil and wood on the vacant stock, which overshoot AHS (§4.9.3); the `None` ratio of 10.5 rests on an AHS/ACS disagreement | TBD | TBD | no |
-| F5 | Catalogue validation: the 0–100% poverty share (10.18% vs the PUMS TSV's 11.05%) and the propane household count (5.75 M vs RECS 5.21 M) are catalogue-versus-source questions, not pipeline ones (U5, §4.9.2) | TBD | TBD | no |
+| F5 | Catalogue validation: the 0–100% poverty share (10.18% vs the PUMS TSV's 11.05%) and the propane household count (5.75 M vs RECS 5.21 M) are catalogue-versus-source questions, not pipeline ones (U4, §4.9.2) | TBD | TBD | no |
 | F6 | Utility-bill columns and the `Sampling Region` bill scenario (§3.7 TODO) | Andrew Parker | TBD | **yes** |
 | F7 | Data dictionary and enumeration dictionary for the new geography columns, weight semantics, `in.sampling_region_id`, and the renamed `Ground Thermal Conductivity` option; buildstock-query and SightGlass checks on non-unique `bldg_id` (§3.7, §3.8) | TBD | TBD | yes, before publication |
 | F8 | Technical Reference Guide section on the stratified sampler, the catalogue, the allocation and the weight semantics; changelog entry (§3.9) | TBD | TBD | yes, before release |
@@ -1727,32 +1760,31 @@ with a control, and the maintainer has ruled to keep it.
 
 # Appendix
 
-**Data provenance.** Every number in §4 that is not attributed to the notebook derives from two
+**Data provenance.** Every number in §4 not attributed to the implementers' analysis derives from two
 files:
 
 | Run | Location | Access |
 |---|---|---|
-| Baseline (`hpxml`) | `metadata_and_annual_results_aggregates/national/full/parquet/upgrade0_agg.parquet` under `C:/Scratch/ResStock/efforts/new_sampling/new_sampling_test_0_amy2018_2_output/` | local copy of the S3 publication `s3://resstock-core/new_sampling/new_sampling_test_0_amy2018_2_output/` |
-| New (`sampling`) | `s3://resstock-core/new_sampling/new_sampling_test_4_output/metadata_and_annual_results_aggregates/national/full/parquet/upgrade0_agg.parquet`, published 2026-09-14 19:31 on catalogue v3 | downloaded to `C:/Scratch/ResStock/efforts/new_sampling/new_sampling_test_4_output/`; the superseded 15:58 v2 publication is archived beside it under `v2_publication/` |
+| Baseline | `metadata_and_annual_results_aggregates/national/full/parquet/upgrade0_agg.parquet` under `C:/Scratch/ResStock/efforts/new_sampling/new_sampling_test_0_amy2018_2_output/` | local copy of the S3 publication `s3://resstock-core/new_sampling/new_sampling_test_0_amy2018_2_output/` |
+| New | `s3://resstock-core/new_sampling/new_sampling_test_4_output/metadata_and_annual_results_aggregates/national/full/parquet/upgrade0_agg.parquet`, published 2026-09-14 19:31 on catalogue v3 | downloaded to `C:/Scratch/ResStock/efforts/new_sampling/new_sampling_test_4_output/` |
 
 plus, for §4.4, the new run's `cached_allocated_weights/*/*.parquet`,
 `allocation_miss_report.parquet` and `cached_simulation_outputs/upgrade=0/` from the same S3
-folder, the catalogue files `pums_2019_5yrs_acs_catalogue_v2.parquet` and `_v3.parquet` from
+folder, the catalogue file `pums_2019_5yrs_acs_catalogue_v3.parquet` from
 `s3://resstock-core/truth_data/v01/StockE/`, and, for §4.6 T8, the county EPWs in
 `C:/Projects/WeatherData/BuildStock_2018_FIPS_HI.zip` (the AMY2018 archive both runs used), and,
 for §4.6 T9, the four TSVs under `project_national/housing_characteristics/`.
 
 Both parquets are one row per building per state (one row per building in the baseline, where
 every building is in one state). **All statistics are weighted by `weight`**, cast to Float64;
-`weight` is a unit count in the new run. The sign convention is `Δ = New − Baseline` (`sampling −
-hpxml`). Only the 192 `in.*` and 53 energy columns present in both are compared; the eight
+`weight` is a unit count in the new run. The sign convention is `Δ = New − Baseline`. Only the 192 `in.*` and 53 energy columns present in both are compared; the eight
 `in.utility_bill_*` columns are excluded throughout. No option enumeration needed a crosswalk.
 
-**Notebook series.** The notebook's `sampling` series (`results_sampling.parquet`, 924,991 rows,
-538,221 buildings, 136,871,390 units) and the S3 publication used here (924,770 rows, 538,200
-buildings, 136,871,390 units) are the same allocation republished; the row and building counts
-differ by the by-state re-aggregation and every headline quantity agrees within 0.1%
-(`republication_check_output.txt`). The baseline series is the same file on both sides.
+**The implementers' series.** The implementers' comparison analysis published the New run's
+allocation locally (924,991 rows, 538,221 buildings, 136,871,390 units); the S3 publication used
+here (924,770 rows, 538,200 buildings, 136,871,390 units) is the same allocation republished. The
+row and building counts differ by the by-state re-aggregation and every headline quantity agrees
+within 0.1% (`republication_check_output.txt`). The Baseline is the same file in both analyses.
 
 **Derived quantities used more than once:**
 
@@ -1766,9 +1798,9 @@ differ by the by-state re-aggregation and every headline quantity agrees within 
 | Error against a reference (§4.9) | `(series − reference) / reference` |
 
 **Figures.** The 15 `images/fig_4_*.png` files were generated programmatically from the files
-above; the 14 `images/nb_*.png` files are the notebook's figures, copied from
-`sampling_step_enablement/figures/` and produced by its cells from the notebook's own
-publication of the same runs. The analysis scripts and their captured output are retained in the
+above; the `images/nb_*.png` files are the implementers' figures, copied from the comparison
+analysis's `figures/` folder and produced by its cells from its own publication of the same runs
+(series labels `old`, `hpxml`, `sampling` = ResStock 2025 Release 1, Baseline, New). The analysis scripts and their captured output are retained in the
 working folder for this change (`analysis/`) and are not committed with the document.
 
 **Runs, logs and commits**
@@ -1777,8 +1809,8 @@ working folder for this change (`analysis/`) and are not committed with the docu
 - New run: `/kfs2/projects/enduse/runs/new_sampling/new_sampling_test_4/` on Kestrel (job JSONs, `job.out-*`, dask logs; no BSB log); YML copied beside this document as `new_sampling_test_4.yml`; raw results `s3://resstock-core/new_sampling/new_sampling_test_4/` (`baseline/results_up00.parquet`, `buildstock_csv/buildstock.csv`, both 2026-08-22)
 - resstock for the new run: `sampling_regions` at `1b8922621c` (inferred; F12); OS-HPXML subtree `1b1ba1b5ac1a02a1ff583db4bf3e31feed92c698` in both
 - buildstockbatch: `59bf7bf311f9f2726c3ff56ce683e30b203d2e77`, branch `sampling_regions`
-- Publication of the new run: resstockpostproc on `sampling_regions` at `69831e6c1d` plus the uncommitted `invalidate_cache()` fix, run through `telescope process` (SightGlassDataProcessing) with `sgpostproc_new_sampling_test_4.yml`; catalogue `pums_2019_5yrs_acs_catalogue_v3.parquet` (2026-08-27), `sampling_regions_v1.json`, `cec_cz_by_tract_2010_lkup.json`, allocation seed 42
-- Notebook: `sampling_step_enablement/` beside this document (`sampling_step_enablement.ipynb`, executed 2026-09-02; `build_notebook.py`, `helpers.py`, `preflight.py`, `references/`), publication code pinned at `595b4d0608e1f53e1477db45a6017531bacc08a9`
+- Publication of the new run: resstockpostproc on `sampling_regions` at `69831e6c1d` (with the `invalidate_cache()` change since committed as `48533ba4ff`), run through `telescope process` (SightGlassDataProcessing) with `sgpostproc_new_sampling_test_4.yml`; catalogue `pums_2019_5yrs_acs_catalogue_v3.parquet` (2026-08-27), `sampling_regions_v1.json`, `cec_cz_by_tract_2010_lkup.json`, allocation seed 42
+- Implementers' comparison analysis: `sampling_step_enablement/` in the working folder for this change (`sampling_step_enablement.ipynb`, executed 2026-09-02; `build_notebook.py`, `helpers.py`, `preflight.py`, `references/`), publication code pinned at `595b4d0608e1f53e1477db45a6017531bacc08a9`
 
 **Reproducing §4.5.** Weighted sums of every column matching
 `out.<fuel>.<end_use>.energy_consumption..kwh` multiplied by `weight`, over the two parquets,
