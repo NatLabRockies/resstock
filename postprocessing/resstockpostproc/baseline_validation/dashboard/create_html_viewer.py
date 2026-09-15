@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Sequence
+from pathlib import Path
 
 from resstockpostproc.baseline_validation.schema.plot_spec import ALL_ENDUSES_DISPLAY
 
@@ -29,7 +30,24 @@ METRIC_ORDER = [
 ]
 
 
-def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: str) -> str:
+FFLATE_ASSET_FILENAME = "fflate-0.8.2.min.js"
+FFLATE_SOURCE_PATH = Path(__file__).parent / "vendor" / FFLATE_ASSET_FILENAME
+
+
+def copy_fflate_asset(dest_dir: Path) -> Path:
+    """Vendor the fflate decompressor into the dashboard data directory."""
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    dest = dest_dir / FFLATE_ASSET_FILENAME
+    dest.write_bytes(FFLATE_SOURCE_PATH.read_bytes())
+    return dest
+
+
+def build_html(
+    headers: Sequence[str],
+    manifest: dict[str, str],
+    data_dir_href: str,
+    fflate_href: str,
+) -> str:
     filter_cols = [h for h in headers if h not in NON_FILTER_COLUMNS]
     headers_json = json.dumps(list(headers), ensure_ascii=False)
     filter_cols_json = json.dumps(filter_cols, ensure_ascii=False)
@@ -50,6 +68,19 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
 <head>
   <meta charset='UTF-8'>
   <title>ResStock Comparison Explorer</title>
+  <script src="{fflate_href}"></script>
+  <script>
+    // Decode a gzip+base64 data payload to a UTF-8 string. Native
+    // DecompressionStream is async and cannot be used here because the
+    // data <script> tags call addRowsZ/setCombinationsZ synchronously as
+    // they load, so we use fflate's synchronous gunzipSync.
+    function __bvInflate(b64) {{
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return new TextDecoder('utf-8').decode(window.fflate.gunzipSync(bytes));
+    }}
+  </script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-S5YQKCKW13"></script>
   <script>
@@ -66,21 +97,23 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
     .app {{ display: grid; grid-template-columns: 322px 1fr; height: 100vh; height: 100dvh; }}
     .sidebar {{
       border-right: 1px solid #ddd;
-      padding: 12px;
+      padding: 12px 0 12px 12px;
       overflow: hidden;
       background: #fafafa;
       display: flex;
       flex-direction: column;
       min-height: 0;
     }}
-    .title {{ font-size: 20px; font-weight: 700; margin: 4px 0 2px; }}
-    .subtitle {{ font-size: 12px; font-weight: 400; color: #6b6b6b; margin: 0 0 12px; }}
+    .title {{ font-size: 20px; font-weight: 700; margin: 4px 12px 2px 0; }}
+    .subtitle {{ font-size: 12px; font-weight: 400; color: #6b6b6b; margin: 0 12px 12px 0; }}
     #filters {{
       flex: 1 1 auto;
       min-height: 0;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      overflow-y: auto;
+      padding-right: 12px;
     }}
     .filter-block {{
       margin-bottom: 0;
@@ -148,6 +181,29 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       position: sticky;
       top: 0;
       z-index: 1;
+    }}
+    .filter-dropdown {{
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      color: #1a1a1a;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      background: #d2e3fc;
+      box-sizing: border-box;
+      cursor: pointer;
+    }}
+    .filter-dropdown:focus {{
+      outline: none;
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.18);
+    }}
+    .filter-dropdown.with-tabs {{
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }}
     .main {{ display: grid; grid-template-rows: auto auto 1fr; min-width: 0; }}
     .tabs {{
@@ -498,8 +554,16 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       for (const row of rows) ROWS.push(row);
     }};
 
+    window.addRowsZ = function(b64) {{
+      window.addRows(__bvInflate(b64));
+    }};
+
     window.setCombinations = function(combos) {{
       COMBOS = combos;
+    }};
+
+    window.setCombinationsZ = function(b64) {{
+      window.setCombinations(JSON.parse(__bvInflate(b64)));
     }};
 
     window.addCombos = function(combo) {{
@@ -556,6 +620,14 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
           KEY_INFO.set(key, {{ rowIdxs: [i] }});
         }}
       }}
+    }}
+
+    // Percent-encode each path segment for use as a URL. Segment-wise so
+    // '/' separators are preserved. Critically encodes '+' as %2B: a literal
+    // '+' in a path is reinterpreted as a space by S3 (and inconsistently
+    // over file://), which 404s plots like "Multi-Family with 5+ Units".
+    function encodePath(p) {{
+      return String(p).split('/').map(encodeURIComponent).join('/');
     }}
 
     function parseEntries(cellValue) {{
@@ -695,6 +767,33 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       renderMain();
     }}
 
+    function shouldUseDropdown(col) {{
+      if (col === 'Filter 1' || col === 'Filter 2') return true;
+      if (col === 'Quantity') {{
+        return norm(selection['Comparison Dataset'] ?? '') === 'RECS 2020';
+      }}
+      return false;
+    }}
+
+    function renderDropdown(block, col, shownOpts, hasFilterTabs) {{
+      const labelForVal = v => isFilterPairCol(col) ? filterOptionDisplayLabel(v) : fmt(v);
+      const select = document.createElement('select');
+      select.className = 'filter-dropdown' + (hasFilterTabs ? ' with-tabs' : '');
+      const currentVal = norm(selection[col] ?? '');
+      for (const val of shownOpts) {{
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = String(labelForVal(val));
+        if (val === currentVal) opt.selected = true;
+        select.appendChild(opt);
+      }}
+      select.addEventListener('change', () => {{
+        selection[col] = select.value;
+        rebuildFilters(col);
+      }});
+      block.appendChild(select);
+    }}
+
     function renderFilters() {{
       const host = document.getElementById('filters');
       host.innerHTML = '';
@@ -739,6 +838,13 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
             if (!activeTab) return true;
             return parseFilterCategoryValue(text).category === activeTab;
           }});
+        }}
+
+        if (shouldUseDropdown(col)) {{
+          block.style.flex = '0 0 auto';
+          renderDropdown(block, col, shownOpts, hasFilterTabs);
+          host.appendChild(block);
+          return;
         }}
 
         const list = document.createElement('div');
@@ -894,7 +1000,7 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       openLink.textContent = 'Open in a new tab';
       openLink.target = '_blank';
       openLink.rel = 'noopener noreferrer';
-      openLink.href = currentTabs[activeTabIdx].path;
+      openLink.href = encodePath(currentTabs[activeTabIdx].path);
       host.appendChild(openLink);
     }}
 
@@ -909,7 +1015,7 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
         return;
       }}
       const iframe = document.createElement('iframe');
-      iframe.src = currentTabs[activeTabIdx].path;
+      iframe.src = encodePath(currentTabs[activeTabIdx].path);
       host.appendChild(iframe);
     }}
 

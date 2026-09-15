@@ -33,10 +33,13 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from resstockpostproc.baseline_validation.dashboard.create_about_html import write_about_html
+from resstockpostproc.baseline_validation.dashboard.payload_codec import encode_gzip_b64
 from resstockpostproc.baseline_validation.dashboard.create_html_viewer import (
     COMBINATIONS_FILENAME,
+    FFLATE_ASSET_FILENAME,
     NON_FILTER_COLUMNS,
     build_html,
+    copy_fflate_asset,
 )
 from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     COMPARISONS_INDEX_DIRNAME,
@@ -69,6 +72,7 @@ class IndexState:
         self.headers = headers_list
         self.data_dir = data_dir or (html_path.parent / DATA_DIR_NAME)
         self.data_dir_href = data_dir_href or relative_href_from_file(self.data_dir, html_path)
+        self.fflate_href = f"{self.data_dir_href}/{FFLATE_ASSET_FILENAME}"
         self.manifest: dict[str, str] = {}
         self.shard_suffix_sizes: dict[str, int] = {}
         self.filter_cols = [h for h in self.headers if h not in NON_FILTER_COLUMNS]
@@ -227,11 +231,15 @@ def parse_viz_cell(cell_value: str) -> tuple[str, str | None]:
     return (cell_value, None)
 
 
-def _row_to_tsv_line(row: dict[str, str], headers: Sequence[str]) -> str:
+def _row_to_tsv_line_raw(row: dict[str, str], headers: Sequence[str]) -> str:
     buf = io.StringIO()
     writer = csv.DictWriter(buf, fieldnames=headers, delimiter="\t", lineterminator="\n")
     writer.writerow(row)
-    line = buf.getvalue()
+    return buf.getvalue()
+
+
+def _row_to_tsv_line(row: dict[str, str], headers: Sequence[str]) -> str:
+    line = _row_to_tsv_line_raw(row, headers)
     return line.replace("\\", "\\\\").replace("`", "\\`").replace("${", "\\${")
 
 
@@ -276,19 +284,21 @@ def create_html_from_rows(
         filename = _shard_filename(filter1)
         manifest[filter1] = filename
         shard_path = data_dir / filename
-        content = ["window.addRows(`\n"]
-        content.extend(_row_to_tsv_line(r, headers_list) for r in shard)
-        content.append(_JS_SUFFIX)
-        shard_path.write_text("".join(content), encoding="utf-8")
+        tsv_body = "".join(_row_to_tsv_line_raw(r, headers_list) for r in shard)
+        encoded = encode_gzip_b64(tsv_body)
+        shard_path.write_text(f'window.addRowsZ("{encoded}");\n', encoding="utf-8")
 
     combos = [list(t) for t in sorted(combinations_set)]
     combo_path = data_dir / COMBINATIONS_FILENAME
+    encoded_combos = encode_gzip_b64(json.dumps(combos, ensure_ascii=False))
     combo_path.write_text(
-        f"window.setCombinations({json.dumps(combos, ensure_ascii=False)});\n",
+        f'window.setCombinationsZ("{encoded_combos}");\n',
         encoding="utf-8",
     )
 
-    html_path.write_text(build_html(headers_list, manifest, data_dir_href), encoding="utf-8")
+    copy_fflate_asset(data_dir)
+    fflate_href = f"{data_dir_href}/{FFLATE_ASSET_FILENAME}"
+    html_path.write_text(build_html(headers_list, manifest, data_dir_href, fflate_href), encoding="utf-8")
     write_about_html(html_path.parent)
     print(f"HTML file created: {html_path} ({len(row_list)} rows, {len(manifest)} shards)")
 
@@ -310,6 +320,7 @@ def init_html_index(
     html_path.parent.mkdir(parents=True, exist_ok=True)
     data_dir = data_dir or (html_path.parent / DATA_DIR_NAME)
     data_dir.mkdir(parents=True, exist_ok=True)
+    copy_fflate_asset(data_dir)
 
     state = IndexState(html_path=html_path, headers=headers, data_dir=data_dir)
     (data_dir / COMBINATIONS_FILENAME).write_text("", encoding="utf-8")
@@ -322,7 +333,10 @@ def append_index_row(state: IndexState, row_dict: dict) -> None:
     """Append one row to disk shards/combinations in O(1)."""
     state.append_to_shard(row_dict)
     if state.needs_html_rewrite:
-        _atomic_write(state.html_path, build_html(state.headers, state.manifest, state.data_dir_href))
+        _atomic_write(
+            state.html_path,
+            build_html(state.headers, state.manifest, state.data_dir_href, state.fflate_href),
+        )
 
 
 def finalize_html_index(state: IndexState) -> None:
@@ -338,7 +352,7 @@ def _resolve_canonical_data_dir(tsv_path: Path, html_path: Path) -> Path:
     the shard subdir. Fall back to the HTML-sibling layout only when the TSV
     is not under ``dashboard_data/``.
     """
-    tsv_parent = tsv_path.resolve().parent
+    tsv_parent = tsv_path.parent
     if tsv_parent.name == DASHBOARD_DATA_DIRNAME:
         return tsv_parent / COMPARISONS_INDEX_DIRNAME
     return html_path.parent / DASHBOARD_DATA_DIRNAME / COMPARISONS_INDEX_DIRNAME

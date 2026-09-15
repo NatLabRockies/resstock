@@ -4,7 +4,7 @@ These are all 15 available Standard Scenarios for three metrics at GEA geographi
 3. average emissions rate (AER) non-levelized, month-hour average over 2025-2050
 
 2024 Cambium release data:
-- Levelized **LRMER** come from Cambium24_Workbook.xlsx (available via [Long-run Marginal Emission Rates for Electricity - Workbooks for 2024 Cambium Data](https://data.nrel.gov/submissions/289)):
+- Levelized **LRMER** come from Cambium24_Workbook.xlsx (available via [Long-run Marginal Emission Rates for Electricity - Workbooks for 2024 Cambium Data](https://data.nlr.gov/submissions/289)):
 
   On the "Levelized LRMER" tab:
   - Emission | CO2e
