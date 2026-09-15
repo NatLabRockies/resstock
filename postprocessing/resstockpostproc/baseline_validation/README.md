@@ -164,33 +164,33 @@ The baseline validation tool maintains multiple caches to speed up subsequent ru
 
 ### Cache Locations
 
-The tool maintains two types of caches:
+The tool maintains two types of caches, in different directories:
 
-1. **Query result cache** (`.bsq_cache/`) — stores Athena query results
-2. **Data loading cache** (`.cache/resstock_*_data_cache/`) — stores processed ResStock data aggregations
-
-Both are stored in the `postprocessing/` directory.
+1. **Query result cache** (`postprocessing/resstockpostproc/.bsq_cache/`) — stores Athena query results
+2. **Data loading cache** (`postprocessing/.cache/resstock_*_data_cache/`) — stores processed ResStock data aggregations, keyed in part by a hash of `workflow.data_sources`
 
 ### How to Clear Caches
 
 Clear all baseline validation caches:
 
 ```bash
-rm -rf /path/to/resstock/postprocessing/.bsq_cache
-rm -rf /path/to/resstock/postprocessing/.cache/resstock_annual_data_cache
-rm -rf /path/to/resstock/postprocessing/.cache/resstock_timeseries_data_cache
+cd /path/to/resstock/postprocessing/
+rm -rf resstockpostproc/.bsq_cache
+rm -rf .cache
 ```
 
-Or using a convenience command from the `postprocessing/` directory:
+To recursively find, print, and remove **all** `.cache` and `.bsq_cache` directories anywhere under `postprocessing/` (e.g. if stray caches exist elsewhere, such as under `resstockpostproc/`), run from the repo root:
 
 ```bash
-# Remove all BSQ and data loading caches
-rm -rf .bsq_cache .cache/resstock_*_data_cache
+find . -type d \( -name ".cache" -o -name ".bsq_cache" \) -print -exec rm -rf {} +
 ```
 
 The next run will recreate caches as needed with your new configuration.
 
 **Note**: Reference data caches (`eia_annual_data_cache`, `recs_annual_data_cache_v2`) are safe to keep unless you're updating reference datasets.
+
+**Symptom of a stale/mis-keyed cache**: a data source you added to `workflow.yaml` is silently missing from plots, with no corresponding warning in `run.log`. The data-loading cache is supposed to auto-invalidate when `data_sources` changes (via a hash in `_get_workflow_state_hash()` in `shared_utils/caching.py`), but if that hash computation ever throws (it's wrapped in a bare `try/except: return None`), invalidation silently no-ops and stale results from a prior `data_sources` config get reused. If you suspect this, clear `postprocessing/.cache` manually using the commands above and re-run.
+
 
 
 ## Developing and Testing

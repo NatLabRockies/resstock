@@ -33,7 +33,7 @@ def _get_workflow_state_hash() -> str | None:
             return None
         # Include source names and tables to detect configuration changes
         source_info = tuple(
-            (src.name, src.config.table_name) for src in workflow.data_sources
+            (src.name, src.table_name) for src in workflow.data_sources
         )
         source_bytes = pickle.dumps(source_info)
         return hashlib.sha256(source_bytes).hexdigest()[:8]
