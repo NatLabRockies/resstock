@@ -96,9 +96,14 @@ across the real geographic units (tracts) it represents and assigns each allocat
 2. Loads the reference data files: the PUMS catalogue, the sampling-region mapping, and the CEC
    2010 climate zones (downloading them from S3 if they are not already cached locally).
 3. Merges the geographical data with the sampling-region assignments (county-based for most of the
-   US, falling back to CEC climate-zone-based regions for California tracts).
-4. Loads the buildstock sample data.
-5. Allocates buildings to geographical units. The geographic catalogue has one row per real
+   US, falling back to CEC climate-zone-based regions for California tracts), and stages the
+   result as one parquet partition per sampling region under `cached_catalogue_by_sampling_region/`.
+   This is a single streaming pass, so the catalogue — one row per US housing unit, some 15 GB in
+   memory — is never held whole. The partitions are reused if a later step fails and the run is
+   repeated.
+4. Loads the allocation keys of the buildstock sample data.
+5. Allocates buildings to geographical units, one sampling region at a time. The geographic
+   catalogue has one row per real
    housing unit (from the PUMS catalogue), and the simulated buildings (identified by `bldg_id`,
    read here from the cached baseline simulation outputs) are the pool that housing units are
    drawn from. The simulated buildings are first grouped into pools that share the key
@@ -111,14 +116,26 @@ across the real geographic units (tracts) it represents and assigns each allocat
 6. Writes the resulting allocated-weights parquet outputs (the full allocation plus a `fkt`
    foreign-key table mapping buildings to tract and PUMA).
 
-The resulting `cached_allocated_weights.parquet` has exactly 14 columns and one row per housing
-unit (`weight` is always `1`). It carries the sampled `bldg_id` plus the catalogue's geographic
-and characteristic columns. Below is the schema, shown transposed (columns down the side, one
-example housing unit per value column). Rows A and B are the *same* building allocated to two
-different tracts, so only the finer geographic columns differ; row C is a different building:
+Allocating a region at a time keeps peak memory set by the largest single sampling region rather
+than by the size of the country, which is what lets a national run finish on an ordinary
+workstation. It gives the same answer as allocating in one piece: `in.sampling_region_id` is one of
+the seven allocation keys and the fallback ladder never releases it, so no housing unit can draw a
+building from outside its own region however the work is divided. Each region draws off a seed
+derived from the run's seed and the region id (see `region_seed`), so a region's allocation does
+not depend on the order the regions happen to be processed in.
+
+The resulting `cached_allocated_weights/` holds one parquet file per sampling region, together
+having 16 columns and one row per housing unit (`weight` is always `1`). They carry the
+sampled `bldg_id` plus the catalogue's geographic and characteristic columns. Read them with
+`get_cached_allocated_weights()`, which scans the partitions as a single `LazyFrame`. Below are the
+14 columns that carry the allocation, shown transposed (columns down the side, one example housing
+unit per value column); the other two are `household_id`, the catalogue's own row identifier, and
+`fallback_stage`, which records the rung of the fallback ladder that filled the row. Rows A
+and B are the *same* building allocated to two different tracts, so only the finer geographic
+columns differ; row C is a different building:
 
 ```text
-  cached_allocated_weights.parquet — (14 columns, roughly 140M rows)
+  cached_allocated_weights/ — (16 columns, roughly 140M rows across 60 region partitions)
   1 row per housing unit represents the actual housing stock count per ACS
   column                          | row A           | row B           | row C
   --------------------------------+-----------------+-----------------+-----------------------
