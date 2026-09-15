@@ -15,6 +15,7 @@ author questions.
 | Change | Date | Type | Status | Verdict |
 |---|---|---|---|---|
 | [OpenStudio-HPXML 1.11 and option-based BuildResidentialHPXML arguments](2026-08-oshpxml-1-11-and-options-args/) | 2026-08 | baseline methodology + dependency bump | draft | REVIEW NEEDED |
+| [New Sampling: stratified sampler and catalogue-allocated weights](2026-08-new-sampling/) | 2026-08 | workflow mechanics + data distribution | draft | REVIEW NEEDED |
 
 ## Layout
 
