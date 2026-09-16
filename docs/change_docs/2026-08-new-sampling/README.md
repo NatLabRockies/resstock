@@ -555,8 +555,8 @@ assigns the cross term equally.
 weights) and **New** is `new_sampling_test_4` (stratified sampler, catalogue-allocated weights);
 every delta is New − Baseline. Where a third series appears it is the **control**: the New run's
 allocation repeated onto a catalogue built without the AHS vacant-fuel renormalization, with
-nothing else changed (`analysis/regenerate_control.py`; its results are the
-`analysis/references/control_*.csv` tables). Every figure and table was computed for this
+nothing else changed (its results are the `analysis/references/control_*.csv` tables, see the
+Appendix). Every figure and table was computed for this
 document from the published parquets, the run's `cached_allocated_weights` and the reference
 tables in `analysis/references/`.
 
@@ -834,14 +834,13 @@ caveat §2.5 records.
 **Source:** the two run parquets named in §0, weighted `group_by` on every `in.*` column present
 in both, converted to dwelling-unit fractions with `weight`, then TVD; occupied and vacant cuts on
 `in.vacancy_status`. ACS B25040 state and county sums, the county key, B25001 state sums and
-AHS 2023 shares from `analysis/references/` (built from the ACS tract file by
-`build_acs_references.py` and from the AHS 2023 National PUF); the county tables for B25001,
-B25003, B25004, B25024, B25034, B17026 (NHGIS) and S1901 summed from the same tract downloads
-the catalogue was built from (`build_acs_county_references.py`). County grain: rows of
+AHS 2023 shares from `analysis/references/` (summed from the ACS 2019 5-year tract files and
+the AHS 2023 National PUF); the county tables for B25001, B25003, B25004, B25024, B25034,
+B17026 (NHGIS) and S1901 summed from the same tract downloads the catalogue was built from,
+with the option mappings recorded in `analysis/references/SOURCES.md`. County grain: rows of
 `cached_allocated_weights/*/*.parquet` that found a building, keyed on
-`in.nhgis_county_gisjoin`, for the New series and `in.as_simulated_county` for the Baseline
-(`decompositions_4_x.py` for heating fuel, `county_grain_4_2.py` for the rest; income for the
-New series is the drawn building's, joined on `bldg_id`). The eight
+`in.nhgis_county_gisjoin`, for the New series and `in.as_simulated_county` for the Baseline;
+income for the New series is the drawn building's, joined on `bldg_id`. The eight
 `in.utility_bill_*` columns are excluded and no other filter is applied.
 
 **Weighting:** weighted to dwelling-unit counts by `weight` throughout.
@@ -1523,7 +1522,10 @@ symmetric split is `ΔE = Δn·(i₀+i₁)/2 + (n₀+n₁)/2·Δi` per cell, col
 at national mean intensity), mix (cell count terms less stock) and intensity (cell intensity
 terms). Composition control is direct standardisation: Σ_cells i_new × n_base / Σ n_base against
 Σ i_base × n_base / Σ n_base over cells present on both sides (99.9% coverage, 100% for occupied).
-The county cooling grouping and the four-part gas split are in `analysis/decompositions_4_x.py`.
+The county cooling grouping splits the national mean intensity Σ_c s_c·ī_c into a county-share
+term at midpoint intensities and a county-intensity term at midpoint shares over counties with
+at least 30 buildings on both sides; the four-part gas split is the symmetric split on the two
+occupancy groups with the renormalization part measured against the control allocation.
 
 ## 4.7 Timeseries and Peak Impacts
 
@@ -1628,7 +1630,8 @@ under each bar is the group's size, so a bar and its count multiply to the group
 
 **Source:** RECS 2020 public microdata v7 (Energy Supplier Survey consumption per household,
 converted at 3.41214 kWh per thousand Btu; EIA's two published estimates reproduce as a check),
-the per-group constants held in `decompositions_4_x.py`; series totals are weighted sums of
+split on `FUELHEAT` into the households that heat with each fuel and every other household;
+series totals are weighted sums of
 `out.<fuel>.total.energy_consumption..kwh` on `in.vacancy_status == Occupied`, per-household values
 divided by weighted household counts. `FUELHEAT` → `in.heating_fuel` per the repository's
 `map_heating_fuel`.
@@ -1919,7 +1922,7 @@ every building is in one state). **All statistics are weighted by `weight`**, ca
 
 **The control allocation** (§4.6 T3) is the New run's simulation outputs allocated again by the
 same `allocated_weights.py` code and seed onto a catalogue emitted without the AHS vacant-fuel
-renormalization (`analysis/regenerate_control.py`, three stages: catalogue, allocate, measure).
+renormalization, in three stages: catalogue, allocate, measure.
 Its energy by fuel, vacant fuel mix, matching stages and distances to the references are the
 `analysis/references/control_*.csv` tables; the New series' rows in those tables agree with the
 S3 publication to the unit.
@@ -1936,9 +1939,28 @@ S3 publication to the unit.
 | Error against a reference (§4.9) | `(series − reference) / reference` |
 
 **Figures.** The 25 `images/fig_4_*.png` files were generated programmatically from the files
-above by the scripts in `analysis/`. The scripts, their captured output and the reference tables
-(`analysis/references/`) are retained in the working folder for this change and are not
-committed with the document.
+above by the scripts listed below.
+
+**Analysis artefacts retained in the working folder** (`2026-08 New Sampling/analysis/` on the
+ResStock Features SharePoint; not committed with the document). Each script reads the files
+named above, prints the section's tables to a `*_output.txt` beside it and writes its figures to
+`images/`:
+
+| Script | Produces |
+|---|---|
+| `common.py` | shared paths, palette, loaders, series names |
+| `input_distribution_4_2.py` | §4.2 TVD tables, heating fuel by vacancy, B25040 state comparison; figures 4.2a–c |
+| `decompositions_4_x.py` | §4.2 county heating-fuel distance (4.2d); §4.6 four-part gas split (4.6h), renormalization control (4.6i, 4.6j), cooling by county (4.6k); §4.9 conditioned fuel use (4.9b), EV share (4.9c) |
+| `county_grain_4_2.py` | §4.2 county-grain TVD by characteristic (4.2e), count errors (4.2f), sample size per county (4.2g) |
+| `run_health_4_4.py` | §4.4 completion, allocation stages, misses, never-drawn buildings; figure 4.4a |
+| `stock_comparison_4_5.py` | §4.5 by-fuel and by-end-use tables, occupied and vacant cuts; figures 4.5a–c |
+| `segment_analysis_4_6.py` | §4.6 T1–T7; figures 4.6a–e |
+| `degree_days_4_6.py` | §4.6 T8 degree days from the EPWs (`county_degree_days_amy2018.csv`); figure 4.6f |
+| `sampler_validation_f3.py` | §4.6 T9 sampler validation, effective sample size, design SE; figure 4.6g |
+| `external_validation_4_9.py` | §4.9 RECS, AHS and EV comparisons; figure 4.9a |
+| `republication_check.py` | the local-copy-against-S3 check recorded in the Appendix |
+| `regenerate_control.py` | the control allocation (§4.6 T3): catalogue, allocate, measure |
+| `references/build_acs_references.py`, `references/build_acs_county_references.py` | the ACS state and county reference tables in `references/`, documented in `references/SOURCES.md` |
 
 **Runs, logs and commits**
 
@@ -1947,7 +1969,7 @@ committed with the document.
 - resstock for the new run: `sampling_regions` at `1b8922621c` (inferred; F12); OS-HPXML subtree `1b1ba1b5ac1a02a1ff583db4bf3e31feed92c698` in both
 - buildstockbatch: `59bf7bf311f9f2726c3ff56ce683e30b203d2e77`, branch `sampling_regions`
 - Publication of the new run: resstockpostproc on `sampling_regions` at `69831e6c1d` (with the `invalidate_cache()` change since committed as `48533ba4ff`), run through `telescope process` (SightGlassDataProcessing) with `sgpostproc_new_sampling_test_4.yml`; catalogue `pums_2019_5yrs_acs_catalogue_v3.parquet` (2026-08-27), `sampling_regions_v1.json`, `cec_cz_by_tract_2010_lkup.json`, allocation seed 42
-- Control allocation: `analysis/regenerate_control.py` against resstockpostproc at `595b4d0608e1f53e1477db45a6017531bacc08a9`; outputs `analysis/references/control_*.csv` (2026-09-02)
+- Control allocation: resstockpostproc at `595b4d0608e1f53e1477db45a6017531bacc08a9`; outputs `analysis/references/control_*.csv` (2026-09-02)
 
 **Reproducing §4.5.** Weighted sums of every column matching
 `out.<fuel>.<end_use>.energy_consumption..kwh` multiplied by `weight`, over the two parquets,
