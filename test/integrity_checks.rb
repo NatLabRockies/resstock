@@ -4,7 +4,7 @@ def integrity_check(project_dir_name, housing_characteristics_dir = 'housing_cha
   # Load helper file and sampling file
   resources_dir = File.join(File.dirname(__FILE__), '../resources')
   require File.join(resources_dir, 'buildstock')
-  require File.join(resources_dir, 'run_sampling_lib')
+  require File.join(resources_dir, '../samplers/quota/run_sampling_lib')
   require 'csv'
 
   # Setup
