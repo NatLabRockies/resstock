@@ -83,7 +83,7 @@ row per US housing unit. A building's weight is the number of catalogue units th
 state, so the published stock is the Census stock by construction: 136.9 million housing units
 (the catalogue's 137.4 million less the 0.4% no simulated building could stand in for), 120.5
 million of them occupied, with the occupied heating-fuel mix matching ACS B25040 to 0.0025 in
-total variation nationally and to 0.006 household-weighted per county, where the quota sample sat
+total variation nationally and to 0.007 household-weighted per county, where the quota sample sat
 at 0.018 and 0.043. The step costs 2.0% of the dwelling-unit count (the quota run
 was normalised to the ACS 2021 total; the catalogue is ACS 2019 and 0.4% of it finds no building)
 and 4.7% of natural-gas space heating: −51.9 TWh, of which −21.9 is the smaller stock, −41.8 is the
@@ -304,6 +304,11 @@ ACS 1.13%, giving a ratio of 10.5).
   fallback ladder cannot fill are dropped, not redistributed. The drop is 302,399 occupied rows on
   rare fuels (`None`, `Other Fuel`, propane, wood) concentrated in California, Texas and Alaska, and
   253,364 vacant rows whose renormalized fuel the sample's vacant buildings do not carry (§4.4).
+- **The catalogue's geography is exact at PUMA grain and not quite at tract grain.** 845 ACS
+  tracts (46,198 units, 0.03%) have no catalogue rows, one of them a whole county (Kusilvak Census
+  Area, AK), and 178 tracts carry unit totals more than 20% from B25001 while 2,338 of 2,351 PUMA
+  totals are within 1%. County results are affected only where a PUMA crosses a county line
+  (§4.2, U6).
 - **A building's simulated location is not its units' location.** Within a sampling region a
   building drawn for a tract may have been simulated in another county of that region, with that
   county's weather; in California, in another county of the same CEC zone. A quarter of the
@@ -586,6 +591,8 @@ station per county), run period, `upgrade0` only, OpenStudio 3.10.0 image, build
 | Input distribution shift on every shared `in.*` column | simulation | total variation distance on weighted dwelling-unit fractions (§4.2) | complete — fitted characteristics move as designed, the rest within 0.05 |
 | Occupied heating fuel against ACS B25040, national and per state | external | weighted counts vs state and county sums of the ACS B25040 tract file (`analysis/references/`; §4.2, §4.9) | pass — TVD 0.0183 → 0.0025; state gap 6.95 M → 0.64 M |
 | Stock against ACS B25001, national and per state | external | weighted counts vs B25001 (§4.6 T5, §4.9.1) | pass — +1.6% → −0.4% nationally; 41 of 51 states closer |
+| Every allocation key and income at county grain | external | per-county TVD against the ACS 2019 5-year table each was fitted to, from each allocated unit's own county (§4.2) | pass — every key at a median county distance ≤ 0.02 (quota sample 0.04–0.16); income, not a key, 0.06 |
+| Unit counts at county grain | external | per-county relative error in dwelling units, occupied households, vacant units and gas-heated households against ACS (§4.2) | pass — median county error 0.9% on units (was 2.6%); residual errors are the misses and two catalogue geography defects (U6) |
 | Composition control (direct standardisation) | simulation | New within-cell intensities on Baseline cell weights (§4.6 T2) | pass — every intensity within ±1% except EV charging (+38%, H8), HP backup (−4%, U5) and NG heating (+1.05%, U1) |
 | Degree days per weather station, and the U1 residual against geography and non-key characteristics | simulation | HDD65F / CDD65F recomputed from every county EPW in the AMY2018 archive, joined on the simulated building's county; composition control with degree-day bins, station, region, the remaining allocation keys and four non-key characteristics added to the cells (§4.6 T8) | gas-heated stock HDD −0.8%; residual unchanged with all seven keys (+1.03%); about half removed by floor area, wall insulation, setpoint and heating efficiency |
 | Sampler validation against the TSV conditionals (F3) | simulation | realised conditional of floor area, wall insulation, heating setpoint and heating efficiency against their TSVs, given each TSV's own dependencies, for both samples unweighted, the published stock weighted, a Monte Carlo noise benchmark, a pool-uniform reweighting and a design standard error (§4.6 T9) | pass — the stratified sample sits at the noise benchmark on all four; the published stock's excess is weight dispersion; the U1 residual is 1.0 SE |
@@ -710,13 +717,13 @@ with its own B25040 mix by total variation distance:
 | | Baseline | New |
 |---|---|---|
 | Counties compared | 3,137 | 3,141 |
-| Mean distance | 0.156 | 0.014 |
-| Median | 0.114 | 0.011 |
-| Household-weighted mean | 0.043 | 0.006 |
-| 90th percentile | 0.338 | 0.025 |
-| Counties above 0.10 | 1,734 | 7 |
+| Mean distance | 0.156 | 0.016 |
+| Median | 0.114 | 0.013 |
+| Household-weighted mean | 0.043 | 0.007 |
+| 90th percentile | 0.338 | 0.027 |
+| Counties above 0.10 | 1,734 | 14 |
 | Counties above 0.20 | 839 | 0 |
-| New closer than Baseline | — | 3,120 of the 3,136 counties in both |
+| New closer than Baseline | — | 3,116 of the 3,136 counties in both |
 
 ![4.2d per-county occupied heating-fuel distance to ACS B25040](images/fig_4_2_d_county_heating_fuel.png)
 
@@ -724,15 +731,117 @@ with its own B25040 mix by total variation distance:
 county's own B25040 fuel mix; the dashed line marks 0.05. Right: the mean, median,
 household-weighted mean and 90th percentile of the two distributions. The New series' county
 line is the catalogue's fuel mix less the 0.4% of rows that found no building, which is why
-seven counties remain above 0.10.*
+fourteen counties remain above 0.10.*
+
+**Every allocation key at county grain.** The same comparison for the other keys, each against the
+ACS 2019 5-year table the catalogue was fitted to, and for income, which is not a key. Vacancy
+status, building type and vintage are compared on all housing units; tenure, poverty level and
+income on occupied households. B17026 counts *families* rather than households (the catalogue trues
+its poverty marginal up to PUMS at PUMA level for that reason), and S1901's income bins are coarser
+than ResStock's, so the two are collapsed to the eight bins they share.
+
+| Characteristic (ACS table) | Series | Counties | Median TVD | Household-weighted mean | 90th percentile | Counties > 0.10 | New closer |
+|---|---|---|---|---|---|---|---|
+| Vacancy status (B25003, B25004) | Baseline | 3,140 | 0.042 | 0.016 | 0.180 | 756 | |
+| | New | 3,141 | 0.004 | 0.002 | 0.015 | 0 | 2,829 of 3,139 |
+| Tenure (B25003) | Baseline | 3,137 | 0.047 | 0.018 | 0.188 | 814 | |
+| | New | 3,141 | 0.006 | 0.005 | 0.017 | 1 | 2,767 of 3,136 |
+| Building type (B25024) | Baseline | 3,140 | 0.080 | 0.027 | 0.212 | 1,246 | |
+| | New | 3,141 | 0.010 | 0.007 | 0.023 | 7 | 2,926 of 3,139 |
+| Vintage (B25034) | Baseline | 3,140 | 0.156 | 0.047 | 0.370 | 2,197 | |
+| | New | 3,141 | 0.018 | 0.011 | 0.032 | 5 | 3,080 of 3,139 |
+| Heating fuel (B25040, 4.2d) | Baseline | 3,137 | 0.114 | 0.043 | 0.338 | 1,734 | |
+| | New | 3,141 | 0.013 | 0.007 | 0.027 | 14 | 3,116 of 3,136 |
+| Poverty level (B17026, families) | Baseline | 3,137 | 0.161 | 0.082 | 0.347 | 2,408 | |
+| | New | 3,141 | 0.065 | 0.050 | 0.089 | 110 | 2,941 of 3,136 |
+| Income (S1901, not a key) | Baseline | 3,137 | 0.151 | 0.067 | 0.363 | 2,152 | |
+| | New | 3,141 | 0.062 | 0.049 | 0.107 | 422 | 2,781 of 3,136 |
+
+![4.2e per-county distance to the ACS mix, by characteristic](images/fig_4_2_e_county_tvd_grid.png)
+
+*Cumulative share of counties at or below each total variation distance from the county's own ACS
+mix, one panel per characteristic; the dashed line marks 0.05. Note the wider axis on the bottom
+row.*
+
+Every key the allocation fits lands at a median distance of 0.02 or less in every county, against
+0.04–0.16 for the quota sample, and vintage — the first key the fallback ladder releases — is no
+exception (median 0.018). The two bottom panels are where the fit stops. Poverty level sits at
+0.05–0.07 in most counties for a reason that is partly the reference (families, not households)
+and partly the catalogue's PUMA-level true-up. Income is not a key at all: a county's income mix
+in the New series is whatever the buildings drawn from its region pool carried, so the improvement
+over the Baseline is the poverty-level, tenure and state keys moving the income conditional, not a
+county fit, and 422 counties remain above 0.10. That panel is the limit of what seven keys buy.
+
+**Unit counts at county grain.** The non-distributional version of the same question: does each
+county hold the right number of units? Relative error against ACS 2019 5-year per county.
+
+| Metric (ACS table) | Series | National bias | Median \|error\| | Household-weighted mean \|error\| | 90th percentile | Counties within ±5% |
+|---|---|---|---|---|---|---|
+| Dwelling units (B25001) | Baseline | +1.61% | 2.6% | 2.3% | 4.9% | 2,845 of 3,142 |
+| | New | −0.41% | 0.9% | 0.6% | 3.2% | 3,014 |
+| Occupied households (B25003) | Baseline | +1.63% | 5.7% | 3.5% | 27.0% | 1,455 |
+| | New | −0.25% | 0.9% | 0.5% | 3.4% | 2,996 |
+| Vacant units (B25004) | Baseline | +1.48% | 24.6% | 13.9% | 89.4% | 636 |
+| | New | −1.53% | 2.6% | 2.3% | 9.4% | 2,287 |
+| Gas-heated households (B25040) | Baseline | +3.65% | 25.5% | 8.1% | 180.6% | 532 of 3,132 |
+| | New | −0.06% | 2.3% | 0.9% | 13.2% | 2,315 |
+
+![4.2f per-county relative error in unit counts against ACS](images/fig_4_2_f_county_count_errors.png)
+
+*Cumulative share of counties at or below each absolute relative error. The Baseline's unit count
+is the ACS 2021 constant spread by the County TSV, so every county carries the +1.6% vintage
+offset and the quota sampler's realisation noise on top; its vacant and gas-heated counts are
+whatever the TSV chain produced. The New series' error is the allocation misses (§4.4) plus the
+catalogue's own geography.*
+
+The New series' remaining county errors are of two kinds, and neither is the allocation code.
+The first is the misses: the Alaska boroughs at −100% on gas-heated households are counties whose
+few gas-heated catalogue rows found no building in the rare-fuel pools (U3). The second is the
+catalogue itself. Kusilvak Census Area, AK (2,231 units) has no rows in the catalogue at all: 845
+of the 73,056 ACS tracts, holding 46,198 units (0.03%), have no catalogue rows, and Kusilvak
+(FIPS 02158, renamed from Wade Hampton 02270 in 2015) is the only whole county among them.
+Cortland County, NY sits at +61% and Madison County, NY at −40% because the catalogue's per-tract
+unit totals inside PUMA 3601500, which spans the two, do not match the tracts they are labelled
+with (the PUMA total is exact). Nationally 178 tracts differ from B25001 by more than 20% and
+9,412 by more than 5%, while 2,338 of 2,351 PUMA totals are within 1%: the catalogue is right at
+PUMA grain and mostly right at tract grain, and the county figure absorbs the rest except where a
+PUMA crosses a county line (U6, F5).
+
+**Sample size behind each county.** The design metric that goes with the two above: how many
+simulated buildings stand behind a county's result, and, once weights are unequal, the effective
+sample size they amount to.
+
+| | Baseline | New |
+|---|---|---|
+| Buildings carrying weight per county: median / 10th percentile / minimum | 50 / 11 / 1 | 2,953 / 1,219 / 51 |
+| Effective sample size (Σw)²/Σw² per county: median / 10th percentile / minimum | 50 / 11 / 1 | 982 / 484 / 38 |
+| Counties with effective sample size below 30 / below 100 | 1,019 / 2,202 | 0 / 4 |
+| Effective sample size of a unit's county, unit-weighted mean | 1,678 | 1,074 |
+
+![4.2g buildings and effective sample size per county](images/fig_4_2_g_county_sample_size.png)
+
+*Cumulative share of counties at or below each count, log axis. The Baseline's effective sample
+size equals its building count because every building carries the same weight.*
+
+Two things follow. A county's result in the New series rests on at least 51 buildings and typically
+on about a thousand effective ones, because every building in the sampling region's pools can be
+drawn for it, where a third of Baseline counties rested on fewer than 30. And the large counties
+lose precision: unit-weighted, the average unit's county has an effective sample of 1,074 against
+1,678 before, because the weight dispersion of §4.6 T9 acts within counties too. The buildings
+behind a county were simulated elsewhere in its region, with that county's weather, which is the
+caveat §2.5 records.
 
 **Source:** the two run parquets named in §0, weighted `group_by` on every `in.*` column present
 in both, converted to dwelling-unit fractions with `weight`, then TVD; occupied and vacant cuts on
 `in.vacancy_status`. ACS B25040 state and county sums, the county key, B25001 state sums and
 AHS 2023 shares from `analysis/references/` (built from the ACS tract file by
-`build_acs_references.py` and from the AHS 2023 National PUF). County grain: occupied rows of
-`cached_allocated_weights/*/*.parquet` keyed on `in.nhgis_county_gisjoin` for the New series and
-`in.as_simulated_county` for the Baseline (`decompositions_4_x.py`). The eight
+`build_acs_references.py` and from the AHS 2023 National PUF); the county tables for B25001,
+B25003, B25004, B25024, B25034, B17026 (NHGIS) and S1901 summed from the same tract downloads
+the catalogue was built from (`build_acs_county_references.py`). County grain: rows of
+`cached_allocated_weights/*/*.parquet` that found a building, keyed on
+`in.nhgis_county_gisjoin`, for the New series and `in.as_simulated_county` for the Baseline
+(`decompositions_4_x.py` for heating fuel, `county_grain_4_2.py` for the rest; income for the
+New series is the drawn building's, joined on `bldg_id`). The eight
 `in.utility_bill_*` columns are excluded and no other filter is applied.
 
 **Weighting:** weighted to dwelling-unit counts by `weight` throughout.
@@ -1470,7 +1579,9 @@ reference`; "closer" means `|e_new| < |e_baseline|`.
 | ACS 2019 5-yr B25040 | Electric-heated households | 46.93 M | 48.77 M | 47.00 M | +3.91% | +0.15% | closer |
 | ACS 2019 5-yr B25040 | Propane / wood / None / Other households | 5.75 / 2.18 / 1.36 / 0.89 M | −10 / −20 / −34 / −52% | −1 / −3 / −6 / −8% | | | closer on all four |
 | ACS 2019 5-yr B25040 | National heating-fuel TVD | — | 0.0183 | 0.0025 | | | closer |
-| ACS 2019 5-yr B25040 | Per-county heating-fuel distance, household-weighted mean (§4.2) | — | 0.043 | 0.006 | | | closer in 3,120 of 3,136 counties |
+| ACS 2019 5-yr B25040 | Per-county heating-fuel distance, household-weighted mean (§4.2) | — | 0.043 | 0.007 | | | closer in 3,116 of 3,136 counties |
+| ACS 2019 5-yr B25003, B25004, B25024, B25034, B17026 | Per-county distance on vacancy, tenure, building type, vintage, poverty level (§4.2) | — | 0.016–0.082 household-weighted | 0.002–0.050 | | | closer in 88–98% of counties |
+| ACS 2019 5-yr B25001 | Per-county dwelling-unit error, household-weighted mean \|error\| (§4.2) | — | 2.3% | 0.6% | | | closer; 3,014 of 3,142 counties within ±5% |
 
 **Source:** §4.2 tables, including the county comparison. B25001 counts all housing
 units including vacant; B25040 counts occupied units only. The YAML's `n_buildings_represented`
@@ -1655,6 +1766,27 @@ neither of which the allocation keys on. Its own design standard error was not c
 
 **Evidence.** §4.6 T1, T2, T8.
 
+### U6 — The catalogue has no rows for one county and mislabels tract totals inside one PUMA
+
+**Expected?** no  |  **Status:** explained — catalogue construction, not the allocation; carried in F5
+
+**Observation.** At county grain the New series' dwelling-unit count is within ±5% of ACS B25001
+in 3,014 of 3,142 counties, but Kusilvak Census Area, AK is at −100% (2,231 units absent) and
+Cortland County, NY at +61% against Madison County, NY at −40% (§4.2).
+
+**Explanation.** Kusilvak is one of 845 ACS tracts (46,198 units, 0.03% of the stock) that have
+no rows in `pums_2019_5yrs_acs_catalogue_v3.parquet`; it is the only whole county among them and
+was renamed from Wade Hampton Census Area (FIPS 02270 → 02158) in 2015, which points at the
+tract-to-PUMA crosswalk the catalogue builder uses. Cortland and Madison share PUMA 3601500, whose
+catalogue total matches ACS exactly while its 19 tracts carry each other's unit counts; 178
+tracts nationally differ from B25001 by more than 20% and 9,412 by more than 5%, against 13 of
+2,351 PUMA totals more than 1% off. The IPF is run one PUMA at a time, so the PUMA margin is
+honoured and the tract split inside it is where the defect lives. Nothing in the allocation code
+touches tract totals; the published county and tract exports will carry the same defect.
+
+**Evidence.** `county_grain_4_2_output.txt`; `references/catalogue_tract_check_output.txt`
+(catalogue rows per tract against `ACSDT5Y2019.B25001`).
+
 Note on completeness: §4.3 (individual models) is not applicable to a reweighting and §4.7
 (timeseries) was not performed, so unexpected results in load shape have not been looked for. The
 upgrade side (§4.8) was not run.
@@ -1709,7 +1841,7 @@ households it is a pure reweighting — gas heating per gas-heated household mov
 and composition control on 6,419 cells leaves every fuel and end-use intensity within ±1% except
 the intended EV retarget — and the reweighting lands on the Census: 136.87 M units against ACS's
 137.43 M, gas-heated households within 35,000 of B25040, the per-county heating-fuel distance down
-sevenfold. The −83 TWh site-energy step is 67 TWh of fewer units, 36 TWh of the fuel margins moving
+sixfold and every allocation key within 0.02 of the Census in the median county. The −83 TWh site-energy step is 67 TWh of fewer units, 36 TWh of the fuel margins moving
 to the Census and AHS, and +20 TWh of within-cell intensity that T8 and T9 show to be sampling
 noise at the effective sample size the allocation weights leave, not geography and not a sampler
 defect (U1).
@@ -1743,7 +1875,7 @@ with a control, and the maintainer has ruled to keep it.
 | F3 | Sampler validation for U1 (§4.6 T9) | Done | — | no — closed: the stratified sample reproduces every tested TSV conditional at the multinomial-noise level |
 | F13 | Effective sample size of the published stock: 8% of buildings overall and 5% of gas-heated occupied ones, because pool weights are catalogue counts and the take is a flat twelve per segment (§4.6 T9). Decide whether to raise `num_samples_per_segment` for the pools that carry the most weight, or make the take proportional to the segment's expected stock, so per-unit intensities on non-key characteristics carry less than the current ~1% design error | TBD | TBD | no |
 | F4 | Decide the renormalization's treatment of propane, fuel oil and wood on the vacant stock, which overshoot AHS (§4.9.3); the `None` ratio of 10.5 rests on an AHS/ACS disagreement | TBD | TBD | no |
-| F5 | Catalogue validation: the 0–100% poverty share (10.18% vs the PUMS TSV's 11.05%) and the propane household count (5.75 M vs RECS 5.21 M) are catalogue-versus-source questions, not pipeline ones (U4, §4.9.2) | TBD | TBD | no |
+| F5 | Catalogue validation: the 0–100% poverty share (10.18% vs the PUMS TSV's 11.05%) and the propane household count (5.75 M vs RECS 5.21 M) are catalogue-versus-source questions, not pipeline ones (U4, §4.9.2); and the catalogue's tract geography — 845 ACS tracts with no rows (Kusilvak Census Area entirely), and per-tract unit totals inside PUMA 3601500 and 177 other tracts more than 20% from B25001 while the PUMA totals are exact (U6, §4.2) | TBD | TBD | yes, before the county and tract exports are published |
 | F6 | Utility-bill columns and the `Sampling Region` bill scenario (§3.7 TODO) | Andrew Parker | TBD | **yes** |
 | F7 | Data dictionary and enumeration dictionary for the new geography columns, weight semantics, `in.sampling_region_id`, and the renamed `Ground Thermal Conductivity` option; buildstock-query and SightGlass checks on non-unique `bldg_id` (§3.7, §3.8) | TBD | TBD | yes, before publication |
 | F8 | Technical Reference Guide section on the stratified sampler, the catalogue, the allocation and the weight semantics; changelog entry (§3.9) | TBD | TBD | yes, before release |
@@ -1803,7 +1935,7 @@ S3 publication to the unit.
 | Effective sample size and design SE (§4.6 T9) | `(Σw)² / Σw²` over buildings; `SE = sqrt(Σ w²(x − x̄)²) / Σw` for a weighted mean with fixed weights and independent buildings |
 | Error against a reference (§4.9) | `(series − reference) / reference` |
 
-**Figures.** The 22 `images/fig_4_*.png` files were generated programmatically from the files
+**Figures.** The 25 `images/fig_4_*.png` files were generated programmatically from the files
 above by the scripts in `analysis/`. The scripts, their captured output and the reference tables
 (`analysis/references/`) are retained in the working folder for this change and are not
 committed with the document.
