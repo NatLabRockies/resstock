@@ -10,19 +10,20 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import lru_cache
 
 from resstockpostproc.utils import (
-    col_name_to_percent_savings,
-    col_name_to_savings,
     col_name_to_weighted,
     conversion_factor,
     get_col_maps,
     units_from_col_name,
 )
 from resstockpostproc.simulation_outputs import (
-    add_income_and_burden,
     downselect_and_order_pub_cols,
     get_cached_simulation_outputs_for_upgrade,
 )
-from resstockpostproc.allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
+from resstockpostproc.allocated_weights import (
+    STATE_BILL_COL_PATTERN,
+    UTILITY_BILL_COL_PREFIX,
+    get_allocated_weights_plus_util_bills_for_upgrade,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -56,10 +57,21 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
     if geographic_aggregation_levels != ["national"]:
         geo_agg_cols = [pl.col(c) for c in geographic_aggregation_levels]
 
-    # Get utility bill columns to aggregate
-    cost_cols = []  # TODO fill out the utility bill column names
+    # The utility bill columns the allocated weights carry: each housing unit's bills (and bill
+    # savings) for the state it was allocated to, per housing unit and unweighted. See
+    # create_allocated_weights_plus_util_bills_for_upgrade. Absent for a run without the
+    # "Sampling Region" bill scenario, in which case no bills are published.
+    cost_cols = [col for col in alloc_wts.collect_schema().names() if col.startswith(UTILITY_BILL_COL_PREFIX)]
 
-    # Sum the weights and weighted utility bills by building IDs within each geography
+    # Sum the weights by building ID within each geography, and average the bills over the
+    # housing units the building represents there, weighted by those housing units. Every
+    # geography level published nests within states, where every housing unit of a building
+    # carries the same state bill, so the average is that bill; over a geography spanning
+    # states it is the housing-unit-weighted average of the state bills. The columns keep
+    # their names so they publish as the per-building bills the column definitions list.
+    # Rounded to cents, as the simulated bills are, so the sum-then-divide does not leave
+    # floating point noise behind on what is usually an average of identical values.
+    weight_sum = pl.col("weight").sum()
     wtd_agg_outs = alloc_wts.select(
         [
             pl.col("weight"),
@@ -68,7 +80,6 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
             # pl.col("in.sqft..ft2")
         ]
         + geo_agg_cols
-        # + weighted_util_cols
         + cost_cols
     ).group_by(
         [
@@ -77,10 +88,9 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
         ]
         + geo_agg_cols
     ).agg(
-        [
-            pl.col(["weight"] + cost_cols).sum(),
-            # pl.col(["in.sqft..ft2"]).first()
-        ]
+        [weight_sum]
+        + [((pl.col(col) * pl.col("weight")).sum() / weight_sum).round(2).alias(col) for col in cost_cols]
+        # + [pl.col(["in.sqft..ft2"]).first()]
     )
 
     # logger.info(f"wtd_agg_outs schema: {wtd_agg_outs.collect_schema()}\n\n")
@@ -88,75 +98,25 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
     return wtd_agg_outs
 
 
-def add_weighted_utility_cost_savings_columns(input_lf, baseline_lf, geo_agg_cols):
+def drop_state_utility_bill_columns(sim_outs: pl.LazyFrame) -> pl.LazyFrame:
+    """Drop the per-state utility bill columns (out.utility_bills.ak_total_bill..usd, ...) from the
+    simulation outputs. They exist to be unpivoted into the allocated weights plus bills, which
+    carry each housing unit's allocated-state bills under the generic names; the published
+    outputs must carry only those. Dropping them here also takes some 1,000 columns out of the
+    wide join.
+
+    Args:
+        sim_outs: Cached simulation outputs for one upgrade
+
+    Returns:
+        The outputs without their per-state bill columns
     """
-    the data contains the weighted extracted utility bills for the apportioned tract
-    This method will calculate the weighted utility cost savings by each metric
-    - min, median_low, median_high, mean, max, and state average
-    """
 
-    logger.debug("Adding weighted utility cost savings")
-
-    assert isinstance(input_lf, pl.LazyFrame)
-
-    weighted_utility_units = "billion_usd"
-
-    result_cols = [] # TODO fill out the utility bill column names
-    abs_svgs_cols = {}
-    pct_svgs_cols = {}
-
-    val_cols = []
-
-    for col in result_cols:
-        weighted_col = col_name_to_weighted(col, weighted_utility_units)
-        val_cols.append(weighted_col)
-        abs_svgs_cols[weighted_col] = col_name_to_savings(weighted_col, None)
-        pct_svgs_cols[weighted_col] = col_name_to_percent_savings(weighted_col, "percent")
-        # TODO do we need intensity savings for utility bills?
-        # mapping for column name to intensity savings column name
-        # intensity_col = col_name_to_area_intensity(col)
-        # val_cols.append(intensity_col)
-        # abs_svgs_cols[intensity_col] = col_name_to_savings(intensity_col, None)
-        # pct_svgs_cols[intensity_col] = col_name_to_percent_savings(intensity_col, "percent")
-
-    if baseline_lf is None:
-        # this is baseline data, add empty savings cols and return
-        for weighted_col in (list(abs_svgs_cols.values()) + list(pct_svgs_cols.values())):
-            input_lf = input_lf.with_columns(pl.lit(0.0).alias(weighted_col))
-        return input_lf
-
-    val_and_id_cols = val_cols + geo_agg_cols + ["bldg_id"]
-
-    base_vals = baseline_lf.select(val_and_id_cols).sort(["bldg_id"] + geo_agg_cols).clone()
-    base_vals = base_vals.rename(lambda col_name: col_name + "_base")
-
-    up_vals = input_lf.select(val_and_id_cols).sort(["bldg_id"] + geo_agg_cols).clone()
-
-    # absolute savings
-    abs_svgs = pl.concat([up_vals, base_vals], how="horizontal").with_columns(
-        [(pl.col(f"{col}_base") - pl.col(col)).alias(abs_svgs_cols[col]) for col in val_cols]
-    ).select(list(abs_svgs_cols.values()) + geo_agg_cols + ["bldg_id"])
-
-    # percent savings
-    pct_svgs = pl.concat([up_vals, base_vals], how="horizontal").with_columns(
-        [
-            (
-                (pl.col(f"{col}_base") - pl.col(col)) / pl.col(f"{col}_base") * 100
-            ).alias(pct_svgs_cols[col])
-            for col in val_cols
-        ]
-    ).select(list(pct_svgs_cols.values()) + geo_agg_cols + ["bldg_id"])
-
-    pct_svgs = pct_svgs.fill_null(0.0)
-    pct_svgs = pct_svgs.fill_nan(0.0)
-
-    abs_svgs = abs_svgs.cast({"bldg_id": pl.Int64})
-    pct_svgs = pct_svgs.cast({"bldg_id": pl.Int64})
-
-    input_lf = input_lf.join(abs_svgs, how="left", on=["bldg_id"] + geo_agg_cols)
-    input_lf = input_lf.join(pct_svgs, how="left", on=["bldg_id"] + geo_agg_cols)
-
-    return input_lf
+    state_bill_cols = [col for col in sim_outs.collect_schema().names() if STATE_BILL_COL_PATTERN.match(col)]
+    if state_bill_cols:
+        logger.info(f"Dropping {len(state_bill_cols)} per-state utility bill columns from the simulation outputs")
+        sim_outs = sim_outs.drop(state_bill_cols)
+    return sim_outs
 
 
 def _create_export_file_name(geo_prefixes, upgrade_id, agg_suffix, data_type) -> str:
@@ -218,14 +178,6 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
         # Slice the geography into manageable slices of buildings
         for offset in range(0, n_rows, slice_rows):
             geog_agg_alloc_wts_slice = geog_agg_alloc_wts.slice(offset, slice_rows).lazy()
-
-            # TODO Calculate utility bill savings columns on the aggregated allocated weights
-            # before joining the simulation outputs. Requires the baseline (upgrade 0)
-            # allocated weights aggregated the same way as this geography.
-            # See add_weighted_utility_cost_savings_columns().
-            # geog_agg_alloc_wts_slice = add_utility_cost_savings_columns(geog_agg_alloc_wts_slice,
-            #                                                             base_agg_alloc_wts,
-            #                                                             geo_agg_cols)
 
             # Join the aggregated allocated weights to the simulation outputs by building ID and upgrade ID
             geog_results = geog_agg_alloc_wts_slice.join(sim_outs, on=[pl.col("upgrade"), pl.col("bldg_id")])
@@ -321,6 +273,10 @@ def export_metadata_and_annual_results_for_upgrade(
     if "weight" in up_sim_outs_df:
         logger.info("Removing weight column from simulation outputs, using weight column from allocated weights.")
         up_sim_outs = up_sim_outs.drop("weight")
+
+    # The per-state bill columns have done their job in the allocated weights plus bills;
+    # only the allocated state's bills are published, and they arrive with the weights.
+    up_sim_outs = drop_state_utility_bill_columns(up_sim_outs)
 
     # Get the allocated weights plus utility bills for the upgrade
     up_alloc_wts_plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
@@ -594,12 +550,14 @@ def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
         ".energy_consumption." in col or
         ".energy_savings." in col or
         ".emissions." in col or
-        ".emissions_reduction." in col
+        ".emissions_reduction." in col or
+        ".utility_bills." in col
         )]
 
     wtd_col_unit_convs = {
         "kwh": "tbtu",
-        "co2e_kg": "co2e_mmt"
+        "co2e_kg": "co2e_mmt",
+        "usd": "billion_usd",
     }
 
     for col in wtd_cols:

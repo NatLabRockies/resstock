@@ -163,8 +163,20 @@ allocated across the tracts within its sampling region (rows A and B: same `bldg
 and state, different tract and county).
 
 A companion function, `create_allocated_weights_plus_util_bills_for_upgrade()`, joins the
-allocated weights with the per-location utility bills so that each building picks up the utility
-costs for the specific location it was allocated to.
+allocated weights with the per-location utility bills so that each housing unit picks up the utility
+costs for the specific state it was allocated to. Under the `Sampling Region` bill scenario every
+building is billed once under the rates of each state in its sampling region, and the cached
+simulation outputs carry one set of bill and bill-savings columns per state
+(`out.utility_bills.ak_total_bill..usd`, `out.utility_bills.wa_total_bill..usd`, ...). Those are
+unpivoted to one row per building and state, then left-joined onto the allocated weights on
+`bldg_id` and `in.state`, so each housing unit's row gains the bills of its allocated state under
+the single-scenario names (`out.utility_bills.total_bill..usd`, `out.utility_bills.total_bill_savings..usd`,
+...). The values are per housing unit and are not multiplied by `weight`; that happens when the
+export aggregates. The result is streamed, never collected, into
+`cached_allocated_weights_plus_bills/upgrade=<id>/state=<ST>/`, and
+`get_allocated_weights_plus_util_bills_for_upgrade()` reads it back with `upgrade` and `state`
+recovered from the directory names. A housing unit allocated to a state its building was not billed
+under is an error; a run with no per-state bill columns at all is cached without bills, with a warning.
 
 ### Metadata and Annual Results
 
@@ -186,10 +198,14 @@ building/tract pair, each with `weight = 1`). `aggregate_allocated_weights_to_ge
 collapses those per-housing-unit rows to one row per building ID **within the target geographic
 aggregation level** by grouping on `(upgrade, bldg_id, <aggregation level>)` and **summing** the
 weights. The resulting `weight` is therefore the count of housing units that a given simulated
-building ID represents in that geography.
+building ID represents in that geography. The utility bill columns carried by the allocated
+weights plus bills (`out.utility_bills.total_bill..usd` and the other fuels, with their savings)
+are aggregated in the same pass as the **weighted average** over those housing units, so each
+building's published bill in a geography is its bill for the state it was allocated to; across a
+geography spanning states, it is the housing-unit-weighted average of the state bills.
 
 This aggregation is deliberately done on the **narrow** table (`weight`, `upgrade`, `bldg_id`,
-plus the geography key) before any wide simulation columns are attached, so it stays cheap. It is
+the bill columns, plus the geography key) before any wide simulation columns are attached, so it stays cheap. It is
 also run **one state at a time**: the filter is applied to the `state` hive partition of the
 cached allocated weights, so each pass reads only that state's cache file. State-nested
 aggregation levels (tract, county, PUMA, state) can be chunked by state without ever splitting an

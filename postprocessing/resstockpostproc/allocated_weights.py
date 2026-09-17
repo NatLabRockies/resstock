@@ -6,6 +6,7 @@ import numpy as np
 from collections.abc import Iterator, Sequence
 from pathlib import Path
 import polars as pl
+import re
 from resstockpostproc.utils import FsspecOutputDir, setup_fsspec_filesystem
 import s3fs
 import zlib
@@ -1183,87 +1184,204 @@ def get_cached_allocated_weights(output_dir) -> pl.LazyFrame:
     return alloc_weights
 
 
+# Per-state utility bill columns in the cached simulation outputs, such as
+# out.utility_bills.ak_electricity_bill..usd. Under the "Sampling Region" bill scenario every
+# building is billed once under the rates of each state in its sampling region, and the
+# two-letter code names the state a column was billed under. The bill columns published for a
+# single scenario carry no such prefix (out.utility_bills.electricity_bill..usd).
+UTILITY_BILL_COL_PREFIX = "out.utility_bills."
+STATE_BILL_COL_PATTERN = re.compile(r"^out\.utility_bills\.([a-z]{2})_(.+\.\.usd)$")
+
+# Where the allocated weights joined with their allocated state's bills are cached, hive
+# partitioned by upgrade and then by state
+ALLOCATED_WEIGHTS_PLUS_BILLS_DIR = "cached_allocated_weights_plus_bills"
+
+
+def state_utility_bill_columns(columns: Sequence[str]) -> dict[str, dict[str, str]]:
+    """Group the per-state utility bill columns of the simulation outputs by state.
+
+    Args:
+        columns: Column names of the cached simulation outputs
+
+    Returns:
+        Uppercase state code -> {per-state column: the same column without its state code},
+        for example {"AK": {"out.utility_bills.ak_total_bill..usd": "out.utility_bills.total_bill..usd"}}.
+        Empty when the outputs carry no per-state bill columns.
+
+    Raises:
+        ValueError: If the states do not all carry the same set of bill columns
+    """
+
+    by_state: dict[str, dict[str, str]] = {}
+    for col in columns:
+        match = STATE_BILL_COL_PATTERN.match(col)
+        if match is None:
+            continue
+        state, rest = match.groups()
+        by_state.setdefault(state.upper(), {})[col] = f"{UTILITY_BILL_COL_PREFIX}{rest}"
+
+    bill_cols = {state: set(cols.values()) for state, cols in by_state.items()}
+    if len({frozenset(cols) for cols in bill_cols.values()}) > 1:
+        first_state = min(bill_cols)
+        odd = {
+            state: sorted(cols ^ bill_cols[first_state])
+            for state, cols in bill_cols.items()
+            if cols != bill_cols[first_state]
+        }
+        raise ValueError(f"States carry different sets of utility bill columns than {first_state}: {odd}")
+
+    return by_state
+
+
+def unpivot_state_utility_bills(
+    sim_outs: pl.LazyFrame, state_dtype: pl.DataType = pl.String
+) -> pl.LazyFrame | None:
+    """Reshape the per-state bill columns to one row per building and state it was billed under.
+
+    The simulation outputs hold one set of bill columns per state, for example
+
+        bldg_id | out.utility_bills.ak_total_bill..usd | out.utility_bills.wa_total_bill..usd
+        1234    | 1000                                 | 500
+
+    and this returns
+
+        bldg_id | in.state | out.utility_bills.total_bill..usd
+        1234    | AK       | 1000
+        1234    | WA       | 500
+
+    A building is only billed under the states in its sampling region, so its rows for other
+    states, which the outputs hold as nulls, are dropped.
+
+    Args:
+        sim_outs: Cached simulation outputs for one upgrade
+        state_dtype: Dtype to give in.state, so it matches the allocated weights' column
+
+    Returns:
+        LazyFrame with bldg_id, in.state and the bill columns named without their state code,
+        or None when the outputs carry no per-state bill columns
+    """
+
+    by_state = state_utility_bill_columns(sim_outs.collect_schema().names())
+    if not by_state:
+        return None
+
+    frames = []
+    for state, cols in sorted(by_state.items()):
+        # Same column order in every frame, so they concatenate
+        renames = sorted(cols.items(), key=lambda src_dst: src_dst[1])
+        bill_cols = [dst for _, dst in renames]
+        frame = sim_outs.select(
+            [pl.col("bldg_id"), pl.lit(state).cast(state_dtype).alias("in.state")]
+            + [pl.col(src).alias(dst) for src, dst in renames]
+        ).filter(pl.any_horizontal(pl.col(bill_cols).is_not_null()))
+        frames.append(frame)
+
+    return pl.concat(frames, how="vertical")
+
+
 def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id) -> None:
+    """Cache the allocated weights joined with the utility bills of each housing unit's allocated state.
+
+    Each building is simulated in only one location, so its energy consumption is the same
+    wherever it is allocated. Its utility bills are not: under the "Sampling Region" bill
+    scenario the building is billed once under the rates of every state in its sampling region,
+    and the simulation outputs carry one set of bill (and bill savings) columns per state, e.g.
+
+        bldg_id | out.utility_bills.ak_total_bill..usd | out.utility_bills.wa_total_bill..usd | ...
+        1234    | 1000                                 | 500                                  | ...
+
+    Those columns are unpivoted to one row per building and state (see
+    unpivot_state_utility_bills) and joined onto the allocated weights by building and allocated
+    state, so every housing unit carries the bills of the state it was allocated to, under the
+    names the single-scenario bill columns are published with:
+
+        bldg_id | in.state | in.nhgis_tract_gisjoin | weight | out.utility_bills.total_bill..usd | ...
+        1234    | AK       | G0200130000100         | 1      | 1000                              | ...
+        1234    | WA       | G5300330001100         | 1      | 500                               | ...
+
+    The bills are per housing unit and are not multiplied by the weight, which is 1 for the
+    stratified sampler and a count for the quota sampler; weighting is left to the export, which
+    aggregates the weight over the same rows. The bill savings columns are the savings for the
+    allocated state too, since the allocation is the same for every upgrade.
+
+    The result is cached under cached_allocated_weights_plus_bills/upgrade=<id>/state=<ST>/ and
+    read back with get_allocated_weights_plus_util_bills_for_upgrade(), which recovers upgrade
+    and state from the directory names so the export can read one state at a time. The
+    allocated weights are never collected: at one row per housing unit the join is streamed
+    straight into the partitioned sink.
+
+    A run without per-state bill columns (no "Sampling Region" bill scenario) is cached without
+    bills, with a warning, so the rest of the export can still run.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        upgrade_id: The upgrade whose simulation outputs supply the bills
+
+    Raises:
+        ValueError: If a housing unit was allocated to a state its building was not billed under
     """
 
-    Each building is simulated in only one location, so the energy consumption results are the
-    same regardless of where this building is allocated. However, utility rates are calculated
-    for each of the possible locations where a building could be allocated. For each building,
-    this step pulls the utility bills for the assigned location.
+    logger.info(f"Creating allocated weights plus bills for upgrade {upgrade_id}")
+    tstart = datetime.datetime.now()
 
-    The simulation outputs have a set of utility bill results columns for each state. e.g.
-    bldg_id | electric_bill_AK | gas_bill_AK | electric_bill_WA | gas_bill_WA | electric_bill_OR | gas_bill_OR
-    1234    | 1000             | 500         | 500              | 200         | 300              | 100    
-    Unpivot the utility bill columns so that each row corresponds to a single utility bill/state pair. e.g.
-    bldg_id | state | electric_bill | gas_bill | ...
-    1234    | AK    | 1000          | 500      |
-    1234    | WA    | 500           | 200      |
-    1234    | OR    | 300           | 100      |
-
-    After unpivoting, the utility bills can be joined with the allocated weights to determine the
-    utility costs for the assigned location of each building.
-
-    """
-    # # Late import to avoid circular dependency
-    # from resstockpostproc.simulation_outputs import get_cached_simulation_outputs_for_upgrade
-    
-    logger.warning("TODO Setting utility bills for each building based on the allocated location.")
     # Read the cached simulation results
     sim_outs = get_cached_simulation_outputs_for_upgrade(output_dir, upgrade_id)
 
     # Read the cached allocated weights. Kept lazy: at one row per housing unit this is
-    # around 18 GB in memory, and the only thing done to it here is a repartition by state.
-    # The upgrade id is not added as a column, it is read back off the upgrade= directory.
+    # around 18 GB in memory, and all that is done to it here is a join against a frame of a few
+    # million rows and a repartition by state. The upgrade id is not added as a column, it is
+    # read back off the upgrade= directory.
     alloc_wts = get_cached_allocated_weights(output_dir)
+    alloc_schema = alloc_wts.collect_schema()
+
+    # Unpivot the per-state bill columns to one row per building and state. Small enough to
+    # collect: one row per building per state in its sampling region.
+    bills = unpivot_state_utility_bills(sim_outs, state_dtype=alloc_schema["in.state"])
+    if bills is None:
+        logger.warning(
+            f"Simulation outputs for upgrade {upgrade_id} carry no per-state utility bill columns "
+            "(no 'Sampling Region' bill scenario); caching the allocated weights without bills"
+        )
+        alloc_wts_plus_bills = alloc_wts
+    else:
+        bills = bills.with_columns(pl.col("bldg_id").cast(alloc_schema["bldg_id"])).collect(engine="streaming")
+        bill_cols = [col for col in bills.columns if col.startswith(UTILITY_BILL_COL_PREFIX)]
+        logger.info(
+            f"Unpivoted {len(bill_cols)} utility bill columns for {bills['bldg_id'].n_unique():,} buildings "
+            f"across {bills['in.state'].n_unique()} states into {bills.height:,} building/state rows"
+        )
+
+        # Every building must have been billed under the state each of its housing units was
+        # allocated to, or that housing unit would be published with no bills. Checked on the
+        # distinct building/state pairs, a narrow pass, before the wide write starts. Catalogue
+        # rows the fallback ladder could not fill carry no bldg_id (see UNMATCHED_STAGE) and so
+        # have no building to bill; they pass through with null bills.
+        missing = (
+            alloc_wts.filter(pl.col("bldg_id").is_not_null())
+            .select(["bldg_id", "in.state"])
+            .unique()
+            .join(bills.lazy().select(["bldg_id", "in.state"]), on=["bldg_id", "in.state"], how="anti")
+            .collect(engine="streaming")
+        )
+        if missing.height > 0:
+            examples = missing.sort(["bldg_id", "in.state"]).head(10).rows()
+            raise ValueError(
+                f"{missing.height} building/state pairs in the allocated weights have no utility bills in "
+                f"the upgrade {upgrade_id} simulation outputs, e.g. (bldg_id, state) = {examples}. "
+                "Every building must be billed under each state in its sampling region."
+            )
+
+        # Join the allocated state's bills onto each housing unit
+        alloc_wts_plus_bills = alloc_wts.join(bills.lazy(), on=["bldg_id", "in.state"], how="left")
 
     # Where the results will be cached
-    alloc_wts_bills_dir = _polars_path(
-        output_dir, f"cached_allocated_weights_plus_bills/upgrade={upgrade_id}"
-    )
-    logger.info(f"Creating allocated weights plus bills for upgrade {upgrade_id}")
-
-
-    logger.warning("TODO Calculate the bills once the per-state bill columns are availble")
-    # # Unpivot the utility bill columns so that each row corresponds to a single utility bill/state pair
-    # sim_outs = sim_outs.unpivot(
-    #     id_vars=["bldg_id", "state"],
-    #     value_vars="COLS_UTIL_BILLS",
-    #     variable_name="UTIL_BILL_TYPE",
-    #     value_name="UTIL_BILL_AMOUNT"
-    # )
-
-    # # Join the utility bills onto each building based on building ID and state
-    # alloc_wts = alloc_wts.join(sim_outs, on=["bldg_id", "state"], how="left")
-
-    # Calculate weighted utility bill columns based on the allocated weights TODO
-    # conv_fact = conv_fact('usd', weighted_utility_units)
-    # cost_cols = (UTIL_ELEC_BILL_COSTS + COST_STATE_UTIL_COSTS + [UTIL_BILL_TOTAL_MEAN])
-    # for col in cost_cols:
-    #     weighted_col_name = col_name_to_weighted(col, weighted_utility_units)
-    #     unweighted_weighted_map.update({col: weighted_col_name})
-
-    # TODO calculate the unweighted utility cost savings here?
-    # would require doing the baseline and upgrade.
-
-    # TODO consider if we want to calculate the weighted utility costs here
-    # or in the next step after we aggregate to a specific geography.
-    # Calculate weighted utility costs
-    # alloc_wts = alloc_wts.with_columns(
-    #     [pl.col(col)
-    #         .cast(pl.Int64)
-    #         .mul(pl.col(BLDG_WEIGHT))
-    #         .mul(conv_fact)
-    #         .alias(col_name_to_weighted(col, weighted_utility_units))
-    #         for col in cost_cols
-    #     ]
-    # )
+    alloc_wts_bills_dir = _polars_path(output_dir, ALLOCATED_WEIGHTS_PLUS_BILLS_DIR, f"upgrade={upgrade_id}")
 
     # Write to parquet, hive partitioned on upgrade and state to make later processing faster.
     # Streamed rather than collected and grouped: collecting would hold the whole allocation
     # and grouping it would hold a second copy of it alongside, for what is a repartition.
     # The upgrade and state columns are recovered from the directory names on read.
     logger.info(f"Caching allocated weights plus bills for upgrade {upgrade_id} to: {alloc_wts_bills_dir}")
-    tstart = datetime.datetime.now()
 
     def state_file_path(args) -> str:
         state_abbv = args.partition_keys.row(0)[0]
@@ -1272,7 +1390,7 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
             f"cached_allocated_weights_plus_bills_upgrade{upgrade_id}_{state_abbv}.parquet"
         )
 
-    alloc_wts.sink_parquet(
+    alloc_wts_plus_bills.sink_parquet(
         pl.PartitionBy(
             f"{alloc_wts_bills_dir}/",
             key="in.state",
@@ -1304,7 +1422,7 @@ def get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id) ->
     """
 
     # Check if the allocated weights plus bills directory exists for the given upgrade
-    alloc_wts_bills_dir = f"{output_dir['fs_path']}/cached_allocated_weights_plus_bills/upgrade={upgrade_id}"
+    alloc_wts_bills_dir = f"{output_dir['fs_path']}/{ALLOCATED_WEIGHTS_PLUS_BILLS_DIR}/upgrade={upgrade_id}"
     if isinstance(output_dir["fs"], s3fs.S3FileSystem):
         alloc_wts_bills_dir = f"s3://{alloc_wts_bills_dir}"
     if not output_dir["fs"].exists(alloc_wts_bills_dir):

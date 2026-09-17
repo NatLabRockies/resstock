@@ -6,6 +6,10 @@ import polars as pl
 import pytest
 
 from resstockpostproc.allocated_weights import (
+    create_allocated_weights_plus_util_bills_for_upgrade,
+    get_allocated_weights_plus_util_bills_for_upgrade,
+    state_utility_bill_columns,
+    unpivot_state_utility_bills,
     allocate_buildings_to_geography,
     check_allocation_misses,
     coerce_vacant_join_keys,
@@ -475,3 +479,188 @@ def test_coerce_vacant_join_keys_leaves_occupied_rows_alone():
     assert coerced["in.tenure"].to_list() == ["Not Available", "Owner"]
     assert coerced["in.federal_poverty_level"].to_list() == ["Not Available", "400%+"]
     assert coerced["in.heating_fuel"].to_list() == [None, "Natural Gas"]
+
+
+# --- Allocated weights plus utility bills ------------------------------------------------------
+
+def _bill_col(state: str | None, fuel: str, savings: bool = False) -> str:
+    suffix = "_bill_savings..usd" if savings else "_bill..usd"
+    prefix = f"{state}_" if state else ""
+    return f"out.utility_bills.{prefix}{fuel}{suffix}"
+
+
+def make_state_bills_sim_outs() -> pl.DataFrame:
+    """Two buildings: 1 billed under AK and WA, 2 billed under WA only (its AK bills are null)."""
+    return pl.DataFrame(
+        {
+            "bldg_id": [1, 2],
+            "upgrade": [1, 1],
+            "out.electricity.total.energy_consumption..kwh": [5000.0, 6000.0],
+            _bill_col("ak", "electricity"): [1000.0, None],
+            _bill_col("ak", "total"): [1500.0, None],
+            _bill_col("ak", "electricity", savings=True): [100.0, None],
+            _bill_col("ak", "total", savings=True): [150.0, None],
+            _bill_col("wa", "electricity"): [500.0, 700.0],
+            _bill_col("wa", "total"): [800.0, 900.0],
+            _bill_col("wa", "electricity", savings=True): [50.0, 70.0],
+            _bill_col("wa", "total", savings=True): [80.0, 90.0],
+        }
+    )
+
+
+def make_state_allocation() -> pl.DataFrame:
+    """Building 1 allocated to one AK and one WA housing unit, building 2 to two WA housing units."""
+    return pl.DataFrame(
+        {
+            "bldg_id": [1, 1, 2, 2],
+            "weight": [1, 1, 1, 1],
+            "in.state": ["AK", "WA", "WA", "WA"],
+            "in.nhgis_tract_gisjoin": ["G0200130000100", "G5300330001100", "G5300330001200", "G5300330001300"],
+            "in.sampling_region_id": ["9", "9", "9", "9"],
+            "in.tenure": "Owner",
+        }
+    )
+
+
+def write_cached_sim_outs(tmp_path, sim_outs: pl.DataFrame, upgrade_id: int = 1) -> None:
+    cache_dir = tmp_path / "cached_simulation_outputs" / f"upgrade={upgrade_id}"
+    cache_dir.mkdir(parents=True)
+    sim_outs.write_parquet(cache_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet")
+
+
+def test_state_utility_bill_columns_group_by_state_and_drop_the_state_code():
+    columns = make_state_bills_sim_outs().columns + ["out.utility_bills.total_bill..usd"]
+    by_state = state_utility_bill_columns(columns)
+
+    assert sorted(by_state) == ["AK", "WA"]
+    assert by_state["AK"][_bill_col("ak", "total")] == _bill_col(None, "total")
+    assert by_state["AK"][_bill_col("ak", "total", savings=True)] == _bill_col(None, "total", savings=True)
+    # The single-scenario column, with no state code, is not a state's column
+    assert not any(_bill_col(None, "total") in cols for cols in by_state.values())
+    # Nothing but bill columns is picked up
+    assert state_utility_bill_columns(["bldg_id", "out.electricity.total.energy_consumption..kwh"]) == {}
+
+
+def test_states_with_different_bill_columns_are_rejected():
+    columns = [_bill_col("ak", "total"), _bill_col("wa", "total"), _bill_col("wa", "propane")]
+    with pytest.raises(ValueError, match="different sets of utility bill columns"):
+        state_utility_bill_columns(columns)
+
+
+def test_unpivot_gives_one_row_per_building_and_billed_state():
+    bills = unpivot_state_utility_bills(make_state_bills_sim_outs().lazy()).collect()
+
+    assert bills.sort(["bldg_id", "in.state"]).select(["bldg_id", "in.state"]).rows() == [
+        (1, "AK"),
+        (1, "WA"),
+        (2, "WA"),
+    ]
+    assert bills.columns == ["bldg_id", "in.state"] + sorted(
+        _bill_col(None, fuel, savings) for fuel in ("electricity", "total") for savings in (False, True)
+    )
+    ak = bills.filter((pl.col("bldg_id") == 1) & (pl.col("in.state") == "AK")).row(0, named=True)
+    assert ak[_bill_col(None, "total")] == 1500.0
+    assert ak[_bill_col(None, "electricity", savings=True)] == 100.0
+    wa = bills.filter((pl.col("bldg_id") == 2) & (pl.col("in.state") == "WA")).row(0, named=True)
+    assert wa[_bill_col(None, "total")] == 900.0
+
+
+def test_unpivot_returns_none_without_state_bill_columns():
+    sim_outs = make_state_bills_sim_outs().select(["bldg_id", "upgrade"]).lazy()
+    assert unpivot_state_utility_bills(sim_outs) is None
+
+
+def test_allocated_weights_plus_bills_carry_the_allocated_states_bills(tmp_path):
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    write_cached_sim_outs(tmp_path, make_state_bills_sim_outs())
+    write_allocated_weights(output_dir, make_state_allocation())
+
+    create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)
+    plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1).collect()
+
+    # One row per housing unit, the allocation columns intact, the bills and the hive keys added
+    assert plus_bills.height == 4
+    bill_cols = sorted(c for c in plus_bills.columns if c.startswith("out.utility_bills."))
+    assert bill_cols == sorted(
+        _bill_col(None, fuel, savings) for fuel in ("electricity", "total") for savings in (False, True)
+    )
+    assert set(plus_bills.columns) == set(make_state_allocation().columns) | set(bill_cols) | {"state", "upgrade"}
+    assert plus_bills["upgrade"].unique().to_list() == [1]
+    assert plus_bills.filter(pl.col("state") != pl.col("in.state")).height == 0
+    # The energy column was not dragged along
+    assert "out.electricity.total.energy_consumption..kwh" not in plus_bills.columns
+
+    # Each housing unit has the bills of the state it was allocated to
+    by_unit = plus_bills.sort("in.nhgis_tract_gisjoin").select(
+        ["bldg_id", "in.state", _bill_col(None, "total"), _bill_col(None, "total", savings=True)]
+    ).rows()
+    assert by_unit == [
+        (1, "AK", 1500.0, 150.0),
+        (1, "WA", 800.0, 80.0),
+        (2, "WA", 900.0, 90.0),
+        (2, "WA", 900.0, 90.0),
+    ]
+
+    # Partitioned one file per state, named after the upgrade and state
+    state_files = sorted(p.relative_to(tmp_path).as_posix() for p in tmp_path.rglob("*plus_bills*.parquet"))
+    assert state_files == [
+        "cached_allocated_weights_plus_bills/upgrade=1/state=AK/cached_allocated_weights_plus_bills_upgrade1_AK.parquet",
+        "cached_allocated_weights_plus_bills/upgrade=1/state=WA/cached_allocated_weights_plus_bills_upgrade1_WA.parquet",
+    ]
+
+
+def test_a_housing_unit_allocated_to_a_state_its_building_was_not_billed_under_raises(tmp_path):
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    write_cached_sim_outs(tmp_path, make_state_bills_sim_outs())
+    # Building 2 has no AK bills, but one of its housing units is sent to Alaska
+    allocation = make_state_allocation().with_columns(
+        pl.when(pl.col("in.nhgis_tract_gisjoin") == "G5300330001300")
+        .then(pl.lit("AK"))
+        .otherwise(pl.col("in.state"))
+        .alias("in.state")
+    )
+    write_allocated_weights(output_dir, allocation)
+
+    with pytest.raises(ValueError, match=r"1 building/state pairs .* have no utility bills .*\(2, 'AK'\)"):
+        create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)
+    assert not (tmp_path / "cached_allocated_weights_plus_bills").exists()
+
+
+def test_a_run_without_state_bills_is_cached_without_them(tmp_path, caplog):
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    write_cached_sim_outs(tmp_path, make_state_bills_sim_outs().select(["bldg_id", "upgrade"]))
+    write_allocated_weights(output_dir, make_state_allocation())
+
+    with caplog.at_level("WARNING"):
+        create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)
+    assert "no per-state utility bill columns" in caplog.text
+
+    plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1).collect()
+    assert plus_bills.height == 4
+    assert not any(c.startswith("out.utility_bills.") for c in plus_bills.columns)
+    assert set(plus_bills.columns) == set(make_state_allocation().columns) | {"state", "upgrade"}
+
+
+def test_unmatched_housing_units_pass_through_with_null_bills(tmp_path):
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    write_cached_sim_outs(tmp_path, make_state_bills_sim_outs())
+    # A catalogue row the fallback ladder could not fill has no building, so nothing to bill
+    unmatched = pl.DataFrame(
+        {
+            "bldg_id": [None],
+            "weight": [1],
+            "in.state": ["AK"],
+            "in.nhgis_tract_gisjoin": ["G0200130000200"],
+            "in.sampling_region_id": ["9"],
+            "in.tenure": "Owner",
+        }
+    ).cast({"bldg_id": pl.Int64})
+    write_allocated_weights(output_dir, pl.concat([make_state_allocation(), unmatched]))
+
+    create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)
+    plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1).collect()
+
+    assert plus_bills.height == 5
+    assert plus_bills.filter(pl.col(_bill_col(None, "total")).is_null()).select(["bldg_id", "in.state"]).rows() == [
+        (None, "AK")
+    ]
