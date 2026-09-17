@@ -3,7 +3,7 @@ os_version: 3.10.0
 os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: national_baseline
+output_directory: baseline_nd_ducts
 weather_files_url: https://data.nlr.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
@@ -14,10 +14,15 @@ baseline:
   n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories ( 138765649 without AK and HI )
 
 # Sampler type and number of data points per baseline or upgrade
+# sampler:
+#   type: residential_quota
+#   args:
+#     n_datapoints: 250
+
 sampler:
-  type: residential_quota
+  type: precomputed
   args:
-    n_datapoints: 250
+    sample_file: '/Volumes/Lixi_Liu/Post-SDR 2025.1 ResStock/buildstock_nd_samples_2.csv'
 
 # NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
@@ -64,6 +69,7 @@ workflow_generator:
       simulation_control_run_period_end_month: 12
       simulation_control_run_period_end_day_of_month: 31
       simulation_control_run_period_calendar_year: 2007
+      add_component_loads: true
 
     # Emissions scenarios
     emissions:
@@ -82,12 +88,12 @@ workflow_generator:
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true
       include_timeseries_end_use_consumptions: true
-      include_timeseries_emissions: true
-      include_timeseries_emission_fuels: true
-      include_timeseries_emission_end_uses: true
+      include_timeseries_emissions: false
+      include_timeseries_emission_fuels: false
+      include_timeseries_emission_end_uses: false
       include_timeseries_hot_water_uses: true
       include_timeseries_total_loads: true
-      include_timeseries_component_loads: false
+      include_timeseries_component_loads: true
       include_timeseries_unmet_hours: true
       include_timeseries_zone_temperatures: true
       include_timeseries_zone_conditions: true

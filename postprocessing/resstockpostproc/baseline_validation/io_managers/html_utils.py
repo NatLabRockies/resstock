@@ -194,7 +194,7 @@ def postprocess_plot_html(
 
     # Resizable container
     resize_wrapper = (
-        f'<div id="resize-container" style="resize:both; overflow:hidden; '
+        f'<div id="resize-container" style="resize:both; overflow:auto; '
         f"width:{scaled_w}px; height:{container_h}px; border:1px solid #ddd; "
         f'position:relative; padding:0; margin:10px;">\n'
     )
