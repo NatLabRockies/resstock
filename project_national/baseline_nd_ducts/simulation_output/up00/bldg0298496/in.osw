@@ -1,0 +1,150 @@
+{
+    "id": "bldg0298496up00",
+    "steps": [
+        {
+            "measure_dir_name": "BuildExistingModel",
+            "arguments": {
+                "simulation_control_timestep": 60,
+                "simulation_control_run_period_begin_month": 1,
+                "simulation_control_run_period_begin_day_of_month": 1,
+                "simulation_control_run_period_end_month": 12,
+                "simulation_control_run_period_end_day_of_month": 31,
+                "simulation_control_run_period_calendar_year": 2007,
+                "emissions_scenario_names": "LRMER_MidCase_15",
+                "emissions_types": "CO2e",
+                "emissions_electricity_folders": "data/emissions/cambium/2024/LRMER_MidCase_15",
+                "emissions_natural_gas_values": "",
+                "emissions_propane_values": "",
+                "emissions_fuel_oil_values": "",
+                "emissions_wood_values": "",
+                "utility_bill_scenario_names": "Bills",
+                "utility_bill_simple_filepaths": "",
+                "utility_bill_detailed_filepaths": "",
+                "utility_bill_electricity_fixed_charges": "",
+                "utility_bill_electricity_marginal_rates": "",
+                "utility_bill_natural_gas_fixed_charges": "",
+                "utility_bill_natural_gas_marginal_rates": "",
+                "utility_bill_propane_fixed_charges": "",
+                "utility_bill_propane_marginal_rates": "",
+                "utility_bill_fuel_oil_fixed_charges": "",
+                "utility_bill_fuel_oil_marginal_rates": "",
+                "utility_bill_wood_fixed_charges": "",
+                "utility_bill_wood_marginal_rates": "",
+                "utility_bill_pv_compensation_types": "",
+                "utility_bill_pv_net_metering_annual_excess_sellback_rate_types": "",
+                "utility_bill_pv_net_metering_annual_excess_sellback_rates": "",
+                "utility_bill_pv_feed_in_tariff_rates": "",
+                "utility_bill_pv_monthly_grid_connection_fee_units": "",
+                "utility_bill_pv_monthly_grid_connection_fees": "",
+                "building_id": 298496,
+                "project_directory": "project_national",
+                "sample_weight": 19949574.285714287
+            }
+        },
+        {
+            "measure_dir_name": "HPXMLtoOpenStudio",
+            "arguments": {
+                "hpxml_path": "../../run/home.xml",
+                "output_dir": "../../run",
+                "debug": false,
+                "add_component_loads": true,
+                "skip_validation": true
+            }
+        },
+        {
+            "measure_dir_name": "UpgradeCosts",
+            "arguments": {
+                "debug": false
+            }
+        },
+        {
+            "measure_dir_name": "ReportSimulationOutput",
+            "arguments": {
+                "include_annual_total_consumptions": true,
+                "include_annual_fuel_consumptions": true,
+                "include_annual_end_use_consumptions": true,
+                "include_annual_system_use_consumptions": false,
+                "include_annual_emissions": true,
+                "include_annual_emission_fuels": true,
+                "include_annual_emission_end_uses": true,
+                "include_annual_total_loads": true,
+                "include_annual_unmet_hours": true,
+                "include_annual_peak_fuels": true,
+                "include_annual_peak_loads": true,
+                "include_annual_component_loads": true,
+                "include_annual_hot_water_uses": true,
+                "include_annual_hvac_summary": true,
+                "include_annual_resilience": true,
+                "timeseries_frequency": "hourly",
+                "include_timeseries_total_consumptions": true,
+                "include_timeseries_fuel_consumptions": true,
+                "include_timeseries_end_use_consumptions": true,
+                "include_timeseries_system_use_consumptions": false,
+                "include_timeseries_emissions": false,
+                "include_timeseries_emission_fuels": false,
+                "include_timeseries_emission_end_uses": false,
+                "include_timeseries_hot_water_uses": true,
+                "include_timeseries_total_loads": true,
+                "include_timeseries_component_loads": true,
+                "include_timeseries_unmet_hours": true,
+                "include_timeseries_zone_temperatures": true,
+                "include_timeseries_zone_conditions": true,
+                "include_timeseries_airflows": true,
+                "include_timeseries_weather": true,
+                "include_timeseries_resilience": true,
+                "timeseries_timestamp_convention": "end",
+                "timeseries_num_decimal_places": 5,
+                "add_timeseries_dst_column": true,
+                "add_timeseries_utc_column": true,
+                "user_output_variables": "",
+                "user_output_meters": ""
+            }
+        },
+        {
+            "measure_dir_name": "ReportUtilityBills",
+            "arguments": {
+                "include_annual_bills": false,
+                "include_monthly_bills": false,
+                "register_annual_bills": true,
+                "register_monthly_bills": false
+            }
+        },
+        {
+            "measure_dir_name": "QOIReport",
+            "arguments": {},
+            "measure_type": "ReportingMeasure"
+        },
+        {
+            "measure_dir_name": "ServerDirectoryCleanup",
+            "arguments": {
+                "retain_in_osm": false,
+                "retain_in_idf": true,
+                "retain_pre_process_idf": false,
+                "retain_eplusout_audit": false,
+                "retain_eplusout_bnd": false,
+                "retain_eplusout_eio": false,
+                "retain_eplusout_end": false,
+                "retain_eplusout_err": false,
+                "retain_eplusout_eso": false,
+                "retain_eplusout_mdd": false,
+                "retain_eplusout_mtd": false,
+                "retain_eplusout_rdd": false,
+                "retain_eplusout_shd": false,
+                "retain_eplusout_msgpack": false,
+                "retain_eplustbl_htm": false,
+                "retain_stdout_energyplus": false,
+                "retain_stdout_expandobject": false,
+                "retain_schedules_csv": false,
+                "debug": false
+            }
+        }
+    ],
+    "created_at": "2026-09-16T00:41:12.217526",
+    "measure_paths": [
+        "measures",
+        "resources/hpxml-measures"
+    ],
+    "run_options": {
+        "skip_zip_results": true
+    }
+}

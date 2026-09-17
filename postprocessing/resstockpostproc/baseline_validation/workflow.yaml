@@ -1,14 +1,25 @@
 # Baseline Validation Workflow Configuration
 # =========================================
 
-workgroup: rescore
+workgroup: resstock-panels
 
 data_sources:
-  - db_name: buildstock_sdr
-    table_name: resstock_2024_amy2018_release_2
-    name: resstock_2024
-    db_schema: resstock_oedi_vu
-    baseline_metadata_and_annual_results_parquet_url: s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/metadata_and_annual_results/national/parquet/baseline_metadata_and_annual_results.parquet
+  - db_name: resstock_panels # resstock_panels
+    table_name: sdr2025_r1_full_nodefco_15min_aug8 # post_sdr_baseline_061926 # precomputed_defco_june9
+    name: ochre_sdr2025_r1_nodefco # option_based_resstock # ochre_10k_sfd_defco
+    db_schema: resstock_oedi_new
+    skip_missing_enduses: true
+    has_upgrades: true
+    skip_timestamp_offset_validation: true  # they are agg to hourly instead of timestep
+    baseline_metadata_and_annual_results_parquet_url: s3://resstock-panels/ochre_runs/sdr2025_r1_full_nodefco_15min_aug8/pub_annual/upgrade=0/results_up00.parquet # s3://resstock-core/heating_calibration/post_sdr_baseline_061926/pub_annual/upgrade=0/results_up00.parquet # s3://resstock-panels/ochre_runs/precomputed_defco_june9/pub_annual/upgrade=0/results_up00.parquet
+  # - db_name: resstock_panels
+  #   table_name: precomputed_nodefco_june9
+  #   name: ochre_10k_sfd_nodefco
+  #   db_schema: resstock_oedi_new
+  #   skip_missing_enduses: true
+  #   has_upgrades: false
+  #   skip_timestamp_offset_validation: true  # they are agg to hourly instead of timestep
+  #   baseline_metadata_and_annual_results_parquet_url: s3://resstock-panels/ochre_runs/precomputed_nodefco_june9/pub_annual/upgrade=0/results_up00.parquet
   - db_name: buildstock_sdr
     table_name: resstock_amy2018_r1_2025
     name: resstock_2025
@@ -23,9 +34,9 @@ reference_years:
     - 2020
 
 output:
-  # Override this with your own directory — the script expands ~
-  output_dir: ~/baseline_validation_outputs
-  run_name: run_2025_release1
+  # Override this with your own directory — the script expands
+  output_dir: ~/baseline_dashboards/ochre_baseline_validation_outputs # ~/baseline_dashboards/heating_calibration # ~/baseline_dashboards/ochre_baseline_validation_outputs #/Users/lliu2/Documents/GitHub/htmls/defrost_ochre
+  run_name: 550k_sdr2025_r1_nodefco # post_sdr_baseline # 10k_precomputed_sfd_060926
 # Data Source Labels
 # ------------------
 # Human-readable labels for data sources appearing in plot legends.
