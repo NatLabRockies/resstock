@@ -201,6 +201,17 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
             # Collect the results for this slice of this geography
             geog_results = geog_results.collect().sort(by="bldg_id")
 
+            # Every allocated (bldg_id, geography) row must survive the joins exactly once.
+            # Fail loudly rather than writing a file with missing (or duplicated) buildings.
+            n_slice_rows = min(slice_rows, n_rows - offset)
+            if geog_results.height != n_slice_rows:
+                raise ValueError(
+                    f"Row count changed while assembling {pqt_path if write_parquet else csv_path}: "
+                    f"expected {n_slice_rows:,} rows in slice at offset {offset:,} but got "
+                    f"{geog_results.height:,}. Rows were dropped or duplicated by a join "
+                    f"(simulation outputs, geospatial lookup, or electric utility lookup)."
+                )
+
             # Downselect and order columns based on the export's data_type
             col_maps = get_col_maps()
             geog_results = downselect_and_order_pub_cols(geog_results, col_maps)  # Per sdr_column_definitions.csv
@@ -512,8 +523,10 @@ def add_geospatial_columns(input_lf: pl.LazyFrame, geography_to_join_on) -> pl.L
         return input_lf
     logger.debug(f"Adding geospatial columns based on {geography_to_join_on}")
 
-    # Join on the (cached) geospatial data
-    input_lf = input_lf.join(_get_geospatial_lookup(geography_to_join_on).lazy(), on=geography_to_join_on)
+    # Join on the (cached) geospatial data. A left join so that a geography missing from
+    # the lookup keeps its rows (with null geospatial columns) rather than silently
+    # dropping every building in it.
+    input_lf = input_lf.join(_get_geospatial_lookup(geography_to_join_on).lazy(), on=geography_to_join_on, how="left")
 
     return input_lf
 
@@ -537,8 +550,10 @@ def add_electric_utility_column(input_lf: pl.LazyFrame, geography_to_join_on) ->
         return input_lf
     logger.debug(f"Adding electric utility column based on {geography_to_join_on}")
 
-    # Join on the (cached) electric utility data
-    input_lf = input_lf.join(_get_elec_util_lookup().lazy(), on=geography_to_join_on)
+    # Join on the (cached) electric utility data. A left join so that a tract missing from
+    # the lookup keeps its rows (with a null utility code) rather than silently dropping
+    # every building in it. Some AK, HI, AZ, and SD tracts are absent from the v2 lookup.
+    input_lf = input_lf.join(_get_elec_util_lookup().lazy(), on=geography_to_join_on, how="left")
 
     return input_lf
 
