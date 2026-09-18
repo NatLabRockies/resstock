@@ -52,6 +52,13 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
         geo_filter_exprs = [(pl.col(k) == v) for k, v in geography_filters.items()]
         alloc_wts = alloc_wts.filter(geo_filter_exprs)
 
+    # Drop the housing units the fallback ladder could not match to any simulated building.
+    # They carry no bldg_id, so there are no simulation outputs to publish against them, and
+    # the join onto the simulation outputs would silently drop them anyway (one row per state
+    # once aggregated). Dropping them here keeps the export's row-count check meaningful.
+    # create_allocated_weights() reports how many there are and writes allocation_miss_report.parquet.
+    alloc_wts = alloc_wts.filter(pl.col("bldg_id").is_not_null())
+
     # Get names of geography columns to group by
     geo_agg_cols = []
     if geographic_aggregation_levels != ["national"]:

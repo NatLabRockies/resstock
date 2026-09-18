@@ -131,3 +131,30 @@ def test_weighted_bill_columns_are_defined_for_publication():
         for suffix in ("", "_savings")
     }
     assert expected <= published
+
+
+def test_unmatched_housing_units_are_excluded_from_the_aggregation():
+    """Housing units the fallback ladder could not fill carry no bldg_id, so they have no
+    simulation outputs to publish and must not reach the join."""
+    unmatched = pl.DataFrame(
+        {
+            "upgrade": [1, 1],
+            "bldg_id": [None, None],
+            "weight": [7, 3],
+            "state": ["AK", "WA"],
+            "in.state": ["AK", "WA"],
+            "in.nhgis_tract_gisjoin": ["G0200130000900", "G5300330009900"],
+            TOTAL_BILL: [None, None],
+            TOTAL_SAVINGS: [None, None],
+        }
+    ).cast({"bldg_id": pl.Int64}).lazy()
+    alloc_wts = pl.concat([make_alloc_wts_plus_bills(), unmatched], how="vertical")
+
+    agg = aggregate_allocated_weights_to_geography(
+        alloc_wts, geographic_aggregation_levels=["in.state"]
+    ).collect()
+
+    assert agg["bldg_id"].null_count() == 0
+    assert sorted(agg["bldg_id"].unique().to_list()) == [1, 2]
+    # The matched housing units keep their full weight
+    assert agg["weight"].sum() == 6
