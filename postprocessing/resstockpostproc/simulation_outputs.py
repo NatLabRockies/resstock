@@ -613,18 +613,25 @@ def downselect_fuel_emissions_cols(df: pl.LazyFrame):
     return df
 
 
-def downselect_and_order_pub_cols(lf: pl.LazyFrame, col_maps: Sequence[dict]):
-    logger.info("Reordering columns and checking for missing/extra columns")
+def downselect_and_order_pub_cols(lf: pl.LazyFrame, col_maps: Sequence[dict], log: bool = True):
+    """
+    Args:
+        log: Whether to log the reordering and the extra/missing columns. Callers that
+            call this repeatedly on identically-shaped frames (e.g. once per slice of a
+            geography) pass False after the first call to avoid repeating the messages.
+    """
+    if log:
+        logger.info("Reordering columns and checking for missing/extra columns")
     # verify that all the columns in lf are one published_name in col_maps
     all_df_cols = set(lf.collect_schema().names())
     all_defined_cols = [col_map["published_name"] for col_map in col_maps if "yes" in col_map["publish_in_full"]]
     extra_cols = all_df_cols - set(all_defined_cols)
-    if extra_cols:
+    if log and extra_cols:
         logger.warning("Extra columns in output data not defined in publication column definition:")
         for c in sorted(extra_cols):
             logger.warning(f"Extra column: {c}")
     missing_cols = [col for col in set(all_defined_cols) - all_df_cols if not col.startswith("upgrade.")]
-    if missing_cols:
+    if log and missing_cols:
         logger.warning("Missing columns in output data that are defined in publication column definition:")
         for c in sorted(missing_cols):
             logger.warning(f"Missing column: {c}")

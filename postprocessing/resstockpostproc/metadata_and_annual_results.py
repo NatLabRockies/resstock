@@ -184,13 +184,16 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
 
         # Slice the geography into manageable slices of buildings
         for offset in range(0, n_rows, slice_rows):
+            # Every slice of a geography is assembled the same way, so only the first
+            # slice logs; otherwise each message repeats once per slice per geography.
+            first_slice = offset == 0
             geog_agg_alloc_wts_slice = geog_agg_alloc_wts.slice(offset, slice_rows).lazy()
 
             # Join the aggregated allocated weights to the simulation outputs by building ID and upgrade ID
             geog_results = geog_agg_alloc_wts_slice.join(sim_outs, on=[pl.col("upgrade"), pl.col("bldg_id")])
 
             # Calculate the weighted columns
-            geog_results = add_weighted_cols(geog_results)
+            geog_results = add_weighted_cols(geog_results, log=first_slice)
 
             # Add geospatial data columns based on most informative geography column
             geog_results = add_geospatial_columns(geog_results, geo_key)
@@ -221,7 +224,9 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
 
             # Downselect and order columns based on the export's data_type
             col_maps = get_col_maps()
-            geog_results = downselect_and_order_pub_cols(geog_results, col_maps)  # Per sdr_column_definitions.csv
+            geog_results = downselect_and_order_pub_cols(  # Per sdr_column_definitions.csv
+                geog_results, col_maps, log=first_slice
+            )
 
             # Write the files
             if write_parquet:
@@ -565,8 +570,9 @@ def add_electric_utility_column(input_lf: pl.LazyFrame, geography_to_join_on) ->
     return input_lf
 
 
-def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
-    logger.info("Adding weighted columns")
+def add_weighted_cols(df: pl.LazyFrame, log: bool = True) -> pl.LazyFrame:
+    if log:
+        logger.info("Adding weighted columns")
     all_cols = df.collect_schema().names()
     wtd_cols = [col for col in all_cols if "out." in col and (
         ".energy_consumption." in col or
