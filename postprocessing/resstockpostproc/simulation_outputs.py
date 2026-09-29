@@ -572,6 +572,59 @@ def adjust_col_dtypes(df: pl.LazyFrame) -> pl.LazyFrame:
     logger.info("Adjusting column dtypes")
     # Upgrade ID must be Athena bigint (np.int64)
     df = df.with_columns(pl.col("upgrade").cast(pl.Int64))
+    df = stringify_characteristic_cols(df)
+    return df
+
+
+def stringify_characteristic_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+    """
+    Publish every in.* housing characteristic as a string.
+
+    Characteristics that come from a housing characteristic TSV are already strings --
+    in.bedrooms is "3", in.has_pv is "Yes" -- so for those this is a no-op. The cast
+    exists because an in.* column can also be an OpenStudio measure argument, which
+    BuildStockBatch carries into the raw results with its declared type and so arrives
+    here as an integer or a boolean.
+
+    Those integer and boolean columns break SightGlass, which builds the set of unique
+    filter values for each in.* column and serializes it to JSON: it rejects any in.*
+    column that Athena reads as BIGINT or BOOLEAN. Casting here keeps the published
+    schema consistent with the characteristics that come from a TSV, so dataset
+    consumers see one type for all of in.*.
+
+    No column currently published needs the cast: the seven that did -- the six
+    in.simulation_control_* makeIntegerArgument arguments on BuildExistingModel, and
+    in.units_represented, defaulted to int(1) in
+    buildstockbatch.postprocessing.flatten_datapoint_json -- are no longer imported.
+    This is the guard that keeps the next such argument from reaching publication as a
+    bigint, which is a hard failure in telescope's view creation rather than something
+    caught here.
+
+    Booleans become "Yes"/"No" rather than polars' "true"/"false" to match the
+    enumerations already published for characteristics like in.has_pv.
+    """
+    schema = df.collect_schema()
+    casts = []
+    for col_name, dtype in schema.items():
+        if not col_name.startswith("in."):
+            continue
+        if dtype == pl.Boolean:
+            casts.append(
+                pl.when(pl.col(col_name).is_null())
+                .then(None)
+                .when(pl.col(col_name))
+                .then(pl.lit("Yes"))
+                .otherwise(pl.lit("No"))
+                .alias(col_name)
+            )
+        elif dtype.is_integer():
+            casts.append(pl.col(col_name).cast(pl.String).alias(col_name))
+    if casts:
+        logger.info(
+            f"Casting {len(casts)} in.* columns to string for SightGlass: "
+            f"{sorted(c.meta.output_name() for c in casts)}"
+        )
+        df = df.with_columns(casts)
     return df
 
 
