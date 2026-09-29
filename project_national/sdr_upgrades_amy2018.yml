@@ -26,7 +26,7 @@ sampler:
       # - Vintage
       # - Heating Fuel
       # - Sampling Region
-    # segment_selection_sample_size: 10000000 # For production run
+    # segment_selection_sample_size: 50000000 # For production run
     # num_samples_per_segment: 12 # For production run
 
 # NLR High Performance Computing machine configuration
