@@ -1687,7 +1687,43 @@ charging energy over all dwelling units.*
 table's ≈1.66% target; the quota draw sat at the bottom of it. The maintainer's ruling is to keep
 the target as it stands and revisit it at the next TSV refresh.
 
-### 4.9.5 What this section changes
+### 4.9.5 Monthly shape by state against EIA 2018
+
+The references above are annual. EIA is the one that also resolves the year, and the only one
+whose universe is the whole stock rather than occupied primary residences, so it is where the
+monthly shape of the change can be read.
+
+![4.9d average monthly electricity per dwelling unit, by state, against EIA 2018](images/fig_4_9_d_monthly_electricity_by_state.png)
+
+*Average monthly electricity per dwelling unit, 52 facets, ordered by dwelling units with the
+national total first. EIA 2018 in green, Baseline dashed, New solid.*
+
+![4.9e average monthly natural gas per dwelling unit, by state, against EIA 2018](images/fig_4_9_e_monthly_natural_gas_by_state.png)
+
+*As above for natural gas. The modelled series sit below EIA in most states in the heating
+months, and the new run sits at or below the baseline.*
+
+**Interpretation.** The seasonal shape is unchanged: both series track the same winter and summer
+peaks in every state, and the new run moves the level without bending the profile, which is what a
+reweighting should do. Across the 52 facets the new run is closer to EIA in 25 and further in 27 on
+both fuels, so the change is not a uniform improvement at state grain; the states that move furthest
+are small ones where the baseline was already far from EIA (the Dakotas, Montana, Wyoming).
+
+**Two cautions on reading these against EIA, both of which bound the comparison rather than the
+model.** EIA's dwelling-unit count is a *meter* count — EIA-861 residential accounts, 133.9 M for
+2018, against 137.4 M ACS housing units — so a per-dwelling-unit comparison divides EIA sales by
+accounts and the modelled series by dwelling units, roughly a 2% offset applied uniformly to the EIA
+curve. And residential-sector sales exclude dwellings billed on a commercial master meter, on the
+energy side as well as the count side. Read these figures for seasonal shape and for the
+Baseline-to-New movement, not as a calibration target.
+
+These two figures are the only ones in this document taken from the `baseline_validation` comparison
+dashboard, which queries the per-timestamp tables of the `_15` S3 publications; every other figure
+here reads the annual publication named in §0. The two differ by a few tenths of a percent in level
+and not at all in shape. `analysis/monthly_by_state_4_9.py` records the difference and builds both
+figures.
+
+### 4.9.6 What this section changes
 
 Closer to the references: the stock count and every heating-fuel count against ACS; gas,
 electricity and fuel oil totals against RECS; the vacant fuel mix against AHS; the EV share. Further:
@@ -1958,9 +1994,11 @@ named above, prints the section's tables to a `*_output.txt` beside it and write
 | `degree_days_4_6.py` | §4.6 T8 degree days from the EPWs (`county_degree_days_amy2018.csv`); figure 4.6f |
 | `sampler_validation_f3.py` | §4.6 T9 sampler validation, effective sample size, design SE; figure 4.6g |
 | `external_validation_4_9.py` | §4.9 RECS, AHS and EV comparisons; figure 4.9a |
+| `monthly_by_state_4_9.py` | §4.9.5 monthly shape by state, read from the `baseline_validation` comparison dashboard; figures 4.9d, 4.9e |
+| `eia_validation_4_9.py` | backing analysis for §4.9.5: EIA 2018 site-energy totals and the total-gas step split by heating fuel and occupancy. No figure; the space-heating split in 4.6h is the finer answer |
 | `republication_check.py` | the local-copy-against-S3 check recorded in the Appendix |
 | `regenerate_control.py` | the control allocation (§4.6 T3): catalogue, allocate, measure |
-| `references/build_acs_references.py`, `references/build_acs_county_references.py` | the ACS state and county reference tables in `references/`, documented in `references/SOURCES.md` |
+| `references/build_acs_references.py`, `references/build_acs_county_references.py`, `references/build_eia_references.py` | the ACS state and county tables and the EIA 2018 state table in `references/`, documented in `references/SOURCES.md` |
 
 **Runs, logs and commits**
 
