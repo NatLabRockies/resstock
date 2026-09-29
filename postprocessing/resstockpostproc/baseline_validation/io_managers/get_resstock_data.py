@@ -11,6 +11,7 @@ from buildstock_query import BuildStockQuery, MappedColumn
 from resstockpostproc.baseline_validation.io_managers.utils import apply_aggregation
 from resstockpostproc.baseline_validation.io_managers.stats import ANNUAL_QUANTILES, weighted_quantiles
 from resstockpostproc.baseline_validation.plot_helpers.resstock_raw import (
+    UnavailableDimension,
     resolve_existing_char_column,
     resstock_group_expr,
     resstock_quantity_expr,
@@ -26,7 +27,7 @@ from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
-from resstockpostproc.shared_utils.mapping import UtilityName2ID
+from resstockpostproc.shared_utils.mapping import STATE2CENSUS_DIVISION_RECS, UtilityName2ID
 
 
 def _save_bsq_cache(bsq: BuildStockQuery) -> None:
@@ -493,9 +494,39 @@ def get_annual(
     return df
 
 
+def _require_char_column(col_name: str, by: str, bsq: BuildStockQuery) -> str:
+    """Return `col_name`, or refuse if the run's metadata does not carry it.
+
+    Never substitute a similarly named `in.as_simulated_*` column. Those answer a different
+    question: where the sampled building was simulated, not where the dwelling units it
+    carries weight for are. On a run whose units are allocated across geographies the two
+    are different places, so grouping units by the as-simulated column reports their energy
+    against the wrong geography. A missing grouping column has to stop the query.
+    """
+    if col_name in bsq.bs_table.c:
+        return col_name
+    raise UnavailableDimension(
+        f"Cannot group by {by!r}: the run's metadata has no column {col_name!r}. If an "
+        f"'in.as_simulated_*' column of a similar name exists, it is not a substitute - it "
+        f"gives the building's simulated location rather than the location of the dwelling "
+        f"units, and grouping by it misattributes their energy. Either publish the allocated "
+        f"geography at this grain, or drop {by!r} from the comparison."
+    )
+
+
 def _get_by_col(by: str, bsq: BuildStockQuery):
-    col_map = RECS_CHARS_MAPPING[by]["ResStock"]["mapping"]
-    col_name = RECS_CHARS_MAPPING[by]["ResStock"]["column_name"]
+    spec = RECS_CHARS_MAPPING[by]["ResStock"]
+    if by == DataCol.CENSUS_DIVISION and spec["column_name"] not in bsq.bs_table.c:
+        # A RECS census division is a fixed partition of the states, so a run that publishes
+        # allocated geography only down to the state can still be grouped by division with
+        # nothing lost. This is the one such derivation; anything finer needs the allocated
+        # geography itself and `_require_char_column` refuses it.
+        state_col = _require_char_column(
+            RECS_CHARS_MAPPING[DataCol.STATE]["ResStock"]["column_name"], by, bsq)
+        return MappedColumn(bsq=bsq, name=by, mapping_dict=dict(STATE2CENSUS_DIVISION_RECS),
+                            key=bsq._get_column(state_col, annual_only=True))
+    col_map = spec["mapping"]
+    col_name = _require_char_column(spec["column_name"], by, bsq)
     if not col_map:  # if empty, just return original by col
         return sa.Column(col_name).label(by)
     original_col = bsq._get_column(col_name, annual_only=True)
