@@ -10,7 +10,7 @@ from pathlib import Path
 import yaml
 from pydantic import Field, field_validator
 
-from resstockpostproc.baseline_validation.schema.plot_spec import NoExtraModel
+from resstockpostproc.baseline_validation.schema.plot_spec import ComparisonDataset, NoExtraModel
 from resstockpostproc.shared_utils.db_column_names import DBSchema
 from resstockpostproc.shared_utils.s3_manager import download_s3_file
 
@@ -79,6 +79,15 @@ class WorkflowConfig(NoExtraModel):
     reference_years: dict[str, list[int]] = Field(
         default={"eia": [2018], "recs": [2020]},
         description="Reference years per data source (e.g., {'eia': [2018, 2024], 'recs': [2020]})",
+    )
+    comparison_datasets: list[ComparisonDataset] = Field(
+        default_factory=lambda: list(ComparisonDataset),
+        description=(
+            "Which reference datasets to generate plots against. Defaults to all of them. "
+            "Narrow it when a run cannot support one: the utility-grain LRD comparison needs "
+            "an eiaid weights table in the run's own database and an allocated county column, "
+            "which an aggregates publication does not have."
+        ),
     )
     output: OutputConfig = Field(description="Output configuration")
     data_source_labels: dict[str, DataSourceLabel] = Field(

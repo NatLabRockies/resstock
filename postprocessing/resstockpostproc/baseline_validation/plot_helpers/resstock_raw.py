@@ -6,6 +6,7 @@ import polars as pl
 
 from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING, PartialMap
 from resstockpostproc.shared_utils.db_column_names import DataCol, DBSchema, get_db_enduse_colnames_map
+from resstockpostproc.shared_utils.mapping import STATE2CENSUS_DIVISION_RECS
 
 
 def resstock_group_expr(col: str, available_cols: set[str]) -> pl.Expr:
@@ -14,6 +15,8 @@ def resstock_group_expr(col: str, available_cols: set[str]) -> pl.Expr:
         known = ", ".join(sorted(RECS_CHARS_MAPPING))
         raise ValueError(f"Unsupported ResStock grouping column {col!r}. Known: {known}")
     spec = RECS_CHARS_MAPPING[col]["ResStock"]
+    if col == DataCol.CENSUS_DIVISION and spec["column_name"] not in available_cols:
+        return _census_division_from_state(available_cols).alias(col)
     raw_col = resolve_existing_char_column(spec["column_name"], available_cols)
     mapping = spec["mapping"]
 
@@ -25,14 +28,38 @@ def resstock_group_expr(col: str, available_cols: set[str]) -> pl.Expr:
     return pl.col(raw_col).replace_strict(mapping, default=None).cast(pl.String).alias(col)
 
 
+class UnavailableDimension(ValueError):
+    """A characteristic the run's data cannot supply at all.
+
+    Distinct from a failure to plot: there is nothing wrong with the request, the
+    publication simply does not carry that dimension. Comparisons needing it are left out
+    rather than approximated from a different column, and rather than stopping the run.
+    Subclasses ValueError so existing handlers keep working.
+    """
+
+
+def _census_division_from_state(available_cols: set[str]) -> pl.Expr:
+    """Derive the RECS census division from the state.
+
+    A division is a fixed partition of the states, so this loses nothing and is the one
+    geography a state-grain publication can still be compared at. Everything finer -- county,
+    climate zone, utility -- genuinely needs the allocated geography and is refused instead.
+    """
+    state_col = resolve_existing_char_column(
+        RECS_CHARS_MAPPING[DataCol.STATE]["ResStock"]["column_name"], available_cols)
+    return pl.col(state_col).replace_strict(STATE2CENSUS_DIVISION_RECS, default=None).cast(pl.String)
+
+
 def resolve_existing_char_column(col: str, available_cols: set[str]) -> str:
     """Resolve characteristic column names across known naming variants."""
     bare = col.removeprefix("in.")
+    # Deliberately NOT tried: `in.as_simulated_<bare>`. It names where the building was
+    # simulated, not where its dwelling units are, so it is a different variable.
     tried = [col, bare, f"build_existing_model.{bare}"]
     for candidate in tried:
         if candidate in available_cols:
             return candidate
-    raise ValueError(
+    raise UnavailableDimension(
         f"Missing required characteristic column {col!r} in raw histogram parquet. "
         f"Tried variants: {tried}. Sample of available cols (first 10): "
         f"{sorted(available_cols)[:10]} (of {len(available_cols)} total)."

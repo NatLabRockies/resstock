@@ -54,6 +54,7 @@ from resstockpostproc.baseline_validation.dashboard.create_html import (
 )
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.shared_utils.timing import TimingStats, timed
+from resstockpostproc.baseline_validation.plot_helpers.utils import os_path
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", force=True)
 for noisy_logger_name in ("kaleido", "choreographer", "browser_proc"):
@@ -196,7 +197,9 @@ def _cleanup_raw_plot_html(output_root: Path, link_format: FileType) -> None:
         if not plots_dir.exists():
             continue
         for raw_html in plots_dir.rglob(f"*.raw.{link_format.value}"):
-            raw_html.unlink()
+            # rglob walks a step at a time so it finds these, but the absolute path it
+            # hands back can be past the Windows limit, which unlink cannot open.
+            os_path(raw_html).unlink(missing_ok=True)
 
 
 def _write_results_tsv(csv_path: Path, results: dict[str, dict[str, str]]) -> None:

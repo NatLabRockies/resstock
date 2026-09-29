@@ -7,7 +7,7 @@ ready for rendering.
 from __future__ import annotations
 
 import logging
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import ABBR2STATE
@@ -28,6 +28,7 @@ from resstockpostproc.baseline_validation.schema.plot_definitions import (
     _make_spec,
 )
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_base_data
+from resstockpostproc.baseline_validation.plot_helpers.resstock_raw import UnavailableDimension
 from resstockpostproc.baseline_validation.generation.index_rows import (
     apply_lrd_sidebar_semantics,
     build_output_row,
@@ -133,6 +134,21 @@ def expand_templates(
     focus values; the tuples are consumed by Pass 2 (metadata) and Pass 3 (plot).
     """
     work_items = []
+    skipped: Counter[str] = Counter()
+
+    def base_data_if_available(data_key):
+        """Load the base data, or return None when the run cannot supply a dimension it needs.
+
+        A characteristic the publication does not carry is a reason to leave those
+        comparisons out, not to abandon the whole dashboard: every other comparison is
+        unaffected. The reasons are counted and reported once at the end, so a dimension
+        that silently disappears from the index is still visible in the log.
+        """
+        try:
+            return get_base_data(data_key)
+        except UnavailableDimension as exc:
+            skipped[str(exc)] += 1
+            return None
 
     for tmpl_index, tmpl in enumerate(templates):
         allow_cross = tmpl.comparison_dataset in (ComparisonDataset.recs, ComparisonDataset.eia)
@@ -206,7 +222,9 @@ def expand_templates(
                 # utility as a separate work item (LRD has no Block 2 triples).
                 if tmpl.resolution == Resolution.hour_of_day_matrix:
                     data_key = main_spec.data_key
-                    base_data = get_base_data(data_key)
+                    base_data = base_data_if_available(data_key)
+                    if base_data is None:
+                        continue
                     col = group_by
                     for val in sorted(v for v in base_data[col].unique().to_list() if v is not None):
                         work_items.append(
@@ -221,7 +239,8 @@ def expand_templates(
                         )
                     continue
                 # Warm the disk cache so worker processes find the data.
-                get_base_data(main_spec.data_key)
+                if base_data_if_available(main_spec.data_key) is None:
+                    continue
                 # Pass focus_on from the spec so the US Total focus (set by
                 # the (None,None,None) handler above) propagates to plotters.
                 work_items.append(
@@ -247,7 +266,9 @@ def expand_templates(
                 group_by=f1_char,
                 view=tmpl.view,
             )
-            f1_data = get_base_data(f1_lookup_spec.data_key)
+            f1_data = base_data_if_available(f1_lookup_spec.data_key)
+            if f1_data is None:
+                continue
             f1_col = f1_char
             f1_values = sorted(v for v in f1_data[f1_col].unique().to_list() if v is not None and v != "US Total")
             if test_only:
@@ -266,7 +287,8 @@ def expand_templates(
                             continue
                         # Warm cache for the 2-column group_by DataKey that
                         # workers will request (focus_on col + group_by).
-                        get_base_data(filtered_entries[0][0].data_key)
+                        if base_data_if_available(filtered_entries[0][0].data_key) is None:
+                            continue
                         focus_on = ((f1_char, f1_val),)
                         work_items.append(
                             (
@@ -305,7 +327,9 @@ def expand_templates(
                     group_by=f2_char,
                     view=tmpl.view,
                 )
-                f2_data = get_base_data(f2_lookup_spec.data_key)
+                f2_data = base_data_if_available(f2_lookup_spec.data_key)
+                if f2_data is None:
+                    continue
                 f2_col = f2_char
 
                 if f2_col not in f2_data.columns:
@@ -329,6 +353,8 @@ def expand_templates(
                     )
 
     logger.info(f"Template expansion: {len(templates)} templates -> {len(work_items)} work items")
+    for reason, n in skipped.most_common():
+        logger.warning("Left out %d comparison(s): %s", n, reason)
     return work_items
 
 
