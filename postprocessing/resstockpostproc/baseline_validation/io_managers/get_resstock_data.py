@@ -29,8 +29,20 @@ from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.shared_utils.mapping import UtilityName2ID
 
 
+def _save_bsq_cache(bsq: BuildStockQuery) -> None:
+    """Flush BuildStockQuery's query cache to disk, where that is still a thing.
+
+    Older versions keep results in memory and only write the pickle when asked. Newer ones
+    use a content-addressed cache that persists each result as it arrives and drop the
+    method, so there is nothing to call.
+    """
+    save = getattr(bsq, "save_cache", None)
+    if save is not None:
+        save()
+
+
 @timed
-@cached(cache_file="resstock_timeseries_data_cache")
+@cached(cache_file="resstock_timeseries_data_cache_v2")
 def get_timeseries_all(
     data_key: DataKey,
     restrict_list: Sequence[str] | None = None,
@@ -210,7 +222,7 @@ def _get_timeseries_by_char(
         annual_only=False,
         timestamp_grouping_func=resolution,
     )
-    bsq.save_cache()
+    _save_bsq_cache(bsq)
     if by == "state":
         result_us_total = bsq.query(
             enduses=tuple(enduses),
@@ -219,7 +231,7 @@ def _get_timeseries_by_char(
             annual_only=False,
             timestamp_grouping_func=resolution,
         )
-        bsq.save_cache()
+        _save_bsq_cache(bsq)
         result_us_total["state"] = "US Total"
         result_us_total = result_us_total[result_df.columns]
         result_df = pd.concat([result_df, result_us_total], ignore_index=True)
@@ -243,7 +255,7 @@ def _get_timeseries_by_utilities(
         annual_only=False,
         timestamp_grouping_func=timestamp_grouping_func,
     )
-    bsq.save_cache()
+    _save_bsq_cache(bsq)
     # .with_columns(pl.lit(str(UtilityName2ID["ERCOT"])).alias("eiaid"))
     ercot_pd["eiaid"] = str(UtilityName2ID["ERCOT"])
 
@@ -255,7 +267,7 @@ def _get_timeseries_by_utilities(
         restrict=restrict,
         timestamp_grouping_func=timestamp_grouping_func,
     )
-    bsq.save_cache()
+    _save_bsq_cache(bsq)
 
     result = pl.concat([pl.from_pandas(result_pd), pl.from_pandas(ercot_pd)], how="diagonal_relaxed")
     if "query_id" in result.columns:
@@ -413,7 +425,7 @@ def _empty_raw_annual_frame(group_cols: list[str], quantity_cols: list[str]) -> 
 
 
 @timed
-@cached(cache_file="resstock_annual_data_cache")
+@cached(cache_file="resstock_annual_data_cache_v2")
 def get_annual_all(
     data_key: DataKey,
     occupied_only: bool = False,
@@ -501,7 +513,7 @@ def _bsq_annual_query(bsq: BuildStockQuery, enduses, group_by: list, restrict: l
         annual_only=True,
         restrict=restrict,
     )
-    bsq.save_cache()
+    _save_bsq_cache(bsq)
     return result
 
 
@@ -544,13 +556,13 @@ def _get_annual_by_eiaid(bsq, data_source):
         restrict=[(db_char_col.STATE, ["TX"]), (db_char_col.ISO_RTO_REGION, ["ERCOT"])],
         get_nonzero_count=True,
     )
-    bsq.save_cache()
+    _save_bsq_cache(bsq)
     ercot_pd["eiaid"] = str(UtilityName2ID["ERCOT"])
     result_pd = bsq.utility.aggregate_annual_by_eiaid(
         enduses=enduses,
         get_nonzero_count=True,
     )
-    bsq.save_cache()
+    _save_bsq_cache(bsq)
     df = pl.concat([pl.from_pandas(ercot_pd), pl.from_pandas(result_pd)], how="diagonal_relaxed")
     df = df.with_columns(pl.col("eiaid").cast(pl.Int64))
     df = _transform_columns(df, data_source.db_schema)
@@ -572,12 +584,41 @@ def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str) -> tu
     return tuple(enduses)
 
 
+_NARROW_NUMERIC_TYPES = (pl.Decimal, pl.Float32)
+
+# Metrics that are weighted or averaged rather than counted, so they are continuous even
+# when a run's integer weight column makes the database hand them back as integers.
+_CONTINUOUS_METRIC_COLUMNS = frozenset({"units_count", "rows_per_sample"})
+
+
+def _widen_numeric_columns(df: pl.DataFrame) -> pl.DataFrame:
+    """Cast narrow and integer-typed numeric columns to double.
+
+    A run is published with whatever column types it was written with, and the two runs
+    being compared need not agree. Integer weights make the database answer a weighted sum
+    in decimal or in integers, and single-precision outputs come back as Float32; a run
+    with double weights gives Float64 throughout. Polars will not stack any of those onto
+    Float64, so the runs cannot be concatenated until the types are widened to a common
+    one. Identifiers and true counts keep their integer types.
+    """
+    narrow_cols = [
+        name
+        for name, dtype in df.schema.items()
+        if dtype.base_type() in _NARROW_NUMERIC_TYPES
+        or (dtype.is_integer() and (name in _CONTINUOUS_METRIC_COLUMNS or name.endswith("__nonzero_units_count")))
+    ]
+    if not narrow_cols:
+        return df
+    return df.with_columns(pl.col(col).cast(pl.Float64) for col in narrow_cols)
+
+
 def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
     """Transform BSQ column names to add _value and _percent_users suffixes.
 
     BSQ now returns columns with the new_name already (e.g., 'electricity_total'),
     so we just need to rename them to add the suffixes and handle associated metadata columns.
     """
+    df = _widen_numeric_columns(df)
     db_enduse_colmap = get_db_enduse_colnames_map(db_schema)
     new_cols_expr = []
     to_drop_cols = []
