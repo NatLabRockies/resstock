@@ -487,21 +487,46 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         return false
       end
 
+      gea_regions = []
+      if args[:emissions_scenario_names].split(',').map(&:strip).include?('Sampling Region')
+        emissions_scenario_names = args[:emissions_scenario_names].split(',', -1).map(&:strip)
+        ix = emissions_scenario_names.index('Sampling Region')
+
+        gea_regions = get_gearegions_for_sampling_region(runner, bldg_data, characteristics_dir)
+
+        [:emissions_scenario_names, :emissions_types, :emissions_electricity_folders, :emissions_natural_gas_values,
+         :emissions_propane_values, :emissions_fuel_oil_values, :emissions_wood_values].each do |arg|
+          next if args[arg].nil?
+
+          values = args[arg].split(',', -1).map(&:strip)
+          value = values[ix]
+          values.delete_at(ix)
+          new_values = (arg == :emissions_scenario_names ? gea_regions : [value] * gea_regions.size)
+          args[arg] = (values + new_values).join(',')
+        end
+      end
+
+      emissions_scenario_names = args[:emissions_scenario_names].split(',').map(&:strip)
       emissions_electricity_filepaths = []
       scenarios = args[:emissions_electricity_folders].split(',')
-      scenarios.each do |scenario|
+      scenarios.each_with_index do |scenario, i|
         scenario = File.join(resources_dir, scenario)
         if !File.exist?(scenario)
           runner.registerError("Emissions scenario electricity folder '#{scenario}' does not exist.")
           return false
         end
 
+        gea_region = bldg_data['Generation And Emissions Assessment Region']
+        gea_region = emissions_scenario_names[i] if gea_regions.include?(emissions_scenario_names[i])
+
         Dir["#{scenario}/*.csv"].each do |filepath|
-          emissions_electricity_filepaths << filepath if filepath.include?(bldg_data['Generation And Emissions Assessment Region'])
+          emissions_electricity_filepaths << filepath if File.basename(filepath, '.csv') == gea_region
         end
       end
 
-      if emissions_electricity_filepaths.size != scenarios.size
+      if scenarios.empty?
+        runner.registerWarning('Not calculating emissions because no emissions scenarios remain after Sampling Region expansion.')
+      elsif emissions_electricity_filepaths.size != scenarios.size
         runner.registerWarning('Not calculating emissions because an electricity filepath for at least one emissions scenario could not be located.')
       else
         emissions_electricity_filepaths = emissions_electricity_filepaths.join(',')
@@ -518,6 +543,12 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         measures['ResStockArgumentsPostHPXML'][0]['emissions_fuel_oil_values'] = args[:emissions_fuel_oil_values]
         measures['ResStockArgumentsPostHPXML'][0]['emissions_wood_values'] = args[:emissions_wood_values]
 
+        register_value(runner, 'emissions_scenario_names', args[:emissions_scenario_names])
+        register_value(runner, 'emissions_types', args[:emissions_types])
+        register_value(runner, 'emissions_natural_gas_values', args[:emissions_natural_gas_values])
+        register_value(runner, 'emissions_propane_values', args[:emissions_propane_values])
+        register_value(runner, 'emissions_fuel_oil_values', args[:emissions_fuel_oil_values])
+        register_value(runner, 'emissions_wood_values', args[:emissions_wood_values])
         register_value(runner, 'emissions_electricity_units', emissions_electricity_units)
         register_value(runner, 'emissions_electricity_filepaths', emissions_electricity_filepaths)
         register_value(runner, 'emissions_fossil_fuel_units', emissions_fossil_fuel_units)
@@ -723,6 +754,44 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     end
 
     return statecodes.uniq.sort
+  end
+
+  def get_gearegions_for_sampling_region(runner, bldg_data, characteristics_dir)
+    parameter = 'Sampling Region'
+    if !bldg_data.keys.include?(parameter)
+      runner.registerError("Emissions scenario(s) were specified, but could not find #{parameter}.")
+      return []
+    end
+
+    sampling_region = bldg_data[parameter]
+    rows = CSV.read(File.join(characteristics_dir, "#{parameter}.tsv"), headers: true, col_sep: "\t")
+
+    option_col = "Option=#{sampling_region}"
+    counties = {}
+    rows.each do |row|
+      next unless row[option_col].to_s.strip == '1'
+
+      counties[row['Dependency=County'].to_s.strip] = true
+    end
+
+    gea_filepath = File.join(characteristics_dir, 'Generation And Emissions Assessment Region.tsv')
+    rows = CSV.read(gea_filepath, headers: true, col_sep: "\t")
+    option_cols = rows.headers.select { |h| h.to_s.start_with?('Option=') }
+
+    gea_regions = []
+    rows.each do |row|
+      next unless counties.key?(row['Dependency=County'].to_s.strip)
+
+      option_cols.each do |col|
+        next unless row[col].to_f > 0
+
+        gea_region = col.sub('Option=', '')
+        # No emissions data exists for the 'None' GEA region (AK/HI)
+        gea_regions << gea_region unless gea_region == 'None'
+      end
+    end
+
+    return gea_regions.uniq.sort
   end
 end
 
