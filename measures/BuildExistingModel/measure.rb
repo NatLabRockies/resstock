@@ -557,6 +557,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
         register_value(runner, 'emissions_scenario_names', args[:emissions_scenario_names])
         register_value(runner, 'emissions_types', args[:emissions_types])
+        register_value(runner, 'emissions_electricity_folders', args[:emissions_electricity_folders])
         register_value(runner, 'emissions_natural_gas_values', args[:emissions_natural_gas_values])
         register_value(runner, 'emissions_propane_values', args[:emissions_propane_values])
         register_value(runner, 'emissions_fuel_oil_values', args[:emissions_fuel_oil_values])
@@ -661,6 +662,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
       measures['ResStockArgumentsPostHPXML'][0]['utility_bill_scenario_names'] = args[:utility_bill_scenario_names]
       register_value(runner, 'utility_bill_scenario_names', args[:utility_bill_scenario_names])
+      register_value(runner, 'utility_bill_simple_filepaths', args[:utility_bill_simple_filepaths]) unless args[:utility_bill_simple_filepaths].nil?
 
       utility_bill.each do |arg, value_array|
         full_arg = "utility_bill_#{arg}"
