@@ -487,26 +487,39 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         return false
       end
 
-      gea_regions = []
-      if args[:emissions_scenario_names].split(',').map(&:strip).include?('Sampling Region')
-        emissions_scenario_names = args[:emissions_scenario_names].split(',', -1).map(&:strip)
-        ix = emissions_scenario_names.index('Sampling Region')
-
+      # GEA region per scenario; nil means use the building's GEA region
+      scenario_gea_regions = []
+      emissions_args = [:emissions_scenario_names, :emissions_types, :emissions_electricity_folders, :emissions_natural_gas_values,
+                        :emissions_propane_values, :emissions_fuel_oil_values, :emissions_wood_values]
+      split_args = emissions_args.map { |arg| [arg, args[arg].nil? ? nil : args[arg].split(',', -1).map(&:strip)] }.to_h
+      if split_args[:emissions_scenario_names].any? { |scenario_name| scenario_name.end_with?('Sampling Region') }
         gea_regions = get_gearegions_for_sampling_region(runner, bldg_data, characteristics_dir)
 
-        [:emissions_scenario_names, :emissions_types, :emissions_electricity_folders, :emissions_natural_gas_values,
-         :emissions_propane_values, :emissions_fuel_oil_values, :emissions_wood_values].each do |arg|
-          next if args[arg].nil?
+        new_args = emissions_args.map { |arg| [arg, []] }.to_h
+        split_args[:emissions_scenario_names].each_with_index do |scenario_name, i|
+          if scenario_name.end_with?('Sampling Region')
+            prefix = scenario_name.delete_suffix('Sampling Region').strip.delete_suffix('-').strip
+            gea_regions.each do |gea_region|
+              emissions_args.each do |arg|
+                next if split_args[arg].nil?
 
-          values = args[arg].split(',', -1).map(&:strip)
-          value = values[ix]
-          values.delete_at(ix)
-          new_values = (arg == :emissions_scenario_names ? gea_regions : [value] * gea_regions.size)
-          args[arg] = (values + new_values).join(',')
+                new_args[arg] << (arg == :emissions_scenario_names ? [prefix, gea_region].reject(&:empty?).join(' - ') : split_args[arg][i])
+              end
+              scenario_gea_regions << gea_region
+            end
+          else
+            emissions_args.each do |arg|
+              new_args[arg] << split_args[arg][i] unless split_args[arg].nil?
+            end
+            scenario_gea_regions << nil
+          end
+        end
+
+        emissions_args.each do |arg|
+          args[arg] = new_args[arg].join(',') unless split_args[arg].nil?
         end
       end
 
-      emissions_scenario_names = args[:emissions_scenario_names].split(',').map(&:strip)
       emissions_electricity_filepaths = []
       scenarios = args[:emissions_electricity_folders].split(',')
       scenarios.each_with_index do |scenario, i|
@@ -516,8 +529,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
           return false
         end
 
-        gea_region = bldg_data['Generation And Emissions Assessment Region']
-        gea_region = emissions_scenario_names[i] if gea_regions.include?(emissions_scenario_names[i])
+        gea_region = scenario_gea_regions[i] || bldg_data['Generation And Emissions Assessment Region']
 
         Dir["#{scenario}/*.csv"].each do |filepath|
           emissions_electricity_filepaths << filepath if File.basename(filepath, '.csv') == gea_region

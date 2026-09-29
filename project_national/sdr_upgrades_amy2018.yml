@@ -128,9 +128,16 @@ workflow_generator:
       - scenario_name: LRMER_MidCase_25
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
-      - scenario_name: Sampling Region # Emissions for each GEA region in sampling region
+      # Emissions for each GEA region in sampling region
+      - scenario_name: LRMER_MidCase_15 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
+      - scenario_name: LRMER_MidCase_25 - Sampling Region
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
+      - scenario_name: AER_MidCase_Avg - Sampling Region
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
 
     # Utility bill rates
     utility_bills:
