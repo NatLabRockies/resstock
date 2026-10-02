@@ -4,6 +4,8 @@ require 'openstudio'
 require 'pathname'
 require_relative '../../resources/buildstock'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
+require_relative 'resources/emission_scenarios'
+require_relative 'resources/utility_bill_scenarios'
 
 # start the measure
 class BuildExistingModel < OpenStudio::Measure::ModelMeasure
@@ -482,149 +484,14 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     # Emissions
     if not args[:emissions_scenario_names].nil?
-      if !bldg_data.keys.include?('Generation And Emissions Assessment Region')
-        runner.registerError('Emissions scenario(s) were specified, but could not find the Generation and Emissions Assessment (GEA) region.')
-        return false
-      end
-
-      emissions_electricity_filepaths = []
-      scenarios = args[:emissions_electricity_folders].split(',')
-      scenarios.each do |scenario|
-        scenario = File.join(resources_dir, scenario)
-        if !File.exist?(scenario)
-          runner.registerError("Emissions scenario electricity folder '#{scenario}' does not exist.")
-          return false
-        end
-
-        Dir["#{scenario}/*.csv"].each do |filepath|
-          emissions_electricity_filepaths << filepath if filepath.include?(bldg_data['Generation And Emissions Assessment Region'])
-        end
-      end
-
-      if emissions_electricity_filepaths.size != scenarios.size
-        runner.registerWarning('Not calculating emissions because an electricity filepath for at least one emissions scenario could not be located.')
-      else
-        emissions_electricity_filepaths = emissions_electricity_filepaths.join(',')
-        emissions_electricity_units = ([HPXML::EmissionsScenario::UnitsKgPerMWh] * scenarios.size).join(',')
-        emissions_fossil_fuel_units = ([HPXML::EmissionsScenario::UnitsLbPerMBtu] * scenarios.size).join(',')
-
-        measures['ResStockArgumentsPostHPXML'][0]['emissions_scenario_names'] = args[:emissions_scenario_names]
-        measures['ResStockArgumentsPostHPXML'][0]['emissions_types'] = args[:emissions_types]
-        measures['ResStockArgumentsPostHPXML'][0]['emissions_electricity_units'] = emissions_electricity_units
-        measures['ResStockArgumentsPostHPXML'][0]['emissions_electricity_filepaths'] = emissions_electricity_filepaths
-        measures['ResStockArgumentsPostHPXML'][0]['emissions_fossil_fuel_units'] = emissions_fossil_fuel_units
-        measures['ResStockArgumentsPostHPXML'][0]['emissions_natural_gas_values'] = args[:emissions_natural_gas_values]
-        measures['ResStockArgumentsPostHPXML'][0]['emissions_propane_values'] = args[:emissions_propane_values]
-        measures['ResStockArgumentsPostHPXML'][0]['emissions_fuel_oil_values'] = args[:emissions_fuel_oil_values]
-        measures['ResStockArgumentsPostHPXML'][0]['emissions_wood_values'] = args[:emissions_wood_values]
-
-        register_value(runner, 'emissions_electricity_units', emissions_electricity_units)
-        register_value(runner, 'emissions_electricity_filepaths', emissions_electricity_filepaths)
-        register_value(runner, 'emissions_fossil_fuel_units', emissions_fossil_fuel_units)
-      end
+      emissions_result = EmissionScenarios.new(args, bldg_data, resources_dir, characteristics_dir).build
+      return false unless apply_scenario_result(emissions_result, runner, measures['ResStockArgumentsPostHPXML'][0])
     end
 
     # Utility Bills
     if not args[:utility_bill_scenario_names].nil?
-
-      sampling_region = false
-      if args[:utility_bill_scenario_names].include?('Sampling Region')
-        sampling_region = true
-        msn_codes = Constants::StateCodesMap.keys
-
-        utility_bill_scenario_names = args[:utility_bill_scenario_names].split(',').map(&:strip)
-        utility_bill_simple_filepaths = args[:utility_bill_simple_filepaths].split(',').map(&:strip)
-
-        ix = utility_bill_scenario_names.index('Sampling Region')
-
-        if File.basename(utility_bill_simple_filepaths[ix]) != 'State.tsv'
-          runner.registerError("Using 'Sampling Region' bill calculation approach, but specified filepath is not /path/to/State.tsv.")
-          return false
-        end
-
-        utility_bill_scenario_names.delete_at(ix)
-        utility_bill_simple_filepath = utility_bill_simple_filepaths[ix]
-        utility_bill_simple_filepaths.delete_at(ix)
-
-        statecodes = get_statecodes_for_sampling_region(runner, bldg_data, characteristics_dir)
-        args[:utility_bill_scenario_names] = (utility_bill_scenario_names + statecodes).join(',')
-        args[:utility_bill_simple_filepaths] = (utility_bill_simple_filepaths + [utility_bill_simple_filepath] * statecodes.size).join(',')
-      end
-
-      num_scenarios = args[:utility_bill_scenario_names].count(',') + 1
-      utility_bill = {
-        'electricity_filepaths' => [nil] * num_scenarios,
-        'electricity_fixed_charges' => args[:utility_bill_electricity_fixed_charges].split(',').map(&:strip),
-        'electricity_marginal_rates' => args[:utility_bill_electricity_marginal_rates].split(',').map(&:strip),
-        'natural_gas_fixed_charges' => args[:utility_bill_natural_gas_fixed_charges].split(',').map(&:strip),
-        'natural_gas_marginal_rates' => args[:utility_bill_natural_gas_marginal_rates].split(',').map(&:strip),
-        'propane_fixed_charges' => args[:utility_bill_propane_fixed_charges].split(',').map(&:strip),
-        'propane_marginal_rates' => args[:utility_bill_propane_marginal_rates].split(',').map(&:strip),
-        'fuel_oil_fixed_charges' => args[:utility_bill_fuel_oil_fixed_charges].split(',').map(&:strip),
-        'fuel_oil_marginal_rates' => args[:utility_bill_fuel_oil_marginal_rates].split(',').map(&:strip),
-        'wood_fixed_charges' => args[:utility_bill_wood_fixed_charges].split(',').map(&:strip),
-        'wood_marginal_rates' => args[:utility_bill_wood_marginal_rates].split(',').map(&:strip),
-        'pv_compensation_types' => args[:utility_bill_pv_compensation_types].split(',').map(&:strip),
-        'pv_net_metering_annual_excess_sellback_rate_types' => args[:utility_bill_pv_net_metering_annual_excess_sellback_rate_types].split(',').map(&:strip),
-        'pv_net_metering_annual_excess_sellback_rates' => args[:utility_bill_pv_net_metering_annual_excess_sellback_rates].split(',').map(&:strip),
-        'pv_feed_in_tariff_rates' => args[:utility_bill_pv_feed_in_tariff_rates].split(',').map(&:strip),
-        'pv_monthly_grid_connection_fee_units' => args[:utility_bill_pv_monthly_grid_connection_fee_units].split(',').map(&:strip),
-        'pv_monthly_grid_connection_fees' => args[:utility_bill_pv_monthly_grid_connection_fees].split(',').map(&:strip),
-      }
-      for i in 0..(num_scenarios - 1)
-        simple_filepath = args[:utility_bill_simple_filepaths].split(',').map(&:strip)[i] rescue nil
-        detailed_filepath = args[:utility_bill_detailed_filepaths].split(',').map(&:strip)[i] rescue nil
-
-        next unless (!simple_filepath.nil? && !simple_filepath.empty?) || (!detailed_filepath.nil? && !detailed_filepath.empty?)
-
-        if !simple_filepath.nil? && !simple_filepath.empty?
-          simple_filepath = File.join(resources_dir, simple_filepath)
-
-          orig_state_code = bldg_data['State']
-          if sampling_region
-            utility_bill_scenario_names = args[:utility_bill_scenario_names].split(',').map(&:strip)
-            scenario_name = utility_bill_scenario_names[i]
-            if msn_codes.include? scenario_name
-              bldg_data['State'] = scenario_name
-            end
-          end
-
-          utility_rate = get_utility_rate(runner, simple_filepath, bldg_data)
-          bldg_data['State'] = orig_state_code
-        elsif !detailed_filepath.nil? && !detailed_filepath.empty?
-          detailed_filepath = File.join(resources_dir, detailed_filepath)
-          utility_rate = get_utility_rate(runner, detailed_filepath, bldg_data)
-          utility_rate['elec_filepath'] = File.join(File.dirname(detailed_filepath), utility_rate['elec_filepath']) if !utility_rate['elec_filepath'].nil?
-        end
-
-        utility_bill['electricity_filepaths'][i] = utility_rate['elec_filepath']
-        utility_bill['electricity_fixed_charges'][i] = utility_rate['elec_fixed_charge']
-        utility_bill['electricity_marginal_rates'][i] = utility_rate['elec_marginal_rate']
-        utility_bill['natural_gas_fixed_charges'][i] = utility_rate['natural_gas_fixed_charge']
-        utility_bill['natural_gas_marginal_rates'][i] = utility_rate['natural_gas_marginal_rate']
-        utility_bill['propane_fixed_charges'][i] = utility_rate['propane_fixed_charge']
-        utility_bill['propane_marginal_rates'][i] = utility_rate['propane_marginal_rate']
-        utility_bill['fuel_oil_fixed_charges'][i] = utility_rate['fuel_oil_fixed_charge']
-        utility_bill['fuel_oil_marginal_rates'][i] = utility_rate['fuel_oil_marginal_rate']
-        utility_bill['wood_fixed_charges'][i] = utility_rate['wood_fixed_charge']
-        utility_bill['wood_marginal_rates'][i] = utility_rate['wood_marginal_rate']
-        utility_bill['pv_compensation_types'][i] = utility_rate['pv_compensation_type']
-        utility_bill['pv_net_metering_annual_excess_sellback_rate_types'][i] = utility_rate['pv_net_metering_annual_excess_sellback_rate_type']
-        utility_bill['pv_net_metering_annual_excess_sellback_rates'][i] = utility_rate['pv_net_metering_annual_excess_sellback_rate']
-        utility_bill['pv_feed_in_tariff_rates'][i] = utility_rate['pv_feed_in_tariff_rate']
-        utility_bill['pv_monthly_grid_connection_fee_units'][i] = utility_rate['pv_monthly_grid_connection_fee_units']
-        utility_bill['pv_monthly_grid_connection_fees'][i] = utility_rate['pv_monthly_grid_connection_fee']
-      end
-
-      measures['ResStockArgumentsPostHPXML'][0]['utility_bill_scenario_names'] = args[:utility_bill_scenario_names]
-      register_value(runner, 'utility_bill_scenario_names', args[:utility_bill_scenario_names])
-
-      utility_bill.each do |arg, value_array|
-        full_arg = "utility_bill_#{arg}"
-        value_str = value_array.join(',')
-        measures['ResStockArgumentsPostHPXML'][0][full_arg] = value_str
-        register_value(runner, full_arg, value_str)
-      end
+      utility_bill_result = UtilityBillScenarios.new(args, bldg_data, resources_dir, characteristics_dir).build
+      return false unless apply_scenario_result(utility_bill_result, runner, measures['ResStockArgumentsPostHPXML'][0])
     end
   end
 
@@ -673,56 +540,27 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     return [n / p + 1] * (n % p) + [n / p] * (p - n % p)
   end
 
-  def get_utility_rate(runner, filepath, bldg_data)
-    if !File.exist?(filepath)
-      runner.registerError("Utility bill scenario file '#{filepath}' does not exist.")
-      return {}
+  # Applies arguments to ResStockArgumentsPostHPXML, registers values for ApplyUpgrade, and forwards diagnostics.
+  # @param result [Hash] Scenario arguments, registered values, warnings, or error
+  # @param runner [OpenStudio::Measure::OSRunner] Runner for diagnostics and registered values
+  # @param measure_args [Hash] ResStockArgumentsPostHPXML arguments to update
+  # @return [Boolean] Whether the scenario result can be applied
+  def apply_scenario_result(result, runner, measure_args)
+    if !result[:error].nil?
+      runner.registerError(result[:error])
+      return false
     end
 
-    rows = CSV.read(filepath, headers: true, col_sep: "\t")
-    utility_rates = rows.map { |d| d.to_hash }
-    parameter = utility_rates[0].keys[0]
-
-    if !bldg_data.keys.include?(parameter)
-      runner.registerError("Utility bill scenario(s) were specified, but could not find #{parameter}.")
-      return {}
+    result[:warnings].each do |warning|
+      runner.registerWarning(warning)
     end
+    measure_args.merge!(result[:measure_arguments])
+    result[:registered_values].each do |name, value|
+      next if value.nil?
 
-    utility_rates = utility_rates.select { |r| r[parameter] == bldg_data[parameter] }
-
-    if utility_rates.size != 1
-      runner.registerWarning("Could not find #{parameter}=#{bldg_data[parameter]} in #{filepath}.")
-      utility_rate = Hash[rows.headers.map { |x| [x, nil] }]
-    else
-      utility_rate = utility_rates[0]
+      register_value(runner, name, value)
     end
-    return utility_rate
-  end
-
-  def get_statecodes_for_sampling_region(runner, bldg_data, characteristics_dir)
-    parameter = 'Sampling Region'
-    if !bldg_data.keys.include?(parameter)
-      runner.registerError("Utility bill scenario(s) were specified, but could not find #{parameter}.")
-      return []
-    end
-
-    sampling_region = bldg_data[parameter]
-    filepath = File.join(characteristics_dir, "#{parameter}.tsv")
-    rows = CSV.read(filepath, headers: true, col_sep: "\t")
-
-    option_col = "Option=#{sampling_region}"
-    statecodes = []
-    rows.each do |row|
-      next unless row[option_col].to_s.strip == '1'
-
-      # Format is typically "AK, Aleutians East Borough"
-      county_field = row['Dependency=County'].to_s
-      statecode = county_field.split(',', 2).first.to_s.strip
-
-      statecodes << statecode if statecode.match?(/\A[A-Z]{2}\z/)
-    end
-
-    return statecodes.uniq.sort
+    return true
   end
 end
 
