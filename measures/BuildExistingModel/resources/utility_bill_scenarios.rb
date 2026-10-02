@@ -134,7 +134,7 @@ class UtilityBillScenarios
   def split_argument(value)
     return [] if value.nil?
 
-    value.split(',').map(&:strip)
+    value.split(',', -1).map(&:strip)
   end
 
   # Returns whether a filepath was supplied.
@@ -157,14 +157,20 @@ class UtilityBillScenarios
       return { error: "Using 'Sampling Region' bill calculation approach, but specified filepath is not /path/to/State.tsv." }
     end
 
-    simple_filepath = simple_filepaths.delete_at(index)
-    scenario_names.delete_at(index)
     statecodes, error = get_statecodes_for_sampling_region
     return { error: error } unless error.nil?
 
     args = args.dup
+    BILL_FIELDS.each_value do |field|
+      argument = field[:argument]
+      next if argument.nil? || argument == scenario_names_argument || args[argument].nil?
+
+      values = split_argument(args[argument])
+      sampling_region_value = values.delete_at(index)
+      args[argument] = (values + [sampling_region_value] * statecodes.size).join(',')
+    end
+    scenario_names.delete_at(index)
     args[scenario_names_argument] = (scenario_names + statecodes).join(',')
-    args[simple_filepaths_argument] = (simple_filepaths + [simple_filepath] * statecodes.size).join(',')
     { args: args, error: nil }
   end
 

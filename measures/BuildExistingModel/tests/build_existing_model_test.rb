@@ -74,23 +74,24 @@ class BuildExistingModelTest < Minitest::Test
       create_utility_rate_file(File.join(rates_dir, 'Flat.tsv'), [['CA', 'Flat.csv', 'Flat fixed']])
 
       args = {
-        utility_bill_scenario_names: 'Sampling Region,Flat',
-        utility_bill_simple_filepaths: 'rates/State.tsv,rates/Flat.tsv',
+        utility_bill_scenario_names: 'Sampling Region,Flat,Inline',
+        utility_bill_simple_filepaths: 'rates/State.tsv,rates/Flat.tsv,',
         utility_bill_detailed_filepaths: ''
       }
       UtilityBillScenarios::BILL_FIELDS.each_value do |field|
-        args[field[:argument]] = '0,0' if field.key?(:rate_field) && !field[:argument].nil?
+        args[field[:argument]] = '0,0,0' if field.key?(:rate_field) && !field[:argument].nil?
       end
+      args[:utility_bill_electricity_fixed_charges] = '10,20,30'
 
       result = UtilityBillScenarios.new(args, { 'State' => 'CA', 'Sampling Region' => '1' }, resources_dir, characteristics_dir).build
 
       assert_nil result[:error]
       assert_empty result[:warnings]
-      assert_equal 'Flat,CA,HI,NV', result[:measure_arguments]['utility_bill_scenario_names']
+      assert_equal 'Flat,Inline,CA,HI,NV', result[:measure_arguments]['utility_bill_scenario_names']
       refute_includes result[:registered_values].keys, 'utility_bill_simple_filepaths'
       refute_includes result[:registered_values].keys, 'utility_bill_detailed_filepaths'
-      assert_equal 'Flat fixed,CA fixed,HI fixed,NV fixed', result[:measure_arguments]['utility_bill_electricity_fixed_charges']
-      assert_equal 'Flat.csv,CA.csv,HI.csv,NV.csv', result[:measure_arguments]['utility_bill_electricity_filepaths']
+      assert_equal 'Flat fixed,30,CA fixed,HI fixed,NV fixed', result[:measure_arguments]['utility_bill_electricity_fixed_charges']
+      assert_equal 'Flat.csv,,CA.csv,HI.csv,NV.csv', result[:measure_arguments]['utility_bill_electricity_filepaths']
 
       runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
       measure_arguments = {}
