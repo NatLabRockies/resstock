@@ -24,3 +24,4 @@
   - [ ] [options saturation](https://github.com/NREL/resstock/tree/develop/project_national/resources/options_saturations.csv)
   - [ ] [options_lookup](https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv)
 - [ ] `openstudio tasks.rb update_measures` has been run
+- [ ] If energy or other results changed materially, a reviewed [change doc](https://github.com/NREL/resstock/blob/develop/docs/change_docs) has been committed
