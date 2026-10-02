@@ -424,20 +424,18 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
     measures['ResStockArgumentsPostHPXML'][0]['simulation_control_run_period_calendar_year'] = values['simulation_control_run_period_calendar_year']
 
-    # Emissions
-    if values.keys.include?('emissions_electricity_filepaths')
+    # BuildExistingModel skips emissions if any schedule is unresolved; don't enable emissions only on the upgraded home.
+    if values.key?('emissions_electricity_filepaths')
       values.each do |arg, value|
-        next unless arg.start_with? 'emissions'
-        next if arg == 'emissions_electricity_folders'
+        next unless arg.start_with?('emissions_')
 
         measures['ResStockArgumentsPostHPXML'][0][arg] = value
       end
     end
 
-    # Utility Bills
+    # Utility rates can be useful without an electricity filepath, so forward these independently.
     values.each do |arg, value|
-      next unless arg.start_with? 'utility_bill'
-      next if ['utility_bill_simple_filepaths', 'utility_bill_detailed_filepaths'].include? arg
+      next unless arg.start_with?('utility_bill_')
 
       measures['ResStockArgumentsPostHPXML'][0][arg] = value
     end
