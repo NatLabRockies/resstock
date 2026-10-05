@@ -626,7 +626,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Fossil fuel emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MBtu and kg/MBtu are allowed.')
     args << arg
 
-    resstock_fuels(include_electricity: false).each do |fuel|
+    resstock_fuels(include_electricity: true).each do |fuel|
       arg = OpenStudio::Measure::OSArgument.makeStringArgument("emissions_#{OpenStudio::toUnderscoreCase(fuel)}_values", false)
       arg.setDisplayName("Emissions: #{fuel.split(' ').map(&:capitalize).join(' ')} Values")
       arg.setDescription("#{fuel.capitalize} emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.")
