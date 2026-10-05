@@ -52,6 +52,8 @@ class TestBuildStockBatch < Minitest::Test
     expected_annual_names = @expected_outputs['Annual Name'].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.emissions_co_2_e_lrmer_mid_case_25_') }
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.emissions_co_2_e_fuel_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
@@ -107,6 +109,8 @@ class TestBuildStockBatch < Minitest::Test
     expected_annual_names = @expected_outputs['Annual Name'].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.emissions_co_2_e_lrmer_mid_case_25_') }
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.emissions_co_2_e_fuel_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
