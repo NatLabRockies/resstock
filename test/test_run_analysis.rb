@@ -322,6 +322,120 @@ class TestRunAnalysis < Minitest::Test
     end
   end
 
+  def test_emissions_electricity_values_and_regions
+    require_relative '../measures/BuildExistingModel/measure'
+    require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/hpxml'
+
+    Dir.mktmpdir do |resources_dir|
+      folder = File.join(resources_dir, 'schedule')
+      FileUtils.mkdir_p(folder)
+      File.write(File.join(folder, 'MISO Central.csv'), '')
+      with_region = { 'Generation And Emissions Assessment Region' => 'MISO Central' }
+      region_error = 'could not find the Generation and Emissions Assessment (GEA) region'
+      value_error = 'Expected a finite number'
+      [
+        ['Fuel', nil, '0.0', {}, nil],
+        ['Constant', nil, '392.6', {}, nil],
+        ['Negative', nil, '-0.5', {}, nil],
+        ['Zero,Positive,Negative', nil, '0.0,392.6,-0.5', {}, nil],
+        ['Invalid', nil, 'not_a_number', with_region, value_error],
+        ['Invalid', nil, 'not_a_number', {}, value_error],
+        ['Invalid', nil, 'NaN', {}, value_error],
+        ['Invalid', nil, 'Infinity', {}, value_error],
+        ['Invalid', nil, '1e999', {}, value_error],
+        ['Schedule', 'schedule', nil, {}, region_error],
+        ['Constant,Schedule', ',schedule', '0.0,', {}, region_error],
+        ['Schedule,Invalid', 'schedule,', ',not_a_number', with_region, value_error]
+      ].each do |names, folders, values, building_data, expected_error|
+        args = {
+          emissions_scenario_names: names,
+          emissions_types: (['CO2e'] * names.split(',').size).join(','),
+          emissions_electricity_folders: folders,
+          emissions_electricity_values: values
+        }
+        runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+        measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
+        result = BuildExistingModel.new.set_header(runner, measures, args, false, building_data, resources_dir)
+        output = measures['ResStockArgumentsPostHPXML'][0]
+        if expected_error.nil?
+          refute_equal false, result
+          assert_empty runner.result.stepErrors
+          assert_empty runner.result.stepWarnings
+          assert_equal values, output['emissions_electricity_values']
+          assert_equal (['kg/MWh'] * names.split(',').size).join(','), output['emissions_electricity_units']
+          assert_equal ([''] * names.split(',').size).join(','), output['emissions_electricity_filepaths']
+        else
+          assert_equal false, result
+          assert_equal 1, runner.result.stepErrors.size
+          assert_includes runner.result.stepErrors[0], expected_error
+          assert_includes runner.result.stepErrors[0], "Emissions scenario 'Invalid'" if expected_error == value_error
+          refute output.key?('emissions_scenario_names')
+        end
+      end
+    end
+  end
+
+  def test_emissions_unresolved_schedules
+    require_relative '../measures/BuildExistingModel/measure'
+    require_relative '../measures/ApplyUpgrade/measure'
+    require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/hpxml'
+
+    Dir.mktmpdir do |resources_dir|
+      folder = File.join(resources_dir, 'schedule')
+      FileUtils.mkdir_p(folder)
+      FileUtils.mkdir_p(File.join(resources_dir, 'empty'))
+      File.write(File.join(folder, 'MISO Central.csv'), '')
+      names = ['Missing', 'Zero', 'Available', 'Positive', 'OtherMissing']
+      args = {
+        emissions_scenario_names: names.join(','),
+        emissions_types: 'CO2e,NOx,SO2,CO2e,NOx',
+        emissions_electricity_folders: 'empty,,schedule,,empty',
+        emissions_electricity_values: ',0.0,,392.6,',
+        emissions_natural_gas_values: '1,2,3,4,5',
+        emissions_propane_values: '10,20,30,40,50',
+        emissions_fuel_oil_values: '100,200,300,400,500',
+        emissions_wood_values: '1000,2000,3000,4000,5000'
+      }
+      [['None', [1, 3]], ['MISO Central', [1, 2, 3]]].each do |region, retained_indices|
+        runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+        measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
+        result = BuildExistingModel.new.set_header(runner, measures, args, false,
+                                                   { 'Generation And Emissions Assessment Region' => region }, resources_dir)
+        refute_equal false, result
+        assert_empty runner.result.stepErrors
+        skipped_indices = (0...names.size).to_a - retained_indices
+        expected_warnings = skipped_indices.map { |index| "Not calculating emissions for scenario '#{names[index]}' because an electricity filepath could not be located." }
+        assert_equal expected_warnings, runner.result.stepWarnings.to_a
+        output = measures['ResStockArgumentsPostHPXML'][0]
+        args.each do |argument, value|
+          next if argument == :emissions_electricity_folders
+
+          expected = retained_indices.map { |index| value.split(',', -1)[index] }.join(',')
+          assert_equal expected, output[argument.to_s]
+          assert_equal expected, get_value_from_runner(runner, argument.to_s)
+        end
+        expected_filepaths = retained_indices.map { |index| index == 2 ? File.join(folder, 'MISO Central.csv') : nil }.join(',')
+        assert_equal expected_filepaths, output['emissions_electricity_filepaths']
+        assert_equal (['kg/MWh'] * retained_indices.size).join(','), output['emissions_electricity_units']
+        values = args.transform_keys(&:to_s).merge(runner.result.stepValues.to_h { |step_value| [step_value.name, get_value_from_workflow_step_value(step_value)] })
+        upgrade_measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
+        ApplyUpgrade.new.set_header(upgrade_measures, HPXML.new, values)
+        output.each do |argument, value|
+          assert_equal value, upgrade_measures['ResStockArgumentsPostHPXML'][0][argument] unless value.nil?
+        end
+      end
+
+      runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+      measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
+      args = { emissions_scenario_names: 'Missing', emissions_types: 'CO2e', emissions_electricity_folders: 'empty' }
+      refute_equal false, BuildExistingModel.new.set_header(runner, measures, args, false,
+                                                            { 'Generation And Emissions Assessment Region' => 'None' }, resources_dir)
+      assert_equal 1, runner.result.stepWarnings.size
+      refute measures['ResStockArgumentsPostHPXML'][0].key?('emissions_scenario_names')
+      assert_nil get_value_from_runner(runner, 'emissions_electricity_filepaths', false)
+    end
+  end
+
   def test_testing_baseline
     yml = ' -y project_testing/testing_baseline.yml'
     @command += yml
@@ -445,7 +559,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, 'Could not find state average fuel oil rate based on')
       next if _expected_warning_message(message, "Specified incompatible corridor; setting corridor position to 'Single Exterior Front'.")
       next if _expected_warning_message(message, 'DistanceToTopOfWindow is greater than 12 feet; this may indicate incorrect units. [context: /HPXML/Building/BuildingDetails/Enclosure/Windows/Window/Overhangs[number(Depth) > 0]')
-      next if _expected_warning_message(message, 'Not calculating emissions because an electricity filepath for at least one emissions scenario could not be located.') # these are AK/HI samples
+      next if _expected_warning_message(message, 'Not calculating emissions for scenario') && message.include?('because an electricity filepath could not be located.') # these are AK/HI samples
       next if _expected_warning_message(message, 'Could not find State=AK') # these are AK samples
       next if _expected_warning_message(message, 'No EPW design conditions found; calculating design conditions from EPW weather data.')
       next if _expected_warning_message(message, 'The garage pitch was changed to accommodate garage ridge >= house ridge')
