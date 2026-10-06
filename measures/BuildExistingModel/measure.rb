@@ -490,11 +490,6 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     # Emissions
     if not args[:emissions_scenario_names].nil?
-      if !bldg_data.keys.include?('Generation And Emissions Assessment Region')
-        runner.registerError('Emissions scenario(s) were specified, but could not find the Generation and Emissions Assessment (GEA) region.')
-        return false
-      end
-
       scenarios = args[:emissions_scenario_names].split(',')
       emissions_electricity_folders = args[:emissions_electricity_folders].to_s.split(',', -1)
       emissions_electricity_values = args[:emissions_electricity_values].to_s.split(',', -1)
@@ -506,7 +501,23 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
           runner.registerError("Emissions scenario '#{scenarios[index].strip}' must specify exactly one of emissions_electricity_folders or emissions_electricity_values.")
           return false
         end
-        next if has_value
+        if has_value
+          begin
+            electricity_value = Float(emissions_electricity_values[index])
+          rescue ArgumentError, TypeError
+            electricity_value = nil
+          end
+          if electricity_value.nil? || !electricity_value.finite?
+            runner.registerError("Emissions scenario '#{scenarios[index].strip}' has invalid emissions_electricity_values: '#{emissions_electricity_values[index]}'. Expected a finite number.")
+            return false
+          end
+          next
+        end
+
+        if !bldg_data.keys.include?('Generation And Emissions Assessment Region')
+          runner.registerError('Emissions scenario(s) were specified, but could not find the Generation and Emissions Assessment (GEA) region.')
+          return false
+        end
 
         scenario = File.join(resources_dir, emissions_electricity_folders[index].to_s.strip)
         if !File.exist?(scenario)
@@ -519,12 +530,28 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         end
       end
 
-      if scenarios.each_index.any? { |index| emissions_electricity_values[index].to_s.strip.empty? && emissions_electricity_filepaths[index].nil? }
-        runner.registerWarning('Not calculating emissions because an electricity filepath for at least one emissions scenario could not be located.')
-      else
-        emissions_electricity_filepaths = emissions_electricity_filepaths.join(',')
-        emissions_electricity_units = ([HPXML::EmissionsScenario::UnitsKgPerMWh] * scenarios.size).join(',')
-        emissions_fossil_fuel_units = ([HPXML::EmissionsScenario::UnitsLbPerMBtu] * scenarios.size).join(',')
+      retained_indices = scenarios.each_index.select do |index|
+        if emissions_electricity_values[index].to_s.strip.empty? && emissions_electricity_filepaths[index].nil?
+          runner.registerWarning("Not calculating emissions for scenario '#{scenarios[index].strip}' because an electricity filepath could not be located.")
+          false
+        else
+          true
+        end
+      end
+
+      if !retained_indices.empty?
+        args = args.dup
+        [:emissions_scenario_names, :emissions_types, :emissions_electricity_values,
+         :emissions_natural_gas_values, :emissions_propane_values,
+         :emissions_fuel_oil_values, :emissions_wood_values].each do |argument|
+          next if args[argument].nil?
+
+          values = args[argument].split(',', -1)
+          args[argument] = retained_indices.map { |index| values[index] }.join(',')
+        end
+        emissions_electricity_filepaths = retained_indices.map { |index| emissions_electricity_filepaths[index] }.join(',')
+        emissions_electricity_units = ([HPXML::EmissionsScenario::UnitsKgPerMWh] * retained_indices.size).join(',')
+        emissions_fossil_fuel_units = ([HPXML::EmissionsScenario::UnitsLbPerMBtu] * retained_indices.size).join(',')
 
         measures['ResStockArgumentsPostHPXML'][0]['emissions_scenario_names'] = args[:emissions_scenario_names]
         measures['ResStockArgumentsPostHPXML'][0]['emissions_types'] = args[:emissions_types]
@@ -537,9 +564,12 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         measures['ResStockArgumentsPostHPXML'][0]['emissions_fuel_oil_values'] = args[:emissions_fuel_oil_values]
         measures['ResStockArgumentsPostHPXML'][0]['emissions_wood_values'] = args[:emissions_wood_values]
 
-        register_value(runner, 'emissions_electricity_units', emissions_electricity_units)
-        register_value(runner, 'emissions_electricity_filepaths', emissions_electricity_filepaths)
-        register_value(runner, 'emissions_fossil_fuel_units', emissions_fossil_fuel_units)
+        measures['ResStockArgumentsPostHPXML'][0].each do |argument, value|
+          next unless argument.start_with?('emissions_')
+          next if value.nil?
+
+          register_value(runner, argument, value)
+        end
       end
     end
 
