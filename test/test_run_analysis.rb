@@ -23,57 +23,6 @@ class TestRunAnalysis < Minitest::Test
     FileUtils.rm_rf(@national_baseline)
   end
 
-  def test_emissions_electricity_sources
-    require_relative '../measures/BuildExistingModel/measure'
-    require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/hpxml'
-
-    Dir.mktmpdir do |resources_dir|
-      folder = File.join(resources_dir, 'schedule')
-      FileUtils.mkdir_p(folder)
-      File.write(File.join(folder, 'MISO Central.csv'), '')
-      [
-        ['Invalid', nil, nil, false],
-        ['Invalid', ' ', '', false],
-        ['Invalid', 'schedule', '0.0', false],
-        ['Invalid', 'schedule', '392.6', false],
-        ['Schedule,Invalid', 'schedule,schedule', ',0.0', false],
-        ['Fuel', nil, '0.0', true],
-        ['Constant', nil, '392.6', true],
-        ['Schedule', 'schedule', nil, true],
-        ['Fuel,Schedule,Constant', ',schedule,', '0.0,,392.6', true]
-      ].each do |names, folders, values, valid|
-        args = {
-          emissions_scenario_names: names,
-          emissions_types: (['CO2e'] * names.split(',').size).join(','),
-          emissions_electricity_folders: folders,
-          emissions_electricity_values: values
-        }
-        runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
-        measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
-        result = BuildExistingModel.new.set_header(runner, measures, args, false,
-                                                   { 'Generation And Emissions Assessment Region' => 'MISO Central' }, resources_dir)
-        output = measures['ResStockArgumentsPostHPXML'][0]
-        if valid
-          refute_equal false, result
-          assert_empty runner.result.stepErrors
-          assert_empty runner.result.stepWarnings
-          assert_equal names, output['emissions_scenario_names']
-          assert_equal (['kg/MWh'] * names.split(',').size).join(','), output['emissions_electricity_units']
-          if values.nil?
-            assert_nil output['emissions_electricity_values']
-          else
-            assert_equal values, output['emissions_electricity_values']
-          end
-        else
-          assert_equal false, result
-          assert_equal 1, runner.result.stepErrors.size
-          assert_includes runner.result.stepErrors[0], "Emissions scenario 'Invalid' must specify exactly one"
-          refute output.key?('emissions_scenario_names')
-        end
-      end
-    end
-  end
-
   def test_version
     @command += ' -v'
 
@@ -320,6 +269,57 @@ class TestRunAnalysis < Minitest::Test
     assert(results.headers.include?('build_existing_model.sample_weight'))
     assert_in_delta(results['build_existing_model.sample_weight'][0].to_f, 226.2342, 0.001)
     assert_in_delta(results['build_existing_model.sample_weight'][1].to_f, 1.000009, 0.001)
+  end
+
+  def test_emissions_electricity_sources
+    require_relative '../measures/BuildExistingModel/measure'
+    require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/hpxml'
+
+    Dir.mktmpdir do |resources_dir|
+      folder = File.join(resources_dir, 'schedule')
+      FileUtils.mkdir_p(folder)
+      File.write(File.join(folder, 'MISO Central.csv'), '')
+      [
+        ['Invalid', nil, nil, false],
+        ['Invalid', ' ', '', false],
+        ['Invalid', 'schedule', '0.0', false],
+        ['Invalid', 'schedule', '392.6', false],
+        ['Schedule,Invalid', 'schedule,schedule', ',0.0', false],
+        ['Fuel', nil, '0.0', true],
+        ['Constant', nil, '392.6', true],
+        ['Schedule', 'schedule', nil, true],
+        ['Fuel,Schedule,Constant', ',schedule,', '0.0,,392.6', true]
+      ].each do |names, folders, values, valid|
+        args = {
+          emissions_scenario_names: names,
+          emissions_types: (['CO2e'] * names.split(',').size).join(','),
+          emissions_electricity_folders: folders,
+          emissions_electricity_values: values
+        }
+        runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+        measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
+        result = BuildExistingModel.new.set_header(runner, measures, args, false,
+                                                   { 'Generation And Emissions Assessment Region' => 'MISO Central' }, resources_dir)
+        output = measures['ResStockArgumentsPostHPXML'][0]
+        if valid
+          refute_equal false, result
+          assert_empty runner.result.stepErrors
+          assert_empty runner.result.stepWarnings
+          assert_equal names, output['emissions_scenario_names']
+          assert_equal (['kg/MWh'] * names.split(',').size).join(','), output['emissions_electricity_units']
+          if values.nil?
+            assert_nil output['emissions_electricity_values']
+          else
+            assert_equal values, output['emissions_electricity_values']
+          end
+        else
+          assert_equal false, result
+          assert_equal 1, runner.result.stepErrors.size
+          assert_includes runner.result.stepErrors[0], "Emissions scenario 'Invalid' must specify exactly one"
+          refute output.key?('emissions_scenario_names')
+        end
+      end
+    end
   end
 
   def test_testing_baseline
