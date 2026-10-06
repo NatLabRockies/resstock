@@ -7,6 +7,22 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: workflow, emissions, feature
+        :pullreq: 1574
+
+        **Date**: 2026-10-06
+
+        Title:
+        Support constant electricity emissions factors
+
+        Description:
+        Add support for constant electricity emissions factors through the ``elec_value`` emissions scenario field.
+        Values are specified in kg/MWh, including zero, and each scenario must specify exactly one of ``elec_folder``
+        or ``elec_value``. Update the residential workflow generator to version ``2026.10.05``.
+
+        Assignees: Joe Robertson
+
+    .. change::
         :tags: postprocessing, technical reference guide
         :pullreq: 1561
 
