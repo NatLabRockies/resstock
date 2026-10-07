@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>9be63119-7e86-403a-b6c6-d0ddea6f168d</version_id>
-  <version_modified>2026-01-05T22:45:19Z</version_modified>
+  <version_id>662c5a03-c2f8-4cc0-ac2b-2a01b2d6eccd</version_id>
+  <version_modified>2026-10-05T20:45:16Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -12397,6 +12397,15 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>emissions_electricity_values</name>
+      <display_name>Emissions: Electricity Values</display_name>
+      <description>Electricity emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>emissions_natural_gas_values</name>
       <display_name>Emissions: Natural Gas Values</display_name>
       <description>Natural gas emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
@@ -12625,7 +12634,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>AC471247</checksum>
+      <checksum>B70A4AA4</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

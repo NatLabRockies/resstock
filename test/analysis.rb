@@ -57,6 +57,8 @@ def expected_timeseries_columns(testing)
   ]
   contents += [
     'Energy Use: Net',
+    'Emissions: CO2e: LRMER_MidCase_25: Total',
+    'Emissions: CO2e: Fuel: Total'
   ] if testing
   return contents
 end

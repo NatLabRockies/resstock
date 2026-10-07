@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_existing_model</name>
   <uid>dedf59bb-3b88-4f16-8755-2c1ff5519cbf</uid>
-  <version_id>e89a57eb-db14-4c56-b2f9-5c453336eca5</version_id>
-  <version_modified>2026-01-05T22:45:14Z</version_modified>
+  <version_id>fbe389f1-f895-46c9-a813-1073650c4cd4</version_id>
+  <version_modified>2026-10-06T16:25:23Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildExistingModel</class_name>
   <display_name>Build Existing Model</display_name>
@@ -134,6 +134,14 @@
       <name>emissions_electricity_folders</name>
       <display_name>Emissions: Electricity Folders</display_name>
       <description>Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. File names must contain GEA region names.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_electricity_values</name>
+      <display_name>Emissions: Electricity Values</display_name>
+      <description>Electricity emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
       <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -340,7 +348,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>DA3A75A2</checksum>
+      <checksum>C8477B92</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -357,7 +365,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>2A37E546</checksum>
+      <checksum>D1BCA3AA</checksum>
     </file>
   </files>
 </measure>
