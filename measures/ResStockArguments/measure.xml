@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>7a5aa58a-4632-4620-9eb7-7ae06b300bd0</version_id>
-  <version_modified>2026-01-05T22:45:17Z</version_modified>
+  <version_id>657fcc42-2231-4221-9f59-cada4c5db45c</version_id>
+  <version_modified>2026-10-05T20:45:14Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -12225,6 +12225,14 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>emissions_electricity_values</name>
+      <display_name>Emissions: Electricity Values</display_name>
+      <description>Electricity emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>emissions_natural_gas_values</name>
       <display_name>Emissions: Natural Gas Values</display_name>
       <description>Natural gas emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
@@ -12418,7 +12426,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>7D9F548E</checksum>
+      <checksum>8A78CF4A</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12435,7 +12443,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>7F60B6F8</checksum>
+      <checksum>F9AC9DFB</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

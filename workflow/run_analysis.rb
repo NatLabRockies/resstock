@@ -134,6 +134,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     bld_exist_model_args['emissions_scenario_names'] = emissions.collect { |s| s['scenario_name'] }.join(',')
     bld_exist_model_args['emissions_types'] = emissions.collect { |s| s['type'] }.join(',')
     bld_exist_model_args['emissions_electricity_folders'] = emissions.collect { |s| s['elec_folder'] }.join(',')
+    bld_exist_model_args['emissions_electricity_values'] = emissions.collect { |s| s['elec_value'] }.join(',')
     bld_exist_model_args['emissions_natural_gas_values'] = emissions.collect { |s| s['gas_value'] }.join(',')
     bld_exist_model_args['emissions_propane_values'] = emissions.collect { |s| s['propane_value'] }.join(',')
     bld_exist_model_args['emissions_fuel_oil_values'] = emissions.collect { |s| s['oil_value'] }.join(',')

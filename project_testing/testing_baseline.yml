@@ -54,7 +54,7 @@ sampler:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.12.03
+  version: 2026.10.05
   args:
     # Annual simulation and timestep
     build_existing_model:
@@ -74,6 +74,19 @@ workflow_generator:
         gas_value: 147.3
         propane_value: 177.8
         oil_value: 195.9
+        wood_value: 200.0
+
+      - scenario_name: LRMER_MidCase_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+        wood_value: 0.0
+
+      - scenario_name: Fuel
+        type: CO2e
+        elec_value: 0.0
         wood_value: 200.0
 
     # Utility bill rates
