@@ -52,6 +52,8 @@ class TestBuildStockBatch < Minitest::Test
     expected_annual_names = @expected_outputs['Annual Name'].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.emissions_co_2_e_lrmer_mid_case_25_') }
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.emissions_co_2_e_fuel_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
@@ -107,6 +109,8 @@ class TestBuildStockBatch < Minitest::Test
     expected_annual_names = @expected_outputs['Annual Name'].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.emissions_co_2_e_lrmer_mid_case_25_') }
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.emissions_co_2_e_fuel_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
@@ -198,6 +202,8 @@ class TestBuildStockBatch < Minitest::Test
     expected_timeseries_names = @expected_outputs[ts_col].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join('baseline', 'timeseries', 'results_output.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.start_with?('Emissions: CO2e: LRMER_MidCase_25:') }
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.start_with?('Emissions: CO2e: Fuel:') }
     actual_timeseries_names = actual_outputs.headers
 
     extra_timeseries_outputs = actual_timeseries_names - expected_timeseries_names
@@ -252,6 +258,8 @@ class TestBuildStockBatch < Minitest::Test
     expected_timeseries_names = @expected_outputs[ts_col].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join('baseline', 'timeseries', 'buildstockbatch.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.start_with?('emissions__co2e__lrmer_midcase_25__') }
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.start_with?('emissions__co2e__fuel__') }
     actual_timeseries_names = actual_outputs.headers
 
     extra_timeseries_outputs = actual_timeseries_names - expected_timeseries_names

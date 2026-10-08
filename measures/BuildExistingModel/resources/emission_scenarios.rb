@@ -9,6 +9,7 @@ class EmissionScenarios
     'scenario_names' => { argument: :emissions_scenario_names },
     'types' => { argument: :emissions_types },
     'electricity_folders' => { argument: :emissions_electricity_folders, include_in_outputs: false },
+    'electricity_values' => { argument: :emissions_electricity_values },
     'natural_gas_values' => { argument: :emissions_natural_gas_values },
     'propane_values' => { argument: :emissions_propane_values },
     'fuel_oil_values' => { argument: :emissions_fuel_oil_values },
@@ -33,8 +34,6 @@ class EmissionScenarios
   # Expands Sampling Region scenarios and prepares measure and runner values.
   # @return [Hash] Measure arguments, registered values, warnings, or an error
   def build
-    return result(error: 'Emissions scenario(s) were specified, but could not find the Generation and Emissions Assessment (GEA) region.') unless @bldg_data.key?('Generation And Emissions Assessment Region')
-
     args = @args.dup
     scenario_names_argument = EMISSIONS_FIELDS['scenario_names'][:argument]
     scenario_names = args[scenario_names_argument].split(',', -1).map(&:strip)
@@ -46,26 +45,71 @@ class EmissionScenarios
       args, scenario_gea_regions = expand_scenarios(args, gea_regions)
     end
 
-    scenarios = args[:emissions_electricity_folders].split(',')
-    electricity_filepaths = []
-    scenarios.each_with_index do |scenario, i|
-      scenario_path = File.join(@resources_dir, scenario)
-      return result(error: "Emissions scenario electricity folder '#{scenario_path}' does not exist.") unless File.exist?(scenario_path)
-
-      gea_region = scenario_gea_regions[i] || @bldg_data['Generation And Emissions Assessment Region']
-      Dir[File.join(scenario_path, '*.csv')].each do |filepath|
-        electricity_filepaths << filepath if File.basename(filepath, '.csv') == gea_region
-      end
-    end
-
+    scenarios = args[scenario_names_argument].split(',', -1).map(&:strip)
     if scenarios.empty?
       return result(warnings: ['Not calculating emissions because no emissions scenarios remain after Sampling Region expansion.'])
     end
-    if electricity_filepaths.size != scenarios.size
-      return result(warnings: ['Not calculating emissions because an electricity filepath for at least one emissions scenario could not be located.'])
+
+    electricity_folders = args[:emissions_electricity_folders].to_s.split(',', -1)
+    electricity_values = args[:emissions_electricity_values].to_s.split(',', -1)
+    electricity_filepaths = Array.new(scenarios.size)
+    scenarios.each_index do |index|
+      has_folder = !electricity_folders[index].to_s.strip.empty?
+      has_value = !electricity_values[index].to_s.strip.empty?
+      if has_folder == has_value
+        return result(error: "Emissions scenario '#{scenarios[index]}' must specify exactly one of emissions_electricity_folders or emissions_electricity_values.")
+      end
+
+      if has_value
+        begin
+          electricity_value = Float(electricity_values[index])
+        rescue ArgumentError, TypeError
+          electricity_value = nil
+        end
+        if electricity_value.nil? || !electricity_value.finite?
+          return result(error: "Emissions scenario '#{scenarios[index]}' has invalid emissions_electricity_values: '#{electricity_values[index]}'. Expected a finite number.")
+        end
+
+        next
+      end
+
+      gea_region = scenario_gea_regions[index] || @bldg_data['Generation And Emissions Assessment Region']
+      if gea_region.nil?
+        return result(error: 'Emissions scenario(s) were specified, but could not find the Generation and Emissions Assessment (GEA) region.')
+      end
+
+      scenario_path = File.join(@resources_dir, electricity_folders[index].to_s.strip)
+      if !File.exist?(scenario_path)
+        return result(error: "Emissions scenario electricity folder '#{scenario_path}' does not exist.")
+      end
+
+      Dir[File.join(scenario_path, '*.csv')].each do |filepath|
+        electricity_filepaths[index] = filepath if File.basename(filepath, '.csv') == gea_region
+      end
     end
 
-    electricity_filepaths = electricity_filepaths.join(',')
+    warnings = []
+    retained_indices = scenarios.each_index.select do |index|
+      if electricity_values[index].to_s.strip.empty? && electricity_filepaths[index].nil?
+        warnings << "Not calculating emissions for scenario '#{scenarios[index]}' because an electricity filepath could not be located."
+        false
+      else
+        true
+      end
+    end
+    if retained_indices.empty?
+      return result(warnings: warnings)
+    end
+
+    EMISSIONS_FIELDS.each_value do |field|
+      argument = field[:argument]
+      next if argument.nil? || args[argument].nil?
+
+      values = args[argument].split(',', -1)
+      args[argument] = retained_indices.map { |index| values[index] }.join(',')
+    end
+
+    electricity_filepaths = retained_indices.map { |index| electricity_filepaths[index] }.join(',')
     output_values = {}
     EMISSIONS_FIELDS.each do |field_name, field|
       argument_name = "emissions_#{field_name}"
@@ -74,18 +118,18 @@ class EmissionScenarios
       if field[:derived]
         case field_name
         when 'electricity_units'
-          value = ([::HPXML::EmissionsScenario::UnitsKgPerMWh] * scenarios.size).join(',')
+          value = ([::HPXML::EmissionsScenario::UnitsKgPerMWh] * retained_indices.size).join(',')
         when 'electricity_filepaths'
           value = electricity_filepaths
         when 'fossil_fuel_units'
-          value = ([::HPXML::EmissionsScenario::UnitsLbPerMBtu] * scenarios.size).join(',')
+          value = ([::HPXML::EmissionsScenario::UnitsLbPerMBtu] * retained_indices.size).join(',')
         end
       else
         value = args[field[:argument]]
       end
       output_values[argument_name] = value
     end
-    result(measure_arguments: output_values, registered_values: output_values.dup)
+    result(measure_arguments: output_values, registered_values: output_values.dup, warnings: warnings)
   end
 
   private

@@ -58,6 +58,38 @@ class BuildExistingModelTest < Minitest::Test
     end
   end
 
+  def test_emissions_sampling_region_electricity_values
+    Dir.mktmpdir do |root|
+      resources_dir = File.join(root, 'resources')
+      characteristics_dir = File.join(root, 'housing_characteristics')
+      create_emissions_resources(resources_dir)
+      create_sampling_region_characteristics(characteristics_dir)
+      create_gea_region_characteristics(characteristics_dir)
+      FileUtils.rm(File.join(resources_dir, 'data', 'lrmer', 'MISO South.csv'))
+
+      args = {
+        emissions_scenario_names: 'Fixed - Sampling Region,Schedule - Sampling Region,Zero',
+        emissions_types: 'CO2e,NOx,CO2e',
+        emissions_electricity_folders: ',data/lrmer,',
+        emissions_electricity_values: '392.6,,0.0',
+        emissions_natural_gas_values: '1,2,3'
+      }
+      result = EmissionScenarios.new(args, { 'Sampling Region' => '1' }, resources_dir, characteristics_dir).build
+
+      assert_nil result[:error]
+      assert_equal ["Not calculating emissions for scenario 'Schedule - MISO South' because an electricity filepath could not be located."], result[:warnings]
+      output = result[:measure_arguments]
+      assert_equal 'Fixed - MISO Central,Fixed - MISO South,Schedule - MISO Central,Zero', output['emissions_scenario_names']
+      assert_equal 'CO2e,CO2e,NOx,CO2e', output['emissions_types']
+      assert_equal '392.6,392.6,,0.0', output['emissions_electricity_values']
+      assert_equal '1,1,2,3', output['emissions_natural_gas_values']
+      assert_equal 'kg/MWh,kg/MWh,kg/MWh,kg/MWh', output['emissions_electricity_units']
+      assert_equal ['', '', File.join(resources_dir, 'data', 'lrmer', 'MISO Central.csv'), ''], output['emissions_electricity_filepaths'].split(',', -1)
+      assert_equal output, result[:registered_values]
+      assert_equal '392.6,,0.0', args[:emissions_electricity_values]
+    end
+  end
+
   # Verifies state expansion, state-specific rate lookup, and registration of resolved values only.
   def test_utility_bill_sampling_region
     Dir.mktmpdir do |root|

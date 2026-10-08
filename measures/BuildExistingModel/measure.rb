@@ -110,6 +110,11 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. File names must contain GEA region names.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('emissions_electricity_values', false)
+    arg.setDisplayName('Emissions: Electricity Values')
+    arg.setDescription('Electricity emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('emissions_natural_gas_values', false)
     arg.setDisplayName('Emissions: Natural Gas Values')
     arg.setDescription('Natural gas emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.')
@@ -363,7 +368,10 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     hpxml_path = File.expand_path('../existing.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
 
-    set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir, characteristics_dir)
+    if not set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir, characteristics_dir)
+      return false
+    end
+
     set_building_header(measures)
     set_battery(measures, whole_sfa_or_mf_building_sim, num_units_modeled)
 
@@ -485,7 +493,9 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     # Emissions
     if not args[:emissions_scenario_names].nil?
       emissions_result = EmissionScenarios.new(args, bldg_data, resources_dir, characteristics_dir).build
-      return false unless apply_scenario_result(emissions_result, runner, measures['ResStockArgumentsPostHPXML'][0])
+      if not apply_scenario_result(emissions_result, runner, measures['ResStockArgumentsPostHPXML'][0])
+        return false
+      end
     end
 
     # Utility Bills
@@ -493,6 +503,8 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       utility_bill_result = UtilityBillScenarios.new(args, bldg_data, resources_dir, characteristics_dir).build
       return false unless apply_scenario_result(utility_bill_result, runner, measures['ResStockArgumentsPostHPXML'][0])
     end
+
+    return true
   end
 
   def set_resstock_arguments(measures, child_runner)
