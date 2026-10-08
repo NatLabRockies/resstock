@@ -299,10 +299,10 @@ class TestRunAnalysis < Minitest::Test
         runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
         measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
         result = BuildExistingModel.new.set_header(runner, measures, args, false,
-                                                   { 'Generation And Emissions Assessment Region' => 'MISO Central' }, resources_dir)
+                                                   { 'Generation And Emissions Assessment Region' => 'MISO Central' }, resources_dir, nil)
         output = measures['ResStockArgumentsPostHPXML'][0]
         if valid
-          refute_equal false, result
+          assert_equal true, result
           assert_empty runner.result.stepErrors
           assert_empty runner.result.stepWarnings
           assert_equal names, output['emissions_scenario_names']
@@ -355,10 +355,10 @@ class TestRunAnalysis < Minitest::Test
         }
         runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
         measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
-        result = BuildExistingModel.new.set_header(runner, measures, args, false, building_data, resources_dir)
+        result = BuildExistingModel.new.set_header(runner, measures, args, false, building_data, resources_dir, nil)
         output = measures['ResStockArgumentsPostHPXML'][0]
         if expected_error.nil?
-          refute_equal false, result
+          assert_equal true, result
           assert_empty runner.result.stepErrors
           assert_empty runner.result.stepWarnings
           assert_equal values, output['emissions_electricity_values']
@@ -400,8 +400,8 @@ class TestRunAnalysis < Minitest::Test
         runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
         measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
         result = BuildExistingModel.new.set_header(runner, measures, args, false,
-                                                   { 'Generation And Emissions Assessment Region' => region }, resources_dir)
-        refute_equal false, result
+                                                   { 'Generation And Emissions Assessment Region' => region }, resources_dir, nil)
+        assert_equal true, result
         assert_empty runner.result.stepErrors
         skipped_indices = (0...names.size).to_a - retained_indices
         expected_warnings = skipped_indices.map { |index| "Not calculating emissions for scenario '#{names[index]}' because an electricity filepath could not be located." }
@@ -428,8 +428,8 @@ class TestRunAnalysis < Minitest::Test
       runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
       measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
       args = { emissions_scenario_names: 'Missing', emissions_types: 'CO2e', emissions_electricity_folders: 'empty' }
-      refute_equal false, BuildExistingModel.new.set_header(runner, measures, args, false,
-                                                            { 'Generation And Emissions Assessment Region' => 'None' }, resources_dir)
+      assert_equal true, BuildExistingModel.new.set_header(runner, measures, args, false,
+                                                           { 'Generation And Emissions Assessment Region' => 'None' }, resources_dir, nil)
       assert_equal 1, runner.result.stepWarnings.size
       refute measures['ResStockArgumentsPostHPXML'][0].key?('emissions_scenario_names')
       assert_nil get_value_from_runner(runner, 'emissions_electricity_filepaths', false)

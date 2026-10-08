@@ -675,6 +675,8 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         register_value(runner, full_arg, value_str)
       end
     end
+
+    return true
   end
 
   def set_resstock_arguments(measures, child_runner)
