@@ -464,5 +464,13 @@ def _lrd_templates() -> Iterator[PlotTemplate]:
 
 
 def generate_all_templates() -> list[PlotTemplate]:
-    """Return the complete ordered list of plot templates."""
-    return list(chain(_eia_templates(), _recs_templates(), _lrd_templates()))
+    """Return the ordered list of plot templates for the workflow's comparison datasets."""
+    from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
+
+    wanted = set(workflow.comparison_datasets)
+    generators = {
+        ComparisonDataset.eia: _eia_templates,
+        ComparisonDataset.recs: _recs_templates,
+        ComparisonDataset.lrd: _lrd_templates,
+    }
+    return list(chain.from_iterable(gen() for ds, gen in generators.items() if ds in wanted))

@@ -14,6 +14,10 @@ class NoExtraModel(BaseModel):
 class DBSchema(StrEnum):
     OEDI_NEW = "resstock_oedi_new"
     OEDI = "resstock_oedi_vu"
+    # metadata_and_annual_results_aggregates + timeseries_individual_buildings, as
+    # registered by telescope's athena_tables step. Same column naming as OEDI_NEW
+    # apart from the renamed geography columns; see resstock_oedi_agg.toml.
+    OEDI_AGG = "resstock_oedi_agg"
 
 
 class DataCol(StrEnum):
@@ -288,6 +292,26 @@ _RESSTOCK_CHAR_COL_MAP: dict[DBSchema, DBCharCol] = {
         TIMESTAMP="timestamp",
     ),
 }
+
+
+# The aggregates publication carries the same out.* column names as OEDI_NEW.
+_RESSTOCK_ENDUSE_COL_MAP[DBSchema.OEDI_AGG] = _RESSTOCK_ENDUSE_COL_MAP[DBSchema.OEDI_NEW]
+
+# ...but renames the geography characteristics, and the as-simulated ones describe the
+# simulated building rather than the dwelling units it stands for.
+_RESSTOCK_CHAR_COL_MAP[DBSchema.OEDI_AGG] = DBCharCol(
+    STATE="in.state",
+    VACANCY="in.vacancy_status",
+    COUNTY="in.county",
+    VINTAGE="in.vintage",
+    BUILDING_TYPE="in.geometry_building_type_recs",
+    HEATING_FUEL="in.heating_fuel",
+    CENSUS_DIVISION="in.census_division_name",
+    BLDG_AMERICA_CLIMATE_ZONE="in.building_america_climate_zone",
+    EV_OWNERSHIP="in.electric_vehicle_ownership",
+    ISO_RTO_REGION="in.iso_rto_region",
+    TIMESTAMP="timestamp",
+)
 
 
 def get_db_enduse_colnames_map(db_schema: DBSchema):

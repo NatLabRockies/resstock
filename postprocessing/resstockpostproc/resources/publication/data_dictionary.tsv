@@ -58,7 +58,7 @@ metadata_and_annual	in.electric_vehicle_outlet_access	boolean	n/a	If the dwellin
 metadata_and_annual	in.electric_vehicle_ownership	boolean	n/a	If the dwelling unit owns an EV.
 metadata_and_annual	in.energystar_climate_zone_2023	string	n/a	Climate zones for windows, doors, and skylights per 2023 ENERGYSTAR guidelines.
 metadata_and_annual	in.federal_poverty_level	string	n/a	Federal poverty level of the household occupying the dwelling unit.
-metadata_and_annual	in.generation_and_emissions_assessment_region	string	n/a	The generation and carbon emissions assessment (GEA) region from Cambium 2023.
+metadata_and_annual	in.as_simulated_generation_and_emissions_assessment_region	string	n/a	The generation and carbon emissions assessment (GEA) region from Cambium 2023 and 2024 where the model was simulated.
 metadata_and_annual	in.geometry_attic_type	string	n/a	The dwelling unit attic type.
 metadata_and_annual	in.geometry_building_horizontal_location_mf	string	n/a	Location of the multi-family attached unit horizontally within the building (left, middle, right).
 metadata_and_annual	in.geometry_building_horizontal_location_sfa	string	n/a	Location of the single-family attached unit horizontally within the building (left, middle, right).
@@ -750,6 +750,16 @@ metadata_and_annual	calc.weighted.emissions_reduction.electricity.lrmer_low_re_c
 metadata_and_annual	calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_mmt	float	co2e_mmt	Calculated from annual results by multiplying by weight.
 metadata_and_annual	calc.weighted.emissions_reduction.electricity.lrmer_mid_case_15..co2e_mmt	float	co2e_mmt	Calculated from annual results by multiplying by weight.
 metadata_and_annual	calc.weighted.emissions_reduction.electricity.lrmer_mid_case_25..co2e_mmt	float	co2e_mmt	Calculated from annual results by multiplying by weight.
+metadata_and_annual	calc.weighted.utility_bills.electricity_bill..billion_usd	float	billion_usd	Annual total charges for electricity multiplied by weight.
+metadata_and_annual	calc.weighted.utility_bills.fuel_oil_bill..billion_usd	float	billion_usd	Annual total charges for fuel oil multiplied by weight.
+metadata_and_annual	calc.weighted.utility_bills.natural_gas_bill..billion_usd	float	billion_usd	Annual total charges for natural gas multiplied by weight.
+metadata_and_annual	calc.weighted.utility_bills.propane_bill..billion_usd	float	billion_usd	Annual total charges for propane multiplied by weight.
+metadata_and_annual	calc.weighted.utility_bills.total_bill..billion_usd	float	billion_usd	Annual total charges for all fuels multiplied by weight.
+metadata_and_annual	calc.weighted.utility_bills.electricity_bill_savings..billion_usd	float	billion_usd	Savings on the annual total charges for electricity multiplied by weight.
+metadata_and_annual	calc.weighted.utility_bills.fuel_oil_bill_savings..billion_usd	float	billion_usd	Savings on the annual total charges for fuel oil multiplied by weight.
+metadata_and_annual	calc.weighted.utility_bills.natural_gas_bill_savings..billion_usd	float	billion_usd	Savings on the annual total charges for natural gas multiplied by weight.
+metadata_and_annual	calc.weighted.utility_bills.propane_bill_savings..billion_usd	float	billion_usd	Savings on the annual total charges for propane multiplied by weight.
+metadata_and_annual	calc.weighted.utility_bills.total_bill_savings..billion_usd	float	billion_usd	Savings on the annual total charges for all fuels multiplied by weight.
 timeseries_aggregates	out.electricity.ceiling_fan.energy_consumption..kwh	float	kWh	Electricity consumed by ceiling fan.
 timeseries_aggregates	out.electricity.clothes_dryer.energy_consumption..kwh	float	kWh	Electricity consumed by clothes dryer.
 timeseries_aggregates	out.electricity.clothes_washer.energy_consumption..kwh	float	kWh	Electricity consumed by clothes washer.

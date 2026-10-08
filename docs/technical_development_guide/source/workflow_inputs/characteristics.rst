@@ -726,6 +726,8 @@ Assumption
 
 - \The mapping between Census Tracts and Zip Codes are approximate and some discrepancies may exist.
 
+- \For each census tract, a CEC climate zone is chosen. If the census tract has more than one CEC climate zone, then the climate zone with the most number of units is chosen.
+
 - \If the sample is outside California, the option is set to None.
 
 
@@ -761,19 +763,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.065%
      - 0.3%
      - 1.2%
-     - 0.54%
+     - 0.55%
      - 0.11%
-     - 0.87%
+     - 0.86%
      - 0.63%
      - 1.1%
      - 1.6%
      - 0.99%
-     - 0.34%
+     - 0.33%
      - 1.3%
      - 0.58%
      - 0.26%
      - 0.24%
-     - 0.24%
+     - 0.25%
      - 90%
 
 .. _ceiling_fan:
@@ -29541,7 +29543,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.1
      - 1.4
      - 1.7
-     - 2.0
+     - 2
      - 2.3
      - 2.6
    * - Stock saturation
@@ -43051,6 +43053,168 @@ Properties
    * - ``enclosure_roof_material_color``
      - 
      - The color of the roof.
+.. _sampling_region:
+
+Sampling Region
+---------------
+
+Description
+***********
+
+The sampling region that the sample is located.
+
+Created by
+**********
+
+``sources/spatial/tsv_maker.py``
+
+Source
+******
+
+- \Building Stock Segmentation Cluster Development: Technical Reference Document. 2023. NREL/TP-5500-84648.
+
+
+Assumption
+**********
+
+- \The prune rules are only for assigning impossible combinations to the Void option.
+
+
+Options
+*******
+
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Sampling Region** characteristic.
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+   :widths: auto
+
+   * - Option name
+     - 0
+     - 1
+     - 2
+     - 3
+     - 4
+     - 5
+     - 6
+     - 7
+     - 8
+     - 9
+     - 10
+     - 11
+     - 12
+     - 13
+     - 14
+     - 15
+     - 16
+     - 17
+     - 18
+     - 19
+     - 20
+     - 21
+     - 22
+     - 23
+     - 24
+     - 25
+     - 26
+     - 27
+     - 28
+     - 29
+     - 30
+     - 31
+     - 32
+     - 33
+     - 34
+     - 35
+     - 36
+     - 37
+     - 38
+     - 39
+     - 40
+     - 41
+     - 42
+     - 43
+     - 44
+     - 45
+     - 46
+     - 47
+     - 48
+     - 49
+     - 100
+     - 101
+     - 102
+     - 103
+     - 104
+     - 105
+     - 106
+     - 107
+     - 108
+     - 109
+     - Void
+   * - Stock saturation
+     - 2.7%
+     - 0.23%
+     - 1.1%
+     - 0.16%
+     - 1.5%
+     - 5.4%
+     - 1.4%
+     - 0.39%
+     - 2.4%
+     - 4.9%
+     - 3.2%
+     - 0.86%
+     - 1.8%
+     - 3%
+     - 0.4%
+     - 0.67%
+     - 0.97%
+     - 2.8%
+     - 4.3%
+     - 7.9%
+     - 1.7%
+     - 0.19%
+     - 5.4%
+     - 0.58%
+     - 1.6%
+     - 1.8%
+     - 2.3%
+     - 0.65%
+     - 0.87%
+     - 3.2%
+     - 3.7%
+     - 0.49%
+     - 1.6%
+     - 1.3%
+     - 0.51%
+     - 0.44%
+     - 1.9%
+     - 1.6%
+     - 1.7%
+     - 2.8%
+     - 2.6%
+     - 0.14%
+     - 0.19%
+     - 0.3%
+     - 0.36%
+     - 0.37%
+     - 0.31%
+     - 0.63%
+     - 3.6%
+     - 0.78%
+     - 0.62%
+     - 1.2%
+     - 1.5%
+     - 0.63%
+     - 1.1%
+     - 1.6%
+     - 0.99%
+     - 1.7%
+     - 0.58%
+     - 0.5%
+     - 0%
+
 .. _state:
 
 State
