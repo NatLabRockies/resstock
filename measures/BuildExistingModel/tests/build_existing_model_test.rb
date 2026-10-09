@@ -13,6 +13,8 @@ class BuildExistingModelTest < Minitest::Test
 
   # Verifies multi-GEA expansion, alignment of mixed scenarios, and registered emissions values.
   def test_emissions_sampling_region
+    require_relative '../../ApplyUpgrade/measure'
+
     Dir.mktmpdir do |root|
       resources_dir = File.join(root, 'resources')
       characteristics_dir = File.join(root, 'housing_characteristics')
@@ -55,6 +57,17 @@ class BuildExistingModelTest < Minitest::Test
       assert_equal result[:registered_values]['emissions_scenario_names'], registered_values['emissions_scenario_names']
       assert_equal result[:registered_values]['emissions_electricity_filepaths'], registered_values['emissions_electricity_filepaths']
       assert_equal result[:measure_arguments], measure_arguments
+
+      values = args.transform_keys(&:to_s).merge(registered_values)
+      upgrade_measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
+      ApplyUpgrade.new.set_header(upgrade_measures, HPXML.new, values)
+      upgrade_arguments = upgrade_measures['ResStockArgumentsPostHPXML'][0]
+      refute upgrade_arguments.key?('emissions_electricity_folders')
+      result[:measure_arguments].each do |argument, value|
+        next if value.nil?
+
+        assert_equal value, upgrade_arguments[argument]
+      end
     end
   end
 
@@ -92,6 +105,8 @@ class BuildExistingModelTest < Minitest::Test
 
   # Verifies state expansion, state-specific rate lookup, and registration of resolved values only.
   def test_utility_bill_sampling_region
+    require_relative '../../ApplyUpgrade/measure'
+
     Dir.mktmpdir do |root|
       resources_dir = File.join(root, 'resources')
       characteristics_dir = File.join(root, 'housing_characteristics')
@@ -137,6 +152,16 @@ class BuildExistingModelTest < Minitest::Test
       assert_equal result[:measure_arguments], measure_arguments
       refute_includes registered_values.keys, 'utility_bill_simple_filepaths'
       refute_includes registered_values.keys, 'utility_bill_detailed_filepaths'
+
+      values = args.transform_keys(&:to_s).merge(registered_values)
+      upgrade_measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
+      ApplyUpgrade.new.set_header(upgrade_measures, HPXML.new, values)
+      upgrade_arguments = upgrade_measures['ResStockArgumentsPostHPXML'][0]
+      refute upgrade_arguments.key?('utility_bill_simple_filepaths')
+      refute upgrade_arguments.key?('utility_bill_detailed_filepaths')
+      result[:measure_arguments].each do |argument, value|
+        assert_equal value, upgrade_arguments[argument]
+      end
     end
   end
 
