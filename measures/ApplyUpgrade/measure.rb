@@ -424,20 +424,26 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
     measures['ResStockArgumentsPostHPXML'][0]['simulation_control_run_period_calendar_year'] = values['simulation_control_run_period_calendar_year']
 
-    # Emissions
-    if values.keys.include?('emissions_electricity_filepaths')
+    # Argument validation records the original scenario names even if BuildExistingModel later skips all scenarios.
+    # The derived electricity_filepaths key is registered only when at least one emissions scenario is retained.
+    # Constant-factor scenarios also register this key, with empty filepath entries; check presence, not content.
+    # Use it to forward the retained scenarios without re-enabling skipped emissions only on the upgraded home.
+    if values.key?('emissions_electricity_filepaths')
       values.each do |arg, value|
-        next unless arg.start_with? 'emissions'
+        next unless arg.start_with?('emissions_')
+        # Lookup folders are baseline-only inputs; PostHPXML accepts resolved filepaths or inline factors.
         next if arg == 'emissions_electricity_folders'
 
         measures['ResStockArgumentsPostHPXML'][0][arg] = value
       end
     end
 
-    # Utility Bills
+    # Utility bill processing retains scenarios without electricity filepaths because they can use inline rates.
+    # Successful processing registers resolved values; fatal lookup errors fail the baseline, so no such guard is needed.
     values.each do |arg, value|
-      next unless arg.start_with? 'utility_bill'
-      next if ['utility_bill_simple_filepaths', 'utility_bill_detailed_filepaths'].include? arg
+      next unless arg.start_with?('utility_bill_')
+      # Lookup files have already been resolved to rates and are not PostHPXML arguments.
+      next if ['utility_bill_simple_filepaths', 'utility_bill_detailed_filepaths'].include?(arg)
 
       measures['ResStockArgumentsPostHPXML'][0][arg] = value
     end

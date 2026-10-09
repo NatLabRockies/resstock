@@ -81,53 +81,101 @@ workflow_generator:
       simulation_control_run_period_calendar_year: 2018
       add_component_loads: true
 
-    # Emissions scenarios
+    # Emissions scenarios, for each GEA region in sampling region
     emissions:
-      - scenario_name: AER_HighRECost_Avg
+      - scenario_name: AER_HighRECost_Avg - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/AER_HighRECost_Avg
-      - scenario_name: AER_HighRECostLowNGPrice_Avg
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: AER_HighRECostLowNGPrice_Avg - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/AER_HighRECostLowNGPrice_Avg
-      - scenario_name: AER_LowRECost_Avg
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: AER_LowRECost_Avg - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/AER_LowRECost_Avg
-      - scenario_name: AER_LowRECostHighNGPrice_Avg
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: AER_LowRECostHighNGPrice_Avg - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/AER_LowRECostHighNGPrice_Avg
-      - scenario_name: AER_MidCase_Avg
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: AER_MidCase_Avg - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
-      - scenario_name: LRMER_HighRECost_15
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_HighRECost_15 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_15
-      - scenario_name: LRMER_HighRECost_25
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_HighRECost_25 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_25
-      - scenario_name: LRMER_HighRECostLowNGPrice_15
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_HighRECostLowNGPrice_15 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_15
-      - scenario_name: LRMER_HighRECostLowNGPrice_25
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_HighRECostLowNGPrice_25 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_25
-      - scenario_name: LRMER_LowRECost_15
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_LowRECost_15 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_15
-      - scenario_name: LRMER_LowRECost_25
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_LowRECost_25 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_25
-      - scenario_name: LRMER_LowRECostHighNGPrice_15
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_LowRECostHighNGPrice_15 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_15
-      - scenario_name: LRMER_LowRECostHighNGPrice_25
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_LowRECostHighNGPrice_25 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_25
-      - scenario_name: LRMER_MidCase_15
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_MidCase_15 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
-      - scenario_name: LRMER_MidCase_25
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: LRMER_MidCase_25 - Sampling Region
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
+        gas_value: 0.0
+        propane_value: 0.0
+        oil_value: 0.0
+      - scenario_name: Fossil Fuels
+        type: CO2e
+        elec_value: 0.0
 
     # Utility bill rates
     utility_bills:
@@ -139,10 +187,13 @@ workflow_generator:
     # Outputs to include
     simulation_output_report:
       timeseries_frequency: hourly
+      include_annual_emissions: false
+      include_annual_emission_fuels: true
+      include_annual_emission_end_uses: false
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true
       include_timeseries_end_use_consumptions: true
-      include_timeseries_emissions: true
+      include_timeseries_emissions: false
       include_timeseries_emission_fuels: true
       include_timeseries_emission_end_uses: false
       include_timeseries_hot_water_uses: true
