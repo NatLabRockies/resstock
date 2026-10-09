@@ -431,6 +431,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     if values.key?('emissions_electricity_filepaths')
       values.each do |arg, value|
         next unless arg.start_with?('emissions_')
+        # Lookup folders are baseline-only inputs; PostHPXML accepts resolved filepaths or inline factors.
+        next if arg == 'emissions_electricity_folders'
 
         measures['ResStockArgumentsPostHPXML'][0][arg] = value
       end
@@ -440,6 +442,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Successful processing registers resolved values; fatal lookup errors fail the baseline, so no such guard is needed.
     values.each do |arg, value|
       next unless arg.start_with?('utility_bill_')
+      # Lookup files have already been resolved to rates and are not PostHPXML arguments.
+      next if ['utility_bill_simple_filepaths', 'utility_bill_detailed_filepaths'].include?(arg)
 
       measures['ResStockArgumentsPostHPXML'][0][arg] = value
     end
