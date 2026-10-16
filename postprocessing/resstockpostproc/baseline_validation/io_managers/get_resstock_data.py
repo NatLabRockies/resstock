@@ -1,4 +1,5 @@
 import functools
+import logging
 from collections.abc import Sequence
 import numpy as np
 
@@ -28,6 +29,8 @@ from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.shared_utils.mapping import UtilityName2ID
 
+logger = logging.getLogger(__name__)
+
 
 @timed
 @cached(cache_file="resstock_timeseries_data_cache")
@@ -45,13 +48,19 @@ def get_timeseries_all(
 
     all_dfs = []
     for data_source in workflow.data_sources:
-        df = get_timeseries(
-            data_source=data_source,
-            by=by,
-            restrict_list=restrict_list,
-            occupied_only=occupied_only,
-            resolution=resolution,
-        )
+        try:
+            df = get_timeseries(
+                data_source=data_source,
+                by=by,
+                restrict_list=restrict_list,
+                occupied_only=occupied_only,
+                resolution=resolution,
+            )
+        except Exception as exc:
+            logger.warning(
+                "Skipping timeseries for source '%s': %s", data_source.name, exc, exc_info=True
+            )
+            continue
         annual_df = get_annual(data_source, by, occupied_only=occupied_only)
         value_cols = [col for col in df.columns if col.endswith("_value")]
         percent_users_cols = [col.replace("_value", "_percent_users") for col in value_cols]
@@ -67,6 +76,8 @@ def get_timeseries_all(
         df = apply_aggregation(data_key, df)
         df = df.with_columns(pl.lit(data_source.name).alias("source"))
         all_dfs.append(df)
+    if not all_dfs:
+        return None
     final_df = pl.concat(all_dfs, how="diagonal")
     return final_df
 
@@ -173,6 +184,13 @@ def get_timeseries(
     )
     ts_col = get_db_characteristics_colnames(data_source.db_schema).TIMESTAMP
 
+    if bsq.ts_table is None:
+        msg = (
+            f"No timeseries table found for source '{data_source.name}' "
+            f"(table_name='{data_source.table_name}'). Skipping timeseries query."
+        )
+        raise ValueError(msg)
+
     if by == "eiaid":
         assert not occupied_only, "occupied_only is not supported when by='eiaid'"
         assert restrict_list, "restrict_list must be provided when by='eiaid'"
@@ -199,7 +217,20 @@ def _get_timeseries_by_char(
     resolution: str = "month",
 ):
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries")
+    enduses = _get_db_enduses(
+        bsq,
+        data_source.db_schema,
+        table="timeseries",
+        skip_missing=data_source.skip_missing_enduses,
+    )
+    if not enduses:
+        logger.warning(
+            "No usable enduses for timeseries query; source=%s table=%s by=%s skip_missing_enduses=%s",
+            data_source.name,
+            data_source.table_name,
+            by,
+            data_source.skip_missing_enduses,
+        )
     restrict = [(db_char_col.VACANCY, ["Occupied"])] if occupied_only else []
     if restrict_list:
         restrict += [(db_char_col.STATE, restrict_list)]
@@ -235,7 +266,20 @@ def _get_timeseries_by_utilities(
     resolution: Resolution = Resolution.month,
 ):
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries")
+    enduses = _get_db_enduses(
+        bsq,
+        data_source.db_schema,
+        table="timeseries",
+        skip_missing=data_source.skip_missing_enduses,
+    )
+    if not enduses:
+        logger.warning(
+            "No usable enduses for utility timeseries query; source=%s table=%s eiaid_count=%s skip_missing_enduses=%s",
+            data_source.name,
+            data_source.table_name,
+            len(eiaid_list),
+            data_source.skip_missing_enduses,
+        )
     timestamp_grouping_func = _get_timestamp_grouping_func(resolution)
     ercot_pd = bsq.query(
         enduses=enduses,
@@ -305,6 +349,11 @@ def _get_raw_annual_data(
 ) -> pl.DataFrame | None:
     """Aggregate annual non-utility data directly from the downloaded raw parquet."""
     if not group_cols or any(col == "eiaid" for col in group_cols):
+        logger.warning(
+            "Skipping raw annual parquet path; unsupported grouping for raw aggregation. source=%s group_cols=%s",
+            data_source.name,
+            list(group_cols),
+        )
         return None
 
     raw_path = workflow.get_resstock_data_file(data_source.name)
@@ -312,6 +361,11 @@ def _get_raw_annual_data(
     schema = lf.collect_schema()
     available_cols = set(schema.names())
     if "weight" not in available_cols:
+        logger.warning(
+            "Skipping raw annual parquet path; required column 'weight' missing. source=%s raw_path=%s",
+            data_source.name,
+            raw_path,
+        )
         return None
 
     try:
@@ -324,11 +378,25 @@ def _get_raw_annual_data(
             )
             lf = lf.filter(pl.col(vacancy_col) == "Occupied")
     except ValueError:
+        logger.warning(
+            "Skipping raw annual parquet path; unable to resolve grouping "
+            "or occupancy columns. source=%s group_cols=%s",
+            data_source.name,
+            list(group_cols),
+        )
         return None
 
     if not quantity_exprs:
+        logger.warning(
+            "Skipping raw annual parquet path; no usable enduse quantity "
+            "expressions were built. source=%s db_schema=%s",
+            data_source.name,
+            data_source.db_schema,
+        )
         return None
 
+    # Drop rows with null weights — they become NaN in numpy and poison weighted sums.
+    lf = lf.filter(pl.col("weight").is_not_null())
     raw_rows = lf.select(
         *group_exprs,
         pl.col("weight").cast(pl.Float64).alias("weight"),
@@ -520,7 +588,21 @@ def _get_annual_by_chars(
     The US-Total row is computed by dropping `by` from the group_by.
     """
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
+    enduses = _get_db_enduses(
+        bsq,
+        data_source.db_schema,
+        table="baseline",
+        skip_missing=data_source.skip_missing_enduses,
+    )
+    if not enduses:
+        logger.warning(
+            "No usable enduses for annual query; source=%s table=%s by=%s filter_char=%s skip_missing_enduses=%s",
+            data_source.name,
+            data_source.table_name,
+            by,
+            filter_char,
+            data_source.skip_missing_enduses,
+        )
     restrict = [(char_cols.VACANCY, ["Occupied"])] if occupied_only else []
 
     by_col = _get_by_col(by, bsq)
@@ -537,7 +619,19 @@ def _get_annual_by_chars(
 
 
 def _get_annual_by_eiaid(bsq, data_source):
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
+    enduses = _get_db_enduses(
+        bsq,
+        data_source.db_schema,
+        table="baseline",
+        skip_missing=data_source.skip_missing_enduses,
+    )
+    if not enduses:
+        logger.warning(
+            "No usable enduses for annual utility query; source=%s table=%s skip_missing_enduses=%s",
+            data_source.name,
+            data_source.table_name,
+            data_source.skip_missing_enduses,
+        )
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
     ercot_pd = bsq.query(
         enduses=enduses,
@@ -546,18 +640,33 @@ def _get_annual_by_eiaid(bsq, data_source):
     )
     bsq.save_cache()
     ercot_pd["eiaid"] = str(UtilityName2ID["ERCOT"])
-    result_pd = bsq.utility.aggregate_annual_by_eiaid(
-        enduses=enduses,
-        get_nonzero_count=True,
-    )
-    bsq.save_cache()
-    df = pl.concat([pl.from_pandas(ercot_pd), pl.from_pandas(result_pd)], how="diagonal_relaxed")
+    try:
+        result_pd = bsq.utility.aggregate_annual_by_eiaid(
+            enduses=enduses,
+            get_nonzero_count=True,
+        )
+        bsq.save_cache()
+        combined_pd = pd.concat([ercot_pd, result_pd], ignore_index=True)
+    except Exception as exc:
+        logger.warning(
+            "aggregate_annual_by_eiaid failed for source '%s', returning ERCOT-only: %s",
+            data_source.name,
+            exc,
+            exc_info=True,
+        )
+        combined_pd = ercot_pd
+    df = pl.from_pandas(combined_pd)
     df = df.with_columns(pl.col("eiaid").cast(pl.Int64))
     df = _transform_columns(df, data_source.db_schema)
     return df
 
 
-def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str) -> tuple[str, ...]:
+def _get_db_enduses(
+    bsq: BuildStockQuery,
+    db_schema: DBSchema,
+    table: str,
+    skip_missing: bool = False,
+) -> tuple[str, ...]:
     data_col_to_db_col = get_db_enduse_colnames_map(db_schema)
     enduses = []
     for new_name, dbcols in data_col_to_db_col.items():
@@ -565,9 +674,59 @@ def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str) -> tu
             continue
         if new_name in [DataCol.OUTDOOR_DRYBULB_TEMP] and table == "baseline":
             continue  # temperature - only available in timeseries table
-        enduse_expr = " + ".join(dbcols) if isinstance(dbcols, tuple) else dbcols
-        col = bsq.get_calculated_column(column_name=new_name, column_expr=enduse_expr, table=table)
+
+        if isinstance(dbcols, tuple) and skip_missing:
+            # Try each sub-column individually; keep only those that exist
+            valid_cols = []
+            for subcol in dbcols:
+                try:
+                    bsq.get_calculated_column(column_name="_probe", column_expr=subcol, table=table)
+                    valid_cols.append(subcol)
+                except (KeyError, ValueError):
+                    logger.warning(
+                        "BuildStockQuery missing sub-column; skipping from "
+                        "calculated enduse. table=%s enduse=%s sub_column=%s",
+                        table,
+                        new_name,
+                        subcol,
+                    )
+            if not valid_cols:
+                logger.warning(
+                    "BuildStockQuery found no valid sub-columns; skipping enduse entirely. table=%s enduse=%s",
+                    table,
+                    new_name,
+                )
+                continue
+            enduse_expr = " + ".join(valid_cols)
+            skipped_cols = [subcol for subcol in dbcols if subcol not in valid_cols]
+            if skipped_cols:
+                logger.warning(
+                    "BuildStockQuery partially dropped enduse expression "
+                    "columns. table=%s enduse=%s kept=%s dropped=%s",
+                    table,
+                    new_name,
+                    valid_cols,
+                    skipped_cols,
+                )
+        else:
+            enduse_expr = " + ".join(dbcols) if isinstance(dbcols, tuple) else dbcols
+
+        try:
+            col = bsq.get_calculated_column(column_name=new_name, column_expr=enduse_expr, table=table)
+        except (KeyError, ValueError):
+            if skip_missing:
+                logger.warning(
+                    "BuildStockQuery could not build calculated column; skipping enduse. table=%s enduse=%s expr=%s",
+                    table,
+                    new_name,
+                    enduse_expr,
+                )
+                continue
+            raise
         enduses.append(col)
+
+    if skip_missing and not enduses:
+        logger.warning("BuildStockQuery produced zero enduses after missing-column filtering. table=%s", table)
 
     return tuple(enduses)
 
@@ -623,6 +782,9 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
         if nonzero_quartiles_db_col in df.columns:
             new_cols_expr.append(pl.col(nonzero_quartiles_db_col).alias(nonzero_quartiles_col_name))
             to_drop_cols.append(nonzero_quartiles_db_col)
+
+    if not new_cols_expr:
+        logger.warning("No transformed enduse columns were produced from query result; output may be incomplete.")
 
     df = df.with_columns(new_cols_expr)
     df = df.drop(to_drop_cols)

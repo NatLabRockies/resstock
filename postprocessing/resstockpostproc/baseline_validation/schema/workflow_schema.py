@@ -28,6 +28,29 @@ class DataSourceConfig(NoExtraModel):
             "Optional S3 URL for the baseline metadata-and-annual-results parquet cached locally for fast reads."
         ),
     )
+    skip_missing_enduses: bool = Field(
+        default=False,
+        description="If True, silently skip end-use columns not present in the Athena table instead of raising.",
+    )
+    query_unload_s3_bucket: str | None = Field(
+        default=None,
+        description=(
+            "Optional: S3 bucket or path for Athena query unload results. "
+            "If not set, BuildStockQuery will automatically fetch the workgroup's configured location. "
+            "Only set this if you need to override the workgroup default (e.g., due to permission issues)."
+        ),
+    )
+    has_upgrades: bool = Field(
+        default=True,
+        description="If False, tells BSQ that no upgrades table exists for this data source.",
+    )
+    skip_timestamp_offset_validation: bool = Field(
+        default=False,
+        description=(
+            "If True, skips validation of timeseries timestamp offsets. "
+            "Set to True if your timeseries data has non-standard intervals (e.g., aggregated to hourly instead of minute-level)."
+        ),
+    )
 
     def __hash__(self):
         return hash((self.name, self.db_name, self.table_name, self.db_schema))
