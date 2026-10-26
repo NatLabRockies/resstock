@@ -12,6 +12,7 @@ weather_files_url: https://data.nlr.gov/system/files/156/Buildstock_TMY3_FIPS-16
 # Baseline number of units
 baseline:
   n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories
+  # For production run, set schema_version: '0.7' and remove baseline: n_buildings_represented, weights are determined by the allocation process.
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:

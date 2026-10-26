@@ -36,6 +36,23 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     return false
   end
 
+  # Same rule as buildstockbatch: the stratified sampler's weights come from allocating the ACS housing unit
+  # catalogue in postprocessing, so n_buildings_represented would be silently ignored there
+  n_buildings_represented = (cfg['baseline'] || {})['n_buildings_represented']
+  if cfg['sampler']['type'] == 'residential_stratified'
+    if Gem::Version.new(cfg['schema_version'].to_s) < Gem::Version.new('0.7')
+      puts "Error: The residential_stratified sampler requires schema_version 0.7 or later (got #{cfg['schema_version']})."
+      return false
+    end
+    if !n_buildings_represented.nil?
+      puts "Error: 'baseline: n_buildings_represented' is not used with the residential_stratified sampler; the ACS housing unit catalogue sets the size of the stock. Remove it from the yml."
+      return false
+    end
+  elsif n_buildings_represented.nil?
+    puts "Error: 'baseline: n_buildings_represented' is required with the #{cfg['sampler']['type']} sampler."
+    return false
+  end
+
   cfg_upgrade_names = ['Baseline']
   cfg_upgrade_names += cfg['upgrades'].collect { |u| u['upgrade_name'] } if cfg.keys.include?('upgrades')
 
@@ -116,9 +133,9 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
   bld_exist_model_args = {
     'buildstock_csv_path': buildstock_csv_path,
     'building_id': '',
-    'project_directory': project_directory,
-    'sample_weight': Float(cfg['baseline']['n_buildings_represented']) / n_datapoints # aligns with buildstockbatch
+    'project_directory': project_directory
   }
+  bld_exist_model_args[:sample_weight] = Float(n_buildings_represented) / n_datapoints unless n_buildings_represented.nil? # aligns with buildstockbatch
 
   bld_exist_model_args.update(sim_ctl_args)
   bld_exist_model_args.update(workflow_args['build_existing_model'])

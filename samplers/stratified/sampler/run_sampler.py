@@ -10,7 +10,7 @@ import polars as pl
 import os, sys
 import hashlib
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-from sampler.sampling_utils import get_param2tsv, get_samples, TSVTuple
+from sampler.sampling_utils import get_param2tsv, get_samples, find_impossible_samples, TSVTuple
 from sampler.utils import log_error_details, get_error_details
 import random
 
@@ -149,7 +149,13 @@ def take_samples_per_segment(df: pl.DataFrame, segment_cols: list[str], num_samp
     Every row is given a uniform variate from a generator seeded with `random_seed`, and each
     segment keeps the rows with the smallest variates, so the take is uniform over the segment
     and reproducible for a given seed and input frame. Segments holding fewer rows than asked
-    for contribute all of them.
+    for contribute all of them. Kept rows stay in their incoming order, and every column,
+    the segment columns included, is returned.
+
+    This used to be a pandas `groupby(...).apply(...)`. From pandas 3.0 `apply` leaves the
+    grouping columns out of its result, so the segment columns silently disappeared, the final
+    `sample_all` re-drew them from their TSVs, and the stratification was lost. The checks at
+    the end of this function are there so a change of that kind fails loudly.
 
     Args:
         df: Frame of candidate buildings, one row per building
@@ -160,28 +166,46 @@ def take_samples_per_segment(df: pl.DataFrame, segment_cols: list[str], num_samp
     Returns:
         Frame holding min(num_samples_per_segment, segment size) rows per segment
     """
-
-    # rng = np.random.default_rng(random_seed)
-    # return (
-        # df.with_columns(pl.Series("_take_draw", rng.random(df.height), dtype=pl.Float64))
-        # .sort("_take_draw")
-        # .group_by(segment_cols, maintain_order=True)
-        # .head(num_samples_per_segment)
-        # .drop("_take_draw")
-    # )
-
-    df_pd = df.to_pandas()
-
-    # Use apply with a lambda function to dynamically match the minimum threshold
-    sampled_pd = (
-        df_pd.groupby(segment_cols, group_keys=False)
-        .apply(lambda x: x.sample(n=min(len(x), num_samples_per_segment), random_state=random_seed))
+    rng = np.random.default_rng(random_seed)
+    taken = (
+        df.with_columns(pl.Series("_take_draw", rng.random(df.height), dtype=pl.Float64))
+        .filter(pl.col("_take_draw").rank("ordinal").over(segment_cols) <= num_samples_per_segment)
+        .drop("_take_draw")
     )
 
-    # Restore the original row sequence layout
-    sampled_pd = sampled_pd.sort_index()
+    if taken.columns != df.columns:
+        raise RuntimeError(f"take_samples_per_segment changed the columns: {df.columns} -> {taken.columns}")
+    sizes = df.group_by(segment_cols).len()
+    expected = int(sizes["len"].clip(upper_bound=num_samples_per_segment).sum())
+    largest = int(taken.group_by(segment_cols).len()["len"].max() or 0)
+    if taken.height != expected or largest > num_samples_per_segment:
+        raise RuntimeError(f"take_samples_per_segment kept {taken.height:,} rows (expected {expected:,}) "
+                           f"and up to {largest} per segment (limit {num_samples_per_segment})")
+    return taken
 
-    return pl.from_pandas(sampled_pd)
+def check_final_samples(sample_df: pd.DataFrame, limited_df: pl.DataFrame, segment_cols: list[str],
+                        num_samples_per_segment: int, param2tsv: dict) -> None:
+    """Refuse to write a buildstock that is not the stratified sample it claims to be.
+
+    Three checks, each of which the pandas-3 failure of `take_samples_per_segment` would have
+    tripped: the final pass kept every building's segment values, no segment holds more buildings
+    than the take allows, and no building carries a combination its TSVs give zero probability.
+    """
+    final = pl.from_pandas(sample_df[["Building"] + segment_cols].astype(str))
+    chosen = limited_df.select([pl.col("Building").cast(pl.String)] + [pl.col(c).cast(pl.String) for c in segment_cols])
+    if final.height != chosen.height or not final.equals(chosen):
+        raise RuntimeError("The final sampling changed the segment values of the buildings the segment take "
+                           "chose; segment characteristics must not be re-drawn")
+    largest = int(final.group_by(segment_cols).len()["len"].max() or 0)
+    if largest > num_samples_per_segment:
+        raise RuntimeError(f"A segment holds {largest} buildings; the take allows {num_samples_per_segment}")
+    bad = find_impossible_samples(sample_df, param2tsv)
+    if bad:
+        detail = "; ".join(f"{p}: {v}" for p, v in bad.items())
+        raise RuntimeError(f"Sampled combinations with zero TSV probability in {len(bad)} characteristic(s): {detail}")
+    print(f"Checked the final samples: segment values kept, at most {largest} per segment, "
+          f"no zero-probability combinations across {len(param2tsv)} TSVs")
+
 
 @click.group()
 def cli():
@@ -247,11 +271,17 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     if new_total < num_datapoints:
         print(f"Will be sampling {new_total} samples instead of {num_datapoints} due to rounding")
     limited_df = limited_df.with_row_index("Building", offset=1)
+    missing = [c for c in segment_cols if c not in limited_df.columns]
+    if missing:
+        raise RuntimeError(f"The segment take dropped the segment columns {missing}; the final sampling "
+                           "would re-draw them and lose the stratification")
     initial_samples_df = limited_df.to_pandas()
     final_start_time = time.time()
     print(f"Performing final sampling with {num_segments} segments of {num_samples_per_segment} samples each")
     sample_df = sample_all(pathlib.Path(project), new_total, initial_samples_df=initial_samples_df)
     print(f"Final sampling completed in {time.time() - final_start_time:.2f} seconds")
+    check_final_samples(sample_df, limited_df, segment_cols, num_samples_per_segment,
+                        get_param2tsv(pathlib.Path(project)))
     click.echo("Writing Buildstock CSV")
     if not pathlib.Path(output).is_absolute():
         output = str((pathlib.Path(__file__).resolve().parent / ".." / ".." / ".."/ "resources" / output).resolve())
