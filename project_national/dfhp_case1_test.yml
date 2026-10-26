@@ -133,7 +133,7 @@ references:
 
 # Dual fuel heat pump scenarios: backup fuel matches the existing heating fuel
 upgrades:
-  - upgrade_name: Dual Fuel Heat Pump, 50F Compressor Lockout
+  - upgrade_name: Dual Fuel Heat Pump Case 1a, 50F Compressor Lockout
     package_apply_logic: *dual_fuel_package_apply_logic
     options:
       - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 80% AFUE NG, 50F compressor lockout
@@ -149,7 +149,7 @@ upgrades:
       - *partial_conditioning_100_percent
       - *remove_secondary_ducted_heating
 
-  - upgrade_name: Dual Fuel Heat Pump, 30F Compressor Lockout
+  - upgrade_name: Dual Fuel Heat Pump Case 1b, 30F Compressor Lockout
     package_apply_logic: *dual_fuel_package_apply_logic
     options:
       - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 80% AFUE NG, 30F compressor lockout
@@ -165,7 +165,7 @@ upgrades:
       - *partial_conditioning_100_percent
       - *remove_secondary_ducted_heating
 
-  - upgrade_name: Dual Fuel Heat Pump, 10F Compressor Lockout
+  - upgrade_name: Dual Fuel Heat Pump Case 1c, 10F Compressor Lockout
     package_apply_logic: *dual_fuel_package_apply_logic
     options:
       - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 80% AFUE NG, 10F compressor lockout
@@ -181,7 +181,7 @@ upgrades:
       - *partial_conditioning_100_percent
       - *remove_secondary_ducted_heating
 
-  - upgrade_name: Dual Fuel Heat Pump, -10F Compressor Lockout
+  - upgrade_name: Dual Fuel Heat Pump Case 1d, -10F Compressor Lockout
     package_apply_logic: *dual_fuel_package_apply_logic
     options:
       - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 80% AFUE NG, -10F compressor lockout
@@ -191,6 +191,70 @@ upgrades:
         apply_logic:
           - Heating Fuel|Propane
       - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 83% AFUE Fuel Oil, -10F compressor lockout
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent
+      - *remove_secondary_ducted_heating
+
+  - upgrade_name: Dual Fuel Heat Pump Case 2a, 50F Compressor Lockout
+    package_apply_logic: *dual_fuel_package_apply_logic
+    options:
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 95% AFUE NG, 50F compressor lockout
+        apply_logic:
+          - Heating Fuel|Natural Gas
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 95% AFUE Propane, 50F compressor lockout
+        apply_logic:
+          - Heating Fuel|Propane
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 85% AFUE Fuel Oil, 50F compressor lockout
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent
+      - *remove_secondary_ducted_heating
+
+  - upgrade_name: Dual Fuel Heat Pump Case 2b, 30F Compressor Lockout
+    package_apply_logic: *dual_fuel_package_apply_logic
+    options:
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 95% AFUE NG, 30F compressor lockout
+        apply_logic:
+          - Heating Fuel|Natural Gas
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 95% AFUE Propane, 30F compressor lockout
+        apply_logic:
+          - Heating Fuel|Propane
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 85% AFUE Fuel Oil, 30F compressor lockout
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent
+      - *remove_secondary_ducted_heating
+
+  - upgrade_name: Dual Fuel Heat Pump Case 2c, 10F Compressor Lockout
+    package_apply_logic: *dual_fuel_package_apply_logic
+    options:
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 95% AFUE NG, 10F compressor lockout
+        apply_logic:
+          - Heating Fuel|Natural Gas
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 95% AFUE Propane, 10F compressor lockout
+        apply_logic:
+          - Heating Fuel|Propane
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 85% AFUE Fuel Oil, 10F compressor lockout
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent
+      - *remove_secondary_ducted_heating
+
+  - upgrade_name: Dual Fuel Heat Pump Case 2d, -10F Compressor Lockout
+    package_apply_logic: *dual_fuel_package_apply_logic
+    options:
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 95% AFUE NG, -10F compressor lockout
+        apply_logic:
+          - Heating Fuel|Natural Gas
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 95% AFUE Propane, -10F compressor lockout
+        apply_logic:
+          - Heating Fuel|Propane
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15.2, 7.8 HSPF2, Integrated Backup, 85% AFUE Fuel Oil, -10F compressor lockout
         apply_logic:
           - Heating Fuel|Fuel Oil
       - *heat_pump_cooling_efficiency_ducted
