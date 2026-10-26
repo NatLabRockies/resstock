@@ -420,6 +420,7 @@ class TestRunAnalysis < Minitest::Test
         values = args.transform_keys(&:to_s).merge(runner.result.stepValues.to_h { |step_value| [step_value.name, get_value_from_workflow_step_value(step_value)] })
         upgrade_measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
         ApplyUpgrade.new.set_header(upgrade_measures, HPXML.new, values)
+        refute upgrade_measures['ResStockArgumentsPostHPXML'][0].key?('emissions_electricity_folders')
         output.each do |argument, value|
           assert_equal value, upgrade_measures['ResStockArgumentsPostHPXML'][0][argument] unless value.nil?
         end
