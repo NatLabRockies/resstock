@@ -78,6 +78,12 @@ ALLOCATED_WEIGHTS_DIR = "cached_allocated_weights"
 # Directory name for one region's partition, in both of the directories above
 SAMPLING_REGION_PARTITION = "sampling_region"
 
+# Written beside the staged catalogue partitions to record which catalogue and sampling region
+# versions built them. A partition directory carries region ids, not the version they came
+# from, so without this record a rerun with a different sampling_region_version would silently
+# reuse partitions keyed by the other version's ids.
+STAGING_RECORD = "_staging.json"
+
 
 def _polars_path(output_dir: FsspecOutputDir, *parts: str) -> str:
     """Join a path below the output directory into the form polars' scan/sink calls expect.
@@ -314,8 +320,11 @@ def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: 
     with output_dir["fs"].open(sample_regions_local_path, "r") as f:
         sampling_regions_dict = json.load(f)
 
-    # Manually add in Oglala Lakota County, SD which used to be Shannon county (G4601130)
-    sampling_regions_dict["G4601020"] = 34
+    # Manually add in Oglala Lakota County, SD which used to be Shannon county (G4601130).
+    # v1 predates the rename and carries only the retired code, so the county has to be added.
+    # Later versions carry it themselves under ids of their own, and region 34 is not valid in
+    # them, so only fill the gap rather than overwriting what the file says.
+    sampling_regions_dict.setdefault("G4601020", 34)
 
     # Convert dictionary to DataFrame
     sampling_regions_df = pl.DataFrame(
@@ -522,6 +531,33 @@ def _region_partition_path(region_id: str) -> str:
     return f"{SAMPLING_REGION_PARTITION}={region_id}/{SAMPLING_REGION_PARTITION}_{region_id}.parquet"
 
 
+def _read_staging_record(output_dir: FsspecOutputDir, partition_dir: str) -> dict | None:
+    """Return the versions recorded for the staged partitions, or None if there is no record."""
+
+    path = f"{partition_dir}/{STAGING_RECORD}"
+    if not output_dir["fs"].exists(path):
+        return None
+    with output_dir["fs"].open(path, "r") as f:
+        return json.load(f)
+
+
+def _write_staging_record(output_dir: FsspecOutputDir, partition_dir: str, record: dict) -> None:
+    """Record which versions built the staged partitions."""
+
+    with output_dir["fs"].open(f"{partition_dir}/{STAGING_RECORD}", "w") as f:
+        json.dump(record, f)
+
+
+def staged_region_ids(output_dir: FsspecOutputDir, partition_dir: str) -> set[str]:
+    """The sampling region ids that have a staged catalogue partition."""
+
+    output_dir["fs"].invalidate_cache()
+    return {
+        Path(p).parent.name.split("=", 1)[1]
+        for p in output_dir["fs"].glob(f"{partition_dir}/*/*.parquet")
+    }
+
+
 def partition_catalogue_by_sampling_region(
     output_dir: FsspecOutputDir,
     catalogue_file_version: str = "v3",
@@ -534,9 +570,11 @@ def partition_catalogue_by_sampling_region(
     flight and one open writer per region are held. The result is the working set for the
     allocation, which then reads a region at a time.
 
-    The pass is skipped when the partitions are already staged, so a rerun after a failure
-    later in the pipeline does not repeat it. Pass rewrite=True to force it, which is needed
-    if the catalogue version or the sampling region version changes.
+    The pass is skipped when the partitions are already staged with the same catalogue and
+    sampling region versions, so a rerun after a failure later in the pipeline does not repeat
+    it. The versions that built them are kept in STAGING_RECORD; partitions staged with other
+    versions, or with no record of their versions, are deleted and rebuilt. Pass rewrite=True
+    to rebuild regardless.
 
     Args:
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
@@ -553,9 +591,25 @@ def partition_catalogue_by_sampling_region(
     # store rather than through this handle, so every glob here reads a fresh listing
     output_dir["fs"].invalidate_cache()
     existing = output_dir["fs"].glob(f"{partition_dir}/*/*.parquet")
+    wanted = {
+        "catalogue_file_version": catalogue_file_version,
+        "sampling_region_version": sampling_region_version,
+    }
     if existing and not rewrite:
-        logger.info(f"Reusing {len(existing)} staged catalogue partitions in {partition_dir}")
-        return partition_dir
+        staged_with = _read_staging_record(output_dir, partition_dir)
+        if staged_with == wanted:
+            logger.info(f"Reusing {len(existing)} staged catalogue partitions in {partition_dir}")
+            return partition_dir
+        logger.warning(
+            f"The {len(existing)} catalogue partitions in {partition_dir} were staged with "
+            f"{staged_with or 'no record of their versions'}, not {wanted}; rebuilding them"
+        )
+        rewrite = True
+    if existing and rewrite:
+        # Region ids differ between versions, so a partition left over from another version
+        # would otherwise survive the rebuild alongside the new ones
+        output_dir["fs"].rm(partition_dir, recursive=True)
+        output_dir["fs"].invalidate_cache()
 
     catalogue_lf = scan_catalogue(output_dir, catalogue_file_version)
     sampling_regions_df = load_sampling_regions(output_dir, sampling_region_version)
@@ -579,6 +633,7 @@ def partition_catalogue_by_sampling_region(
     )
     output_dir["fs"].invalidate_cache()
     n_partitions = len(output_dir["fs"].glob(f"{partition_dir}/*/*.parquet"))
+    _write_staging_record(output_dir, partition_dir, wanted)
     logger.info(
         f"Staged the catalogue as {n_partitions} sampling region partitions in "
         f"{(datetime.datetime.now() - tstart).total_seconds():.0f} seconds"
@@ -994,6 +1049,42 @@ def write_foreign_key_table(output_dir: FsspecOutputDir) -> None:
     )
 
 
+def check_building_sampling_regions(
+    bs_df: pl.DataFrame, region_ids: set[str], sampling_region_version: str
+) -> None:
+    """Refuse to allocate buildings whose sampling region has no catalogue partition.
+
+    The allocation draws each catalogue row's building from the row's own sampling region, so
+    a building labelled with a region the catalogue does not have can never be drawn. That
+    happens when the sample was drawn with one version of Sampling Region.tsv and the
+    allocation is run with another: the region ids differ between versions, so most of the
+    sample falls outside the catalogue and the run fails only at the miss-report threshold,
+    after the whole allocation has been spent. Checking the labels up front catches it at once.
+
+    Args:
+        bs_df: The buildstock sample's allocation keys, with in.sampling_region_id
+        region_ids: Sampling region ids that have a staged catalogue partition
+        sampling_region_version: The version the partitions were staged with, for the message
+
+    Raises:
+        ValueError: If any building carries a sampling region the catalogue does not have
+    """
+
+    counts = bs_df.group_by("in.sampling_region_id").len()
+    unknown = counts.filter(~pl.col("in.sampling_region_id").is_in(sorted(region_ids)))
+    if unknown.height == 0:
+        return
+    n_unknown = int(unknown["len"].sum())
+    examples = unknown.sort("len", descending=True)["in.sampling_region_id"].head(10).to_list()
+    raise ValueError(
+        f"\n{n_unknown:,} of {bs_df.height:,} buildings ({n_unknown / bs_df.height:.2%}) carry "
+        f"{unknown.height} sampling region id(s) that the catalogue, staged with sampling region "
+        f"version '{sampling_region_version}', does not have: {examples}.\n"
+        f"The sample was most likely drawn with a different version of Sampling Region.tsv. "
+        f"Run the allocation with the sampling_region_version the sample was drawn with."
+    )
+
+
 def create_allocated_weights_for_quota_sampler(
     simulation_outputs_file: str, output_dir: str, aws_profile_name=None
 ) -> None:
@@ -1099,6 +1190,12 @@ def create_allocated_weights(
         simulation_outputs_file,
         columns=ALLOCATION_KEYS + ["bldg_id"],
         storage_options=output_dir["storage_options"],
+    )
+
+    # Every building must belong to a region the catalogue was staged with, or it can never be
+    # drawn. A version mismatch otherwise surfaces only at the miss threshold, after the run.
+    check_building_sampling_regions(
+        bs_df, staged_region_ids(output_dir, partition_dir), sampling_region_version
     )
 
     # Allocate one sampling region at a time, keeping only the misses and the counts

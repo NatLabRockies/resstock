@@ -159,3 +159,80 @@ def test_one_config_value_sets_both_the_segment_count_and_the_take():
 
     taken = take_samples_per_segment(df, ['segment'], num_samples_per_segment)
     assert taken.height == 2 * num_samples_per_segment
+
+def test_take_returns_every_column_including_the_segment_columns():
+    df = make_segment_df({'a': 30, 'b': 5}).with_columns(pl.lit('x').alias('Other'))
+
+    taken = take_samples_per_segment(df, ['segment'], 12)
+
+    # pandas 3 `groupby(...).apply` drops the grouping columns; the take must not
+    assert taken.columns == df.columns
+    assert dict(taken.group_by('segment').len().iter_rows()) == {'a': 12, 'b': 5}
+    # kept rows stay in their incoming order
+    assert taken['Building'].to_list() == sorted(taken['Building'].to_list())
+
+
+def write_chain_project(root: pathlib.Path) -> pathlib.Path:
+    """Bedrooms -> Bedrooms Bin (deterministic) -> Occupants: the shape of Vintage -> Vintage ACS -> Income."""
+    hc = root / 'housing_characteristics'
+    hc.mkdir(parents=True)
+    (hc / 'Bedrooms.tsv').write_text(
+        'Option=1\tOption=2\tOption=3\tOption=4\tsampling_probability\n0.25\t0.25\t0.25\t0.25\t1\n')
+    (hc / 'Bedrooms Bin.tsv').write_text(
+        'Dependency=Bedrooms\tOption=Small\tOption=Large\tsampling_probability\n'
+        '1\t1\t0\t0.25\n2\t1\t0\t0.25\n3\t0\t1\t0.25\n4\t0\t1\t0.25\n')
+    (hc / 'Occupants.tsv').write_text(
+        'Dependency=Bedrooms Bin\tOption=1\tOption=2\tOption=3\tsampling_probability\n'
+        'Small\t0.6\t0.3\t0.1\t0.5\nLarge\t0.2\t0.4\t0.4\t0.5\n')
+    return root
+
+
+def run_sample_command(tmp_dir: str, num_datapoints: int = 24):
+    from click.testing import CliRunner
+    from sampler.run_sampler import cli
+    project = write_chain_project(pathlib.Path(tmp_dir) / 'project')
+    config = pathlib.Path(tmp_dir) / 'sampler_config.yaml'
+    config.write_text(yaml.safe_dump({'segment_vars': ['Bedrooms', 'Occupants'],
+                                      'segment_selection_sample_size': 5000,
+                                      'num_samples_per_segment': 2}))
+    output = pathlib.Path(tmp_dir) / 'buildstock.csv'
+    result = CliRunner().invoke(cli, ['sample', '-p', str(project), '-n', str(num_datapoints),
+                                      '-c', str(config), '-o', str(output)])
+    return result, output
+
+
+def test_sample_keeps_segments_and_their_deterministic_children_consistent():
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        result, output = run_sample_command(tmp_dir)
+        assert result.exit_code == 0, result.output
+        df = pl.read_csv(output, infer_schema=False)
+    expected_bin = df['Bedrooms'].replace_strict({'1': 'Small', '2': 'Small', '3': 'Large', '4': 'Large'})
+    assert (df['Bedrooms Bin'] == expected_bin).all()
+    assert df.group_by(['Bedrooms', 'Occupants']).len()['len'].max() <= 2
+
+
+def test_sample_refuses_a_take_that_drops_the_segment_columns(monkeypatch):
+    import sampler.run_sampler as rs
+    original = rs.take_samples_per_segment
+
+    def pandas3_take(df, segment_cols, n, random_seed=rs.RANDOM_SEED):
+        # What the pandas `groupby(...).apply` take returned under pandas 3: no segment columns
+        return original(df, segment_cols, n, random_seed).drop(segment_cols)
+
+    monkeypatch.setattr(rs, 'take_samples_per_segment', pandas3_take)
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        result, _ = run_sample_command(tmp_dir)
+    assert result.exit_code != 0
+    assert 'dropped the segment columns' in str(result.exception)
+
+
+def test_find_impossible_samples_flags_a_stale_deterministic_child():
+    from sampler.sampling_utils import find_impossible_samples
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        project = write_chain_project(pathlib.Path(tmp_dir) / 'project')
+        param2tsv = get_param2tsv(project)
+        good = pd.DataFrame({'Bedrooms': ['1', '4'], 'Bedrooms Bin': ['Small', 'Large'], 'Occupants': ['1', '3']})
+        assert find_impossible_samples(good, param2tsv) == {}
+        stale = good.assign(Bedrooms=['4', '1'])  # re-drawn parent, child left behind
+        bad = find_impossible_samples(stale, param2tsv)
+        assert set(bad) == {'Bedrooms Bin'}

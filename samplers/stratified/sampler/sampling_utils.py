@@ -46,6 +46,39 @@ def get_param2tsv(project_dir: pathlib.Path) -> dict[str, TSVTuple]:
     return param2tsv
 
 
+def find_impossible_samples(sample_df, param2tsv: dict[str, TSVTuple]) -> dict[str, list[tuple]]:
+    """Every (parent values, option) combination in the samples that its TSV gives no probability.
+
+    A correct draw can never produce one: each option is drawn from its own TSV row given the
+    parent values already in the frame. A combination with zero or no probability means a column
+    was overwritten, re-drawn or misaligned after its children were drawn from it.
+
+    Args:
+        sample_df: Sampled buildings, one column per characteristic (pandas or polars)
+        param2tsv: The TSVs the samples were drawn from
+
+    Returns:
+        {characteristic: up to five offending (parent values..., option) tuples}; empty if none
+    """
+    import polars as pl
+    df = sample_df if isinstance(sample_df, pl.DataFrame) else pl.from_pandas(sample_df)
+    bad = {}
+    for param, (group2probs, dep_cols, opt_cols) in sorted(param2tsv.items()):
+        cols = dep_cols + [param]
+        if not set(cols) <= set(df.columns):
+            continue
+        opt_ix = {o: i for i, o in enumerate(opt_cols)}
+        offenders = []
+        for row in df.select([pl.col(c).cast(pl.String) for c in cols]).unique().iter_rows():
+            probs = group2probs.get(tuple(row[:-1]))
+            i = opt_ix.get(row[-1])
+            if probs is None or i is None or probs[i] <= 0:
+                offenders.append(row)
+        if offenders:
+            bad[param] = sorted(offenders, key=str)[:5]
+    return bad
+
+
 def get_samples(probs: list[float], options: list[str], num_samples: int) -> list[str]:
     """Returns a list of samples chosen from the options list as per the probability distribution in probs using
        simple random sampling.

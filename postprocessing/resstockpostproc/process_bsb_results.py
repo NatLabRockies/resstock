@@ -78,6 +78,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
                                        rename_upgrades_path: str | None = None,
                                        allocation_seed: int | None = DEFAULT_ALLOCATION_SEED,
                                        null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
+                                       sampling_region_version: str = "v3",
                                        ) -> None:
     """
     Export metadata and annual results for the given raw BuildStockBatch results.
@@ -106,6 +107,10 @@ def export_metadata_and_annual_results(raw_results_dir: str,
             building (stratified sampler only) before the run is rejected. The
             unallocated rows are written to allocation_miss_report.parquet in
             output_dir either way.
+        sampling_region_version: Which sampling_regions_<version>.json the allocation
+            joins on (stratified sampler only). It must match the `Sampling Region.tsv`
+            the sample was drawn with, or the sampler segments on one set of region ids
+            while the allocator joins on another and almost every row misses.
     """
     if sampler_type not in SUPPORTED_SAMPLER_TYPES:
         raise ValueError(f"Unsupported sampler_type {sampler_type!r}; expected one of {SUPPORTED_SAMPLER_TYPES}")
@@ -226,6 +231,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
             alloc_output_url, aws_profile_name=aws_profile_name,
             seed=allocation_seed,
             null_building_threshold=null_building_threshold,
+            sampling_region_version=sampling_region_version,
         )
     elif sampler_type == "quota":
         create_allocated_weights_for_quota_sampler(bs_pub_df_path, alloc_output_url, aws_profile_name=aws_profile_name)
@@ -323,6 +329,14 @@ if __name__ == "__main__":
             "(stratified sampler only)"
         ),
     )
+    parser.add_argument(
+        "--sampling_region_version",
+        default="v3",
+        help=(
+            "Version of sampling_regions_<version>.json to join on (stratified sampler only); "
+            "must match the Sampling Region.tsv the sample was drawn with"
+        ),
+    )
     args = parser.parse_args()
     export_metadata_and_annual_results(
         args.raw_results_dir,
@@ -330,4 +344,5 @@ if __name__ == "__main__":
         sampler_type=args.sampler_type,
         allocation_seed=args.allocation_seed,
         null_building_threshold=args.null_building_threshold,
+        sampling_region_version=args.sampling_region_version,
     )
