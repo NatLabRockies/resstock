@@ -1,0 +1,61 @@
+# Schema for runs published by resstockpostproc/telescope as
+# `metadata_and_annual_results_aggregates` + `timeseries_individual_buildings` and
+# registered in Athena as `<dataset>_md_agg_national_parquet` / `<dataset>_ts_by_state`.
+#
+# Column naming matches `resstock_oedi_new`, except that this publication carries allocated
+# geography only down to the grain the dwelling units were allocated to. One genuine rename:
+#   in.census_division -> in.census_division_name
+#
+# It also carries `in.as_simulated_*` columns. Those are NOT renamed versions of the plain
+# geography columns and must never be used in their place. They give the location of the
+# SIMULATED BUILDING - which weather file it ran on - whereas `in.<geography>` gives the
+# location of the dwelling units the building carries weight for. Under the catalogue
+# allocation a building's units land in geographies it was not simulated in, so the two
+# answer different questions and grouping units by the as-simulated column reports their
+# energy against the wrong place.
+#
+# In practice: `in.state` is the units' state and `weight` is their count, so state-grain and
+# national comparisons are exact. There is no allocated county, climate zone or ISO/RTO column
+# here, so comparisons at those grains cannot be made from this publication and are refused
+# rather than approximated.
+
+[table_suffix]
+annual_and_metadata = "_md_agg_national_parquet"
+timeseries = "_ts_by_state"
+
+[column_prefix]
+characteristics = "in."
+output = "out."
+
+[column_names]
+building_id = "bldg_id"
+sample_weight = "weight"
+sqft = "in.sqft..ft2"
+timestamp = "timestamp"
+completed_status = "applicability"
+unmet_hours_cooling_hr = ""
+unmet_hours_heating_hr = ""
+# The eiaid column on the utility mapping table, not a column of this publication.
+map_eiaid_column = "gisjoin"
+fuel_totals = ["out.electricity.total.energy_consumption..kwh",
+               "out.natural_gas.total.energy_consumption..kwh",
+               "out.fuel_oil.total.energy_consumption..kwh",
+               "out.propane.total.energy_consumption..kwh",
+               ]
+
+[completion_values]
+success = "true"
+fail = ""
+inapplicable = "false"
+
+[structure]
+inapplicables_have_ts = "true"
+
+# The metadata holds one row (and one weight) per (building, state) the building's
+# dwelling units were allocated to, and the timeseries is written once per (building,
+# state) as well, so state belongs in both keys. Joining on bldg_id alone would pair every
+# state's profile with every state's weight. The metadata carries the column as
+# `in.state`; key lookup falls back to the characteristics prefix to find it.
+[unique_keys]
+metadata = ["bldg_id", "state"]
+timeseries = ["bldg_id", "state"]

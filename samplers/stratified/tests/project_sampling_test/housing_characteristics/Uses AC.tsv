@@ -1,0 +1,4 @@
+Dependency=Ceiling Fan	Option=Yes	Option=No	sampling_probability
+None	0.9	0.1	0.4
+Standard	0.8	0.2	0.4
+Premium	0.1	0.9	0.2

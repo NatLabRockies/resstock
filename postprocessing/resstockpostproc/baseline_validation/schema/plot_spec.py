@@ -10,6 +10,7 @@ both the plotters (for figure titles) and the HTML index (for filter facets).
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 from enum import StrEnum
@@ -110,6 +111,25 @@ class DataKey(NamedTuple):
             f"DataKey({self.comparison_dataset}, {self.effective_group_by}, {self.resolution},"
             f" {self.aggregation_type}, {self.coverage})"
         )
+
+
+_HTML_LINE_BREAK = re.compile(r"<br\s*/?>")
+# Characters Windows rejects in a file or directory name. POSIX allows all but "/", which
+# is why display titles carrying "<br>" write fine on Linux and fail on Windows.
+_UNSAFE_PATH_CHARS = re.compile(r'[<>:"/\\|?*]')
+
+
+def as_path_component(text: str) -> str:
+    """Make one display label safe to use as a file or directory name.
+
+    Display titles carry ``<br>`` so that long plot headings wrap in the figure, and the
+    same string is used for the file on disk. Trailing dots and spaces are stripped too:
+    Windows silently drops them, which would make a written path differ from the one linked
+    in the dashboard index.
+    """
+    cleaned = _HTML_LINE_BREAK.sub(" ", text)
+    cleaned = _UNSAFE_PATH_CHARS.sub("", cleaned)
+    return " ".join(cleaned.split()).rstrip(". ") or "untitled"
 
 
 def format_group_by(group_by: str) -> str:
@@ -566,7 +586,10 @@ class PlotSpec(NoExtraModel):
             if value == "US Total":
                 filter_dir /= "U.S. Total"
             else:
-                filter_dir /= f"By {format_group_by(char)}"
-                filter_dir /= format_focus_label(value)
-        path_segment = filter_dir / f"By {format_group_by(self.group_by)}" if self.group_by else filter_dir
-        return path_segment, title
+                filter_dir /= as_path_component(f"By {format_group_by(char)}")
+                filter_dir /= as_path_component(format_focus_label(value))
+        if self.group_by:
+            path_segment = filter_dir / as_path_component(f"By {format_group_by(self.group_by)}")
+        else:
+            path_segment = filter_dir
+        return path_segment, as_path_component(title)

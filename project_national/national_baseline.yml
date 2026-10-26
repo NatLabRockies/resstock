@@ -1,4 +1,4 @@
-schema_version: '0.4'
+schema_version: '0.7'
 os_version: 3.10.0
 os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
@@ -9,15 +9,21 @@ weather_files_url: https://data.nlr.gov/system/files/156/Buildstock_TMY3_FIPS-16
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
 
-# Baseline number of units
-baseline:
-  n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories ( 138765649 without AK and HI )
+# No baseline: n_buildings_represented with the stratified sampler, weights are determined by the allocation process.
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: residential_quota
+  type: residential_stratified
   args:
     n_datapoints: 250
+    segment_vars:
+      - Federal Poverty Level
+      - Geometry Building Type RECS
+      - Vintage
+      - Heating Fuel
+      - Sampling Region
+    segment_selection_sample_size: 5000000
+    num_samples_per_segment: 12
 
 # NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)

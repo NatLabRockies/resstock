@@ -39,7 +39,7 @@ from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     dataset_output_dir,
     relative_href_from_file,
 )
-from resstockpostproc.baseline_validation.plot_helpers.utils import ensure_directory
+from resstockpostproc.baseline_validation.plot_helpers.utils import ensure_directory, os_path
 
 logger = logging.getLogger(__name__)
 
@@ -233,7 +233,7 @@ def _build_stacked_views_for_group(
         paths = [
             p
             for p in (_raw_path(output_root, e[i][0], link_format) for _, e in qty_entries if i < len(e))
-            if p.exists()
+            if os_path(p).exists()
         ]
         if len(paths) < 2:
             continue

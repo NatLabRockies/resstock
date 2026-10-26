@@ -15614,25 +15614,25 @@ in.federal_poverty_level	200-300%	Federal poverty level of 200-300%
 in.federal_poverty_level	300-400%	Federal poverty level of 300-400%
 in.federal_poverty_level	400%+	Federal poverty level of 400%+
 in.federal_poverty_level	Not Available	Federal poverty level is Not Available
-in.generation_and_emissions_assessment_region	CAISO	Generation and emission assessment region of CAISO
-in.generation_and_emissions_assessment_region	ERCOT	Generation and emission assessment region of ERCOT
-in.generation_and_emissions_assessment_region	FRCC	Generation and emission assessment region of FRCC
-in.generation_and_emissions_assessment_region	ISONE	Generation and emission assessment region of ISONE
-in.generation_and_emissions_assessment_region	MISO Central	Generation and emission assessment region of MISO Central
-in.generation_and_emissions_assessment_region	MISO North	Generation and emission assessment region of MISO North
-in.generation_and_emissions_assessment_region	MISO South	Generation and emission assessment region of MISO South
-in.generation_and_emissions_assessment_region	NYISO	Generation and emission assessment region of NYISO
-in.generation_and_emissions_assessment_region	None	Generation and emission assessment region of None
-in.generation_and_emissions_assessment_region	Northern Grid East	Generation and emission assessment region of Northern Grid East
-in.generation_and_emissions_assessment_region	Northern Grid South	Generation and emission assessment region of Northern Grid South
-in.generation_and_emissions_assessment_region	Northern Grid West	Generation and emission assessment region of Northern Grid West
-in.generation_and_emissions_assessment_region	PJM East	Generation and emission assessment region of PJM East
-in.generation_and_emissions_assessment_region	PJM West	Generation and emission assessment region of PJM West
-in.generation_and_emissions_assessment_region	SERTP	Generation and emission assessment region of SERTP
-in.generation_and_emissions_assessment_region	SPP North	Generation and emission assessment region of SPP North
-in.generation_and_emissions_assessment_region	SPP South	Generation and emission assessment region of SPP South
-in.generation_and_emissions_assessment_region	West Connect North	Generation and emission assessment region of West Connect North
-in.generation_and_emissions_assessment_region	West Connect South	Generation and emission assessment region of West Connect South
+in.as_simulated_generation_and_emissions_assessment_region	CAISO	Generation and emission assessment region of CAISO
+in.as_simulated_generation_and_emissions_assessment_region	ERCOT	Generation and emission assessment region of ERCOT
+in.as_simulated_generation_and_emissions_assessment_region	FRCC	Generation and emission assessment region of FRCC
+in.as_simulated_generation_and_emissions_assessment_region	ISONE	Generation and emission assessment region of ISONE
+in.as_simulated_generation_and_emissions_assessment_region	MISO Central	Generation and emission assessment region of MISO Central
+in.as_simulated_generation_and_emissions_assessment_region	MISO North	Generation and emission assessment region of MISO North
+in.as_simulated_generation_and_emissions_assessment_region	MISO South	Generation and emission assessment region of MISO South
+in.as_simulated_generation_and_emissions_assessment_region	NYISO	Generation and emission assessment region of NYISO
+in.as_simulated_generation_and_emissions_assessment_region	None	Generation and emission assessment region of None
+in.as_simulated_generation_and_emissions_assessment_region	Northern Grid East	Generation and emission assessment region of Northern Grid East
+in.as_simulated_generation_and_emissions_assessment_region	Northern Grid South	Generation and emission assessment region of Northern Grid South
+in.as_simulated_generation_and_emissions_assessment_region	Northern Grid West	Generation and emission assessment region of Northern Grid West
+in.as_simulated_generation_and_emissions_assessment_region	PJM East	Generation and emission assessment region of PJM East
+in.as_simulated_generation_and_emissions_assessment_region	PJM West	Generation and emission assessment region of PJM West
+in.as_simulated_generation_and_emissions_assessment_region	SERTP	Generation and emission assessment region of SERTP
+in.as_simulated_generation_and_emissions_assessment_region	SPP North	Generation and emission assessment region of SPP North
+in.as_simulated_generation_and_emissions_assessment_region	SPP South	Generation and emission assessment region of SPP South
+in.as_simulated_generation_and_emissions_assessment_region	West Connect North	Generation and emission assessment region of West Connect North
+in.as_simulated_generation_and_emissions_assessment_region	West Connect South	Generation and emission assessment region of West Connect South
 in.geometry_attic_type	Finished Attic or Cathedral Ceilings	Living space extends up to the roof structure
 in.geometry_attic_type	None	No attic
 in.geometry_attic_type	Unvented Attic	Attic space is unvented

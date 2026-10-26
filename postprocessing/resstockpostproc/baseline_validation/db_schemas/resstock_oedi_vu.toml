@@ -1,7 +1,6 @@
 [table_suffix]
-baseline = "_metadata"
+annual_and_metadata = "_metadata"
 timeseries = "_by_state_vu"
-upgrades = "_metadata"
 
 [column_prefix]
 characteristics = "in."

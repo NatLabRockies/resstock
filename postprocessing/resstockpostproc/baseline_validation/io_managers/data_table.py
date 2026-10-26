@@ -31,6 +31,7 @@ from resstockpostproc.baseline_validation.io_managers.data_table_columns import 
     build_column_config,
 )
 from resstockpostproc.shared_utils.timing import timed
+from resstockpostproc.baseline_validation.plot_helpers.utils import os_path
 
 
 # Page size for client-side pagination (large tables render in chunks)
@@ -475,7 +476,7 @@ def generate_data_table_html(
 ) -> None:
     """Write an interactive HTML data table page for ``data`` to ``output_path``."""
     if data.is_empty():
-        output_path.write_text(
+        os_path(output_path).write_text(
             "<html><body><p>No data available.</p></body></html>",
             encoding="utf-8",
         )
@@ -588,4 +589,4 @@ def generate_data_table_html(
         csv_download_filename=csv_download_filename,
         include_discrepancy_metrics=include_discrepancy_metrics,
     )
-    output_path.write_text(html, encoding="utf-8")
+    os_path(output_path).write_text(html, encoding="utf-8")
