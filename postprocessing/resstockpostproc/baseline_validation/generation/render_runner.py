@@ -245,12 +245,19 @@ def generate_spec_plots(
     return " ;; ".join(viz_parts), data_rel
 
 
-def worker_init(enable_persistent_kaleido: bool = True):
+def worker_init(enable_persistent_kaleido: bool = True, log_file_path: str | None = None):
     """Process initializer for worker pool — collect timing in memory, use read-only disk cache."""
     from resstockpostproc.shared_utils import caching  # noqa: PLC0415 — lazy: runs only in worker process
 
     TimingStats.enable_worker_mode()
     caching.CACHE_READ_ONLY = True
+    # Route WARNING+ logs to the shared run.log before silencing stderr so that
+    # graceful-skip warnings (e.g. missing timeseries table) are preserved.
+    if log_file_path:
+        _fh = logging.FileHandler(log_file_path, mode="a", encoding="utf-8", delay=False)
+        _fh.setLevel(logging.WARNING)
+        _fh.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - %(message)s"))
+        logging.getLogger().addHandler(_fh)
     # Suppress worker stdout/stderr — the main process logs progress via tqdm.
     sys.stdout = open(os.devnull, "w")  # noqa: SIM115 — intentionally lives for the worker's lifetime
     sys.stderr = open(os.devnull, "w")  # noqa: SIM115 — intentionally lives for the worker's lifetime
@@ -310,7 +317,9 @@ def _tqdm_logging_context(total: int):
     original_handlers = root_logger.handlers[:]
     tqdm_handler = _TqdmLoggingHandler()
     tqdm_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
-    root_logger.handlers = [tqdm_handler]
+    # Keep any FileHandlers so log output continues to run.log during the tqdm phase.
+    file_handlers = [h for h in original_handlers if isinstance(h, logging.FileHandler)]
+    root_logger.handlers = [tqdm_handler] + file_handlers
     pbar = tqdm(
         total=total,
         desc="Generating plots",
@@ -350,14 +359,14 @@ def _consume_result(future, sub_key):
     return result
 
 
-def _render_parallel(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result) -> None:
+def _render_parallel(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result, log_file_path=None) -> None:
     """Run plot_args in a ProcessPoolExecutor, calling handle_result on each completion."""
     max_workers = max(2, min(8, (os.cpu_count() or 4) - 2))
     logger.info(f"Using {max_workers} worker processes")
     with ProcessPoolExecutor(
         max_workers=max_workers,
         initializer=worker_init,
-        initargs=(needs_persistent_kaleido,),
+        initargs=(needs_persistent_kaleido, str(log_file_path) if log_file_path else None),
     ) as executor:
         futures = _submit_all(executor, plot_args, common_kwargs)
         for future in as_completed(futures):
@@ -394,6 +403,7 @@ def render_all_work_items(
     results: dict,
     index_state,
     csv_path: Path,
+    log_file_path: Path | None = None,
 ) -> None:
     """Render every work item — parallel or sequential — into results and TSV index."""
     common_kwargs = {
@@ -409,7 +419,7 @@ def render_all_work_items(
 
     with _tqdm_logging_context(len(plot_args)) as pbar:
         if parallel:
-            _render_parallel(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result)
+            _render_parallel(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result, log_file_path=log_file_path)
         else:
             _render_sequential(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result)
 
