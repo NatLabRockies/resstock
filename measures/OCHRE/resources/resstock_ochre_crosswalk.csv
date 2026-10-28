@@ -1,0 +1,98 @@
+ResStock Annual,ResStock Timeseries,OCHRE
+,Time,Time
+,TimeDST,
+,TimeUTC,
+Energy Use: Total (MBtu),Energy Use: Total,
+Energy Use: Net (MBtu),Energy Use: Net,
+Fuel Use: Electricity: Total (MBtu),Fuel Use: Electricity: Total,Total Electric Power (kW)
+Fuel Use: Electricity: Net (MBtu),Fuel Use: Electricity: Net,
+Fuel Use: Electricity: PV (MBtu),Fuel Use: Electricity: PV,PV Electric Power (kW)
+End Use: Electricity: Heating (MBtu),End Use: Electricity: Heating,HVAC Heating Electric Power (kW)
+End Use: Electricity: Heating Fans/Pumps (MBtu),End Use: Electricity: Heating Fans/Pumps,HVAC Heating Fan Power (kW)
+End Use: Electricity: Heating Heat Pump Backup (MBtu),End Use: Electricity: Heating Heat Pump Backup,HVAC Heating ER Power (kW)
+End Use: Electricity: Heating Heat Pump Backup Fans/Pumps (MBtu),End Use: Electricity: Heating Heat Pump Backup Fans/Pumps,
+End Use: Electricity: Cooling (MBtu),End Use: Electricity: Cooling,HVAC Cooling Electric Power (kW)
+End Use: Electricity: Cooling Fans/Pumps (MBtu),End Use: Electricity: Cooling Fans/Pumps,HVAC Cooling Fan Power (kW)
+End Use: Electricity: Hot Water Recirc Pump (MBtu),End Use: Electricity: Hot Water Recirc Pump,
+End Use: Electricity: Hot Water (MBtu),End Use: Electricity: Hot Water,Water Heating Electric Power (kW)
+End Use: Electricity: Lighting Interior (MBtu),End Use: Electricity: Lighting Interior,Indoor Lighting Electric Power (kW)
+End Use: Electricity: Lighting Exterior (MBtu),End Use: Electricity: Lighting Exterior,Exterior Lighting Electric Power (kW)
+End Use: Electricity: Lighting Garage (MBtu),End Use: Electricity: Lighting Garage,Garage Lighting Electric Power (kW)
+End Use: Electricity: Mech Vent (MBtu),End Use: Electricity: Mech Vent,Ventilation Fan Electric Power (kW)
+End Use: Electricity: Refrigerator (MBtu),End Use: Electricity: Refrigerator,Refrigerator Electric Power (kW)
+End Use: Electricity: Freezer (MBtu),End Use: Electricity: Freezer,Freezer Electric Power (kW)
+End Use: Electricity: Dishwasher (MBtu),End Use: Electricity: Dishwasher,Dishwasher Electric Power (kW)
+End Use: Electricity: Clothes Washer (MBtu),End Use: Electricity: Clothes Washer,Clothes Washer Electric Power (kW)
+End Use: Electricity: Clothes Dryer (MBtu),End Use: Electricity: Clothes Dryer,Clothes Dryer Electric Power (kW)
+End Use: Electricity: Range/Oven (MBtu),End Use: Electricity: Range/Oven,Cooking Range Electric Power (kW)
+End Use: Electricity: Ceiling Fan (MBtu),End Use: Electricity: Ceiling Fan,Ceiling Fan Electric Power (kW)
+End Use: Electricity: Television (MBtu),End Use: Electricity: Television,TV Electric Power (kW)
+End Use: Electricity: Plug Loads (MBtu),End Use: Electricity: Plug Loads,MELs Electric Power (kW)
+End Use: Electricity: Pool Heater (MBtu),End Use: Electricity: Pool Heater,Pool Heater Electric Power (kW)
+End Use: Electricity: Pool Pump (MBtu),End Use: Electricity: Pool Pump,Pool Pump Electric Power (kW)
+End Use: Electricity: Permanent Spa Heater (MBtu),End Use: Electricity: Permanent Spa Heater,Spa Heater Electric Power (kW)
+End Use: Electricity: Permanent Spa Pump (MBtu),End Use: Electricity: Permanent Spa Pump,Spa Pump Electric Power (kW)
+End Use: Electricity: Well Pump (MBtu),End Use: Electricity: Well Pump,Well Pump Electric Power (kW)
+End Use: Electricity: Electric Vehicle Charging (MBtu),End Use: Electricity: Electric Vehicle Charging,EV Electric Power (kW)
+Emissions: CO2e: LRMER_MidCase_15: Total (lb),Emissions: CO2e: LRMER_MidCase_15: Total,
+Emissions: CO2e: LRMER_MidCase_15: Net (lb),Emissions: CO2e: LRMER_MidCase_15: Net,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Total (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Total,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Net (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Net,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Heating (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Heating,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Heating Fans/Pumps (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Heating Fans/Pumps,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Cooling (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Cooling,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Cooling Fans/Pumps (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Cooling Fans/Pumps,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Hot Water (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Hot Water,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Lighting Interior (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Lighting Interior,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Lighting Exterior (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Lighting Exterior,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Mech Vent (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Mech Vent,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Refrigerator (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Refrigerator,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Freezer (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Freezer,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Dishwasher (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Dishwasher,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Clothes Washer (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Clothes Washer,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Clothes Dryer (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Clothes Dryer,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Range/Oven (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Range/Oven,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Ceiling Fan (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Ceiling Fan,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Television (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Television,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Plug Loads (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Plug Loads,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Pool Heater (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Pool Heater,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Pool Pump (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Pool Pump,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Permanent Spa Heater (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Permanent Spa Heater,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Permanent Spa Pump (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Permanent Spa Pump,
+Emissions: CO2e: LRMER_MidCase_15: Electricity: Electric Vehicle Charging (lb),Emissions: CO2e: LRMER_MidCase_15: Electricity: Electric Vehicle Charging,
+Hot Water: Clothes Washer (gal),Hot Water: Clothes Washer,
+Hot Water: Dishwasher (gal),Hot Water: Dishwasher,
+Hot Water: Fixtures (gal),Hot Water: Fixtures,
+Hot Water: Distribution Waste (gal),Hot Water: Distribution Waste,
+Load: Heating: Delivered (MBtu),Load: Heating: Delivered,HVAC Heating Delivered (W)
+Load: Cooling: Delivered (MBtu),Load: Cooling: Delivered,HVAC Cooling Delivered (W)
+Load: Hot Water: Delivered (MBtu),Load: Hot Water: Delivered,Water Heating Delivered (W)
+Load: Hot Water: Tank Losses (MBtu),Load: Hot Water: Tank Losses,Hot Water Heat Loss (W)
+Unmet Hours: Heating (hr),Unmet Hours: Heating,
+Unmet Hours: Cooling (hr),Unmet Hours: Cooling,
+Unmet Hours: EV Driving (hr),Unmet Hours: EV Driving,
+,Temperature: Conditioned Space,Temperature - Indoor (C)
+,Temperature: Heating Setpoint,HVAC Heating Setpoint (C)
+,Temperature: Cooling Setpoint,HVAC Cooling Setpoint (C)
+,Humidity Ratio: Conditioned Space,Humidity Ratio - Indoor (-)
+,Relative Humidity: Conditioned Space,Relative Humidity - Indoor (-)
+,Dewpoint Temperature: Conditioned Space,
+,Radiant Temperature: Conditioned Space,
+,Operative Temperature: Conditioned Space,
+,Airflow: Infiltration,Infiltration Flow Rate - Indoor (m^3/s)
+,Airflow: Mechanical Ventilation,Forced Ventilation Flow Rate - Indoor (m^3/s)
+,Airflow: Natural Ventilation,Natural Ventilation Flow Rate - Indoor (m^3/s)
+,Weather: Drybulb Temperature,Temperature - Outdoor (C)
+,Weather: Wetbulb Temperature,
+,Weather: Relative Humidity,
+,Weather: Wind Speed,
+,Weather: Diffuse Solar Radiation,
+,Weather: Direct Solar Radiation,
+Peak Electricity: Winter Total (W),,
+Peak Electricity: Summer Total (W),,
+Peak Electricity: Annual Total (W),,
+Peak Electricity: Winter Net (W),,
+Peak Electricity: Summer Net (W),,
+Peak Electricity: Annual Net (W),,
+Peak Load: Heating: Delivered (kBtu/hr),,
+Peak Load: Cooling: Delivered (kBtu/hr),,

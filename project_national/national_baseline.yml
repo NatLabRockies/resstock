@@ -1,69 +1,83 @@
-schema_version: '0.4'
+schema_version: '0.7'
 os_version: 3.9.0
 os_sha: c77fbb9569
+# Use the project-built apptainer image that ships with OCHRE pre-installed
+# at /opt/OCHRE/.venv/bin/ochre. Built by apptainer/build-ochre-image.sh.
+sys_image_dir: /projects/panels/bsb_ochre/apptainer_images
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: national_baseline
-weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
-# weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
+output_directory: /projects/panels/bsb_ochre/precomputed_nodefco_june9/
+weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip
+# weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+# weather_files_path: ../weather # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
 
 # Baseline number of units
 baseline:
-  n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories ( 138765649 without AK and HI )
+  n_buildings_represented: 139647020 # 2539036 # 139647020 * 10K/550K # American Community Survey 2021 5-year, B25001, does not include territories ( 138765649 without AK and HI )
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: residential_quota
+  # type: precomputed
+  type: precomputed # For production run
   args:
-    n_datapoints: 250
-
+    sample_file: res_sdr_2025_r1.csv
+    # n_datapoints: 10000 # For production run
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
-# kestrel:
-#   n_jobs: 3
-#   minutes_per_sim: 30
-#   account: <account>
-#   postprocessing:
-#     time: 20
-#     n_workers: 1
-#     n_procs: 20
-#   sampling:
-#     time: 5
+kestrel:
+  n_jobs: 40
+  # minutes_per_sim is optional; auto-sized from stock type + use_ochre.
+  account: panels
+  postprocessing:
+    time: 240
+    n_workers: 10
+    n_procs: 20
+  sampling:
+    time: 20
 
 # Post proccessing and Amazon Web Services
-# postprocessing:
-#   # Post simulation partitioning
-#   keep_individual_timeseries: true
-#   partition_columns:
-#     - State
-#     - County
-#   # AWS upload bucket and athena setup (uncomment during production and testing runs)
-#   aws:
-#    region_name: us-west-2
-#    s3:
-#      bucket: sdr_resstock
-#      prefix: production_runs
-#    athena:
-#      glue_service_role: service-role/AWSGlueServiceRole-default
-#      database_name: sdr_resstock
-#      max_crawling_time: 1200
+postprocessing:
+  # Post simulation partitioning
+  keep_individual_timeseries: true
+  partition_columns:
+    - State
+    - County
+  # AWS upload bucket and athena setup (uncomment during production and testing runs)
+  publish_annual_results: true
+  aws:
+   region_name: us-west-2
+   s3:
+     bucket: resstock-panels
+     prefix: ochre_runs
+   athena:
+     glue_service_role: service-role/AWSGlueServiceRole-default
+     database_name: resstock_panels
+     max_crawling_time: 1200
 
 # Workflow generator
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.04.29
+  version: 2026.01.12
   args:
     # Annual simulation and timestep
+    use_ochre: true
+
+    # OCHRE simulates at simulation_control_timestep (1 min) but writes the
+    # timeseries at output_res_minutes to keep output size manageable. Annual
+    # totals are still computed from the full-resolution data.
+    ochre:
+      output_res_minutes: 15
+
     build_existing_model:
-      simulation_control_timestep: 60
+      simulation_control_timestep: 1
       simulation_control_run_period_begin_month: 1
       simulation_control_run_period_begin_day_of_month: 1
       simulation_control_run_period_end_month: 12
       simulation_control_run_period_end_day_of_month: 31
-      simulation_control_run_period_calendar_year: 2007
+      simulation_control_run_period_calendar_year: 2018
 
     # Emissions scenarios
     emissions:
@@ -100,4 +114,80 @@ workflow_generator:
 
     # Files to keep
     server_directory_cleanup:
-      retain_schedules_csv: false
+      retain_schedules_csv: true
+
+references:
+  ### -- Anchors not dependent on other anchors -- ###
+  cchp_apply_logic: &typical_cold_climate_logic
+    - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
+    - or:
+        - not:
+          - or:
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Cooling Only
+        # - or:
+        - and:
+          - HVAC Cooling Type|Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+        - and:
+          - HVAC Cooling Type|Non-Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+        - and:
+          - HVAC Cooling Type|Central AC
+          - not: HVAC Shared Efficiencies|Fan Coil Cooling Only
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+  
+  fossil_fuel_or_electricity: &fossil_fuel_or_electricity
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+
+upgrades:
+  ### -- HVAC: Furnaces -- ###
+  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025
+    package_apply_logic: *fossil_fuel_or_electricity
+    options:
+      - option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *typical_cold_climate_logic
+
+      - option: Heating Fuel|Electricity
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: Heating Fuel|Electricity
+
+      - option: HVAC Heating Type And Fuel|Electricity ASHP
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: HVAC Heating Type And Fuel|Electricity ASHP
