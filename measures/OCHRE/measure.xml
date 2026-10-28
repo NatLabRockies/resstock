@@ -113,6 +113,29 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
+    <argument>
+      <name>defco_mode</name>
+      <display_name>DEFCO Mode</display_name>
+      <description>Frost/defrost mode for the DEFCO air-source heat pump model. Standard: ROM airflow/evaporator-temperature defrost triggers. Time: also defrost after 60 min of compressor runtime. IdealNoFrost: no frost growth or defrost; compressor low-temperature lockout is retained.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Standard</default_value>
+      <choices>
+        <choice>
+          <value>Standard</value>
+          <display_name>Standard</display_name>
+        </choice>
+        <choice>
+          <value>Time</value>
+          <display_name>Time</display_name>
+        </choice>
+        <choice>
+          <value>IdealNoFrost</value>
+          <display_name>IdealNoFrost</display_name>
+        </choice>
+      </choices>
+    </argument>
   </arguments>
   <outputs />
   <provenances />

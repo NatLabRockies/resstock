@@ -104,6 +104,12 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Random seed for reproducibility. If set, passed to OCHRE CLI.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('defco_mode', ['Standard', 'Time', 'IdealNoFrost'], false)
+    arg.setDisplayName('DEFCO Mode')
+    arg.setDescription('Frost/defrost mode for the DEFCO air-source heat pump model. Standard: ROM airflow/evaporator-temperature defrost triggers. Time: also defrost after 60 min of compressor runtime. IdealNoFrost: no frost growth or defrost; compressor low-temperature lockout is retained.')
+    arg.setDefaultValue('Standard')
+    args << arg
+
     return args
   end
 
@@ -187,13 +193,14 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     end
 
     seed = args[:seed]
+    defco_mode = args[:defco_mode]
 
     # Build OCHRE CLI command
     ochre_cmd = build_ochre_command(ochre_cli, hpxml_path, output_dir,
                                     time_res_minutes, duration_days,
                                     schedule_file, weather_file,
                                     start_year, start_month, start_day,
-                                    export_res_minutes, seed, output_res_minutes)
+                                    export_res_minutes, seed, output_res_minutes, defco_mode)
 
     runner.registerInfo("Running OCHRE simulation: #{ochre_cmd}")
 
@@ -241,7 +248,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
   private
 
   # Build OCHRE command to run via CLI
-  def build_ochre_command(ochre_cli, hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day, export_res_minutes = nil, seed = nil, output_res_minutes = nil)
+  def build_ochre_command(ochre_cli, hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day, export_res_minutes = nil, seed = nil, output_res_minutes = nil, defco_mode = nil)
     # Get directory and filename for HPXML
     hpxml_dir = File.dirname(hpxml_path)
     hpxml_name = File.basename(hpxml_path)
@@ -262,7 +269,11 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     cmd += " --start_year #{start_year} --start_month #{start_month} --start_day #{start_day}"
     # cmd += " --time_zone DST"
     cmd += ' --verbosity=3'
-    # cmd += ' --use_advanced_defrost'
+    cmd += ' --use_advanced_defrost'
+    # DEFCO frost/defrost mode (Standard, Time or IdealNoFrost); omitted -> OCHRE default (Standard)
+    if defco_mode && !defco_mode.empty?
+      cmd += " --defco_mode #{defco_mode}"
+    end
 
     if schedule_file && !schedule_file.empty?
       schedule_file_safe = schedule_file.gsub("'", "\\\\'")
