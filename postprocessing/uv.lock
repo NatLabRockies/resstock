@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = "==3.12.*"
 resolution-markers = [
     "sys_platform == 'win32'",
@@ -273,7 +273,7 @@ wheels = [
 [[package]]
 name = "buildstock-query"
 version = "0.3.0"
-source = { git = "https://github.com/NREL/buildstock-query.git?rev=fix%2Fquery_from_view#d842d10bf6449f6318a189ebea229b80aa61c802" }
+source = { git = "https://github.com/NREL/buildstock-query.git?rev=v0.3.2#ab7e77225b35fdcf5f956f12c01db4af110ecbe1" }
 dependencies = [
     { name = "filelock" },
     { name = "inquirerpy" },
@@ -1668,7 +1668,7 @@ name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ptyprocess", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "ptyprocess" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/92/cc564bf6381ff43ce1f4d06852fc19a2f11d180f23dc32d9588bee2f149d/pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f", size = 166450, upload-time = "2023-11-25T09:07:26.339Z" }
 wheels = [
@@ -1753,19 +1753,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ff/f9/aeda46259b0669247a160315d2d51269de9504b9dd2f70acadbcb22f46b7/polars-1.41.2.tar.gz", hash = "sha256:256d6731162371b77f3f29a55eacb8c0fc740ddb1a293a01d2ef5b5393c5c708", size = 737996, upload-time = "2026-05-29T17:39:15.604Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1f/22/28f62d24f7db56ac4343588f9362d49b7b4177e55ac47a466fe696b0099b/polars-1.41.2-py3-none-any.whl", hash = "sha256:23ce9a2910b6e3e8d4258770bf44aa17170958df7af6e85feedf4458a04d8d29", size = 833445, upload-time = "2026-05-29T17:37:05.576Z" },
-]
-
-[[package]]
-name = "polars-lts-cpu"
-version = "0.19.19"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/45/db/669a8b1b6792f615da23b4a5bb555bf91c818a91a6bbebdef586b53dabd8/polars_lts_cpu-0.19.19.tar.gz", hash = "sha256:886d47a68a1b48409273d78b5232ebb10f52fddcfb2d5293b3301e1c716ddea7", size = 2973447, upload-time = "2023-12-01T19:20:45.437Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/2e/bf/5f6a9c710bfea5a344f8f7665b5ebe3bdf480f187f65bf02c7f5cd8276d9/polars_lts_cpu-0.19.19-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:30141220cebcf019e7ae52e60e95dba82f66482296452e59bb264437b2e943bd", size = 26174564, upload-time = "2023-12-01T19:20:00.674Z" },
-    { url = "https://files.pythonhosted.org/packages/69/92/844c7b973e9eadbfffd229840c400d8824ff1ece9ef3eb7c2cc3de96b9ff/polars_lts_cpu-0.19.19-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:74ee7b1692fbbc9430f287ac90c74521a21aab64773be770efa0d47c19c9c6f0", size = 24083205, upload-time = "2023-12-01T19:20:06.153Z" },
-    { url = "https://files.pythonhosted.org/packages/3c/b0/9d318079e5282816223a59a1c1bab93b405ca5c93bd7b801415231850b81/polars_lts_cpu-0.19.19-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b2e56175ea0bca32f1d9eba7e1c883518c511df3312239530aa8637af5617abe", size = 26406382, upload-time = "2023-12-01T19:20:09.815Z" },
-    { url = "https://files.pythonhosted.org/packages/ce/fa/e101dc9bb51f7fe0a04d27609c15c0a578017410ff99bd8c5fe6a034e94a/polars_lts_cpu-0.19.19-cp38-abi3-manylinux_2_24_aarch64.whl", hash = "sha256:8c1f164351c55e4b478256ef610bebd588d4b08cca28e2165891404724246d30", size = 26247243, upload-time = "2023-12-01T19:20:13.779Z" },
-    { url = "https://files.pythonhosted.org/packages/c5/20/f46ac47842c68b87124ebb1144d00a2b502a7dcbc6f3d61d6531cd063b7a/polars_lts_cpu-0.19.19-cp38-abi3-win_amd64.whl", hash = "sha256:bfc1011ef2e01b0e0df87579c5e4dbb4995be718cd189cdf8e00bc27f72d1f0a", size = 24875207, upload-time = "2023-12-01T19:20:17.62Z" },
 ]
 
 [[package]]
@@ -2385,7 +2372,7 @@ dependencies = [
     { name = "pandas" },
     { name = "playwright" },
     { name = "plotly" },
-    { name = "polars-lts-cpu" },
+    { name = "polars" },
     { name = "prefect" },
     { name = "pyarrow" },
     { name = "pyathena" },
@@ -2425,7 +2412,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "boto3", extras = ["crt"], specifier = ">=1.39.4" },
-    { name = "buildstock-query", git = "https://github.com/NREL/buildstock-query.git?rev=fix%2Fquery_from_view" },
+    { name = "buildstock-query", git = "https://github.com/NREL/buildstock-query.git?rev=v0.3.2" },
     { name = "connectorx", specifier = ">=0.4.3" },
     { name = "dash", extras = ["diskcache"], specifier = ">=3.0.4" },
     { name = "dash-bootstrap-components", specifier = ">=2.0.3" },
@@ -2443,7 +2430,7 @@ requires-dist = [
     { name = "pandas" },
     { name = "playwright", specifier = ">=1.58.0" },
     { name = "plotly" },
-    { name = "polars-lts-cpu", specifier = ">=0.19.0,<0.20.0" },
+    { name = "polars" },
     { name = "prefect", specifier = ">=3.4.5" },
     { name = "pyarrow" },
     { name = "pyathena", specifier = ">=3.19.0" },
