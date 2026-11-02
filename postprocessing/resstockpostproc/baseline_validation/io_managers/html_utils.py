@@ -10,6 +10,7 @@ from pathlib import Path
 
 from resstockpostproc.baseline_validation.dashboard.dashboard_paths import relative_href_from_file
 from resstockpostproc.shared_utils.timing import timed
+from resstockpostproc.baseline_validation.plot_helpers.utils import os_path
 
 
 _BODY_RE = re.compile(r"<body[^>]*>\n?(.*?)</body>", re.DOTALL)
@@ -138,7 +139,7 @@ def postprocess_plot_html(
     chart_sections = []
     orig_w, orig_h = "1200", "600"
     for i, path in enumerate(html_paths):
-        html = path.read_text(encoding="utf-8")
+        html = os_path(path).read_text(encoding="utf-8")
         m = _PLOTLY_DIV_STYLE_RE.search(html)
         if m:
             orig_h_raw, orig_w_raw = m.group(1).strip(), m.group(2).strip()
@@ -262,7 +263,7 @@ def postprocess_plot_html(
         )
 
     # Take the <head> from the first input and inject page CSS there.
-    first_html = html_paths[0].read_text(encoding="utf-8")
+    first_html = os_path(html_paths[0]).read_text(encoding="utf-8")
     head_match = _HEAD_RE.search(first_html)
     head = head_match.group(1) if head_match else "<head></head>"
     head = head.replace("</head>", css + "</head>")
@@ -285,7 +286,7 @@ def postprocess_plot_html(
         + "</body>\n</html>"
     )
 
-    output_path.write_text(final_html, encoding="utf-8")
+    os_path(output_path).write_text(final_html, encoding="utf-8")
 
 
 @timed

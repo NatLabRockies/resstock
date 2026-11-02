@@ -13,7 +13,7 @@ from plotly.offline import get_plotlyjs
 
 from resstockpostproc.baseline_validation.dashboard.dashboard_paths import dashboard_output_root, dataset_output_dir
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType
-from resstockpostproc.baseline_validation.plot_helpers.utils import ensure_directory
+from resstockpostproc.baseline_validation.plot_helpers.utils import ensure_directory, os_path
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.io_managers.html_utils import postprocess_plot_html
 from resstockpostproc.shared_utils.timing import timed
@@ -65,7 +65,7 @@ def ensure_plotly_asset(asset_dir: Path) -> Path:
     _, js = _plotly_bundle()
     ensure_directory(asset_dir)
     asset_path = asset_dir / plotly_asset_filename()
-    asset_path.write_text(js, encoding="utf-8")
+    os_path(asset_path).write_text(js, encoding="utf-8")
     return asset_path
 
 
@@ -88,7 +88,7 @@ def _figure_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -
 def _write_static_image(fig: go.Figure, fullpath: Path) -> None:
     """Write one static image with Plotly/Kaleido."""
     width, height = _figure_dimensions(fig)
-    fig.write_image(fullpath, width=width, height=height, scale=2)
+    fig.write_image(os_path(fullpath), width=width, height=height, scale=2)
 
 
 @timed
@@ -148,7 +148,7 @@ def save_figure(
             raw_path = fullpath.with_name(f"{fullpath.stem}.raw{fullpath.suffix}")
             rel_path = fullpath.relative_to(output_root)
             div_id = "fig-" + hashlib.md5(str(rel_path).encode(), usedforsecurity=False).hexdigest()
-            fig.write_html(raw_path, include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG, div_id=div_id)
+            fig.write_html(os_path(raw_path), include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG, div_id=div_id)
             postprocess_plot_html(
                 raw_path,
                 output_path=fullpath,

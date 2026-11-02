@@ -202,7 +202,8 @@ In addition to the housing characteristics themselves, several other ResStock ou
 {ResStock building characteristic output field names and descriptions} {table:supplmentary_input_fields}
 {\textbf{Field Name} & \textbf{Field Description}}
 
-        in.emissions\_electricity\_folders & Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. File names must contain GEA region names. \\ \hline
+        in.emissions\_electricity\_folders & Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. CSV basenames (without the .csv extension) must exactly match GEA region names. \\ \hline
+        in.emissions\_electricity\_values & Electricity emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list. Leave entries empty for scenarios using electricity emissions factor schedules. \\ \hline
         in.emissions\_electricity\_units & Electricity emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MWh and kg/MWh are allowed. \\ \hline
         in.emissions\_electricity\_values\_or\_filepaths & Electricity emissions factors values, specified as either an annual factor or an absolute/relative path to a file with hourly factors. If multiple scenarios, use a comma-separated list. \\ \hline
         in.emissions\_fossil\_fuel\_units & Fossil fuel emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MBtu and kg/MBtu are allowed. \\ \hline

@@ -64,7 +64,14 @@ def get_base_data(data_key: DataKey) -> pl.DataFrame:
     final_df = _add_percent_difference(
         df, join_columns=groups, value_columns=val_columns, ref_column="source", ref_cols=ref_cols
     )
-    if "sample_count" in final_df.columns:
+    # Older BuildStockQuery labels the count of distinct models `sample_count`; newer
+    # versions emit `model_count` directly, and then `sample_count` carries only the
+    # comparison source's own sample size. Either way the two belong in one column.
+    if "sample_count" in final_df.columns and "model_count" in final_df.columns:
+        final_df = final_df.with_columns(
+            pl.coalesce(pl.col("model_count"), pl.col("sample_count").cast(pl.Int64)).alias("model_count")
+        ).drop("sample_count")
+    elif "sample_count" in final_df.columns:
         final_df = final_df.rename({"sample_count": "model_count"})
     elif "model_count" not in final_df.columns:
         final_df = final_df.with_columns(pl.lit(None).cast(pl.Int64).alias("model_count"))

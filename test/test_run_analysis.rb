@@ -112,6 +112,26 @@ class TestRunAnalysis < Minitest::Test
     _assert_and_puts([stdout_str], "Error: Both 'build_existing_model' and 'simulation_output_report' must be included in yml.")
   end
 
+  def test_errors_stratified_n_buildings_represented
+    yml = ' -y test/tests_yml_files/yml_stratified_n_buildings/testing_baseline.yml'
+    @command += yml
+
+    stdout_str, _stderr_str, _status = Open3.capture3(@command, unsetenv_others: true)
+
+    _assert_and_puts([stdout_str], "Error: 'baseline: n_buildings_represented' is not used with the residential_stratified sampler")
+    assert(!File.exist?(@testing_baseline))
+  end
+
+  def test_errors_stratified_old_schema
+    yml = ' -y test/tests_yml_files/yml_stratified_old_schema/testing_baseline.yml'
+    @command += yml
+
+    stdout_str, _stderr_str, _status = Open3.capture3(@command, unsetenv_others: true)
+
+    _assert_and_puts([stdout_str], 'Error: The residential_stratified sampler requires schema_version 0.7 or later (got 0.6).')
+    assert(!File.exist?(@testing_baseline))
+  end
+
   def test_errors_precomputed_outdated_missing_parameter
     yml = ' -y test/tests_yml_files/yml_precomputed_outdated/testing_baseline_missing.yml'
     @command += yml
@@ -299,10 +319,10 @@ class TestRunAnalysis < Minitest::Test
         runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
         measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
         result = BuildExistingModel.new.set_header(runner, measures, args, false,
-                                                   { 'Generation And Emissions Assessment Region' => 'MISO Central' }, resources_dir)
+                                                   { 'Generation And Emissions Assessment Region' => 'MISO Central' }, resources_dir, nil)
         output = measures['ResStockArgumentsPostHPXML'][0]
         if valid
-          refute_equal false, result
+          assert_equal true, result
           assert_empty runner.result.stepErrors
           assert_empty runner.result.stepWarnings
           assert_equal names, output['emissions_scenario_names']
@@ -355,10 +375,10 @@ class TestRunAnalysis < Minitest::Test
         }
         runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
         measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
-        result = BuildExistingModel.new.set_header(runner, measures, args, false, building_data, resources_dir)
+        result = BuildExistingModel.new.set_header(runner, measures, args, false, building_data, resources_dir, nil)
         output = measures['ResStockArgumentsPostHPXML'][0]
         if expected_error.nil?
-          refute_equal false, result
+          assert_equal true, result
           assert_empty runner.result.stepErrors
           assert_empty runner.result.stepWarnings
           assert_equal values, output['emissions_electricity_values']
@@ -400,8 +420,8 @@ class TestRunAnalysis < Minitest::Test
         runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
         measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
         result = BuildExistingModel.new.set_header(runner, measures, args, false,
-                                                   { 'Generation And Emissions Assessment Region' => region }, resources_dir)
-        refute_equal false, result
+                                                   { 'Generation And Emissions Assessment Region' => region }, resources_dir, nil)
+        assert_equal true, result
         assert_empty runner.result.stepErrors
         skipped_indices = (0...names.size).to_a - retained_indices
         expected_warnings = skipped_indices.map { |index| "Not calculating emissions for scenario '#{names[index]}' because an electricity filepath could not be located." }
@@ -420,6 +440,7 @@ class TestRunAnalysis < Minitest::Test
         values = args.transform_keys(&:to_s).merge(runner.result.stepValues.to_h { |step_value| [step_value.name, get_value_from_workflow_step_value(step_value)] })
         upgrade_measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
         ApplyUpgrade.new.set_header(upgrade_measures, HPXML.new, values)
+        refute upgrade_measures['ResStockArgumentsPostHPXML'][0].key?('emissions_electricity_folders')
         output.each do |argument, value|
           assert_equal value, upgrade_measures['ResStockArgumentsPostHPXML'][0][argument] unless value.nil?
         end
@@ -428,8 +449,8 @@ class TestRunAnalysis < Minitest::Test
       runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
       measures = { 'BuildResidentialHPXML' => [{}], 'ResStockArgumentsPostHPXML' => [{}] }
       args = { emissions_scenario_names: 'Missing', emissions_types: 'CO2e', emissions_electricity_folders: 'empty' }
-      refute_equal false, BuildExistingModel.new.set_header(runner, measures, args, false,
-                                                            { 'Generation And Emissions Assessment Region' => 'None' }, resources_dir)
+      assert_equal true, BuildExistingModel.new.set_header(runner, measures, args, false,
+                                                           { 'Generation And Emissions Assessment Region' => 'None' }, resources_dir, nil)
       assert_equal 1, runner.result.stepWarnings.size
       refute measures['ResStockArgumentsPostHPXML'][0].key?('emissions_scenario_names')
       assert_nil get_value_from_runner(runner, 'emissions_electricity_filepaths', false)
@@ -583,6 +604,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Could not find row='peak_period' in unavailable_periods.csv")
       next if _expected_warning_message(message, "Could not find row='pre_peak_period' in unavailable_periods.csv")
       next if _expected_warning_message(message, 'Electric vehicle specified with no charger provided; home EV charging will not be modeled.')
+      next if _expected_warning_message(message, 'No emissions factor found for Scenario=LRMER_MidCase_15, Type=CO2e, Fuel=Wood Cord.')
 
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
       new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }

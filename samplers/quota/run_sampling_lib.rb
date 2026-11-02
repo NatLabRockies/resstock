@@ -6,15 +6,15 @@
 # File name must for the snake case (underscore case) of the class name. For example: WorkerInit = worker_init
 
 require 'csv'
-require_relative 'buildstock'
+require_relative '../../resources/buildstock'
 require 'pathname'
 
 class RunSampling
   def run(project_dir_name, num_samples, outfile, housing_characteristics_dir = 'housing_characteristics', lookup_file = nil)
-    resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '..', 'resources')) # Should have been uploaded per 'Additional Analysis Files' in PAT
-    characteristics_dir = File.absolute_path(File.join(File.dirname(__FILE__), '..', housing_characteristics_dir)) # Should have been uploaded per 'Additional Analysis Files' in PAT
+    resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..', 'resources')) # Should have been uploaded per 'Additional Analysis Files' in PAT
+    characteristics_dir = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..', housing_characteristics_dir)) # Should have been uploaded per 'Additional Analysis Files' in PAT
     if not File.exist?(characteristics_dir)
-      characteristics_dir = File.absolute_path(File.join(File.dirname(__FILE__), '..', project_dir_name, housing_characteristics_dir)) # Being run locally?
+      characteristics_dir = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..', project_dir_name, housing_characteristics_dir)) # Being run locally?
     end
 
     if lookup_file.nil?
@@ -294,7 +294,7 @@ class RunSampling
   def write_csv(sample_results, outfile)
     # Writes the csv output file.
     unless (Pathname.new outfile).absolute?
-      outfile = File.absolute_path(File.join(File.dirname(__FILE__), outfile))
+      outfile = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..', 'resources', outfile))
     end
     CSV.open(outfile, 'w') do |csv_object|
       sample_results.each do |sample_result|

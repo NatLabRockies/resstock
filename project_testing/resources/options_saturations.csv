@@ -141,7 +141,7 @@ Level,Parameter,Option,Saturation
 0,Ground Thermal Conductivity,1.1,0.125
 0,Ground Thermal Conductivity,1.4,0.125
 0,Ground Thermal Conductivity,1.7,0.125
-0,Ground Thermal Conductivity,2.0,0.125
+0,Ground Thermal Conductivity,2,0.125
 0,Ground Thermal Conductivity,2.3,0.125
 0,Ground Thermal Conductivity,2.6,0.125
 0,HVAC System Is Faulted,No,0.5

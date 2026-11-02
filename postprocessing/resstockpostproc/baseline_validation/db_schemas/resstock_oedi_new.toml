@@ -1,7 +1,6 @@
 [table_suffix]
-baseline = "_md_national_parquet"
+annual_and_metadata = "_md_national_parquet"
 timeseries = "_ts_by_state"
-upgrades = "_md_national_parquet"
 
 [column_prefix]
 characteristics = "in."

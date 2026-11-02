@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import contextlib
 import csv
+import functools
 import logging
 import os
 import sys
@@ -27,6 +28,7 @@ from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     relative_href_from_file,
 )
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
+from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.plot_helpers.footnotes import (
     get_plot_notes,
     get_table_notes,
@@ -151,6 +153,22 @@ def data_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -> P
 
 
 @timed
+@functools.cache
+def _modelled_source_labels() -> frozenset[str]:
+    """Display labels of the workflow's ResStock data sources.
+
+    Plot frames carry display labels rather than the configured source names, so telling a
+    modelled series from a reference one means mapping the configured names through
+    `data_source_labels`. Looking for "resstock" in the label instead would drop every
+    comparison in a workflow that labels its runs by what distinguishes them, such as
+    "Baseline" and "New".
+    """
+    labels = workflow.data_source_labels
+    return frozenset(
+        labels[source.name].label if source.name in labels else source.name for source in workflow.data_sources
+    )
+
+
 def generate_spec_plots(
     spec_entries,
     output_formats,
@@ -167,11 +185,13 @@ def generate_spec_plots(
     to a full run.
     """
     # Check if data is available for this combination before generating any plots.
+    # A comparison needs at least one modelled series and at least one reference series.
     first_spec = spec_entries[0][0]
     probe_data = get_plot_data(first_spec)
     sources = probe_data["source"].unique().to_list() if not probe_data.is_empty() else []
-    has_reference = any("resstock" not in s.lower() for s in sources)
-    has_resstock = any("resstock" in s.lower() for s in sources)
+    modelled = _modelled_source_labels()
+    has_resstock = any(source in modelled for source in sources)
+    has_reference = any(source not in modelled for source in sources)
     if not has_reference or not has_resstock:
         return None
 

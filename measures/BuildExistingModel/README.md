@@ -179,7 +179,7 @@ Types of emissions (e.g., CO2e, NOx, etc.). If multiple scenarios, use a comma-s
 
 **Emissions: Electricity Folders**
 
-Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. File names must contain GEA region names.
+Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. CSV basenames (without the .csv extension) must exactly match GEA region names.
 
 - **Name:** ``emissions_electricity_folders``
 - **Type:** ``String``
