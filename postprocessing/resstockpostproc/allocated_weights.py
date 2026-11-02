@@ -296,15 +296,23 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
     # Align vacant row join keys with how the buildstock sample labels vacant buildings
     return coerce_vacant_join_keys(catalogue_df)
 
+# Separates the county and PUMA gisjoins in the keys of a cell-keyed sampling regions file (v5)
+CELL_KEY_SEPARATOR = "|"
+
+
 def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: str) -> pl.DataFrame:
     """Load sampling regions mapping, downloading from S3 if necessary.
+
+    v1 and v3 map counties to regions ({"G0100010": 7}); v5 maps County x PUMA cells
+    ({"G0100010|G01002100": 10602}), and covers California itself.
 
     Args:
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
         sampling_region_version: Version string for sampling regions file (e.g., 'v1')
 
     Returns:
-        Polars DataFrame with county_gisjoin to sampling_region mapping
+        Polars DataFrame of in.sampling_region_id keyed by in.nhgis_county_gisjoin, plus
+        in.nhgis_puma_gisjoin for a cell-keyed version (see sampling_region_key_columns)
     """
 
     # Construct file path for sampling regions JSON file, downloading it if it isn't staged already
@@ -321,6 +329,16 @@ def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: 
     with output_dir["fs"].open(sample_regions_local_path, "r") as f:
         sampling_regions_dict = json.load(f)
 
+    if any(CELL_KEY_SEPARATOR in key for key in sampling_regions_dict):
+        counties, pumas = zip(*(key.split(CELL_KEY_SEPARATOR) for key in sampling_regions_dict))
+        return pl.DataFrame(
+            {
+                "in.nhgis_county_gisjoin": list(counties),
+                "in.nhgis_puma_gisjoin": list(pumas),
+                "in.sampling_region_id": list(sampling_regions_dict.values()),
+            }
+        )
+
     # Manually add in Oglala Lakota County, SD which used to be Shannon county (G4601130).
     # v1 predates the rename and carries only the retired code, so the county has to be added.
     # Later versions carry it themselves under ids of their own, and region 34 is not valid in
@@ -335,6 +353,19 @@ def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: 
         }
     )
     return sampling_regions_df
+
+
+def sampling_region_key_columns(sampling_regions_df: pl.DataFrame) -> list[str]:
+    """The catalogue columns a sampling regions mapping is keyed by: county, or county and PUMA."""
+
+    return [col for col in ("in.nhgis_county_gisjoin", "in.nhgis_puma_gisjoin") if col in sampling_regions_df.columns]
+
+
+def no_cec_climate_zones() -> pl.DataFrame:
+    """An empty CEC lookup, for versions whose regions cover California themselves (v5)."""
+
+    return pl.DataFrame(schema={"in.nhgis_tract_gisjoin": pl.Utf8, "in.sampling_region_id": pl.Int64})
+
 
 def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
     """Load CEC climate zone to sampling region mapping.
@@ -419,24 +450,25 @@ def assign_sampling_regions(
 ) -> pl.LazyFrame:
     """Attach the sampling region each catalogue row falls in.
 
-    Uses county-based sampling regions for most of the US and CEC climate zone-based
-    sampling regions for California tracts.
+    Uses county-based (v1, v3) or County x PUMA-based (v5) sampling regions, and for the
+    county-based versions CEC climate zone-based sampling regions for California tracts.
 
-    The assignment depends only on the tract and county gisjoins, so it can be applied
+    The assignment depends only on the tract, county and PUMA gisjoins, so it can be applied
     to the catalogue itself or to just its distinct geographies. Rows in neither lookup
     keep a null region; validate_sampling_region_coverage is what rejects those.
 
     Args:
-        catalogue: Catalogue data with tract and county information
-        sampling_regions_df: County to sampling region mapping
+        catalogue: Catalogue data with tract, county and PUMA information
+        sampling_regions_df: County (or County x PUMA) to sampling region mapping
         cec_2010_cz_lkup_df: California tract to sampling region mapping via CEC climate zones
+            (empty for v5)
 
     Returns:
         LazyFrame with an in.sampling_region_id column, as a string to match the type in bs_df
     """
 
-    # Join catalogue with county-based sampling regions (covers most of US)
-    lf = catalogue.join(sampling_regions_df.lazy(), on="in.nhgis_county_gisjoin", how="left")
+    # Join catalogue with county or cell-based sampling regions (covers most of US, or all of it for v5)
+    lf = catalogue.join(sampling_regions_df.lazy(), on=sampling_region_key_columns(sampling_regions_df), how="left")
 
     # Join with CEC climate zone-based sampling regions (covers California)
     lf = lf.join(cec_2010_cz_lkup_df.lazy(), on="in.nhgis_tract_gisjoin", how="left", suffix="_cec2010")
@@ -482,7 +514,7 @@ def validate_sampling_region_coverage(
 
     logger.info("Checking that every catalogue geography maps to a sampling region")
     geographies = catalogue.select(
-        pl.col("in.nhgis_tract_gisjoin"), pl.col("in.nhgis_county_gisjoin")
+        pl.col("in.nhgis_tract_gisjoin"), *[pl.col(col) for col in sampling_region_key_columns(sampling_regions_df)]
     ).unique()
     assigned = assign_sampling_regions(geographies, sampling_regions_df, cec_2010_cz_lkup_df)
 
@@ -614,7 +646,11 @@ def partition_catalogue_by_sampling_region(
 
     catalogue_lf = scan_catalogue(output_dir, catalogue_file_version)
     sampling_regions_df = load_sampling_regions(output_dir, sampling_region_version)
-    cec_2010_cz_lkup_df = load_cec_climate_zones(output_dir)
+    # Cell-keyed versions (v5) cluster California like every other state, so the CEC zones do not apply
+    if "in.nhgis_puma_gisjoin" in sampling_regions_df.columns:
+        cec_2010_cz_lkup_df = no_cec_climate_zones()
+    else:
+        cec_2010_cz_lkup_df = load_cec_climate_zones(output_dir)
 
     # Reject a catalogue with geographies outside the lookups before spending a pass on it
     validate_sampling_region_coverage(catalogue_lf, sampling_regions_df, cec_2010_cz_lkup_df)

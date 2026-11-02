@@ -20,8 +20,10 @@ from resstockpostproc.allocated_weights import (
     coerce_vacant_join_keys,
     get_cached_allocated_weights,
     iter_sampling_region_partitions,
+    load_sampling_regions,
     partition_catalogue_by_sampling_region,
     region_seed,
+    sampling_region_key_columns,
     stage_counts,
     write_allocated_weights,
 )
@@ -426,6 +428,37 @@ def test_catalogue_partitions_round_trip_through_the_sampling_region_cache(tmp_p
     alabama = partitions["7"]
     assert alabama["in.nhgis_county_gisjoin"].unique().to_list() == ["G0100010"]
     assert alabama["in.state"].unique().to_list() == ["AL"]
+
+
+def test_cell_keyed_sampling_regions_join_on_county_and_puma_and_skip_cec(tmp_path):
+    # v5: regions keyed by County x PUMA cell, California included, so the CEC lookup is not read
+    write_catalogue_files(tmp_path)
+    (tmp_path / "cec_cz_by_tract_2010_lkup.json").unlink()
+    cells = {"G0100010|G01000100": 10601, "G3600610|G36006100": 360501, "G0600010|G06000100": 60801}
+    (tmp_path / "sampling_regions_cells.json").write_text(json.dumps(cells))
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+
+    regions = load_sampling_regions(output_dir, "cells")
+    assert sampling_region_key_columns(regions) == ["in.nhgis_county_gisjoin", "in.nhgis_puma_gisjoin"]
+    assert regions.filter(pl.col("in.nhgis_puma_gisjoin") == "G06000100")["in.sampling_region_id"].item() == 60801
+
+    partition_dir = partition_catalogue_by_sampling_region(
+        output_dir, catalogue_file_version="test", sampling_region_version="cells"
+    )
+    partitions = dict(iter_sampling_region_partitions(output_dir, partition_dir))
+    assert set(partitions) == {"10601", "360501", "60801"}
+    assert partitions["60801"]["in.nhgis_tract_gisjoin"].unique().to_list() == ["G0600010000100"]
+
+
+def test_a_catalogue_cell_missing_from_a_cell_keyed_version_is_rejected(tmp_path):
+    write_catalogue_files(tmp_path)
+    (tmp_path / "sampling_regions_cells.json").write_text(json.dumps({"G0100010|G01000100": 10601}))
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+
+    with pytest.raises(ValueError, match="missing sampling regions"):
+        partition_catalogue_by_sampling_region(
+            output_dir, catalogue_file_version="test", sampling_region_version="cells"
+        )
 
 
 def test_staged_catalogue_partitions_are_reused_rather_than_rebuilt(tmp_path):
