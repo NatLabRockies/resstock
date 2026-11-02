@@ -1,0 +1,35 @@
+v5 sampling regions: 300 weather-clustered regions on County x PUMA cells, County x PUMA weather
+  cell table: 4,534 cells, 300 regions
+  sampler cells (County and PUMA.tsv options): 4,545; County rows with a weather file: 0
+    G0201000, G02000300: region 20902 (from G0200900, offset -9), weather G0201000.epw
+    G0201050, G02000400: region 20902 (from G0200500, offset -9), weather G0201050.epw
+    G0201580, G02000400: region 20902 (from G0200500, offset -9), weather G0202700.epw
+    G0201950, G02000400: region 20902 (from G0200500, offset -9), weather G0201950.epw
+    G0201980, G02000400: region 20902 (from G0200500, offset -9), weather G0201980.epw
+    G0202300, G02000300: region 20902 (from G0200900, offset -9), weather G0202300.epw
+    G0202750, G02000400: region 20902 (from G0200500, offset -9), weather G0202750.epw
+    G0202820, G02000400: region 20902 (from G0200500, offset -9), weather G0202820.epw
+    G0202900, G02000400: region 20902 (from G0200500, offset -9), weather G0202900.epw
+    G1500050, G15000100: region 151001 (from G1500090, offset -10), weather G1500050.epw
+    G4601020, G46000200: region 460701 (from G4600470, offset -7), weather G4601020.epw
+  sampler cells by source: in the cell table 4,534, same PUMA and offset's largest cell 11
+  [ok] County.tsv depends on County and PUMA alone
+  [ok] every County.tsv row is one-hot
+
+=== checks ===
+  [ok] 300 regions
+  [ok] every sampler cell has a region (4,545)
+  [ok] no region spans two states
+  [ok] no region mixes UTC offsets
+  [ok] every cell weather file is a county weather file
+  cells simulated on another county's weather file: 3,048 of 4,545
+  [ok] Sampling Region.tsv options are the v5 ids
+  [ok] Sampling Region.tsv rows one-hot (4,545)
+  [ok] project_testing County and PUMA.tsv rows sum to 1 (5 counties, 152 cells)
+  [ok] options_lookup Sampling Region rows 300 -> 300
+  [ok] no County row sets location_epw_path (3,142 rows)
+  [ok] every sampler cell's County and PUMA row sets location_epw_path (4,545)
+  [ok] every cell table offset is its county's zip code offset
+  [ok] cell weather files as in the cell table
+
+  regions by state: 01 6, 02 2, 04 7, 05 5, 06 12, 08 7, 09 4, 10 3, 11 1, 12 9, 13 7, 15 1, 16 7, 17 7, 18 8, 19 5, 20 6, 21 6, 22 4, 23 4, 24 5, 25 7, 26 10, 27 8, 28 6, 29 8, 30 5, 31 4, 32 4, 33 4, 34 5, 35 6, 36 11, 37 6, 38 4, 39 7, 40 4, 41 7, 42 8, 44 3, 45 5, 46 4, 47 5, 48 13, 49 4, 50 3, 51 9, 53 9, 54 3, 55 8, 56 4
