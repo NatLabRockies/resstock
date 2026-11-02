@@ -103,8 +103,8 @@ def tsv_county_regions():
     with open(NAME_LKUP, encoding="utf-8-sig", newline="") as f:
         for r in csv.DictReader(f):
             name_to_cg[r["long_name"]] = r["original_FIP"]
-    lines = [ln.rstrip(chr(13)) for ln in open(V1_TSV, encoding="utf-8").read().split(NL)
-             if ln.strip() and not ln.startswith("#")]
+    with open(V1_TSV, encoding="utf-8") as f:
+        lines = [ln.rstrip(chr(13)) for ln in f.read().split(NL) if ln.strip() and not ln.startswith("#")]
     head = lines[0].split(TAB)
     opts = [(i, h[len("Option="):]) for i, h in enumerate(head) if h.startswith("Option=")]
     cty = head.index("Dependency=County")
@@ -215,9 +215,9 @@ def main():
 
     say()
     say("=== checks ===")
+    mismatched = [cg for cg in v1 if v3[cg] % 100 != v1[cg]]
     say("  [{}] v3 % 100 reproduces v1 for every county ({} mismatches)".format(
-        *(lambda b: ("ok" if not b else "FAIL", len(b)))(
-            [cg for cg in v1 if v3[cg] % 100 != v1[cg]])))
+        "ok" if not mismatched else "FAIL", len(mismatched)))
     say("  [{}] (v3 % 10000) // 100 recovers the county's own offset".format(
         "ok" if all((v3[cg] % 10000) // 100 == abs(tz[cg]) for cg in v3) else "FAIL"))
     say("  [{}] v3 // 10000 recovers the county's own state FIPS".format(
@@ -226,12 +226,10 @@ def main():
     for cg, rid in v3.items():
         span_s.setdefault(rid, set()).add(cg[1:3])
         span_z.setdefault(rid, set()).add(tz[cg])
-    say("  [{}] no v3 region spans more than one state ({} do)".format(
-        *(lambda n: ("ok" if not n else "FAIL", n))(
-            sum(1 for s in span_s.values() if len(s) > 1))))
-    say("  [{}] no v3 region spans more than one timezone ({} do)".format(
-        *(lambda n: ("ok" if not n else "FAIL", n))(
-            sum(1 for s in span_z.values() if len(s) > 1))))
+    n_s = sum(1 for s in span_s.values() if len(s) > 1)
+    n_z = sum(1 for s in span_z.values() if len(s) > 1)
+    say("  [{}] no v3 region spans more than one state ({} do)".format("ok" if not n_s else "FAIL", n_s))
+    say("  [{}] no v3 region spans more than one timezone ({} do)".format("ok" if not n_z else "FAIL", n_z))
     clash = sorted(set(v3.values()) & set(range(100, 111)))
     say("  [{}] no v3 id collides with the California ids 100-110 ({})".format(
         "ok" if not clash else "FAIL", clash or "none"))
@@ -370,8 +368,8 @@ def relabel_tsv(v3, offset):
     say("  [{}] every row still one-hot".format(
         "ok" if all(sum(1 for c in r[nd:nd + len(order)] if c not in zero) == 1
                     for r in out_rows) else "FAIL"))
-    tsv_ids = set(o for o in order if o != "Void" and int(o) >= 10000)
-    json_ids = set(str(v) for v in v3.values())
+    tsv_ids = {o for o in order if o != "Void" and int(o) >= 10000}
+    json_ids = {str(v) for v in v3.values()}
     say("  [{}] every id the sampler can assign exists for the allocator ({} would be orphaned)"
         .format("ok" if tsv_ids <= json_ids else "FAIL", len(tsv_ids - json_ids)))
     only_json = sorted(json_ids - tsv_ids, key=int)
