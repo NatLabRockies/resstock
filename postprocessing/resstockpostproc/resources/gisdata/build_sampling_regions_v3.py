@@ -44,7 +44,6 @@ Writes: sampling_regions_v3.json
 """
 import csv
 import glob
-import io
 import json
 import os
 import sys
@@ -85,11 +84,11 @@ def county_timezones():
         return {r["county_gisjoin"]: int(r["utc_offset"]) for r in d.iter_rows(named=True)}
     rows = []
     for p in sorted(glob.glob(os.path.join(EPW_DIR, "*.epw"))):
-        with open(p, "r", errors="replace") as f:
+        with open(p, errors="replace") as f:
             loc = f.readline().split(",")
         rows.append({"county_gisjoin": os.path.basename(p)[:-4], "utc_offset": int(float(loc[8]))})
     if not rows:
-        raise SystemExit("no EPW files under {} and no {}".format(EPW_DIR, TZ_CSV))
+        raise SystemExit(f"no EPW files under {EPW_DIR} and no {TZ_CSV}")
     pl.DataFrame(rows).sort("county_gisjoin").write_csv(TZ_CSV)
     return {r["county_gisjoin"]: r["utc_offset"] for r in rows}
 
@@ -104,7 +103,7 @@ def tsv_county_regions():
     with open(NAME_LKUP, encoding="utf-8-sig", newline="") as f:
         for r in csv.DictReader(f):
             name_to_cg[r["long_name"]] = r["original_FIP"]
-    lines = [ln.rstrip(chr(13)) for ln in io.open(V1_TSV, encoding="utf-8").read().split(NL)
+    lines = [ln.rstrip(chr(13)) for ln in open(V1_TSV, encoding="utf-8").read().split(NL)
              if ln.strip() and not ln.startswith("#")]
     head = lines[0].split(TAB)
     opts = [(i, h[len("Option="):]) for i, h in enumerate(head) if h.startswith("Option=")]
@@ -152,7 +151,7 @@ def relabel_options_lookup(order):
         f.write(bnl.join(lines))
     say()
     say("=== resources/options_lookup.tsv ===")
-    say("  Sampling Region rows {} -> {} (block at line {})".format(before, after, idx[0] + 1))
+    say(f"  Sampling Region rows {before} -> {after} (block at line {idx[0] + 1})")
     say("  [{}] rows carry no measure arguments, so this is a pure re-registration".format("ok"))
 
 
@@ -164,9 +163,8 @@ def main():
 
     tz = county_timezones()
     say("=== inputs ===")
-    say("  v1 counties {:,} in {} regions".format(len(v1), len(set(v1.values()))))
-    say("  timezone crosswalk: {:,} counties, offsets {}".format(
-        len(tz), sorted(set(tz.values()))))
+    say(f"  v1 counties {len(v1):,} in {len(set(v1.values()))} regions")
+    say(f"  timezone crosswalk: {len(tz):,} counties, offsets {sorted(set(tz.values()))}")
 
     # Counties the local weather set has no file for, and counties v1 codes under a retired FIPS
     # while the TSV uses the current one (Alaska's Wade Hampton / Kusilvak is both), fall back to
@@ -204,18 +202,16 @@ def main():
         say()
         say("=== counties the TSV places in a region but v1 omits ===")
         for cg, rid in sorted(added.items()):
-            say("  {} -> v1 region {}, v3 {}".format(cg, rid, v3[cg]))
+            say(f"  {cg} -> v1 region {rid}, v3 {v3[cg]}")
     with open(os.path.join(HERE, "sampling_regions_v3.json"), "w") as f:
         json.dump(v3, f, indent=1, sort_keys=True)
 
     say()
     say("=== sampling_regions_v3.json ===")
-    say("  counties            v1 {:>6,}  v3 {:>6,}".format(len(v1), len(v3)))
-    say("  regions             v1 {:>6,}  v3 {:>6,}".format(
-        len(set(v1.values())), len(set(v3.values()))))
-    say("  id range            v1 {}-{}   v3 {}-{}".format(
-        min(v1.values()), max(v1.values()), min(v3.values()), max(v3.values())))
-    say("  Oglala Lakota {}: v1 {} -> v3 {}".format(OGLALA, v1[OGLALA], v3[OGLALA]))
+    say(f"  counties            v1 {len(v1):>6,}  v3 {len(v3):>6,}")
+    say(f"  regions             v1 {len(set(v1.values())):>6,}  v3 {len(set(v3.values())):>6,}")
+    say(f"  id range            v1 {min(v1.values())}-{max(v1.values())}   v3 {min(v3.values())}-{max(v3.values())}")
+    say(f"  Oglala Lakota {OGLALA}: v1 {v1[OGLALA]} -> v3 {v3[OGLALA]}")
 
     say()
     say("=== checks ===")
@@ -255,7 +251,7 @@ def main():
     unmapped = mapped.filter(pl.col("v3").is_null())
     say()
     say("=== coverage against the ACS catalogue ===")
-    say("  catalogue housing units                   {:>14,}".format(tot))
+    say(f"  catalogue housing units                   {tot:>14,}")
     say("  in California regions 100-110, untouched  {:>14,}".format(ca["units"].sum()))
     say("  [{}] non-California units with no v3 county: {:,} in {} counties".format(
         "ok" if unmapped.height == 0 else "FAIL", unmapped["units"].sum(), unmapped.height))
@@ -268,7 +264,7 @@ def main():
     say("=== region count ===")
     say("  v1 non-California                {:>4}".format(
         agg.filter(pl.col("v1") < 100)["v1"].n_unique()))
-    say("  v3 non-California                {:>4}".format(pieces.height))
+    say(f"  v3 non-California                {pieces.height:>4}")
     say("  California, unchanged            {:>4}".format(ca["v1"].n_unique()))
     say("  v3 total                         {:>4}".format(pieces.height + ca["v1"].n_unique()))
     say()
@@ -291,13 +287,13 @@ def main():
           .sort(["v1_region", "state", "cg"]))
     cw.write_csv(os.path.join(HERE, "sampling_regions_v3_crosswalk.csv"))
     say()
-    say("  wrote sampling_regions_v3_crosswalk.csv ({:,} counties)".format(cw.height))
+    say(f"  wrote sampling_regions_v3_crosswalk.csv ({cw.height:,} counties)")
 
     if fallbacks:
         say()
         say("=== counties given their state's modal offset ===")
         for cg, z in sorted(fallbacks.items()):
-            say("  {} state {} -> offset {}".format(cg, cg[1:3], z))
+            say(f"  {cg} state {cg[1:3]} -> offset {z}")
 
     relabel_tsv(v3, offset)
 
@@ -331,7 +327,7 @@ def relabel_tsv(v3, offset):
     for r in rows:
         hot = [k for k, i in enumerate(opt_idx) if r[i] not in zero]
         if len(hot) != 1:
-            raise SystemExit("row is not one-hot: {}".format(r[:2]))
+            raise SystemExit(f"row is not one-hot: {r[:2]}")
         o = opts[hot[0]]
         if o == "Void" or int(o) >= 100:
             new = o                                   # Void and California pass through
@@ -345,8 +341,7 @@ def relabel_tsv(v3, offset):
         per_row.append((r, new, r[opt_idx[hot[0]]]))
         new_opts.add(new)
     if unknown:
-        raise SystemExit("county names absent from county_lookup_table.csv: {}".format(
-            sorted(unknown)[:5]))
+        raise SystemExit(f"county names absent from county_lookup_table.csv: {sorted(unknown)[:5]}")
 
     order = sorted(new_opts, key=lambda o: (1, 0) if o == "Void" else (0, int(o)))
     pos = {o: k for k, o in enumerate(order)}
@@ -368,8 +363,8 @@ def relabel_tsv(v3, offset):
     nd = len(dep_idx)
     say()
     say("=== Sampling Region v3.tsv ===")
-    say("  rows {:,} (unchanged); comment lines {}".format(len(out_rows), len(comments)))
-    say("  option columns  v1 {:>4}  ->  v3 {:>4}".format(len(opts), len(order)))
+    say(f"  rows {len(out_rows):,} (unchanged); comment lines {len(comments)}")
+    say(f"  option columns  v1 {len(opts):>4}  ->  v3 {len(order):>4}")
     say("  passed through unchanged: {}".format(
         [o for o in order if o == "Void" or int(o) < 10000]))
     say("  [{}] every row still one-hot".format(
