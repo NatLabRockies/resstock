@@ -1,10 +1,11 @@
 import polars as pl
 import pytest
 
-from resstockpostproc.allocated_weights import STATE_BILL_COL_PATTERN
+from resstockpostproc.allocated_weights import STATE_BILL_COL_PATTERN, gea_region_emissions_columns
 from resstockpostproc.metadata_and_annual_results import (
     add_weighted_cols,
     aggregate_allocated_weights_to_geography,
+    drop_gea_region_emissions_columns,
     drop_state_utility_bill_columns,
 )
 from resstockpostproc.utils import get_col_maps
@@ -158,3 +159,79 @@ def test_unmatched_housing_units_are_excluded_from_the_aggregation():
     assert sorted(agg["bldg_id"].unique().to_list()) == [1, 2]
     # The matched housing units keep their full weight
     assert agg["weight"].sum() == 6
+
+
+ELEC_EMISSIONS = "out.emissions.electricity.lrmer_mid_case_25..co2e_kg"
+
+
+def test_state_aggregation_averages_emissions_over_the_regions_housing_units():
+    """Building 1's Washington units sit in two GEA regions with different emissions."""
+    alloc_wts = make_alloc_wts_plus_bills().with_columns(
+        pl.Series(ELEC_EMISSIONS, [3000.0, 3000.0, 1000.0, 2000.0])
+    )
+    alloc_wts = pl.concat(
+        [
+            alloc_wts,
+            pl.DataFrame(
+                {
+                    "upgrade": [1],
+                    "bldg_id": [1],
+                    "weight": [1],
+                    "state": ["WA"],
+                    "in.state": ["WA"],
+                    "in.nhgis_tract_gisjoin": ["G5300330001300"],
+                    TOTAL_BILL: [400.0],
+                    TOTAL_SAVINGS: [40.0],
+                    ELEC_EMISSIONS: [4000.0],
+                }
+            ).lazy(),
+        ],
+        how="vertical_relaxed",
+    )
+    agg = aggregate_allocated_weights_to_geography(
+        alloc_wts, geographic_aggregation_levels=["in.state"]
+    ).collect().sort(["bldg_id", "in.state"])
+
+    assert agg.select(["bldg_id", "in.state", "weight", ELEC_EMISSIONS]).rows() == [
+        (1, "AK", 2, 3000.0),
+        (1, "WA", 3, (2 * 1000.0 + 1 * 4000.0) / 3),
+        (2, "WA", 2, 2000.0),
+    ]
+
+
+def test_per_region_emissions_columns_are_dropped_from_the_simulation_outputs():
+    sim_outs = pl.DataFrame(
+        {
+            "bldg_id": [1],
+            "out.emissions.electricity.lrmer_mid_case_25_miso_central..co2e_kg": [1.0],
+            "out.emissions_reduction.electricity.lrmer_mid_case_25_miso_central..co2e_kg": [0.5],
+            "out.emissions.natural_gas.total..co2e_kg": [2.0],
+            "out.electricity.total.energy_consumption..kwh": [100.0],
+        }
+    ).lazy()
+    kept = drop_gea_region_emissions_columns(sim_outs).collect_schema().names()
+    assert kept == [
+        "bldg_id",
+        "out.emissions.natural_gas.total..co2e_kg",
+        "out.electricity.total.energy_consumption..kwh",
+    ]
+
+
+def test_only_the_generic_emissions_columns_are_flagged_for_publication():
+    published = {m["published_name"] for m in get_col_maps() if "yes" in m["publish_in_full"]}
+    region_emissions = sorted(gea_region_emissions_columns(sorted(published)))
+    assert region_emissions == []
+    cases = ("mid_case", "high_re_cost", "low_re_cost", "low_re_cost_high_ng_price", "high_re_cost_low_ng_price")
+    scenarios = {
+        f"{metric}_{case}_{year}"
+        for metric, year in [("lrmer", "15"), ("lrmer", "25"), ("aer", "avg")]
+        for case in cases
+    }
+    assert len(scenarios) == 15
+    for scenario in scenarios:
+        for kind in ("emissions", "emissions_reduction"):
+            for fuel in ("electricity", "total"):
+                assert f"out.{kind}.{fuel}.{scenario}..co2e_kg" in published
+    # The per-region columns must still be imported, the emissions step is built on them
+    imported = {m["published_name"] for m in get_col_maps() if m["import_from_raw"] == "yes"}
+    assert "out.emissions.electricity.lrmer_mid_case_25_miso_central..co2e_kg" in imported

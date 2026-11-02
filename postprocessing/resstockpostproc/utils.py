@@ -103,6 +103,15 @@ def get_col_maps():
     return col_maps
 
 
+@lru_cache(maxsize=1)
+def read_geospatial_lookup_file() -> pl.DataFrame:
+    """Reads the geospatial lookup table file. Cached so the file is read only once."""
+    geospatial_file = "spatial_tract_lookup_table_publish_v12.csv"
+    geospatial_file_path = pathlib.Path(__file__).parent / "resources" / "gisdata" / geospatial_file
+    logger.info(f"Reading geospatial data file from {geospatial_file_path}")
+    return pl.read_csv(geospatial_file_path, infer_schema_length=None)
+
+
 def setup_fsspec_filesystem(output_dir: str, aws_profile_name=None) -> FsspecOutputDir:
     """
     Creates fsspec filesystem to handle local or S3 output locations

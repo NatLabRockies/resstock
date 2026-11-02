@@ -4,10 +4,11 @@ import json
 import logging
 import numpy as np
 from collections.abc import Iterator, Sequence
+from functools import lru_cache
 from pathlib import Path
 import polars as pl
 import re
-from resstockpostproc.utils import FsspecOutputDir, setup_fsspec_filesystem
+from resstockpostproc.utils import FsspecOutputDir, read_geospatial_lookup_file, setup_fsspec_filesystem
 import s3fs
 import zlib
 
@@ -1317,17 +1318,59 @@ def state_utility_bill_columns(columns: Sequence[str]) -> dict[str, dict[str, st
         state, rest = match.groups()
         by_state.setdefault(state.upper(), {})[col] = f"{UTILITY_BILL_COL_PREFIX}{rest}"
 
-    bill_cols = {state: set(cols.values()) for state, cols in by_state.items()}
-    if len({frozenset(cols) for cols in bill_cols.values()}) > 1:
-        first_state = min(bill_cols)
-        odd = {
-            state: sorted(cols ^ bill_cols[first_state])
-            for state, cols in bill_cols.items()
-            if cols != bill_cols[first_state]
-        }
-        raise ValueError(f"States carry different sets of utility bill columns than {first_state}: {odd}")
-
+    _check_column_groups_match(by_state, "States", "utility bill")
     return by_state
+
+
+def _check_column_groups_match(groups: dict[str, dict[str, str]], key_desc: str, col_desc: str) -> None:
+    """Refuse column groups whose renamed columns differ, since they could not be concatenated.
+
+    Args:
+        groups: Key (state, region) -> {source column: renamed column}
+        key_desc: What the keys are, for the message, e.g. "States"
+        col_desc: What the columns are, for the message, e.g. "utility bill"
+
+    Raises:
+        ValueError: If the groups do not all carry the same set of renamed columns
+    """
+
+    renamed = {key: set(cols.values()) for key, cols in groups.items()}
+    if len({frozenset(cols) for cols in renamed.values()}) > 1:
+        first_key = min(renamed)
+        odd = {key: sorted(cols ^ renamed[first_key]) for key, cols in renamed.items() if cols != renamed[first_key]}
+        raise ValueError(f"{key_desc} carry different sets of {col_desc} columns than {first_key}: {odd}")
+
+
+def _unpivot_column_groups(
+    sim_outs: pl.LazyFrame, groups: dict[str, dict[str, str]], key_col: str, key_dtype: pl.DataType
+) -> pl.LazyFrame:
+    """Reshape groups of columns, one group per key, to one row per building and key.
+
+    A building's rows for keys whose columns are all null are dropped: the outputs hold nulls
+    for the states or regions the building was not run under.
+
+    Args:
+        sim_outs: Cached simulation outputs for one upgrade
+        groups: Key -> {source column: renamed column}, every key renaming to the same columns
+        key_col: Name of the column the key is written to
+        key_dtype: Dtype to give the key column
+
+    Returns:
+        LazyFrame with bldg_id, key_col and the renamed columns
+    """
+
+    frames = []
+    for key, cols in sorted(groups.items()):
+        # Same column order in every frame, so they concatenate
+        renames = sorted(cols.items(), key=lambda src_dst: src_dst[1])
+        dst_cols = [dst for _, dst in renames]
+        frame = sim_outs.select(
+            [pl.col("bldg_id"), pl.lit(key).cast(key_dtype).alias(key_col)]
+            + [pl.col(src).alias(dst) for src, dst in renames]
+        ).filter(pl.any_horizontal(pl.col(dst_cols).is_not_null()))
+        frames.append(frame)
+
+    return pl.concat(frames, how="vertical")
 
 
 def unpivot_state_utility_bills(
@@ -1362,18 +1405,260 @@ def unpivot_state_utility_bills(
     if not by_state:
         return None
 
-    frames = []
-    for state, cols in sorted(by_state.items()):
-        # Same column order in every frame, so they concatenate
-        renames = sorted(cols.items(), key=lambda src_dst: src_dst[1])
-        bill_cols = [dst for _, dst in renames]
-        frame = sim_outs.select(
-            [pl.col("bldg_id"), pl.lit(state).cast(state_dtype).alias("in.state")]
-            + [pl.col(src).alias(dst) for src, dst in renames]
-        ).filter(pl.any_horizontal(pl.col(bill_cols).is_not_null()))
-        frames.append(frame)
+    return _unpivot_column_groups(sim_outs, by_state, "in.state", state_dtype)
 
-    return pl.concat(frames, how="vertical")
+
+# Each housing unit's electricity emissions belong to the Cambium Generation and Emissions
+# Assessment (GEA) region of the county it was allocated to, the in.cambium_grid_region of the
+# geospatial lookup. That mapping matches
+# project_national/housing_characteristics/Generation And Emissions Assessment Region.tsv, keyed
+# by county gisjoin rather than ResStock county name (see tests/test_allocated_weights.py, which
+# checks the two agree). Counties outside the Cambium footprint (AK, HI) map to "None".
+GEA_REGION_COL = "in.cambium_grid_region"
+NO_GEA_REGION = "None"
+
+# County gisjoins the catalogue may carry that the geospatial lookup knows under another code,
+# mapped to that code: Shannon County, SD was renamed Oglala Lakota County (see
+# load_sampling_regions), and Kusilvak Census Area, AK is the former Wade Hampton Census Area.
+COUNTY_GISJOIN_ALIASES = {"G4601130": "G4601020", "G0201580": "G0202700"}
+
+# Emissions and emissions reduction columns in the cached simulation outputs, such as
+# out.emissions.electricity.lrmer_mid_case_25_miso_central..co2e_kg. Under a "Sampling Region"
+# emissions scenario every building is run once under the emissions factors of each GEA region in
+# its sampling region, and the scenario name ends in that region's name, lowercased with spaces
+# replaced by underscores.
+EMISSIONS_COL_PATTERN = re.compile(r"^out\.(emissions|emissions_reduction)\..+\.\.co2e_kg$")
+EMISSIONS_COL_SUFFIX = "..co2e_kg"
+
+
+@lru_cache(maxsize=1)
+def load_county_gea_regions() -> pl.DataFrame:
+    """Map each county gisjoin to its GEA region, from the geospatial lookup.
+
+    Returns:
+        DataFrame of in.nhgis_county_gisjoin and in.cambium_grid_region, one row per county,
+        including the codes in COUNTY_GISJOIN_ALIASES
+
+    Raises:
+        ValueError: If a county takes more than one region in the geospatial lookup
+    """
+
+    county_regions = (
+        read_geospatial_lookup_file()
+        .select(["in.nhgis_county_gisjoin", pl.col(GEA_REGION_COL).cast(pl.String)])
+        .unique()
+    )
+    split = county_regions.filter(pl.col("in.nhgis_county_gisjoin").is_duplicated())
+    if split.height > 0:
+        raise ValueError(f"Counties span more than one {GEA_REGION_COL} in the geospatial lookup: {split.rows()[:10]}")
+
+    aliases = (
+        pl.DataFrame(
+            {"in.nhgis_county_gisjoin": list(COUNTY_GISJOIN_ALIASES), "lookup": list(COUNTY_GISJOIN_ALIASES.values())}
+        )
+        .join(county_regions, left_on="lookup", right_on="in.nhgis_county_gisjoin", how="inner")
+        .drop("lookup")
+        # Only where the lookup lacks the alias itself
+        .join(county_regions, on="in.nhgis_county_gisjoin", how="anti")
+    )
+    return pl.concat([county_regions, aliases], how="vertical").sort("in.nhgis_county_gisjoin")
+
+
+def gea_region_emissions_columns(columns: Sequence[str]) -> dict[str, dict[str, str]]:
+    """Group the per-GEA-region emissions columns of the simulation outputs by region.
+
+    Args:
+        columns: Column names of the cached simulation outputs
+
+    Returns:
+        GEA region name -> {per-region column: the same column without the region in its scenario},
+        for example {"MISO Central": {"out.emissions.electricity.lrmer_mid_case_25_miso_central..co2e_kg":
+        "out.emissions.electricity.lrmer_mid_case_25..co2e_kg"}}. Empty when the outputs carry no
+        per-region emissions columns.
+
+    Raises:
+        ValueError: If the regions do not all carry the same set of emissions columns
+    """
+
+    regions = load_county_gea_regions()[GEA_REGION_COL].unique().to_list()
+    # Longest first, so a region whose name ends another's could never claim its columns
+    suffixes = sorted(
+        ((f"_{region.lower().replace(' ', '_')}", region) for region in regions if region != NO_GEA_REGION),
+        key=lambda suffix_region: len(suffix_region[0]),
+        reverse=True,
+    )
+
+    by_region: dict[str, dict[str, str]] = {}
+    for col in columns:
+        if not EMISSIONS_COL_PATTERN.match(col):
+            continue
+        stem = col.removesuffix(EMISSIONS_COL_SUFFIX)
+        for suffix, region in suffixes:
+            if stem.endswith(suffix):
+                by_region.setdefault(region, {})[col] = f"{stem.removesuffix(suffix)}{EMISSIONS_COL_SUFFIX}"
+                break
+
+    _check_column_groups_match(by_region, "GEA regions", "emissions")
+    return by_region
+
+
+def unpivot_gea_region_emissions(
+    sim_outs: pl.LazyFrame, region_dtype: pl.DataType = pl.String
+) -> pl.LazyFrame | None:
+    """Reshape the per-GEA-region emissions columns to one row per building and region it was run under.
+
+    The simulation outputs hold one set of emissions columns per region, for example
+
+        bldg_id | out.emissions.electricity.lrmer_mid_case_25_pjm_east..co2e_kg | ..._pjm_west..co2e_kg
+        1234    | 3000                                                          | 3500
+
+    and this returns
+
+        bldg_id | in.cambium_grid_region | out.emissions.electricity.lrmer_mid_case_25..co2e_kg
+        1234    | PJM East               | 3000
+        1234    | PJM West               | 3500
+
+    A building is only run under the regions in its sampling region, so its rows for other
+    regions, which the outputs hold as nulls, are dropped.
+
+    Args:
+        sim_outs: Cached simulation outputs for one upgrade
+        region_dtype: Dtype to give the region column
+
+    Returns:
+        LazyFrame with bldg_id, in.cambium_grid_region and the emissions
+        columns named without their region, or None when the outputs carry no per-region columns
+    """
+
+    by_region = gea_region_emissions_columns(sim_outs.collect_schema().names())
+    if not by_region:
+        return None
+
+    return _unpivot_column_groups(sim_outs, by_region, GEA_REGION_COL, region_dtype)
+
+
+def check_allocated_pairs_are_covered(
+    alloc_wts: pl.LazyFrame,
+    values: pl.DataFrame,
+    key_col: str,
+    upgrade_id: int,
+    key_desc: str,
+    values_desc: str,
+    verb: str,
+) -> None:
+    """Refuse an allocation with housing units whose building has no values for their allocated key.
+
+    Checked on the distinct building/key pairs, a narrow pass, before the wide write starts.
+    Catalogue rows the fallback ladder could not fill carry no bldg_id (see UNMATCHED_STAGE)
+    and so have no building to take values from; they pass through with nulls.
+
+    Args:
+        alloc_wts: The allocated weights, carrying bldg_id and key_col
+        values: The unpivoted values, one row per building and key
+        key_col: The column the pairs are keyed on, e.g. in.state
+        upgrade_id: The upgrade the values are for, for the message
+        key_desc: What the key is, for the message, e.g. "state"
+        values_desc: What the values are, for the message, e.g. "utility bills"
+        verb: How a building gets values for a key, for the message, e.g. "billed under"
+
+    Raises:
+        ValueError: If any allocated building/key pair has no row in values
+    """
+
+    missing = (
+        alloc_wts.filter(pl.col("bldg_id").is_not_null())
+        .select(["bldg_id", key_col])
+        .unique()
+        .join(values.lazy().select(["bldg_id", key_col]), on=["bldg_id", key_col], how="anti")
+        .collect(engine="streaming")
+    )
+    if missing.height > 0:
+        examples = missing.sort(["bldg_id", key_col]).head(10).rows()
+        raise ValueError(
+            f"{missing.height} building/{key_desc} pairs in the allocated weights have no {values_desc} in "
+            f"the upgrade {upgrade_id} simulation outputs, e.g. (bldg_id, {key_desc}) = {examples}. "
+            f"Every building must be {verb} each {key_desc} in its sampling region."
+        )
+
+
+def add_gea_region_emissions(
+    alloc_wts: pl.LazyFrame, sim_outs: pl.LazyFrame, upgrade_id: int
+) -> pl.LazyFrame:
+    """Join the emissions of each housing unit's allocated GEA region onto the allocated weights.
+
+    The housing unit's GEA region comes from its allocated county, and the building's emissions
+    columns for that region are joined on under the names they would carry for a single region,
+    e.g. out.emissions.electricity.lrmer_mid_case_25..co2e_kg. Housing units in counties with no
+    GEA region ("None": AK, HI) get null emissions.
+
+    Args:
+        alloc_wts: The allocated weights
+        sim_outs: Cached simulation outputs for one upgrade
+        upgrade_id: The upgrade the outputs are for
+
+    Returns:
+        The allocated weights with in.cambium_grid_region and the emissions
+        columns added, or unchanged when the outputs carry no per-region emissions columns
+
+    Raises:
+        ValueError: If an allocated county has no GEA region, or a housing unit was allocated to a
+            region its building was not run under
+    """
+
+    emissions = unpivot_gea_region_emissions(sim_outs)
+    if emissions is None:
+        logger.info(
+            f"Simulation outputs for upgrade {upgrade_id} carry no per-GEA-region emissions columns "
+            "(no 'Sampling Region' emissions scenario); caching the allocated weights without them"
+        )
+        return alloc_wts
+
+    alloc_schema = alloc_wts.collect_schema()
+    if "in.nhgis_county_gisjoin" not in alloc_schema:
+        # The quota sampler's allocation is one row per building with no geography below state
+        logger.warning(
+            f"Simulation outputs for upgrade {upgrade_id} carry per-GEA-region emissions columns, but "
+            "the allocated weights have no in.nhgis_county_gisjoin to place housing units in a region; "
+            "caching the allocated weights without emissions"
+        )
+        return alloc_wts
+
+    # Place each housing unit in its county's GEA region. Every allocated county must have one,
+    # or its housing units would be published with no emissions.
+    alloc_wts = alloc_wts.join(
+        load_county_gea_regions().lazy(), on="in.nhgis_county_gisjoin", how="left"
+    )
+    unmapped = (
+        alloc_wts.filter(pl.col(GEA_REGION_COL).is_null())
+        .select("in.nhgis_county_gisjoin")
+        .unique()
+        .collect(engine="streaming")
+    )
+    if unmapped.height > 0:
+        raise ValueError(
+            f"{unmapped.height} counties in the allocated weights have no GEA region in "
+            f"the geospatial lookup: {sorted(unmapped['in.nhgis_county_gisjoin'].to_list(), key=str)[:10]}"
+        )
+
+    emissions = emissions.with_columns(pl.col("bldg_id").cast(alloc_schema["bldg_id"])).collect(engine="streaming")
+    emissions_cols = [col for col in emissions.columns if EMISSIONS_COL_PATTERN.match(col)]
+    logger.info(
+        f"Unpivoted {len(emissions_cols)} emissions columns for {emissions['bldg_id'].n_unique():,} buildings "
+        f"across {emissions[GEA_REGION_COL].n_unique()} GEA regions into {emissions.height:,} building/region rows"
+    )
+
+    # Housing units in "None" counties are not run under any region's factors, so are not checked
+    check_allocated_pairs_are_covered(
+        alloc_wts.filter(pl.col(GEA_REGION_COL) != NO_GEA_REGION),
+        emissions,
+        GEA_REGION_COL,
+        upgrade_id,
+        key_desc="GEA region",
+        values_desc="emissions",
+        verb="run under",
+    )
+
+    return alloc_wts.join(emissions.lazy(), on=["bldg_id", GEA_REGION_COL], how="left")
 
 
 def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id) -> None:
@@ -1410,12 +1695,17 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
     A run without per-state bill columns (no "Sampling Region" bill scenario) is cached without
     bills, with a warning, so the rest of the export can still run.
 
+    Emissions are handled the same way, keyed on the Cambium GEA region of the housing unit's
+    allocated county instead of its state: see add_gea_region_emissions. Those housing units
+    also carry in.cambium_grid_region.
+
     Args:
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
-        upgrade_id: The upgrade whose simulation outputs supply the bills
+        upgrade_id: The upgrade whose simulation outputs supply the bills and emissions
 
     Raises:
-        ValueError: If a housing unit was allocated to a state its building was not billed under
+        ValueError: If a housing unit was allocated to a state its building was not billed under,
+            or to a GEA region its building was not run under
     """
 
     logger.info(f"Creating allocated weights plus bills for upgrade {upgrade_id}")
@@ -1449,27 +1739,22 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
         )
 
         # Every building must have been billed under the state each of its housing units was
-        # allocated to, or that housing unit would be published with no bills. Checked on the
-        # distinct building/state pairs, a narrow pass, before the wide write starts. Catalogue
-        # rows the fallback ladder could not fill carry no bldg_id (see UNMATCHED_STAGE) and so
-        # have no building to bill; they pass through with null bills.
-        missing = (
-            alloc_wts.filter(pl.col("bldg_id").is_not_null())
-            .select(["bldg_id", "in.state"])
-            .unique()
-            .join(bills.lazy().select(["bldg_id", "in.state"]), on=["bldg_id", "in.state"], how="anti")
-            .collect(engine="streaming")
+        # allocated to, or that housing unit would be published with no bills
+        check_allocated_pairs_are_covered(
+            alloc_wts,
+            bills,
+            "in.state",
+            upgrade_id,
+            key_desc="state",
+            values_desc="utility bills",
+            verb="billed under",
         )
-        if missing.height > 0:
-            examples = missing.sort(["bldg_id", "in.state"]).head(10).rows()
-            raise ValueError(
-                f"{missing.height} building/state pairs in the allocated weights have no utility bills in "
-                f"the upgrade {upgrade_id} simulation outputs, e.g. (bldg_id, state) = {examples}. "
-                "Every building must be billed under each state in its sampling region."
-            )
 
         # Join the allocated state's bills onto each housing unit
         alloc_wts_plus_bills = alloc_wts.join(bills.lazy(), on=["bldg_id", "in.state"], how="left")
+
+    # And the emissions of its allocated county's GEA region
+    alloc_wts_plus_bills = add_gea_region_emissions(alloc_wts_plus_bills, sim_outs, upgrade_id)
 
     # Where the results will be cached
     alloc_wts_bills_dir = _polars_path(output_dir, ALLOCATED_WEIGHTS_PLUS_BILLS_DIR, f"upgrade={upgrade_id}")

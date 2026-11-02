@@ -1,14 +1,19 @@
 """Tests for the building-to-geography allocation in resstockpostproc.allocated_weights."""
 
 import json
+from pathlib import Path
 
 import polars as pl
 import pytest
 
 from resstockpostproc.allocated_weights import (
+    GEA_REGION_COL,
     create_allocated_weights_plus_util_bills_for_upgrade,
+    gea_region_emissions_columns,
     get_allocated_weights_plus_util_bills_for_upgrade,
+    load_county_gea_regions,
     state_utility_bill_columns,
+    unpivot_gea_region_emissions,
     unpivot_state_utility_bills,
     allocate_buildings_to_geography,
     check_allocation_misses,
@@ -664,3 +669,178 @@ def test_unmatched_housing_units_pass_through_with_null_bills(tmp_path):
     assert plus_bills.filter(pl.col(_bill_col(None, "total")).is_null()).select(["bldg_id", "in.state"]).rows() == [
         (None, "AK")
     ]
+
+
+def _emissions_col(region: str | None, fuel: str = "electricity", reduction: bool = False) -> str:
+    kind = "emissions_reduction" if reduction else "emissions"
+    suffix = f"_{region}" if region else ""
+    return f"out.{kind}.{fuel}.lrmer_mid_case_25{suffix}..co2e_kg"
+
+
+# The generic emissions columns each GEA region's columns are renamed to
+GENERIC_EMISSIONS_COLS = sorted(
+    [_emissions_col(None), _emissions_col(None, "total"), _emissions_col(None, reduction=True)]
+)
+
+
+def make_region_emissions_sim_outs() -> pl.DataFrame:
+    """Building 1 run under MISO Central and PJM West, 2 under PJM West only, 3 under neither (AK)."""
+    by_region = {
+        "miso_central": [3000.0, None, None],
+        "pjm_west": [3500.0, 4000.0, None],
+    }
+    cols = {}
+    for region, values in by_region.items():
+        cols[_emissions_col(region)] = values
+        cols[_emissions_col(region, "total")] = [v + 100.0 if v is not None else None for v in values]
+        cols[_emissions_col(region, reduction=True)] = [v / 10 if v is not None else None for v in values]
+    return pl.DataFrame(
+        {
+            "bldg_id": [1, 2, 3],
+            "upgrade": [1, 1, 1],
+            # Not tied to a region, so left alone
+            "out.emissions.natural_gas.total..co2e_kg": [50.0, 60.0, 70.0],
+            "out.emissions.total.fossil_fuels..co2e_kg": [50.0, 60.0, 70.0],
+            **cols,
+        }
+    )
+
+
+def make_county_allocation() -> pl.DataFrame:
+    """Building 1 in an IL MISO Central and an IL PJM West county, 2 twice in PJM West, 3 in AK."""
+    return pl.DataFrame(
+        {
+            "bldg_id": [1, 1, 2, 2, 3],
+            "weight": [1, 1, 1, 1, 1],
+            "in.state": ["IL", "IL", "IL", "IL", "AK"],
+            "in.nhgis_county_gisjoin": ["G1700010", "G1700070", "G1700070", "G1700150", "G0200130"],
+            "in.nhgis_tract_gisjoin": [
+                "G1700010000100",
+                "G1700070000100",
+                "G1700070000200",
+                "G1700150000100",
+                "G0200130000100",
+            ],
+            "in.sampling_region_id": ["9", "9", "9", "9", "8"],
+        }
+    )
+
+
+def test_gea_region_emissions_columns_group_by_region_and_drop_the_region():
+    by_region = gea_region_emissions_columns(make_region_emissions_sim_outs().columns)
+
+    assert sorted(by_region) == ["MISO Central", "PJM West"]
+    assert by_region["MISO Central"][_emissions_col("miso_central")] == _emissions_col(None)
+    assert by_region["PJM West"][_emissions_col("pjm_west", reduction=True)] == _emissions_col(None, reduction=True)
+    assert all(sorted(cols.values()) == GENERIC_EMISSIONS_COLS for cols in by_region.values())
+    # Emissions not tied to a region are not picked up
+    assert gea_region_emissions_columns(["out.emissions.total.fossil_fuels..co2e_kg", _emissions_col(None)]) == {}
+
+
+def test_regions_with_different_emissions_columns_are_rejected():
+    columns = [_emissions_col("pjm_west"), _emissions_col("pjm_east"), _emissions_col("pjm_east", "total")]
+    with pytest.raises(ValueError, match="different sets of emissions columns"):
+        gea_region_emissions_columns(columns)
+
+
+def test_county_gea_regions_match_the_housing_characteristic():
+    """The county lookup must place every county where the simulation's TSV does."""
+    project_dir = Path(__file__).resolve().parents[3] / "project_national" / "housing_characteristics"
+    tsv = pl.read_csv(
+        project_dir / "Generation And Emissions Assessment Region.tsv", separator="\t", infer_schema_length=0
+    )
+    options = [col for col in tsv.columns if col.startswith("Option=")]
+    tsv_regions = (
+        tsv.unpivot(index="Dependency=County", on=options)
+        .filter(pl.col("value").cast(pl.Float64) > 0)
+        .select(
+            pl.col("Dependency=County").alias("in.resstock_county_id"),
+            pl.col("variable").str.strip_prefix("Option=").alias("tsv_region"),
+        )
+    )
+    # Each county takes a single region
+    assert tsv_regions["in.resstock_county_id"].is_unique().all()
+
+    county_names = pl.read_csv(
+        Path(__file__).resolve().parents[1] / "resources" / "gisdata" / "spatial_tract_lookup_table_publish_v12.csv",
+        columns=["in.nhgis_county_gisjoin", "in.resstock_county_id"],
+    ).unique()
+    compared = (
+        load_county_gea_regions()
+        .join(county_names, on="in.nhgis_county_gisjoin", how="inner")
+        .join(tsv_regions, on="in.resstock_county_id", how="inner")
+    )
+    assert compared.height >= 3100
+    assert compared.filter(pl.col(GEA_REGION_COL) != pl.col("tsv_region")).height == 0
+    assert load_county_gea_regions()["in.nhgis_county_gisjoin"].is_unique().all()
+
+
+def test_renamed_counties_take_the_region_of_the_code_the_lookup_knows():
+    regions = dict(load_county_gea_regions().rows())
+    # Shannon County, SD under its Oglala Lakota code; Kusilvak, AK under its Wade Hampton code
+    assert regions["G4601130"] == regions["G4601020"] == "SPP North"
+    assert regions["G0201580"] == regions["G0202700"] == "None"
+
+
+def test_unpivot_gives_one_row_per_building_and_region_it_was_run_under():
+    emissions = unpivot_gea_region_emissions(make_region_emissions_sim_outs().lazy()).collect()
+
+    assert emissions.columns == ["bldg_id", GEA_REGION_COL] + GENERIC_EMISSIONS_COLS
+    assert emissions.sort(["bldg_id", GEA_REGION_COL]).select(["bldg_id", GEA_REGION_COL]).rows() == [
+        (1, "MISO Central"),
+        (1, "PJM West"),
+        (2, "PJM West"),
+    ]
+
+
+def test_allocated_weights_carry_the_allocated_regions_emissions(tmp_path):
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    write_cached_sim_outs(tmp_path, make_region_emissions_sim_outs())
+    write_allocated_weights(output_dir, make_county_allocation())
+
+    create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)
+    plus = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1).collect()
+
+    assert plus.height == 5
+    assert set(plus.columns) == (
+        set(make_county_allocation().columns) | set(GENERIC_EMISSIONS_COLS) | {GEA_REGION_COL, "state", "upgrade"}
+    )
+    by_unit = plus.sort("in.nhgis_tract_gisjoin").select(
+        ["bldg_id", GEA_REGION_COL, _emissions_col(None), _emissions_col(None, "total")]
+    ).rows()
+    assert by_unit == [
+        (3, "None", None, None),
+        (1, "MISO Central", 3000.0, 3100.0),
+        (1, "PJM West", 3500.0, 3600.0),
+        (2, "PJM West", 4000.0, 4100.0),
+        (2, "PJM West", 4000.0, 4100.0),
+    ]
+
+
+def test_a_housing_unit_allocated_to_a_region_its_building_was_not_run_under_raises(tmp_path):
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    write_cached_sim_outs(tmp_path, make_region_emissions_sim_outs())
+    # Building 2 has no MISO Central emissions, but one of its housing units is sent there
+    allocation = make_county_allocation().with_columns(
+        pl.when(pl.col("in.nhgis_tract_gisjoin") == "G1700150000100")
+        .then(pl.lit("G1700010"))
+        .otherwise(pl.col("in.nhgis_county_gisjoin"))
+        .alias("in.nhgis_county_gisjoin")
+    )
+    write_allocated_weights(output_dir, allocation)
+
+    with pytest.raises(ValueError, match=r"1 building/GEA region pairs .* no emissions .*\(2, 'MISO Central'\)"):
+        create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)
+
+
+def test_an_allocated_county_with_no_gea_region_raises(tmp_path):
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    write_cached_sim_outs(tmp_path, make_region_emissions_sim_outs())
+    allocation = make_county_allocation().with_columns(
+        pl.when(pl.col("bldg_id") == 3).then(pl.lit("G9900000")).otherwise(pl.col("in.nhgis_county_gisjoin"))
+        .alias("in.nhgis_county_gisjoin")
+    )
+    write_allocated_weights(output_dir, allocation)
+
+    with pytest.raises(ValueError, match=r"1 counties .* no GEA region .*G9900000"):
+        create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)

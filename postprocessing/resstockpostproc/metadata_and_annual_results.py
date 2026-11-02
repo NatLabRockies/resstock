@@ -13,6 +13,7 @@ from resstockpostproc.utils import (
     col_name_to_weighted,
     conversion_factor,
     get_col_maps,
+    read_geospatial_lookup_file,
     units_from_col_name,
 )
 from resstockpostproc.simulation_outputs import (
@@ -20,8 +21,10 @@ from resstockpostproc.simulation_outputs import (
     get_cached_simulation_outputs_for_upgrade,
 )
 from resstockpostproc.allocated_weights import (
+    EMISSIONS_COL_PATTERN,
     STATE_BILL_COL_PATTERN,
     UTILITY_BILL_COL_PREFIX,
+    gea_region_emissions_columns,
     get_allocated_weights_plus_util_bills_for_upgrade,
 )
 
@@ -70,6 +73,11 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
     # "Sampling Region" bill scenario, in which case no bills are published.
     cost_cols = [col for col in alloc_wts.collect_schema().names() if col.startswith(UTILITY_BILL_COL_PREFIX)]
 
+    # Likewise the emissions (and emissions reduction) of each housing unit's allocated GEA
+    # region, see add_gea_region_emissions. Absent for a run without a "Sampling Region"
+    # emissions scenario.
+    emissions_cols = [col for col in alloc_wts.collect_schema().names() if EMISSIONS_COL_PATTERN.match(col)]
+
     # Sum the weights by building ID within each geography, and average the bills over the
     # housing units the building represents there, weighted by those housing units. Every
     # geography level published nests within states, where every housing unit of a building
@@ -78,6 +86,10 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
     # their names so they publish as the per-building bills the column definitions list.
     # Rounded to cents, as the simulated bills are, so the sum-then-divide does not leave
     # floating point noise behind on what is usually an average of identical values.
+    # Emissions are averaged the same way but not rounded. Counties nest within GEA regions,
+    # so at tract and county level the average is the region's emissions; over a state or
+    # PUMA spanning regions it is the housing-unit-weighted average, which times the summed
+    # weight still gives the geography's total.
     weight_sum = pl.col("weight").sum()
     wtd_agg_outs = alloc_wts.select(
         [
@@ -88,6 +100,7 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
         ]
         + geo_agg_cols
         + cost_cols
+        + emissions_cols
     ).group_by(
         [
             pl.col("upgrade"),
@@ -97,6 +110,7 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
     ).agg(
         [weight_sum]
         + [((pl.col(col) * pl.col("weight")).sum() / weight_sum).round(2).alias(col) for col in cost_cols]
+        + [((pl.col(col) * pl.col("weight")).sum() / weight_sum).alias(col) for col in emissions_cols]
         # + [pl.col(["in.sqft..ft2"]).first()]
     )
 
@@ -123,6 +137,26 @@ def drop_state_utility_bill_columns(sim_outs: pl.LazyFrame) -> pl.LazyFrame:
     if state_bill_cols:
         logger.info(f"Dropping {len(state_bill_cols)} per-state utility bill columns from the simulation outputs")
         sim_outs = sim_outs.drop(state_bill_cols)
+    return sim_outs
+
+
+def drop_gea_region_emissions_columns(sim_outs: pl.LazyFrame) -> pl.LazyFrame:
+    """Drop the per-GEA-region emissions columns (out.emissions.electricity.lrmer_mid_case_25_caiso..co2e_kg,
+    ...) from the simulation outputs, for the same reason as drop_state_utility_bill_columns: the
+    allocated weights carry each housing unit's allocated-region emissions under the generic names.
+
+    Args:
+        sim_outs: Cached simulation outputs for one upgrade
+
+    Returns:
+        The outputs without their per-region emissions columns
+    """
+
+    by_region = gea_region_emissions_columns(sim_outs.collect_schema().names())
+    region_cols = [col for cols in by_region.values() for col in cols]
+    if region_cols:
+        logger.info(f"Dropping {len(region_cols)} per-GEA-region emissions columns from the simulation outputs")
+        sim_outs = sim_outs.drop(region_cols)
     return sim_outs
 
 
@@ -300,6 +334,7 @@ def export_metadata_and_annual_results_for_upgrade(
     # The per-state bill columns have done their job in the allocated weights plus bills;
     # only the allocated state's bills are published, and they arrive with the weights.
     up_sim_outs = drop_state_utility_bill_columns(up_sim_outs)
+    up_sim_outs = drop_gea_region_emissions_columns(up_sim_outs)
 
     # Get the allocated weights plus utility bills for the upgrade
     up_alloc_wts_plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
@@ -462,15 +497,6 @@ def export_metadata_and_annual_results_for_upgrade(
     )
 
 
-@lru_cache(maxsize=1)
-def _read_geospatial_lookup_file() -> pl.DataFrame:
-    """Reads the geospatial lookup table file. Cached so the file is read only once."""
-    geospatial_file = "spatial_tract_lookup_table_publish_v11.csv"
-    geospatial_file_path = os.path.abspath(os.path.join(__file__, "..", "resources", "gisdata", geospatial_file))
-    logger.info(f"Reading geospatial data file from {geospatial_file_path}")
-    return pl.read_csv(geospatial_file_path, infer_schema_length=None)
-
-
 @lru_cache(maxsize=8)
 def _get_geospatial_lookup(geography_to_join_on) -> pl.DataFrame:
     """
@@ -479,7 +505,7 @@ def _get_geospatial_lookup(geography_to_join_on) -> pl.DataFrame:
     (and every slice within a geography) during an export.
     """
 
-    geospatial_data = _read_geospatial_lookup_file()
+    geospatial_data = read_geospatial_lookup_file()
 
     # Columns mappable from in.nhgis_county_gisjoin:
     county_mappings = [
