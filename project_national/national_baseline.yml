@@ -3,7 +3,7 @@ os_version: 3.10.0
 os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: baseline_nd_ducts
+output_directory: national_baseline
 weather_files_url: https://data.nlr.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
@@ -14,15 +14,10 @@ baseline:
   n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories ( 138765649 without AK and HI )
 
 # Sampler type and number of data points per baseline or upgrade
-# sampler:
-#   type: residential_quota
-#   args:
-#     n_datapoints: 250
-
 sampler:
-  type: precomputed
+  type: residential_quota
   args:
-    sample_file: '/Volumes/Lixi_Liu/Post-SDR 2025.1 ResStock/buildstock_nd_samples_2.csv'
+    n_datapoints: 250
 
 # NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
