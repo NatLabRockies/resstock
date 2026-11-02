@@ -2,6 +2,7 @@
 
 require 'csv'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/hpxml'
+require_relative 'sampling_region'
 
 class EmissionScenarios
   # Maps output fields to input arguments or derived values; include_in_outputs: false omits lookup-only fields.
@@ -188,9 +189,7 @@ class EmissionScenarios
     parameter = 'Sampling Region'
     return [[], "Emissions scenario(s) were specified, but could not find #{parameter}."] unless @bldg_data.key?(parameter)
 
-    rows = CSV.read(File.join(@characteristics_dir, "#{parameter}.tsv"), headers: true, col_sep: "\t")
-    option_col = "Option=#{@bldg_data[parameter]}"
-    counties = rows.select { |row| row[option_col].to_s.strip == '1' }.map { |row| row['Dependency=County'].to_s.strip }.to_h { |county| [county, true] }
+    counties = SamplingRegion.counties(@characteristics_dir, @bldg_data[parameter]).to_h { |county| [county, true] }
 
     gea_filepath = File.join(@characteristics_dir, 'Generation And Emissions Assessment Region.tsv')
     rows = CSV.read(gea_filepath, headers: true, col_sep: "\t")

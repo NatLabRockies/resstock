@@ -166,7 +166,52 @@ class BuildExistingModelTest < Minitest::Test
     end
   end
 
+  # Verifies that v5 regions, built from County and PUMA cells, resolve to their counties through County.tsv.
+  def test_sampling_region_counties_from_county_and_puma_cells
+    Dir.mktmpdir do |root|
+      characteristics_dir = File.join(root, 'housing_characteristics')
+      create_cell_sampling_region_characteristics(characteristics_dir)
+      create_gea_region_characteristics(characteristics_dir)
+
+      assert_equal ['CA, Alpha County', 'NV, Beta County', 'HI, Honolulu County'], SamplingRegion.counties(characteristics_dir, '60801')
+      assert_equal ['OR, Not Selected County'], SamplingRegion.counties(characteristics_dir, '410801')
+
+      args = {
+        emissions_scenario_names: 'LRMER_MidCase_15 - Sampling Region',
+        emissions_types: 'CO2e',
+        emissions_electricity_folders: 'data/lrmer',
+        emissions_natural_gas_values: '1'
+      }
+      resources_dir = File.join(root, 'resources')
+      create_emissions_resources(resources_dir)
+      result = EmissionScenarios.new(args, { 'Sampling Region' => '60801' }, resources_dir, characteristics_dir).build
+      assert_nil result[:error]
+      assert_equal 'LRMER_MidCase_15 - MISO Central,LRMER_MidCase_15 - MISO South', result[:measure_arguments]['emissions_scenario_names']
+
+      bills = UtilityBillScenarios.new({}, { 'Sampling Region' => '60801' }, resources_dir, characteristics_dir)
+      assert_equal [['CA', 'HI', 'NV'], nil], bills.send(:get_statecodes_for_sampling_region)
+    end
+  end
+
   private
+
+  def create_cell_sampling_region_characteristics(characteristics_dir)
+    FileUtils.mkdir_p(characteristics_dir)
+    cells = { 'G0600010, G06000101' => 'CA, Alpha County', 'G0600010, G06000102' => 'CA, Alpha County',
+              'G3200010, G32000100' => 'NV, Beta County', 'G1500030, G15000100' => 'HI, Honolulu County',
+              'G4100010, G41000100' => 'OR, Not Selected County' }
+    counties = cells.values.uniq
+    # Written with CRLF line endings, as the project TSVs are
+    File.open(File.join(characteristics_dir, 'Sampling Region.tsv'), 'wb') do |f|
+      f.write("Dependency=County and PUMA\tOption=60801\tOption=410801\r\n")
+      cells.each { |cell, county| f.write("#{cell}\t#{county.start_with?('OR') ? "0\t1" : "1\t0"}\r\n") }
+    end
+    File.open(File.join(characteristics_dir, 'County.tsv'), 'wb') do |f|
+      f.write((['Dependency=County and PUMA'] + counties.map { |c| "Option=#{c}" } + ['sampling_probability']).join("\t") + "\r\n")
+      cells.each { |cell, county| f.write(([cell] + counties.map { |c| c == county ? '1' : '0' } + ['0.2']).join("\t") + "\r\n") }
+      f.write("# Description: The U.S. County that the sample is located.\r\n")
+    end
+  end
 
   def create_emissions_resources(resources_dir)
     %w[lrmer baseline peak].each do |scenario|

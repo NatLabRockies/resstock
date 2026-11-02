@@ -2,6 +2,7 @@
 
 require 'csv'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/constants'
+require_relative 'sampling_region'
 
 class UtilityBillScenarios
   # Maps output fields to input arguments or rate-file fields; include_in_outputs: false omits lookup-only fields.
@@ -180,13 +181,8 @@ class UtilityBillScenarios
     parameter = 'Sampling Region'
     return [[], "Utility bill scenario(s) were specified, but could not find #{parameter}."] unless @bldg_data.key?(parameter)
 
-    filepath = File.join(@characteristics_dir, "#{parameter}.tsv")
-    rows = CSV.read(filepath, headers: true, col_sep: "\t")
-    option_col = "Option=#{@bldg_data[parameter]}"
-    statecodes = rows.each_with_object([]) do |row, codes|
-      next unless row[option_col].to_s.strip == '1'
-
-      statecode = row['Dependency=County'].to_s.split(',', 2).first.to_s.strip
+    statecodes = SamplingRegion.counties(@characteristics_dir, @bldg_data[parameter]).each_with_object([]) do |county, codes|
+      statecode = county.split(',', 2).first.to_s.strip
       codes << statecode if statecode.match?(/\A[A-Z]{2}\z/)
     end
     return [statecodes.uniq.sort, nil]
