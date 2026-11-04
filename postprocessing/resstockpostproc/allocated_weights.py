@@ -558,10 +558,49 @@ def merge_geographical_data(
     return assign_sampling_regions(catalogue_df.lazy(), sampling_regions_df, cec_2010_cz_lkup_df).collect()
 
 
-def _region_partition_path(region_id: str) -> str:
-    """Return the path of one region's partition, relative to the partition directory."""
+def _file_index_suffix(index_in_partition: int) -> str:
+    """The file name suffix for the index_in_partition'th file of one partition.
 
-    return f"{SAMPLING_REGION_PARTITION}={region_id}/{SAMPLING_REGION_PARTITION}_{region_id}.parquet"
+    pl.PartitionBy starts a new file whenever a partition passes approximate_bytes_per_file
+    (4 GiB in memory by default) and asks the file_path_provider for each one. A provider that
+    ignores the index returns the same path every time, and each file then overwrites the one
+    before it, keeping only a partition's last 4 GiB. The first file keeps the unsuffixed name.
+    """
+
+    return "" if index_in_partition == 0 else f"_{index_in_partition}"
+
+
+def _region_partition_path(region_id: str, index_in_partition: int = 0) -> str:
+    """Return the path of one file of a region's partition, relative to the partition directory."""
+
+    return (
+        f"{SAMPLING_REGION_PARTITION}={region_id}/"
+        f"{SAMPLING_REGION_PARTITION}_{region_id}{_file_index_suffix(index_in_partition)}.parquet"
+    )
+
+
+def check_partitioned_row_count(output_dir: FsspecOutputDir, file_glob: str, expected: int, desc: str) -> None:
+    """Raise if the files a partitioned sink wrote do not hold exactly the rows it was given.
+
+    Counts from the parquet footers, so no data is read. Catches files that overwrote each
+    other and files left over from an earlier write.
+
+    Args:
+        output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
+        file_glob: Glob matching every file the sink wrote, as polars reads it
+        expected: Rows passed to the sink
+        desc: What the files hold, for the error message
+
+    Raises:
+        ValueError: If the row counts differ
+    """
+
+    output_dir["fs"].invalidate_cache()
+    written = (
+        pl.scan_parquet(file_glob, storage_options=output_dir["storage_options"]).select(pl.len()).collect().item()
+    )
+    if written != expected:
+        raise ValueError(f"The {desc} files hold {written:,} rows, but {expected:,} were written to them: {file_glob}")
 
 
 def _read_staging_record(output_dir: FsspecOutputDir, partition_dir: str) -> dict | None:
@@ -662,14 +701,21 @@ def partition_catalogue_by_sampling_region(
             f"{partition_dir}/",
             key="in.sampling_region_id",
             include_key=True,
-            file_path_provider=lambda args: _region_partition_path(args.partition_keys.row(0)[0]),
+            file_path_provider=lambda args: _region_partition_path(
+                args.partition_keys.row(0)[0], args.index_in_partition
+            ),
         ),
         compression="zstd",
         storage_options=output_dir["storage_options"],
         mkdir=True,
     )
-    output_dir["fs"].invalidate_cache()
-    n_partitions = len(output_dir["fs"].glob(f"{partition_dir}/*/*.parquet"))
+    check_partitioned_row_count(
+        output_dir,
+        f"{partition_dir}/*/*.parquet",
+        catalogue_lf.select(pl.len()).collect().item(),
+        "staged catalogue",
+    )
+    n_partitions = len({Path(p).parent.name for p in output_dir["fs"].glob(f"{partition_dir}/*/*.parquet")})
     _write_staging_record(output_dir, partition_dir, wanted)
     logger.info(
         f"Staged the catalogue as {n_partitions} sampling region partitions in "
@@ -1805,8 +1851,16 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
         state_abbv = args.partition_keys.row(0)[0]
         return (
             f"state={state_abbv}/"
-            f"cached_allocated_weights_plus_bills_upgrade{upgrade_id}_{state_abbv}.parquet"
+            f"cached_allocated_weights_plus_bills_upgrade{upgrade_id}_{state_abbv}"
+            f"{_file_index_suffix(args.index_in_partition)}.parquet"
         )
+
+    # A state can be written as several files, so files left by an earlier write would be read
+    # back alongside the new ones
+    output_dir["fs"].invalidate_cache()
+    if output_dir["fs"].exists(alloc_wts_bills_dir):
+        output_dir["fs"].rm(alloc_wts_bills_dir, recursive=True)
+        output_dir["fs"].invalidate_cache()
 
     alloc_wts_plus_bills.sink_parquet(
         pl.PartitionBy(
@@ -1818,6 +1872,13 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
         compression="zstd",
         storage_options=output_dir["storage_options"],
         mkdir=True,
+    )
+    # Every join above is a left join on a unique key, so the cache holds one row per allocated row
+    check_partitioned_row_count(
+        output_dir,
+        f"{alloc_wts_bills_dir}/*/*.parquet",
+        alloc_wts.select(pl.len()).collect().item(),
+        f"allocated weights plus bills for upgrade {upgrade_id}",
     )
     logger.info(
         f"Cached allocated weights plus bills for upgrade {upgrade_id} in "

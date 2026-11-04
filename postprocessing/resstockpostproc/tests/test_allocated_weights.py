@@ -17,6 +17,7 @@ from resstockpostproc.allocated_weights import (
     unpivot_state_utility_bills,
     allocate_buildings_to_geography,
     check_allocation_misses,
+    check_partitioned_row_count,
     coerce_vacant_join_keys,
     get_cached_allocated_weights,
     iter_sampling_region_partitions,
@@ -430,6 +431,22 @@ def test_catalogue_partitions_round_trip_through_the_sampling_region_cache(tmp_p
     assert alabama["in.state"].unique().to_list() == ["AL"]
 
 
+def test_a_region_staged_as_several_files_keeps_every_catalogue_row(tmp_path, monkeypatch):
+    split_every_partition_row_by_row(monkeypatch)
+    write_catalogue_files(tmp_path)
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+
+    partition_dir = partition_catalogue_by_sampling_region(
+        output_dir, catalogue_file_version="test", sampling_region_version="test"
+    )
+    partitions = dict(iter_sampling_region_partitions(output_dir, partition_dir))
+
+    assert sum(df.height for df in partitions.values()) == len(CATALOGUE_ROWS) * 3
+    # One file per row, each under its own name
+    region_files = list((tmp_path / "cached_catalogue_by_sampling_region" / "sampling_region=7").iterdir())
+    assert len(region_files) == partitions["7"].height > 1
+
+
 def test_cell_keyed_sampling_regions_join_on_county_and_puma_and_skip_cec(tmp_path):
     # v5: regions keyed by County x PUMA cell, California included, so the CEC lookup is not read
     write_catalogue_files(tmp_path)
@@ -645,6 +662,65 @@ def test_allocated_weights_plus_bills_carry_the_allocated_states_bills(tmp_path)
         "cached_allocated_weights_plus_bills/upgrade=1/state=AK/cached_allocated_weights_plus_bills_upgrade1_AK.parquet",
         "cached_allocated_weights_plus_bills/upgrade=1/state=WA/cached_allocated_weights_plus_bills_upgrade1_WA.parquet",
     ]
+
+
+def split_every_partition_row_by_row(monkeypatch) -> None:
+    """Make pl.PartitionBy start a new file for every row, as it does for a partition over 4 GiB."""
+
+    partition_by = pl.PartitionBy
+
+    def one_row_per_file(*args, **kwargs):
+        return partition_by(*args, max_rows_per_file=1, approximate_bytes_per_file=None, **kwargs)
+
+    monkeypatch.setattr(pl, "PartitionBy", one_row_per_file)
+
+
+def test_a_state_written_as_several_files_keeps_every_housing_unit(tmp_path, monkeypatch):
+    # The 8_15 run lost CA, NY, FL and TX: their partitions passed 4 GiB, and every file of a
+    # state was given the same name, so each overwrote the one before it
+    split_every_partition_row_by_row(monkeypatch)
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    write_cached_sim_outs(tmp_path, make_state_bills_sim_outs())
+    write_allocated_weights(output_dir, make_state_allocation())
+
+    create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)
+    plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1).collect()
+
+    assert plus_bills.height == 4
+    assert sorted(plus_bills["in.nhgis_tract_gisjoin"].to_list()) == sorted(
+        make_state_allocation()["in.nhgis_tract_gisjoin"].to_list()
+    )
+    wa_files = sorted(p.name for p in (tmp_path / "cached_allocated_weights_plus_bills/upgrade=1/state=WA").iterdir())
+    assert wa_files == [
+        "cached_allocated_weights_plus_bills_upgrade1_WA.parquet",
+        "cached_allocated_weights_plus_bills_upgrade1_WA_1.parquet",
+        "cached_allocated_weights_plus_bills_upgrade1_WA_2.parquet",
+    ]
+
+
+def test_rewriting_the_bills_cache_drops_files_from_the_previous_write(tmp_path, monkeypatch):
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    write_cached_sim_outs(tmp_path, make_state_bills_sim_outs())
+    write_allocated_weights(output_dir, make_state_allocation())
+
+    with monkeypatch.context() as m:
+        split_every_partition_row_by_row(m)
+        create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)
+    # Written whole this time, so the WA_1 and WA_2 files of the first write must not survive
+    create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1)
+
+    assert get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id=1).collect().height == 4
+    assert len(list(tmp_path.rglob("*plus_bills*.parquet"))) == 2
+
+
+def test_a_partitioned_write_short_of_rows_raises(tmp_path):
+    output_dir = setup_fsspec_filesystem(str(tmp_path))
+    (tmp_path / "part=a").mkdir()
+    pl.DataFrame({"x": [1, 2]}).write_parquet(tmp_path / "part=a" / "part_a.parquet")
+
+    check_partitioned_row_count(output_dir, f"{tmp_path.as_posix()}/*/*.parquet", 2, "test")
+    with pytest.raises(ValueError, match="hold 2 rows, but 3 were written"):
+        check_partitioned_row_count(output_dir, f"{tmp_path.as_posix()}/*/*.parquet", 3, "test")
 
 
 def test_a_housing_unit_allocated_to_a_state_its_building_was_not_billed_under_raises(tmp_path):
