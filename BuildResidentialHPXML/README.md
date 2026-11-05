@@ -76,7 +76,7 @@ Path to the EPW file. Either this or the Zip Code input above must be provided.
 
 **Location: Site Type**
 
-The terrain/shielding of the home, for the infiltration model. Defaults to 'Suburban, Normal' for single-family detached and manufactured home and 'Suburban, Well-Shielded' for single-family attached and apartment units.
+The terrain/shielding of the home, for the infiltration model.
 
 - **Name:** ``location_site_type``
 - **Type:** ``Choice``
@@ -209,7 +209,7 @@ The number of bedrooms in the unit.
 
 **Geometry: Unit Number of Bathrooms**
 
-The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.
+The number of bathrooms in the unit.
 
 - **Name:** ``geometry_unit_num_bathrooms``
 - **Type:** ``Choice``
@@ -512,7 +512,7 @@ The material type and color of the roof.
 
 - **Required:** ``false``
 
-- **Choices:** <br/>  - `Asphalt/Fiberglass Shingles, Dark`<br/>  - `Asphalt/Fiberglass Shingles, Medium Dark`<br/>  - `Asphalt/Fiberglass Shingles, Medium`<br/>  - `Asphalt/Fiberglass Shingles, Medium Light`<br/>  - `Asphalt/Fiberglass Shingles, Light`<br/>  - `Asphalt/Fiberglass Shingles, Reflective`<br/>  - `Tile/Slate, Dark`<br/>  - `Tile/Slate, Medium Dark`<br/>  - `Tile/Slate, Medium`<br/>  - `Tile/Slate, Medium Light`<br/>  - `Tile/Slate, Light`<br/>  - `Tile/Slate, Reflective`<br/>  - `Metal, Dark`<br/>  - `Metal, Medium Dark`<br/>  - `Metal, Medium`<br/>  - `Metal, Medium Light`<br/>  - `Metal, Light`<br/>  - `Metal, Reflective`<br/>  - `Wood Shingles/Shakes, Dark`<br/>  - `Wood Shingles/Shakes, Medium Dark`<br/>  - `Wood Shingles/Shakes, Medium`<br/>  - `Wood Shingles/Shakes, Medium Light`<br/>  - `Wood Shingles/Shakes, Light`<br/>  - `Wood Shingles/Shakes, Reflective`<br/>  - `Shingles, Dark`<br/>  - `Shingles, Medium Dark`<br/>  - `Shingles, Medium`<br/>  - `Shingles, Medium Light`<br/>  - `Shingles, Light`<br/>  - `Shingles, Reflective`<br/>  - `Synthetic Sheeting, Dark`<br/>  - `Synthetic Sheeting, Medium Dark`<br/>  - `Synthetic Sheeting, Medium`<br/>  - `Synthetic Sheeting, Medium Light`<br/>  - `Synthetic Sheeting, Light`<br/>  - `Synthetic Sheeting, Reflective`<br/>  - `EPS Sheathing, Dark`<br/>  - `EPS Sheathing, Medium Dark`<br/>  - `EPS Sheathing, Medium`<br/>  - `EPS Sheathing, Medium Light`<br/>  - `EPS Sheathing, Light`<br/>  - `EPS Sheathing, Reflective`<br/>  - `Concrete, Dark`<br/>  - `Concrete, Medium Dark`<br/>  - `Concrete, Medium`<br/>  - `Concrete, Medium Light`<br/>  - `Concrete, Light`<br/>  - `Concrete, Reflective`<br/>  - `Cool Roof`<br/>  - `ASHRAE 140 Tests: Low Solar Absorptance`<br/>  - `ASHRAE 140 Tests: Typical Solar Absorptance`<br/>  - `HERS Reference`
+- **Choices:** <br/>  - `Asphalt/Fiberglass Shingles, Dark`<br/>  - `Asphalt/Fiberglass Shingles, Medium Dark`<br/>  - `Asphalt/Fiberglass Shingles, Medium`<br/>  - `Asphalt/Fiberglass Shingles, Medium Light`<br/>  - `Asphalt/Fiberglass Shingles, Light`<br/>  - `Asphalt/Fiberglass Shingles, White`<br/>  - `Asphalt/Fiberglass Shingles, Reflective`<br/>  - `Tile/Slate, Dark`<br/>  - `Tile/Slate, Medium Dark`<br/>  - `Tile/Slate, Medium`<br/>  - `Tile/Slate, Medium Light`<br/>  - `Tile/Slate, Light`<br/>  - `Tile/Slate, White`<br/>  - `Tile/Slate, Reflective`<br/>  - `Metal, Dark`<br/>  - `Metal, Medium Dark`<br/>  - `Metal, Medium`<br/>  - `Metal, Medium Light`<br/>  - `Metal, Light`<br/>  - `Metal, White`<br/>  - `Metal, Reflective`<br/>  - `Wood Shingles/Shakes, Dark`<br/>  - `Wood Shingles/Shakes, Medium Dark`<br/>  - `Wood Shingles/Shakes, Medium`<br/>  - `Wood Shingles/Shakes, Medium Light`<br/>  - `Wood Shingles/Shakes, Light`<br/>  - `Wood Shingles/Shakes, White`<br/>  - `Wood Shingles/Shakes, Reflective`<br/>  - `Shingles, Dark`<br/>  - `Shingles, Medium Dark`<br/>  - `Shingles, Medium`<br/>  - `Shingles, Medium Light`<br/>  - `Shingles, Light`<br/>  - `Shingles, White`<br/>  - `Shingles, Reflective`<br/>  - `Synthetic Sheeting, Dark`<br/>  - `Synthetic Sheeting, Medium Dark`<br/>  - `Synthetic Sheeting, Medium`<br/>  - `Synthetic Sheeting, Medium Light`<br/>  - `Synthetic Sheeting, Light`<br/>  - `Synthetic Sheeting, White`<br/>  - `Synthetic Sheeting, Reflective`<br/>  - `EPS Sheathing, Dark`<br/>  - `EPS Sheathing, Medium Dark`<br/>  - `EPS Sheathing, Medium`<br/>  - `EPS Sheathing, Medium Light`<br/>  - `EPS Sheathing, Light`<br/>  - `EPS Sheathing, White`<br/>  - `EPS Sheathing, Reflective`<br/>  - `Concrete, Dark`<br/>  - `Concrete, Medium Dark`<br/>  - `Concrete, Medium`<br/>  - `Concrete, Medium Light`<br/>  - `Concrete, Light`<br/>  - `Concrete, White`<br/>  - `Concrete, Reflective`<br/>  - `ASHRAE 140 Tests: Low Solar Absorptance`<br/>  - `ASHRAE 140 Tests: Typical Solar Absorptance`<br/>  - `HERS Reference`
 
 
 - **Default:** `Asphalt/Fiberglass Shingles, Medium`
@@ -1370,7 +1370,7 @@ The size and type of battery storage.
 
 - **Required:** ``false``
 
-- **Choices:** <br/>  - `None`<br/>  - `5.0 kWh`<br/>  - `7.5 kWh`<br/>  - `10.0 kWh`<br/>  - `12.5 kWh`<br/>  - `15.0 kWh`<br/>  - `17.5 kWh`<br/>  - `20.0 kWh`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Garage`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Outside`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency`
+- **Choices:** <br/>  - `None`<br/>  - `5.0 kWh`<br/>  - `7.5 kWh`<br/>  - `10.0 kWh`<br/>  - `12.5 kWh`<br/>  - `15.0 kWh`<br/>  - `17.5 kWh`<br/>  - `20.0 kWh`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Garage`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Outside`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Other Heated Space`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Other Multifamily Buffer Space`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Other Non-Freezing Space`
 
 
 - **Default:** `None`

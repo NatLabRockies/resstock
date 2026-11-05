@@ -21,6 +21,9 @@
         <Site>
           <Surroundings>stand-alone</Surroundings>
           <VerticalSurroundings>no units above or below</VerticalSurroundings>
+          <Soil>
+            <Conductivity>0.8</Conductivity>
+          </Soil>
         </Site>
         <BuildingOccupancy>
           <NumberofResidents>0.0</NumberofResidents>
@@ -507,7 +510,7 @@
         <Doors>
           <Door>
             <SystemIdentifier id='Door1'/>
-            <AttachedToWall idref='Wall3'/>
+            <AttachedToWall idref='Wall1'/>
             <Area>20.0</Area>
             <Azimuth>180</Azimuth>
             <RValue>3.04</RValue>

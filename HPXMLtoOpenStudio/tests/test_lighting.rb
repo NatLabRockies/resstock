@@ -20,32 +20,56 @@ class HPXMLtoOpenStudioLightingTest < Minitest::Test
     cleanup_output_files([@tmp_hpxml_path])
   end
 
-  def get_kwh_per_year(model, name)
+  def get_kwh_per_year(model, name, schedules_file = nil)
+    sch_file_col_name_map = {
+      Constants::ObjectTypeLightingInterior => :LightingInterior,
+      Constants::ObjectTypeLightingExterior => :LightingExterior,
+    }
+
+    kwh_yr = 0.0
     model.getLightss.each do |ltg|
       next unless ltg.name.to_s == name
 
-      hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ltg.schedule.get)
-      kwh_yr = UnitConversions.convert(hrs * ltg.lightingLevel.get * ltg.multiplier * ltg.space.get.multiplier, 'Wh', 'kWh')
-      return kwh_yr
+      if ltg.schedule.get.to_ScheduleFile.is_initialized
+        hrs = schedules_file.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[sch_file_col_name_map[name]].name)
+      else
+        hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ltg.schedule.get)
+      end
+      kwh_yr += UnitConversions.convert(hrs * ltg.lightingLevel.get * ltg.multiplier * ltg.space.get.multiplier, 'Wh', 'kWh')
     end
     model.getElectricEquipments.each do |ee|
       next unless ee.name.to_s.include?(name)
 
-      hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ee.schedule.get)
-      kwh_yr = UnitConversions.convert(hrs * ee.designLevel.get * ee.multiplier * ee.space.get.multiplier, 'Wh', 'kWh')
-      return kwh_yr
+      if ee.schedule.get.to_ScheduleFile.is_initialized
+        hrs = schedules_file.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[sch_file_col_name_map[name]].name)
+      else
+        hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ee.schedule.get)
+      end
+      kwh_yr += UnitConversions.convert(hrs * ee.designLevel.get * ee.multiplier * ee.space.get.multiplier, 'Wh', 'kWh')
     end
-    return 0.0
+    return kwh_yr
   end
 
   def test_lighting
-    args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base.xml'))
-    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
+    hpxml_names = ['base.xml',
+                   'base-schedules-detailed-occupancy-stochastic.xml'] # Test w/ detailed schedules
 
-    # Check lighting
-    assert_in_delta(1322, get_kwh_per_year(model, Constants::ObjectTypeLightingInterior).round, 1.0)
-    assert_in_delta(98, get_kwh_per_year(model, Constants::ObjectTypeLightingExterior), 1.0)
+    hpxml_names.each do |hpxml_name|
+      args_hash = {}
+      args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, hpxml_name))
+      model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+
+      if not hpxml_bldg.header.schedules_filepaths.empty?
+        schedules_file = SchedulesFile.new(runner: nil,
+                                           schedules_paths: hpxml_bldg.header.schedules_filepaths,
+                                           year: model.yearDescription.get.assumedYear,
+                                           output_path: nil)
+      end
+
+      # Check lighting
+      assert_in_delta(1322, get_kwh_per_year(model, Constants::ObjectTypeLightingInterior, schedules_file).round, 1.0)
+      assert_in_delta(98, get_kwh_per_year(model, Constants::ObjectTypeLightingExterior, schedules_file), 1.0)
+    end
   end
 
   def test_lighting_garage

@@ -134,6 +134,29 @@ module Model
     return constr
   end
 
+  # Adds an InternalMass object to the OpenStudio model.
+  #
+  # The InternalMass object is used to describe interior surfaces, furniture,
+  # and furnishings.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param space [OpenStudio::Model::Space] an OpenStudio::Model::Space object
+  # @param area [Double] The entire surface area (both sides) exposed to the zone (ft^2)
+  # @return [OpenStudio::Model::InternalMass] The model object
+  def self.add_internal_mass(model, name:, space:, area:)
+    # Note: EnergyPlus documentation states that if both sides of the surface exchange
+    # energy with the zone then the user should input twice the area when defining the
+    # Internal Mass object.
+    im_def = OpenStudio::Model::InternalMassDefinition.new(model)
+    im = OpenStudio::Model::InternalMass.new(im_def)
+    im.setName(name)
+    im_def.setName(name)
+    im_def.setSurfaceArea(UnitConversions.convert(area, 'ft^2', 'm^2'))
+    im.setSpace(space)
+    return im
+  end
+
   # Adds a WaterUseEquipment object to the OpenStudio model.
   #
   # The WaterUseEquipment object is a generalized object for simulating all (hot and cold)
@@ -333,6 +356,43 @@ module Model
     return coil
   end
 
+  # Adds a CoilHeatingWater to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param capacity [Double] Heating capacity (W)
+  # @param ua_value [Double] UA value (W/K)
+  # @param max_flow_rate [Double] Maximum water flow rate (m^3/s)
+  # @return [OpenStudio::Model::CoilHeatingWater] The model object
+  def self.add_coil_heating_water(model, name:, capacity:, ua_value:, max_flow_rate:)
+    coil = OpenStudio::Model::CoilHeatingWater.new(model, model.alwaysOnDiscreteSchedule)
+    coil.setRatedCapacity(capacity)
+    coil.setUFactorTimesAreaValue(ua_value)
+    coil.setMaximumWaterFlowRate(max_flow_rate)
+    coil.setPerformanceInputMethod('NominalCapacity')
+    coil.setName(name)
+    return coil
+  end
+
+  # Adds a CoilHeatingWaterBaseboard to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param capacity [Double] Heating capacity (W)
+  # @param ua_value [Double] UA value (W/K)
+  # @param max_flow_rate [Double] Maximum water flow rate (m^3/s)
+  # @return [OpenStudio::Model::CoilHeatingWaterBaseboard] The model object
+  def self.add_coil_heating_water_baseboard(model, name:, capacity:, ua_value:, max_flow_rate:)
+    coil = OpenStudio::Model::CoilHeatingWaterBaseboard.new(model)
+    coil.setName(name)
+    coil.setConvergenceTolerance(0.001)
+    coil.setHeatingDesignCapacity(capacity)
+    coil.setUFactorTimesAreaValue(ua_value)
+    coil.setMaximumWaterFlowRate(max_flow_rate)
+    coil.setHeatingDesignCapacityMethod('HeatingDesignCapacity')
+    return coil
+  end
+
   # Adds a FanSystemModel object to the OpenStudio model.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
@@ -382,6 +442,34 @@ module Model
       plant_loop.autocalculatePlantLoopVolume()
     end
     return plant_loop
+  end
+
+  # Adds a PumpConstantSpeed object to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param rated_power [Double] Design power consumption (W)
+  # @param rated_flow_rate [Double] Design flow rate (m^3/s)
+  # @param rated_pump_head [Double] Design pump head (Pa)
+  # @param motor_efficiency [Double] Motor efficiency (frac)
+  # @param control_type [String] Pump control type (EPlus::PumpControlTypeXXX)
+  # @return [OpenStudio::Model::PumpConstantSpeed] The model object
+  def self.add_pump_constant_speed(model, name:, rated_power:, rated_flow_rate: nil, rated_pump_head: 90000, motor_efficiency: 0.3, control_type: EPlus::PumpControlTypeIntermittent)
+    pump = OpenStudio::Model::PumpConstantSpeed.new(model)
+    pump.setName(name)
+    pump.setMotorEfficiency(motor_efficiency)
+    if not rated_power.nil?
+      pump.setRatedPowerConsumption(rated_power)
+    end
+    if not rated_pump_head.nil?
+      pump.setRatedPumpHead(rated_pump_head)
+    end
+    if not rated_flow_rate.nil?
+      pump.setRatedFlowRate(rated_flow_rate)
+    end
+    pump.setFractionofMotorInefficienciestoFluidStream(0.2)
+    pump.setPumpControlType(control_type)
+    return pump
   end
 
   # Adds a PumpVariableSpeed object to the OpenStudio model.

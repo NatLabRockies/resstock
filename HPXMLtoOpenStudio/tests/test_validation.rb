@@ -74,8 +74,14 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'cooking-range-location' => ['A location is specified as "garage" but no surfaces were found adjacent to this space type.'],
                             'dehumidifier-fraction-served' => ['Expected sum(FractionDehumidificationLoadServed) to be less than or equal to 1 [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]'],
                             'dhw-frac-load-served' => ['Expected sum(FractionDHWLoadServed) to be 1 [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]'],
+                            'dhw-hpwh-voltage' => ["Expected HPWHVoltage to be '240V' or '120V' or '120V dedicated circuit' or '120V shared circuit'"],
+                            'dhw-hpwh-operating-mode-120v' => ["Expected HPWHOperatingMode to be 'heat pump only'"],
                             'dhw-invalid-ef-tank' => ['Expected EnergyFactor to be less than 1 [context: /HPXML/Building/BuildingDetails/Systems/WaterHeating/WaterHeatingSystem[WaterHeaterType="storage water heater"], id: "WaterHeatingSystem1"]'],
-                            'dhw-invalid-uef-tank-heat-pump' => ['Expected UniformEnergyFactor to be greater than 1 [context: /HPXML/Building/BuildingDetails/Systems/WaterHeating/WaterHeatingSystem[WaterHeaterType="heat pump water heater"], id: "WaterHeatingSystem1"]'],
+                            'dhw-invalid-uef-tank-heat-pump' => ['Expected UniformEnergyFactor to be greater than or equal to 1.45 [context: /HPXML/Building/BuildingDetails/Systems/WaterHeating/WaterHeatingSystem[WaterHeaterType="heat pump water heater"], id: "WaterHeatingSystem1"]'],
+                            'dhw-mixing-valve-consistency' => ['Expected no MixingValveSetpoint when HasMixingValve=false'],
+                            'dhw-mixing-valve-setpoint-high' => ['Expected MixingValveSetpoint to be less than or equal to HotWaterTemperature'],
+                            'dhw-mixing-valve-setpoint-low' => ['Expected MixingValveSetpoint to be greater than or equal to 105 deg-F'],
+                            'dhw-setpoint-low' => ['Expected HotWaterTemperature to be greater than or equal to 105 deg-F'],
                             'dishwasher-location' => ['A location is specified as "garage" but no surfaces were found adjacent to this space type.'],
                             'duct-leakage-cfm25' => ["The value '-2.0' is less than the minimum value allowed",
                                                      "The value '-3.0' is less than the minimum value allowed"],
@@ -127,11 +133,11 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                                                             'Expected CapacityFractionOfNominal to be 1.0'],
                             'hvac-detailed-performance-incomplete-pair' => ['Cooling detailed performance data for outdoor temperature > 95.0 is incomplete; there must be exactly one minimum and one maximum capacity datapoint.',
                                                                             'Heating detailed performance data for outdoor temperature < 5.0 is incomplete; there must be exactly one minimum and one maximum capacity datapoint.'],
-                            'hvac-detailed-performance-invalid-data' => ['Cooling detailed performance data for outdoor temperature = 82.0 is invalid; Power (capacity / COP) at minimum capacity must be less than power at maximum capacity.',
+                            'hvac-detailed-performance-invalid-data' => ['Cooling detailed performance data for outdoor temperature = 82.0 is invalid; Power (capacity / COP) at minimum capacity must be less than power at maximum capacity plus 341.2 Btuh (100W).',
                                                                          'Cooling detailed performance data for outdoor temperature = 95.0 is invalid; Minimum capacity must be less than maximum capacity.',
                                                                          'Cooling detailed performance data for outdoor temperature = 95.0 is invalid; Minimum capacity must be less than or equal to nominal capacity.',
-                                                                         'Heating detailed performance data for outdoor temperature = 47.0 is invalid; Power (capacity / COP) at minimum capacity must be less than power at maximum capacity.',
-                                                                         'Heating detailed performance data for outdoor temperature = 47.0 is invalid; Power (capacity / COP) at minimum capacity must be less than or equal to power at nominal capacity.',
+                                                                         'Heating detailed performance data for outdoor temperature = 47.0 is invalid; Power (capacity / COP) at minimum capacity must be less than power at maximum capacity plus 341.2 Btuh (100W).',
+                                                                         'Heating detailed performance data for outdoor temperature = 47.0 is invalid; Power (capacity / COP) at minimum capacity must be less than or equal to power at nominal capacity plus 341.2 Btuh (100W).',
                                                                          'Heating detailed performance data for outdoor temperature = 5.0 is invalid; Minimum capacity must be less than maximum capacity.'],
                             'hvac-distribution-return-duct-leakage-missing' => ['Expected DuctLeakageMeasurement[DuctType="return"]/DuctLeakage[(Units="CFM25" or Units="CFM50" or Units="Percent") and TotalOrToOutside="to outside"] [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution[AirDistributionType[text()="regular velocity" or text()="gravity"]], id: "HVACDistribution1"]'],
                             'hvac-frac-load-served' => ['Expected sum(FractionHeatLoadServed) to be less than or equal to 1 [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]',
@@ -143,6 +149,10 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'hvac-invalid-fan-model-type' => ["Expected extension/FanMotorType to be 'PSC' or 'BPM'"],
                             'hvac-invalid-eer' => ['Expected EER to be less than SEER.'],
                             'hvac-invalid-eer2' => ['Expected EER2 to be less than or equal to SEER2.'],
+                            'hvac-invalid-mixed-seer-eer2' => ['Expected SEER to be paired with EER, or SEER2 with EER2.'],
+                            'hvac-invalid-mixed-seer2-eer' => ['Expected SEER to be paired with EER, or SEER2 with EER2.'],
+                            'hvac-invalid-mixed-seer-hspf2' => ['Expected SEER to be paired with HSPF, or SEER2 with HSPF2.'],
+                            'hvac-invalid-mixed-seer2-hspf' => ['Expected SEER to be paired with HSPF, or SEER2 with HSPF2.'],
                             'hvac-location-heating-system' => ['A location is specified as "basement - unconditioned" but no surfaces were found adjacent to this space type.'],
                             'hvac-location-cooling-system' => ['A location is specified as "basement - unconditioned" but no surfaces were found adjacent to this space type.'],
                             'hvac-location-heat-pump' => ['A location is specified as "basement - unconditioned" but no surfaces were found adjacent to this space type.'],
@@ -169,17 +179,16 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'invalid-battery-capacities-ah' => ['Expected UsableCapacity to be less than NominalCapacity'],
                             'invalid-battery-capacities-kwh' => ['Expected UsableCapacity to be less than NominalCapacity'],
                             'invalid-calendar-year-low' => ['Expected CalendarYear to be greater than or equal to 1600'],
-                            'invalid-calendar-year-high' => ['Expected CalendarYear to be less than or equal to 9999'],
                             'invalid-clothes-dryer-cef' => ["Element 'CombinedEnergyFactor': [facet 'minExclusive'] The value '0.0' must be greater than '0'."],
                             'invalid-clothes-washer-imef' => ["Element 'IntegratedModifiedEnergyFactor': [facet 'minExclusive'] The value '0.0' must be greater than '0'."],
                             'invalid-cfis-addtl-runtime-mode' => ["Expected CFISControls/AdditionalRuntimeOperatingMode to be 'air handler fan'"],
                             'invalid-dishwasher-ler' => ["Element 'LabelElectricRate': [facet 'minExclusive'] The value '0.0' must be greater than '0'."],
                             'invalid-duct-area-fractions' => ['Expected sum(Ducts/FractionDuctArea) for DuctType="supply" to be 1 [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution, id: "HVACDistribution1"]',
                                                               'Expected sum(Ducts/FractionDuctArea) for DuctType="return" to be 1 [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution, id: "HVACDistribution1"]'],
-                            'invalid-facility-type' => ['Expected ../../../BuildingSummary/BuildingConstruction[ResidentialFacilityType=("single-family attached" or "apartment unit")] [context: /HPXML/Building/BuildingDetails/Systems/WaterHeating/WaterHeatingSystem[IsSharedSystem="true"], id: "WaterHeatingSystem1"]',
-                                                        'Expected ../../BuildingSummary/BuildingConstruction[ResidentialFacilityType=("single-family attached" or "apartment unit")] [context: /HPXML/Building/BuildingDetails/Appliances/ClothesWasher[IsSharedAppliance="true"], id: "ClothesWasher1"]',
-                                                        'Expected ../../BuildingSummary/BuildingConstruction[ResidentialFacilityType=("single-family attached" or "apartment unit")] [context: /HPXML/Building/BuildingDetails/Appliances/ClothesDryer[IsSharedAppliance="true"], id: "ClothesDryer1"]',
-                                                        'Expected ../../BuildingSummary/BuildingConstruction[ResidentialFacilityType=("single-family attached" or "apartment unit")] [context: /HPXML/Building/BuildingDetails/Appliances/Dishwasher[IsSharedAppliance="true"], id: "Dishwasher1"]',
+                            'invalid-facility-type' => ['Expected ../../../BuildingSummary/BuildingConstruction[ResidentialFacilityType="single-family attached" or "apartment unit"] [context: /HPXML/Building/BuildingDetails/Systems/WaterHeating/WaterHeatingSystem[IsSharedSystem="true"], id: "WaterHeatingSystem1"]',
+                                                        'Expected ../../BuildingSummary/BuildingConstruction[ResidentialFacilityType="single-family attached" or "apartment unit"] [context: /HPXML/Building/BuildingDetails/Appliances/ClothesWasher[IsSharedAppliance="true"], id: "ClothesWasher1"]',
+                                                        'Expected ../../BuildingSummary/BuildingConstruction[ResidentialFacilityType="single-family attached" or "apartment unit"] [context: /HPXML/Building/BuildingDetails/Appliances/ClothesDryer[IsSharedAppliance="true"], id: "ClothesDryer1"]',
+                                                        'Expected ../../BuildingSummary/BuildingConstruction[ResidentialFacilityType="single-family attached" or "apartment unit"] [context: /HPXML/Building/BuildingDetails/Appliances/Dishwasher[IsSharedAppliance="true"], id: "Dishwasher1"]',
                                                         'There are references to "other housing unit" but ResidentialFacilityType is not "single-family attached" or "apartment unit".',
                                                         'There are references to "other heated space" but ResidentialFacilityType is not "single-family attached" or "apartment unit".'],
                             'invalid-foundation-wall-properties' => ['Expected DepthBelowGrade to be less than or equal to Height [context: /HPXML/Building/BuildingDetails/Enclosure/FoundationWalls/FoundationWall[not(SystemIdentifier/@sameas and /HPXML/SoftwareInfo/extension/WholeSFAorMFBuildingSimulation[text()="true"])], id: "FoundationWall1"]',
@@ -263,7 +272,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'missing-elements' => ['Expected NumberofConditionedFloors [context: /HPXML/Building/BuildingDetails/BuildingSummary/BuildingConstruction, id: "MyBuilding"]',
                                                    'Expected ConditionedFloorArea [context: /HPXML/Building/BuildingDetails/BuildingSummary/BuildingConstruction, id: "MyBuilding"]'],
                             'missing-epw-filepath-and-zipcode' => ['Expected Site/Address/ZipCode or BuildingDetails/ClimateandRiskZones/WeatherStation/extension/EPWFilePath'],
-                            'missing-hpwh-containment-volume' => ['Expected HPWHContainmentVolume if HPWHInConfinedSpaceWithoutMitigation="true" [context: /HPXML/Building/BuildingDetails/Systems/WaterHeating/WaterHeatingSystem/extension[HPWHInConfinedSpaceWithoutMitigation="true"], id: "WaterHeatingSystem1"]'],
+                            'missing-hpwh-containment-volume' => ['Expected HPWHContainmentVolume if HPWHInConfinedSpaceWithoutMitigation="true" [context: /HPXML/Building/BuildingDetails/Systems/WaterHeating/WaterHeatingSystem[WaterHeaterType="heat pump water heater"]/extension[HPWHInConfinedSpaceWithoutMitigation="true"], id: "WaterHeatingSystem1"]'],
                             'missing-inverter-idref' => ['Expected AttachedToInverter if multiple Inverters are specified [context: /HPXML/Building/BuildingDetails/Systems/Photovoltaics/PVSystem[count(../Inverter) > 1], id: "PVSystem1"]',
                                                          'Expected AttachedToInverter if multiple Inverters are specified [context: /HPXML/Building/BuildingDetails/Systems/Photovoltaics/PVSystem[count(../Inverter) > 1], id: "PVSystem2"]'],
                             'missing-skylight-floor' => ['Expected ../../AttachedToFloor'],
@@ -273,6 +282,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                                         'Expected only SystemIdentifier to be specified when sameas attribute used'],
                             'multifamily-common-space-whole-sfa-or-mf-building-sim-false' => ['Expected ExteriorAdjacentTo'],
                             'multifamily-reference-appliance' => ['There are references to "other housing unit" but ResidentialFacilityType is not "single-family attached" or "apartment unit".'],
+                            'multifamily-reference-battery' => ['There are references to "other heated space" but ResidentialFacilityType is not "single-family attached" or "apartment unit".'],
                             'multifamily-reference-duct' => ['There are references to "other multifamily buffer space" but ResidentialFacilityType is not "single-family attached" or "apartment unit".'],
                             'multifamily-reference-surface' => ['There are references to "other heated space" but ResidentialFacilityType is not "single-family attached" or "apartment unit".'],
                             'multifamily-reference-water-heater' => ['There are references to "other non-freezing space" but ResidentialFacilityType is not "single-family attached" or "apartment unit".'],
@@ -285,6 +295,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'panel-without-load-type' => ['Expected LoadType'],
                             'panel-insufficient-voltage' => ["Expected ../../../ElectricPanel/Voltage to be '240' [context: /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel/BranchCircuits/BranchCircuit, id: \"BranchCircuit1\"]"],
                             'panel-zero-meter-based' => ['Expected extension/ElectricPanelBaselinePeakPower to be greater than 0 [context: /HPXML/Building/BuildingDetails/BuildingSummary, id: "MyBuilding"]'],
+                            'pv-year-modules-manufactured' => ['Expected YearModulesManufactured to be greater than or equal to 1970'],
+                            'pv-year-installed' => ['Expected YearInstalled to be greater than or equal to 1970'],
                             'refrigerator-location' => ['A location is specified as "garage" but no surfaces were found adjacent to this space type.'],
                             'refrigerator-schedule' => ['Expected not both schedule fractions/multipliers and schedule coefficients'],
                             'solar-fraction-one' => ['Expected SolarFraction to be less than or equal to 0.99 [context: /HPXML/Building/BuildingDetails/Systems/SolarThermal/SolarThermalSystem, id: "SolarThermalSystem1"]'],
@@ -320,13 +332,33 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'dhw-frac-load-served'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-multiple.xml')
         hpxml_bldg.water_heating_systems[0].fraction_dhw_load_served = 0.35
+      when 'dhw-hpwh-voltage'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump.xml')
+        hpxml_bldg.water_heating_systems[0].hpwh_voltage = 'other'
+      when 'dhw-hpwh-operating-mode-120v'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-120v.xml')
+        hpxml_bldg.water_heating_systems[0].hpwh_operating_mode = HPXML::WaterHeaterHPWHOperatingModeHybridAuto
       when 'dhw-invalid-ef-tank'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-gas-ef.xml')
         hpxml_bldg.water_heating_systems[0].energy_factor = 1.0
         hpxml_bldg.water_heating_systems[0].recovery_efficiency = nil
       when 'dhw-invalid-uef-tank-heat-pump'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump.xml')
-        hpxml_bldg.water_heating_systems[0].uniform_energy_factor = 1.0
+        hpxml_bldg.water_heating_systems[0].uniform_energy_factor = 1.4
+      when 'dhw-mixing-valve-consistency'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.water_heating_systems[0].has_mixing_valve = false
+        hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint = 125
+      when 'dhw-mixing-valve-setpoint-high'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.water_heating_systems[0].temperature = 130
+        hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint = 131
+      when 'dhw-mixing-valve-setpoint-low'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint = 100
+      when 'dhw-setpoint-low'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.water_heating_systems[0].temperature = 100
       when 'dishwasher-location'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.dishwashers[0].location = HPXML::LocationGarage
@@ -598,6 +630,26 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'hvac-invalid-eer2'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].cooling_efficiency_eer2 = hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2 + 1
+      when 'hvac-invalid-mixed-seer-eer2'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
+        hpxml_bldg.heat_pumps[0].cooling_efficiency_eer = nil
+        hpxml_bldg.heat_pumps[0].cooling_efficiency_eer2 = hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2 - 1
+        hpxml_bldg.heat_pumps[0].cooling_efficiency_seer = hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2
+        hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2 = nil
+        hpxml_bldg.heat_pumps[0].heating_efficiency_hspf = hpxml_bldg.heat_pumps[0].heating_efficiency_hspf2
+        hpxml_bldg.heat_pumps[0].heating_efficiency_hspf2 = nil
+      when 'hvac-invalid-mixed-seer2-eer'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-central-ac-only-1-speed.xml')
+        hpxml_bldg.cooling_systems[0].cooling_efficiency_eer2 = nil
+        hpxml_bldg.cooling_systems[0].cooling_efficiency_eer = hpxml_bldg.cooling_systems[0].cooling_efficiency_seer2 - 1
+      when 'hvac-invalid-mixed-seer-hspf2'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
+        hpxml_bldg.heat_pumps[0].cooling_efficiency_seer = hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2
+        hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2 = nil
+      when 'hvac-invalid-mixed-seer2-hspf'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-mini-split-heat-pump-ductless.xml')
+        hpxml_bldg.heat_pumps[0].heating_efficiency_hspf = hpxml_bldg.heat_pumps[0].heating_efficiency_hspf2
+        hpxml_bldg.heat_pumps[0].heating_efficiency_hspf2 = nil
       when 'hvac-location-heating-system'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-boiler-oil-only.xml')
         hpxml_bldg.heating_systems[0].location = HPXML::LocationBasementUnconditioned
@@ -644,9 +696,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'invalid-calendar-year-low'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml.header.sim_calendar_year = 1575
-      when 'invalid-calendar-year-high'
-        hpxml, hpxml_bldg = _create_hpxml('base.xml')
-        hpxml.header.sim_calendar_year = 20000
       when 'invalid-clothes-dryer-cef'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.clothes_dryers[0].combined_energy_factor = 0
@@ -873,6 +922,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'multifamily-reference-appliance'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.clothes_washers[0].location = HPXML::LocationOtherHousingUnit
+      when 'multifamily-reference-battery'
+        hpxml, hpxml_bldg = _create_hpxml('base-pv-battery.xml')
+        hpxml_bldg.batteries[0].location = HPXML::LocationOtherHeatedSpace
       when 'multifamily-reference-duct'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.hvac_distributions[0].ducts[0].duct_location = HPXML::LocationOtherMultifamilyBufferSpace
@@ -921,6 +973,12 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.electric_panels.add(id: 'ElectricPanel1')
         hpxml.header.service_feeders_load_calculation_types = [HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased]
         hpxml_bldg.header.electric_panel_baseline_peak_power = 0
+      when 'pv-year-modules-manufactured'
+        hpxml, hpxml_bldg = _create_hpxml('base-pv.xml')
+        hpxml_bldg.pv_systems[0].year_modules_manufactured = 1900
+      when 'pv-year-installed'
+        hpxml, hpxml_bldg = _create_hpxml('base-pv.xml')
+        hpxml_bldg.pv_systems[0].year_installed = 1900
       when 'refrigerator-location'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.refrigerators[0].location = HPXML::LocationGarage
@@ -984,7 +1042,17 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
   # Test warnings are correctly triggered during the XSD schema or Schematron validation
   def test_schema_schematron_warning_messages
     # Test case => Warning message(s)
-    all_expected_warnings = { 'battery-pv-output-power-low' => ['Max power output should typically be greater than or equal to 500 W.',
+    all_expected_warnings = { 'appliance-energyguide-label-inputs' => ['LabelElectricRate should typically be less than 0.5. [context: /HPXML/Building/BuildingDetails/Appliances/ClothesWasher[IntegratedModifiedEnergyFactor | ModifiedEnergyFactor], id: "ClothesWasher1"]',
+                                                                       'LabelGasRate should typically be greater than 0.5. [context: /HPXML/Building/BuildingDetails/Appliances/ClothesWasher[IntegratedModifiedEnergyFactor | ModifiedEnergyFactor], id: "ClothesWasher1"]',
+                                                                       'LabelAnnualGasCost should typically be greater than 5. [context: /HPXML/Building/BuildingDetails/Appliances/ClothesWasher[IntegratedModifiedEnergyFactor | ModifiedEnergyFactor], id: "ClothesWasher1"]',
+                                                                       'LabelUsage should typically be less than 20. [context: /HPXML/Building/BuildingDetails/Appliances/ClothesWasher[IntegratedModifiedEnergyFactor | ModifiedEnergyFactor], id: "ClothesWasher1"]',
+                                                                       'LabelElectricRate should typically be less than 0.5. [context: /HPXML/Building/BuildingDetails/Appliances/Dishwasher[RatedAnnualkWh | EnergyFactor], id: "Dishwasher1"]',
+                                                                       'LabelGasRate should typically be greater than 0.5. [context: /HPXML/Building/BuildingDetails/Appliances/Dishwasher[RatedAnnualkWh | EnergyFactor], id: "Dishwasher1"]',
+                                                                       'LabelAnnualGasCost should typically be greater than 5. [context: /HPXML/Building/BuildingDetails/Appliances/Dishwasher[RatedAnnualkWh | EnergyFactor], id: "Dishwasher1"]',
+                                                                       'LabelUsage should typically be less than 20. [context: /HPXML/Building/BuildingDetails/Appliances/Dishwasher[RatedAnnualkWh | EnergyFactor], id: "Dishwasher1"]'],
+                              'appliance-energyguide-label-inputs2' => ['LabelGasRate should typically be less than 5. [context: /HPXML/Building/BuildingDetails/Appliances/ClothesWasher[IntegratedModifiedEnergyFactor | ModifiedEnergyFactor], id: "ClothesWasher1"]',
+                                                                        'LabelGasRate should typically be less than 5. [context: /HPXML/Building/BuildingDetails/Appliances/Dishwasher[RatedAnnualkWh | EnergyFactor], id: "Dishwasher1"]'],
+                              'battery-pv-output-power-low' => ['Max power output should typically be greater than or equal to 500 W.',
                                                                 'Max power output should typically be greater than or equal to 500 W.',
                                                                 'Rated power output should typically be greater than or equal to 1000 W.'],
                               'dhw-capacities-low' => ['Heating capacity should typically be greater than or equal to 1000 Btu/hr.',
@@ -995,7 +1063,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                          'EnergyFactor should typically be greater than or equal to 0.4.',
                                                          'EnergyFactor should typically be greater than or equal to 0.4.',
                                                          'No space cooling specified, the model will not include space cooling energy use.'],
-                              'dhw-setpoint-low' => ['Hot water setpoint should typically be greater than or equal to 110 deg-F.'],
                               'erv-atre-low' => ['Adjusted total recovery efficiency should typically be at least half of the adjusted sensible recovery efficiency.'],
                               'erv-tre-low' => ['Total recovery efficiency should typically be at least half of the sensible recovery efficiency.'],
                               'ev-charging-methods' => ['Electric vehicle charging was specified as both a PlugLoad and a Vehicle, the latter will be ignored.'],
@@ -1004,6 +1071,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'heat-pump-defrost-backup' => ['BackupHeatingActiveDuringDefrost does not apply when system has separate backup heating'],
                               'heat-pump-low-backup-switchover-temp' => ['BackupHeatingSwitchoverTemperature is below 30 deg-F; this may result in significant unmet hours if the heat pump does not have sufficient capacity.'],
                               'heat-pump-low-backup-lockout-temp' => ['BackupHeatingLockoutTemperature is below 30 deg-F; this may result in significant unmet hours if the heat pump does not have sufficient capacity.'],
+                              'hpwh-120-dedicated-circuit-backup-capacity' => ['BackupHeatingCapacity should typically be less than or equal to 6824 Btu/hr for an HPWH on a 120V dedicated circuit.'],
+                              'hpwh-120-shared-circuit-backup-capacity' => ['BackupHeatingCapacity should typically be less than or equal to 3412 Btu/hr for an HPWH on a 120V shared circuit.'],
                               'hvac-dse-low' => ['Heating DSE should typically be greater than or equal to 0.5.',
                                                  'Cooling DSE should typically be greater than or equal to 0.5.'],
                               'hvac-capacities-low' => ['Heating capacity should typically be greater than or equal to 1000 Btu/hr.',
@@ -1026,20 +1095,13 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                         'Backup heating capacity should typically be greater than or equal to 1000 Btu/hr.',
                                                         'Backup heating capacity should typically be greater than or equal to 1000 Btu/hr.'],
                               'hvac-efficiencies-low' => ['Percent efficiency should typically be greater than or equal to 0.95.',
-                                                          'AFUE should typically be greater than or equal to 0.5.',
-                                                          'AFUE should typically be greater than or equal to 0.5.',
-                                                          'AFUE should typically be greater than or equal to 0.5.',
+                                                          'Percent efficiency should typically be greater than or equal to 0.5.',
                                                           'AFUE should typically be greater than or equal to 0.5.',
                                                           'AFUE should typically be greater than or equal to 0.5.',
                                                           'Percent efficiency should typically be greater than or equal to 0.5.',
-                                                          'SEER should typically be greater than or equal to 8.',
+                                                          'AFUE should typically be greater than or equal to 0.5.',
+                                                          'Percent efficiency should typically be greater than or equal to 0.5.',
                                                           'EER should typically be greater than or equal to 6.',
-                                                          'EER should typically be greater than or equal to 6.',
-                                                          'SEER should typically be greater than or equal to 8.',
-                                                          'HSPF should typically be greater than or equal to 6.',
-                                                          'SEER should typically be greater than or equal to 8.',
-                                                          'EER should typically be greater than or equal to 6.',
-                                                          'HSPF should typically be greater than or equal to 6.',
                                                           'EER should typically be greater than or equal to 6.',
                                                           'COP should typically be greater than or equal to 2.'],
                               'hvac-research-features-onoff-thermostat-temperature-capacitance-multiplier-one' => ['TemperatureCapacitanceMultiplier should typically be greater than 1 if OnOffThermostatDeadbandTemperature is specified'],
@@ -1078,6 +1140,20 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       puts "[#{i + 1}/#{all_expected_warnings.size}] Testing #{warning_case}..."
       # Create HPXML object
       case warning_case
+      when 'appliance-energyguide-label-inputs'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.clothes_washers[0].label_electric_rate = 1.1
+        hpxml_bldg.clothes_washers[0].label_gas_rate = 0.1
+        hpxml_bldg.clothes_washers[0].label_annual_gas_cost = 1.1
+        hpxml_bldg.clothes_washers[0].label_usage *= 52
+        hpxml_bldg.dishwashers[0].label_electric_rate = 1.1
+        hpxml_bldg.dishwashers[0].label_gas_rate = 0.1
+        hpxml_bldg.dishwashers[0].label_annual_gas_cost = 1.1
+        hpxml_bldg.dishwashers[0].label_usage *= 52
+      when 'appliance-energyguide-label-inputs2'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.clothes_washers[0].label_gas_rate = 10.0
+        hpxml_bldg.dishwashers[0].label_gas_rate = 10.0
       when 'battery-pv-output-power-low'
         hpxml, hpxml_bldg = _create_hpxml('base-pv-battery.xml')
         hpxml_bldg.batteries[0].rated_power_output = 0.1
@@ -1098,9 +1174,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
             water_heating_system.energy_factor = 0.1
           end
         end
-      when 'dhw-setpoint-low'
-        hpxml, hpxml_bldg = _create_hpxml('base.xml')
-        hpxml_bldg.water_heating_systems[0].temperature = 100
       when 'erv-atre-low'
         hpxml, hpxml_bldg = _create_hpxml('base-mechvent-erv-atre-asre.xml')
         hpxml_bldg.ventilation_fans[0].total_recovery_efficiency_adjusted = 0.1
@@ -1125,6 +1198,12 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'heat-pump-low-backup-lockout-temp'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed-lockout-temperatures.xml')
         hpxml_bldg.heat_pumps[0].backup_heating_lockout_temp = 25.0
+      when 'hpwh-120-dedicated-circuit-backup-capacity'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-120v-dedicated-circuit.xml')
+        hpxml_bldg.water_heating_systems[0].backup_heating_capacity = 7000
+      when 'hpwh-120-shared-circuit-backup-capacity'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-120v.xml')
+        hpxml_bldg.water_heating_systems[0].backup_heating_capacity = 3500
       when 'hvac-dse-low'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-dse.xml')
         hpxml_bldg.hvac_distributions[0].annual_heating_dse = 0.1
@@ -1146,32 +1225,30 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-multiple.xml')
         hpxml_bldg.hvac_systems.each do |hvac_system|
           if hvac_system.is_a? HPXML::HeatingSystem
-            case hvac_system.heating_system_type
-            when HPXML::HVACTypeElectricResistance,
-                 HPXML::HVACTypeStove
+            if not hvac_system.heating_efficiency_percent.nil?
               hvac_system.heating_efficiency_percent = 0.1
-            when HPXML::HVACTypeFurnace,
-                   HPXML::HVACTypeWallFurnace,
-                   HPXML::HVACTypeBoiler
+            end
+            if not hvac_system.heating_efficiency_afue.nil?
               hvac_system.heating_efficiency_afue = 0.1
             end
           elsif hvac_system.is_a? HPXML::CoolingSystem
-            case hvac_system.cooling_system_type
-            when HPXML::HVACTypeCentralAirConditioner
+            if not hvac_system.cooling_efficiency_seer.nil?
               hvac_system.cooling_efficiency_seer = 0.1
-              hvac_system.cooling_efficiency_eer = 0.1
-            when HPXML::HVACTypeRoomAirConditioner
+            end
+            if not hvac_system.cooling_efficiency_eer.nil?
               hvac_system.cooling_efficiency_eer = 0.1
             end
           elsif hvac_system.is_a? HPXML::HeatPump
-            case hvac_system.heat_pump_type
-            when HPXML::HVACTypeHeatPumpAirToAir,
-                HPXML::HVACTypeHeatPumpMiniSplit
+            if not hvac_system.cooling_efficiency_seer.nil?
               hvac_system.cooling_efficiency_seer = 0.1
+            end
+            if not hvac_system.cooling_efficiency_eer.nil?
               hvac_system.cooling_efficiency_eer = 0.1
+            end
+            if not hvac_system.heating_efficiency_hspf.nil?
               hvac_system.heating_efficiency_hspf = 0.1
-            when HPXML::HVACTypeHeatPumpGroundToAir
-              hvac_system.cooling_efficiency_eer = 0.1
+            end
+            if not hvac_system.heating_efficiency_cop.nil?
               hvac_system.heating_efficiency_cop = 0.1
             end
           end
@@ -1362,6 +1439,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'schedule-detailed-bad-values-non-numeric' => ["Schedule value must be numeric for column 'lighting_interior'."],
                             'schedule-detailed-bad-values-mode-negative' => ["Schedule value for column 'water_heater_operating_mode' must be either 0 or 1."],
                             'schedule-detailed-duplicate-columns' => ["Schedule column name 'occupants' is duplicated."],
+                            'schedule-detailed-operating-mode-and-120v' => ["'water_heater_operating_mode' schedule file is not allowed for 120V HPWH systems."],
                             'schedule-detailed-wrong-filename' => ["Schedules file path 'invalid-wrong-filename.csv' does not exist."],
                             'schedule-detailed-wrong-rows' => ["Schedule has invalid number of rows (8759) for column 'occupants'. Must be one of: 8760, 17520, 26280, 35040, 43800, 52560, 87600, 105120, 131400, 175200, 262800, 525600."],
                             'skylight-not-connected-to-cond-space' => ["Skylight 'Skylight1' not connected to conditioned space; if it's a skylight with a shaft, use AttachedToFloor to connect it to conditioned space."],
@@ -1817,6 +1895,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.header.schedules_filepaths = []
         hpxml_bldg.header.schedules_filepaths << @tmp_csv_path
         hpxml_bldg.header.schedules_filepaths << @tmp_csv_path
+      when 'schedule-detailed-operating-mode-and-120v'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-120v.xml')
+        hpxml_bldg.header.schedules_filepaths << File.join(File.dirname(__FILE__), '../resources/schedule_files/water-heater-operating-modes.csv')
       when 'schedule-detailed-wrong-filename'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.header.schedules_filepaths << 'invalid-wrong-filename.csv'
@@ -2104,7 +2185,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'schedule-file-and-setpoints' => ["Both 'heating_setpoint' schedule file and heating setpoint temperature provided; the latter will be ignored.",
                                                                 "Both 'cooling_setpoint' schedule file and cooling setpoint temperature provided; the latter will be ignored.",
                                                                 "Both 'water_heater_setpoint' schedule file and setpoint temperature provided; the latter will be ignored."],
-                              'schedule-file-and-operating-mode' => ["Both 'water_heater_operating_mode' schedule file and operating mode provided; the latter will be ignored."],
+                              'schedule-file-and-operating-mode' => ["Both 'water_heater_operating_mode' schedule file and HPWH operating mode provided; the latter will be ignored."],
                               'schedule-file-max-power-ratio-with-single-speed-system' => ['Maximum power ratio schedule is only supported for variable speed systems.'],
                               'schedule-file-max-power-ratio-with-two-speed-system' => ['Maximum power ratio schedule is only supported for variable speed systems.'],
                               'schedule-file-max-power-ratio-with-separate-backup-system' => ['Maximum power ratio schedule is only supported for integrated backup system. Schedule is ignored for heating.'],

@@ -78,6 +78,53 @@ class WorkflowOtherTest < Minitest::Test
     refute(File.exist? File.join(run_dir, 'eplusout.msgpack'))
   end
 
+  def test_run_simulation_epw_path_with_shell_characters
+    # Check that a weather file path containing shell metacharacters is not
+    # interpreted by a shell
+    rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
+    sample_files_path = File.join(File.dirname(__FILE__), '..', 'sample_files')
+    weather_path = File.join(File.dirname(__FILE__), '..', '..', 'weather')
+
+    # The embedded command creates a 'pwned' file if a shell interprets the path
+    orig_epw_path = File.join(weather_path, 'USA_CO_Denver.Intl.AP.725650_TMY3.epw')
+    shell_chars_epw = 'USA_CO_Denver$(touch pwned).725650_TMY3.epw'
+    shell_chars_epw_path = File.join(weather_path, shell_chars_epw)
+    tmp_hpxml_path = File.join(sample_files_path, 'tmp.xml')
+    run_dir = File.join(sample_files_path, 'run')
+
+    begin
+      FileUtils.cp(orig_epw_path, shell_chars_epw_path)
+
+      hpxml = HPXML.new(hpxml_path: File.join(sample_files_path, 'base.xml'))
+      hpxml.buildings[0].climate_and_risk_zones.weather_station_epw_filepath = shell_chars_epw
+      XMLHelper.write_file(hpxml.to_doc, tmp_hpxml_path)
+
+      # Avoid asserting on stale files from a previous run
+      FileUtils.rm_rf(run_dir)
+
+      command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{tmp_hpxml_path}\""
+      system(command, err: File::NULL)
+
+      # Check this weather file was the one actually used
+      hpxml_defaults = HPXML.new(hpxml_path: File.join(run_dir, 'in.xml'))
+      assert_equal(shell_chars_epw, hpxml_defaults.buildings[0].climate_and_risk_zones.weather_station_epw_filepath)
+
+      # Check EnergyPlus ran to completion with it
+      eplusout_err_path = File.join(run_dir, 'eplusout.err')
+      assert(File.exist? eplusout_err_path)
+      assert(File.read(eplusout_err_path).include?('EnergyPlus Completed Successfully'))
+      assert(File.exist? File.join(run_dir, 'results_annual.csv'))
+
+      # Check the embedded command was not executed
+      refute(File.exist? File.join(run_dir, 'pwned'))
+      refute(File.exist? File.join(Dir.pwd, 'pwned'))
+    ensure
+      # Cleanup
+      File.delete(tmp_hpxml_path) if File.exist? tmp_hpxml_path
+      File.delete(shell_chars_epw_path) if File.exist? shell_chars_epw_path
+    end
+  end
+
   def test_run_simulation_ems_debug
     rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
     xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base.xml')
@@ -392,7 +439,8 @@ class WorkflowOtherTest < Minitest::Test
      'template-build-hpxml.osw'].each do |osw_name|
       osw_path = File.join(File.dirname(__FILE__), '..', osw_name)
 
-      skip_simulation = (osw_name == 'template-build-hpxml.osw')
+      skip_simulation = (osw_name == 'template-build-hpxml.osw' || osw_name == 'template-run-hpxml.osw')
+      skip_hpxml_to_os_outputs = (osw_name == 'template-run-hpxml.osw')
 
       # Create derivative OSW for testing
       osw_path_test = osw_path.gsub('.osw', '_test.osw')
@@ -401,13 +449,21 @@ class WorkflowOtherTest < Minitest::Test
       # Turn on debug mode
       json = JSON.parse(File.read(osw_path_test), symbolize_names: true)
       if not skip_simulation
-        measure_index = json[:steps].find_index { |m| m[:measure_dir_name] == 'HPXMLtoOpenStudio' }
-        json[:steps][measure_index][:arguments][:debug] = true
+        hpxml_to_os_measure_index = json[:steps].find_index { |m| m[:measure_dir_name] == 'HPXMLtoOpenStudio' }
+        hpxml_to_os_measure = json[:steps][hpxml_to_os_measure_index]
+        hpxml_to_os_measure[:arguments][:debug] = true
+      end
+      if skip_hpxml_to_os_outputs
+        hpxml_to_os_measure_index = json[:steps].find_index { |m| m[:measure_dir_name] == 'HPXMLtoOpenStudio' }
+        hpxml_to_os_measure = json[:steps][hpxml_to_os_measure_index]
+        hpxml_to_os_measure[:arguments][:annual_output_file_name] = 'null'
+        hpxml_to_os_measure[:arguments][:electric_panel_output_file_name] = 'null'
+        hpxml_to_os_measure[:arguments][:design_load_details_output_file_name] = 'null'
       end
 
       if Dir.exist? File.join(File.dirname(__FILE__), '..', '..', 'project')
         # CI checks out the repo as "project", so update dir name
-        json[:steps][measure_index][:measure_dir_name] = 'project'
+        hpxml_to_os_measure[:measure_dir_name] = 'project'
       end
 
       File.open(osw_path_test, 'w') do |f|
@@ -427,6 +483,7 @@ class WorkflowOtherTest < Minitest::Test
       # Check for output files
       assert(File.exist? File.join(run_dir, 'eplusout.msgpack')) unless skip_simulation
       assert(File.exist? File.join(run_dir, 'results_annual.csv')) unless skip_simulation
+      assert(File.exist?(File.join(run_dir, 'results_design_load_details.csv'))) unless skip_hpxml_to_os_outputs || osw_name == 'template-build-hpxml.osw'
 
       # Check for debug files
       assert(File.exist? File.join(run_dir, 'in.osm')) unless skip_simulation

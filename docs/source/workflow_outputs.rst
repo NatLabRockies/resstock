@@ -86,7 +86,7 @@ OpenStudio-HPXML will always generate an annual output file called ``results_ann
 The file includes the following sections of output:
 
 Annual Energy
-~~~~~~~~~~~~~
+*************
 
 Annual energy outputs are listed below.
 
@@ -248,7 +248,7 @@ Non-zero end uses from :ref:`annualenduses` will be included.
   ===============================================================  =============================================
 
 Annual Emissions
-~~~~~~~~~~~~~~~~
+****************
 
 When no emissions scenarios are specified, emissions outputs will not be reported.
 See :ref:`hpxml_emissions_scenarios` for more information about specifying emissions scenarios.
@@ -299,7 +299,7 @@ Every end use from :ref:`annualenduses` will be included.
   =======================================================================  ==================================================================
 
 Annual Building Loads
-~~~~~~~~~~~~~~~~~~~~~
+*********************
 
 Annual building loads are listed below.
 
@@ -321,7 +321,7 @@ If the home is not fully conditioned (e.g., a room air conditioner that only mee
 .. _annual_unmet_hours:
 
 Annual Unmet Hours
-~~~~~~~~~~~~~~~~~~
+******************
 
 Annual unmet hours are listed below.
 If running :ref:`bldg_type_whole_mf_buildings`, values will reflect hours in which *any* dwelling unit has an unmet condition (i.e., it is not the sum of unmet hours for each dwelling unit).
@@ -343,7 +343,7 @@ If running :ref:`bldg_type_whole_mf_buildings`, values will reflect hours in whi
          OpenStudio-HPXML will issue a warning if there are unmet hours for EV driving.
 
 Peak Building Electricity
-~~~~~~~~~~~~~~~~~~~~~~~~~
+*************************
 
 Peak building electricity outputs are listed below.
 Values are calculated as the maximum energy use for any individual timestep divided by the timestep length.
@@ -363,7 +363,7 @@ Values are calculated as the maximum energy use for any individual timestep divi
   .. [#] Summer is Jun/Jul/Aug (or Dec/Jan/Feb in the southern hemisphere).
 
 Peak Building Loads
-~~~~~~~~~~~~~~~~~~~
+*******************
 
 Peak building loads are listed below.
 Values are calculated as the maximum load for any individual timestep divided by the timestep length.
@@ -379,7 +379,7 @@ Note that the "Delivered" peak loads represent the energy delivered by the HVAC 
 If the home is not fully conditioned (e.g., a room air conditioner that only meets 30% of the cooling load), the reported peak load will be likewise reduced compared to a home that is fully conditioned.
 
 Annual Component Building Loads
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*******************************
 
 **Note**: This section is only available if the ``--add-component-loads`` argument is used.
 The argument is not used by default for faster performance.
@@ -417,7 +417,7 @@ Component loads disaggregated by Heating/Cooling are listed below.
 If the home is not fully conditioned (e.g., a room air conditioner that only meets 30% of the cooling load), the reported component loads will be likewise reduced compared to a home that is fully conditioned.
 
 Annual Hot Water Uses
-~~~~~~~~~~~~~~~~~~~~~
+*********************
 
 Annual hot water uses are listed below.
 
@@ -435,7 +435,7 @@ Annual hot water uses are listed below.
   All values are gallons of *hot* water (e.g., at water heater setpoint), not *total* water (e.g., at the fixture temperature).
 
 Resilience
-~~~~~~~~~~
+**********
 
 Resilience outputs are listed below.
 
@@ -450,7 +450,7 @@ Resilience outputs are listed below.
          Resilience hours are set to 0 for any timestep where the battery is not charged, even if there is sufficient PV to power the building.
 
 HVAC Capacities
-~~~~~~~~~~~~~~~
+***************
 
 System outputs are listed below.
 Capacities for individual HVAC systems can be found in the ``in.xml`` file.
@@ -458,10 +458,15 @@ Capacities for individual HVAC systems can be found in the ``in.xml`` file.
   ====================================================  ====================
   Type                                                  Notes
   ====================================================  ====================
-  HVAC Capacity: Cooling (Btu/h)                        Total HVAC cooling capacity
-  HVAC Capacity: Heating (Btu/h)                        Total HVAC heating capacity
-  HVAC Capacity: Heat Pump Backup (Btu/h)               Total HVAC heat pump backup capacity
+  HVAC Capacity: Cooling (Btu/h)                        Total rated output cooling capacity [#]_
+  HVAC Capacity: Heating (Btu/h)                        Total rated output heating capacity [#]_
+  HVAC Capacity: Heat Pump Backup (Btu/h)               Total rated output heat pump backup capacity [#]_
   ====================================================  ====================
+
+  .. [#] I.e., sum of all ``CoolingSystem/CoolingCapacity`` and ``HeatPump/CoolingCapacity``, whether user-specified or autosized.
+  .. [#] I.e., sum of all ``HeatingSystem/HeatingCapacity`` and ``HeatPump/HeatingCapacity``, whether user-specified or autosized.
+  .. [#] I.e., sum of all ``HeatPump/BackupHeatingCapacity`` (and ``HeatingSystem/HeatingCapacity`` for heating systems serving as heat pump backup), whether user-specified or autosized.
+
 
 .. note::
 
@@ -474,7 +479,7 @@ Capacities for individual HVAC systems can be found in the ``in.xml`` file.
 .. _hvac_design_temps:
 
 HVAC Design Temperatures
-~~~~~~~~~~~~~~~~~~~~~~~~
+************************
 
 Design temperatures are used in the design load calculations for autosizing of HVAC equipment; see :ref:`hvac_sizing_control` for how they are derived.
 Design temperatures can also be found in the ``in.xml`` file.
@@ -489,7 +494,7 @@ Design temperatures can also be found in the ``in.xml`` file.
 .. _hvac_design_loads:
 
 HVAC Design Loads
-~~~~~~~~~~~~~~~~~
+*****************
 
 Design load outputs, used for autosizing of HVAC equipment, are listed below.
 Design loads are based on block load ACCA Manual J calculations using :ref:`hvac_design_temps`.
@@ -620,7 +625,7 @@ Additional detail related to space design loads can be found in the :ref:`design
   =====================================================================================  ====================
 
 HVAC Geothermal Loop
-~~~~~~~~~~~~~~~~~~~~
+********************
 
 Geothermal loop outputs are listed below.
 Outputs for individual geothermal loops can be found in the ``in.xml`` file.
@@ -694,7 +699,7 @@ The annual utility bills output file is called ``results_bills.csv`` (or ``.json
 The monthly utility bills output file is called ``results_bills_monthly.csv`` (or ``.json`` or ``.msgpack``) and located in the run directory.
 
 Annual Bills by Fuel Use
-~~~~~~~~~~~~~~~~~~~~~~~~
+************************
 
 Annual results for each utility bill scenario defined in the HPXML file are listed as shown below.
 
@@ -727,7 +732,7 @@ Annual results for each utility bill scenario defined in the HPXML file are list
   =================================================  ====================
 
 Monthly Bills by Fuel Use
-~~~~~~~~~~~~~~~~~~~~~~~~~
+*************************
 
 Monthly results for each utility bill scenario defined in the HPXML file are listed as rows corresponding to Month, and columns corresponding to Type.
 
@@ -746,7 +751,7 @@ The electric panels output file is called ``results_panel.csv`` (or ``.json`` or
 Panel breaker spaces and loads can also be found in the ``in.xml`` file.
 
 Breaker Spaces
-~~~~~~~~~~~~~~
+**************
 
 Electric panel breaker space counts are available as listed below.
 End use categories (e.g., Heating, Cooling, Hot Water) report occupied spaces for dedicated circuits except for Other which reports otherwise uncategorized or shared circuits.
@@ -776,7 +781,7 @@ End use categories (e.g., Heating, Cooling, Hot Water) report occupied spaces fo
   .. [#] A positive value indicates panel availability whereas a negative value indicates panel constraint.
 
 Loads
-~~~~~
+*****
 
 Electric panel loads, as well as calculated total loads and capacities for each NEC calculation type (see :ref:`hpxml_electric_panel_calculations`), are available as listed below.
 
@@ -817,7 +822,7 @@ The file includes values pertaining to ACCA Form J1 (see example on page 2 of `h
 The file is organized into a few different reports described below.
 
 Report: <BuildingID>: Summary
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*****************************
 
 For each HPXML Building, the following output types are reported.
 
@@ -841,7 +846,7 @@ For each HPXML Building, the following output types are reported.
   .. [#] Cooling CFM is the airflow rate (ft^3/min) during the cooling season.
 
 Report: <BuildingID>: Loads
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***************************
 
 For each HPXML Building, the following output types are reported.
 
@@ -868,7 +873,7 @@ For each HPXML Building, the following output types are reported.
   .. [#] Length will be provided for a slab floor under conditioned space.
 
 Report: <BuildingID>: <ZoneID>: Loads
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*************************************
 
 For each HPXML conditioned Zone (see :ref:`zones_spaces`), the following output types are reported.
 Only those surfaces attached to a space in the given zone will be included.
@@ -896,7 +901,7 @@ Only those surfaces attached to a space in the given zone will be included.
   .. [#] Length will be provided for a slab floor under conditioned space.
 
 Report: <BuildingID>: <SpaceID>: Loads
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**************************************
 
 For each HPXML Space in a conditioned zone (see :ref:`zones_spaces`), the following output types are reported.
 Only those surfaces attached to the given space will be included.
@@ -920,7 +925,7 @@ Only those surfaces attached to the given space will be included.
   .. [#] Length will be provided for a slab floor under conditioned space.
 
 Report: <BuildingID>: AED Curve
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*******************************
 
 For each HPXML Building (and any HPXML spaces, see :ref:`zones_spaces`), the hourly cooling fenestration load curve (AED curve) from 8am to 8pm is provided.
 

@@ -86,17 +86,17 @@ def _run_xml(xml, worker_num, apply_unit_multiplier = false, annual_results_1x =
   command = "\"#{cli_path}\" \"#{File.join(File.dirname(__FILE__), '../run_simulation.rb')}\" -x \"#{xml}\" --add-component-loads -o \"#{rundir}\" --debug --monthly ALL#{building_id_str}#{skip_validation_str}"
   success = system(command)
 
-  if unit_multiplier > 1
-    # Clean up
-    File.delete(xml)
-    xml.gsub!('-10x.xml', '.xml')
-  end
-
   rundir = File.join(rundir, 'run')
 
   # Check results
   print "Simulation failed: #{xml}.\n" unless success
   assert_equal(true, success)
+
+  if unit_multiplier > 1
+    # Clean up
+    File.delete(xml)
+    xml.gsub!('-10x.xml', '.xml')
+  end
 
   # Check for output files
   annual_csv_path = File.join(rundir, 'results_annual.csv')
@@ -378,10 +378,6 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     # Stratified tank WHs
     if hpxml.buildings.any? { |hpxml_bldg| hpxml_bldg.water_heating_systems.count { |wh| wh.tank_model_type == HPXML::WaterHeaterTankModelTypeStratified } > 0 }
       next if message.include? 'Recovery Efficiency and Energy Factor could not be calculated during the test for standard ratings'
-    end
-    # HP defrost curves
-    if hpxml.buildings.any? { |hpxml_bldg| hpxml_bldg.heat_pumps.count { |hp| [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpMiniSplit, HPXML::HVACTypeHeatPumpPTHP, HPXML::HVACTypeHeatPumpRoom].include? hp.heat_pump_type } > 0 }
-      next if message.include?('GetDXCoils: Coil:Heating:DX') && message.include?('curve values') && message.include?('Defrost Energy Input Ratio Function of Temperature Curve')
     end
     # variable system SHR adjustment
     if hpxml.buildings.any? { |hpxml_bldg| (hpxml_bldg.heat_pumps + hpxml_bldg.cooling_systems).count { |hp| hp.compressor_type == HPXML::HVACCompressorTypeVariableSpeed } > 0 }
@@ -983,7 +979,7 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
 
     # Location
     hpxml_value = appliance.location
-    if hpxml_value.nil? || HPXML::conditioned_locations.include?(hpxml_value) || [HPXML::LocationOtherHeatedSpace, HPXML::LocationOtherMultifamilyBufferSpace, HPXML::LocationOtherNonFreezingSpace].include?(hpxml_value)
+    if hpxml_value.nil? || HPXML::conditioned_locations.include?(hpxml_value) || HPXML::multifamily_common_space_locations.include?(hpxml_value)
       hpxml_value = HPXML::LocationConditionedSpace
     end
     tabular_value = tabular_map[appliance.class]
@@ -1402,11 +1398,11 @@ def _get_simulation_hot_water_results(results)
 end
 
 def _check_ashrae_140_results(htg_loads, clg_loads)
-  # Pub 002-2024
-  htg_min = [48.07, 74.30, 35.98, 39.74, 45.72, 39.13, 42.17, 48.30, 58.15, 121.76, 126.71, 24.59, 27.72, 57.57, 48.33]
-  htg_max = [61.35, 82.96, 48.09, 49.95, 51.97, 55.54, 58.15, 63.40, 74.24, 137.68, 146.84, 81.73, 70.27, 91.66, 56.47]
-  htg_dt_min = [17.53, -16.08, -12.92, -12.14, -10.90, -0.56, -1.96, 8.15, 71.16, 3.20, -25.78, -3.14, 7.79, 5.49]
-  htg_dt_max = [29.62, -9.44, -5.89, 0.24, -3.37, 6.42, 4.54, 15.14, 79.06, 11.26, 22.68, 11.47, 32.01, 38.95]
+  # Pub 002-2024 (Working Draft, 8/14/2026)
+  htg_min = [48.06, 74.30, 35.98, 39.74, 45.72, 39.11, 42.15, 48.30, 58.15, 121.75, 126.70, 21.72, 24.97, 56.21, 45.93]
+  htg_max = [61.35, 82.94, 48.09, 49.95, 51.97, 55.54, 58.15, 63.39, 74.24, 137.67, 146.84, 82.54, 71.04, 96.55, 56.36]
+  htg_dt_min = [17.53, -16.08, -12.92, -12.14, -10.90, -0.56, -1.95, 8.16, 71.15, 3.21, -28.64, -3.25, 7.61, 8.10]
+  htg_dt_max = [29.62, -9.44, -5.89, 0.24, -3.37, 6.42, 4.54, 15.14, 79.06, 11.26, 23.49, 11.50, 35.74, 42.93]
   clg_min = [42.50, 47.72, 41.15, 31.54, 21.03, 50.55, 36.63, 52.26, 34.16, 57.07, 50.19]
   clg_max = [58.66, 61.33, 51.69, 41.85, 29.35, 73.48, 59.72, 68.60, 47.58, 73.51, 60.72]
   clg_dt_min = [0.69, -8.24, -18.53, -30.58, 7.51, -16.52, 6.75, -12.95, 11.62, 5.12]
@@ -1442,8 +1438,7 @@ def _check_ashrae_140_results(htg_loads, clg_loads)
   assert_operator(htg_loads['L322XC'], :<=, htg_max[13])
   assert_operator(htg_loads['L322XC'], :>=, htg_min[13])
   assert_operator(htg_loads['L324XC'], :<=, htg_max[14])
-  # FIXME: Re-enable this when test criteria are updated
-  # assert_operator(htg_loads['L324XC'], :>=, htg_min[14])
+  assert_operator(htg_loads['L324XC'], :>=, htg_min[14])
 
   # Annual Heating Load Deltas
   assert_operator(htg_loads['L110AC'] - htg_loads['L100AC'], :<=, htg_dt_max[0])

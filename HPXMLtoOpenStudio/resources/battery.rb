@@ -92,7 +92,9 @@ module Battery
     rated_power_output *= unit_multiplier
     charging_power *= unit_multiplier
 
-    is_outside = (location == HPXML::LocationOutside)
+    # Multifamily locations are not modeled as thermal zones, so we don't need to worry
+    # about heat gain; we'll treat them as outside.
+    is_outside = [HPXML::LocationOutside, *HPXML.scheduled_locations].include?(location)
     if !is_outside && !is_ev
       frac_sens = 1.0
     else # Internal gains outside unit

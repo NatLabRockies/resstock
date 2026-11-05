@@ -24,6 +24,9 @@
           <Surroundings>stand-alone</Surroundings>
           <VerticalSurroundings>no units above or below</VerticalSurroundings>
           <AzimuthOfFrontOfHome>180</AzimuthOfFrontOfHome>
+          <Soil>
+            <Conductivity>0.8</Conductivity>
+          </Soil>
         </Site>
         <BuildingConstruction>
           <ResidentialFacilityType>single-family detached</ResidentialFacilityType>

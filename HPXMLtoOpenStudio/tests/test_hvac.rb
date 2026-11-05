@@ -808,13 +808,13 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
 
     # Get HPXML values
     heating_system = hpxml_bldg.heating_systems[0]
-    afue = heating_system.heating_efficiency_afue
+    efficiency = heating_system.heating_efficiency_percent
     capacity = UnitConversions.convert(heating_system.heating_capacity, 'Btu/hr', 'W')
 
     # Check heating coil
     assert_equal(1, model.getCoilHeatingElectrics.size)
     htg_coil = model.getCoilHeatingElectrics[0]
-    assert_in_epsilon(afue, htg_coil.efficiency, 0.01)
+    assert_in_epsilon(efficiency, htg_coil.efficiency, 0.01)
     assert_in_epsilon(capacity, htg_coil.nominalCapacity.get, 0.01)
   end
 
@@ -863,14 +863,14 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
 
     # Get HPXML values
     heating_system = hpxml_bldg.heating_systems[0]
-    afue = heating_system.heating_efficiency_afue
+    efficiency = heating_system.heating_efficiency_percent
     capacity = UnitConversions.convert(heating_system.heating_capacity, 'Btu/hr', 'W')
     fuel = heating_system.heating_system_fuel
 
     # Check boiler
     assert_equal(1, model.getBoilerHotWaters.size)
     boiler = model.getBoilerHotWaters[0]
-    assert_in_epsilon(afue, boiler.nominalThermalEfficiency, 0.01)
+    assert_in_epsilon(efficiency, boiler.nominalThermalEfficiency, 0.01)
     assert_in_epsilon(capacity, boiler.nominalCapacity.get, 0.01)
     assert_equal(EPlus.fuel_type(fuel), boiler.fuelType)
   end

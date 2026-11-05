@@ -1295,6 +1295,7 @@ module Outputs
 
   # Returns electric panel results for use in writing output files.
   #
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldgs [Array<HPXML::Building>] List of HPXML Building objects representing an individual dwelling unit
   # @return [Array] Rows of output data, with electric panel results appended
   def self.get_panel_results(hpxml_header, hpxml_bldgs)
@@ -1395,6 +1396,8 @@ module Outputs
   # @param mode [String] File opening mode (e.g., write or append)
   # @return [nil]
   def self.write_results_out_to_file(results_out, output_format, output_file_path, mode = 'w')
+    return if output_file_path.nil?
+
     line_break = nil
     if ['csv'].include? output_format
       CSV.open(output_file_path, mode) { |csv| results_out.to_a.each { |elem| csv << elem } }
@@ -1607,7 +1610,7 @@ module Outputs
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param sys_id [String] HPXML System ID
-  # @param eut_list [Array<String>] Optional list of EUT::XXX that we should filter down to
+  # @param eut_filter [Array<String>] Optional list of EUT::XXX that we should filter down to
   # @return [Hash] Map of output key => (Map of OpenStudio model object => array of EnergyPlus output variable/meter names)
   def self.get_object_outputs_for_hpxml_system(model, sys_id, eut_filter = nil)
     vars = {}
