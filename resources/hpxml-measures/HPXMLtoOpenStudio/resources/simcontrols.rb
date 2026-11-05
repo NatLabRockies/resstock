@@ -43,7 +43,9 @@ module SimControls
     run_period.setEndMonth(hpxml_header.sim_end_month)
     run_period.setEndDayOfMonth(hpxml_header.sim_end_day)
 
-    ppt = model.getPerformancePrecisionTradeoffs
-    ppt.setZoneRadiantExchangeAlgorithm('CarrollMRT') # Speed improvement with minimal effect on results
+    # This is now disabled because https://github.com/NatLabRockies/EnergyPlus/pull/11187
+    # caused larger changes to our simulation results.
+    # ppt = model.getPerformancePrecisionTradeoffs
+    # ppt.setZoneRadiantExchangeAlgorithm('CarrollMRT') # Speed improvement with minimal effect on results
   end
 end

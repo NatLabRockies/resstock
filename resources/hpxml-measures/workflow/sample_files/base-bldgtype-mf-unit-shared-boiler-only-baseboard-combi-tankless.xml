@@ -245,7 +245,6 @@
           <WaterHeatingSystem>
             <SystemIdentifier id='WaterHeatingSystem1'/>
             <WaterHeaterType>space-heating boiler with tankless coil</WaterHeaterType>
-            <Location>conditioned space</Location>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
             <RelatedHVACSystem idref='HeatingSystem1'/>
           </WaterHeatingSystem>

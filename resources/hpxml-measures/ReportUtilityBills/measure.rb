@@ -369,6 +369,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   # @param utility_bills [Hash] Fuel type => UtilityRate object
   # @param annual_output_path [String] the file path containing annual utility bills
   # @param bill_scenario_name [String] the name of the HPXML Utility Bill Scenario
+  # @return [nil]
   def report_runperiod_output_results(runner, args, utility_bills, annual_output_path, bill_scenario_name)
     return unless (args[:include_annual_bills] || args[:register_annual_bills])
 
@@ -402,6 +403,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   # @param bill_scenario_name [String] the name of the HPXML Utility Bill Scenario
   # @param monthly_data [Array<String>] lines of monthly utility bill data
   # @param header [HPXML::Header] HPXML Header object (one per HPXML file)
+  # @return [nil]
   def get_monthly_output_results(args, utility_bills, bill_scenario_name, monthly_data, header)
     run_period = (header.sim_begin_month - 1)..(header.sim_end_month - 1)
     monthly_data << ["#{bill_scenario_name}: Total", 'USD'] + ([0.0] * run_period.size)
@@ -425,6 +427,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   # @param timestamps [Array<String>] array of monthly timestamps (e.g., 2007-01-01T00:00:00)
   # @param monthly_data [Array<String>] lines of monthly utility bill data
   # @param monthly_output_path [String] the file path containing monthly utility bills
+  # @return [nil]
   def report_monthly_output_results(runner, args, timestamps, monthly_data, monthly_output_path)
     return unless (args[:include_monthly_bills] || args[:register_monthly_bills])
 
@@ -611,6 +614,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   # @param utility_bills [Hash] Fuel type => UtilityBill object
   # @param utility_bill_scenario [HPXML::UtilityBillScenario] HPXML Utility Bill Scenario object
   # @param header [HPXML::Header] HPXML Header object (one per HPXML file)
+  # @return [nil]
   def get_utility_bills(fuels, utility_rates, utility_bills, utility_bill_scenario, header)
     net_elec = 0
 
@@ -698,6 +702,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   #
   # @param fuels [Hash] Fuel type, is_production => Fuel object
   # @param utility_bill_scenario [HPXML::UtilityBillScenario] HPXML Utility Bill Scenario object
+  # @return [nil]
   def get_outputs(fuels, utility_bill_scenario)
     fuels.each do |(fuel_type, _is_production), fuel|
       unit_conv = UnitConversions.convert(1.0, 'J', fuel.units)

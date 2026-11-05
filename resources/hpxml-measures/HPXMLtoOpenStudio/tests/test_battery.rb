@@ -184,6 +184,7 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     hpxml_bldg.batteries.each do |hpxml_battery|
+      assert_equal(HPXML::LocationOtherHeatedSpace, hpxml_battery.location)
       batteries = get_batteries(model, hpxml_battery.id)
       assert_equal(1, batteries.size)
       battery = batteries[0]
@@ -334,6 +335,25 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
       assert_equal(6000.0, elcd.designStorageControlDischargePower.get)
       assert(!elcd.demandLimitSchemePurchasedElectricDemandLimit.is_initialized)
       assert_equal('TrackFacilityElectricDemandStoreExcessOnSite', elcd.storageOperationScheme)
+    end
+  end
+
+  def test_pv_battery_mf_locations
+    sample_path = File.join(@sample_files_path, 'base-bldgtype-mf-unit-shared-pv-battery.xml')
+    hpxml = HPXML.new(hpxml_path: sample_path)
+    [HPXML::LocationOtherHousingUnit, *HPXML.multifamily_common_space_locations].each do |location|
+      hpxml.buildings[0].batteries[0].location = location
+      XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+
+      args_hash = { 'hpxml_path' => @tmp_hpxml_path }
+      model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+
+      assert_equal(location, hpxml_bldg.batteries[0].location)
+      batteries = get_batteries(model, hpxml_bldg.batteries[0].id)
+      assert_equal(1, batteries.size)
+      battery = batteries[0]
+      assert(!battery.thermalZone.is_initialized)
+      assert_equal(0, battery.radiativeFraction)
     end
   end
 

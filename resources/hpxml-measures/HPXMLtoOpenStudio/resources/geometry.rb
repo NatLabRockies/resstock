@@ -865,6 +865,10 @@ module Geometry
 
       space.setThermalZone(thermal_zone)
       spaces[location] = space
+
+      if not HPXML::conditioned_locations_this_unit.include? location
+        space.setPartofTotalFloorArea(false)
+      end
     end
   end
 
@@ -1498,6 +1502,7 @@ module Geometry
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param hpxml_surface [HPXML::Wall or HPXML::Roof or HPXML::RimJoist or HPXML::FoundationWall or HPXML::Slab] any HPXML surface
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [nil]
   def self.set_subsurface_exterior(surface, spaces, model, hpxml_surface, hpxml_bldg, hpxml_header)
@@ -1662,13 +1667,7 @@ module Geometry
 
     sch = nil
     space = nil
-    if [HPXML::LocationOtherHeatedSpace,
-        HPXML::LocationOtherHousingUnit,
-        HPXML::LocationOtherMultifamilyBufferSpace,
-        HPXML::LocationOtherNonFreezingSpace,
-        HPXML::LocationExteriorWall,
-        HPXML::LocationUnderSlab,
-        HPXML::LocationManufacturedHomeBelly].include? location
+    if HPXML::scheduled_locations.include? location
       # if located in spaces where we don't model a thermal zone, create and return temperature schedule
       sch = get_space_temperature_schedule(model, location, spaces)
     else
@@ -1678,7 +1677,7 @@ module Geometry
     return space, sch
   end
 
-  # Returns an OS:Space, or nil if a MF space or outside
+  # Returns an OS:Space, or nil if outside or a location with a scheduled temperature.
   # Should be called when the object's energy use is NOT sensitive to ambient temperature
   # (e.g., appliances).
   #
@@ -1686,11 +1685,8 @@ module Geometry
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @return [OpenStudio::Model::Space] OpenStudio Space object
   def self.get_space_from_location(location, spaces)
-    return if [HPXML::LocationOutside,
-               HPXML::LocationOtherHeatedSpace,
-               HPXML::LocationOtherHousingUnit,
-               HPXML::LocationOtherMultifamilyBufferSpace,
-               HPXML::LocationOtherNonFreezingSpace].include? location
+    return if location == HPXML::LocationOutside
+    return if HPXML::scheduled_locations.include? location
 
     if HPXML::conditioned_locations.include? location
       location = HPXML::LocationConditionedSpace

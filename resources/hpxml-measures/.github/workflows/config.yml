@@ -24,8 +24,6 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Install software
         run: |
@@ -98,8 +96,6 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Install OpenStudio
         run: |
@@ -121,8 +117,6 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Install OpenStudio
         run: |
@@ -150,8 +144,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Install OpenStudio and run test
         shell: pwsh
@@ -165,8 +157,6 @@ jobs:
     needs: [run-unit-tests, run-workflow1-tests, run-workflow2-tests]
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Download all results
         uses: actions/download-artifact@v8
@@ -246,6 +236,7 @@ jobs:
           name: comparisons
 
   update-results:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     needs: merge-results
     steps:

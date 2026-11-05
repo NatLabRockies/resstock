@@ -5,6 +5,7 @@ require 'matrix'
 # Collection of methods related to the generation of stochastic occupancy schedules.
 class ScheduleGenerator
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param state [String] State code from the HPXML file
   # @param column_names [Array<String>] list of the schedule column names to generate
   # @param random_seed [Integer] the seed for the random number generator
@@ -477,6 +478,7 @@ class ScheduleGenerator
 
   # Sample the number of events in a cluster for a given activity type.
   #
+  # @param prng [Random] Random number generator to use
   # @param cluster_size_prob_map [Hash] Map of activity name to array of probabilities for different cluster sizes
   # @param activity_type_name [String] Name of the activity type to sample cluster size for
   # @param precomputed_vals [Array] Precomputed values for weighted random sampling
@@ -497,6 +499,7 @@ class ScheduleGenerator
 
   # Sample a duration for a given event type based on its probability distribution.
   #
+  # @param prng [Random] Random number generator to use
   # @param duration_probabilites_map [Hash] Map of event type to array containing durations and probabilities
   # @param event_type [String] Type of event to sample duration for (e.g. 'hot_water_clothes_washer')
   # @param precomputed_vals [Array] Precomputed values for weighted random sampling
@@ -514,6 +517,7 @@ class ScheduleGenerator
   # @param activity [Integer] Activity state number (1=shower, 2=laundry, 3=cooking, 4=dishwashing)
   # @param day_type [String] Type of day ('weekday' or 'weekend')
   # @param hour [Integer] Hour of the day (0-23)
+  # @return [Array<Float> or nil] Array of cumulative weights
   def get_activity_duration_precomputed_vals(activity_duration_prob_map, occ_type_id, activity, day_type, hour)
     time_of_day = hour < 8 ? 'morning' : hour < 16 ? 'midday' : 'evening'
     if activity == 1
@@ -532,6 +536,7 @@ class ScheduleGenerator
 
   # Sample a duration for an activity based on occupant type, activity type, day type and hour.
   #
+  # @param prng [Random] Random number generator to use
   # @param activity_duration_prob_map [Hash] Map of activity parameters to arrays containing durations and probabilities
   # @param occ_type_id [String] Occupant type ID (cluster type)
   # @param activity [Integer] Activity state number (1=shower, 2=laundry, 3=cooking, 4=dishwashing)
@@ -859,6 +864,7 @@ class ScheduleGenerator
   # Fill EV battery charging and discharging schedules based on Markov chain simulation results
   #
   # @param markov_chain_simulation_result [Array<Matrix>] Array of matrices containing Markov chain simulation results for each occupant
+  # @param ev_occupant_presence [Array<Double>] Normalized schedule for EV occupant presence
   # @return [nil] Updates @schedules with EV battery charging and discharging schedules
   def fill_ev_schedules(markov_chain_simulation_result, ev_occupant_presence)
     if @hpxml_bldg.vehicles.to_a.empty?
@@ -937,10 +943,7 @@ class ScheduleGenerator
 
   # Initialize the interior lighting schedule based on location parameters.
   #
-  # @param args [Hash] Hash containing required parameters:
-  # @option args [Integer] :time_zone_utc_offset Offset from UTC in hours
-  # @option args [Double] :latitude Latitude in degrees
-  # @option args [Double] :longitude Longitude in degrees
+  # @param args [Hash] Map of :argument_name => value
   # @return [Array<Float>] Array of hourly lighting schedule values normalized to 1.0
   def initialize_interior_lighting_schedule(args)
     sch = get_building_america_lighting_schedule(args[:time_zone_utc_offset], args[:latitude], args[:longitude])

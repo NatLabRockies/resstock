@@ -58,19 +58,19 @@ class HPXMLToOpenStudio < OpenStudio::Measure::ModelMeasure
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('annual_output_file_name', false)
     arg.setDisplayName('Annual Output File Name')
-    arg.setDescription("The name of the file w/ HVAC design loads and capacities. If not provided, defaults to 'results_annual.csv' (or '.json' or '.msgpack').")
+    arg.setDescription("The name of the file w/ HVAC design loads and capacities. If not provided, defaults to 'results_annual.csv' (or '.json' or '.msgpack'). Use 'null' to skip.")
     arg.setDefaultValue('results_annual')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('electric_panel_output_file_name', false)
     arg.setDisplayName('Electric Panel Output File Name')
-    arg.setDescription("The name of the file w/ electric panel outputs. If not provided, defaults to 'results_panel.csv' (or '.json' or '.msgpack').")
+    arg.setDescription("The name of the file w/ electric panel outputs. If not provided, defaults to 'results_panel.csv' (or '.json' or '.msgpack'). Use 'null' to skip.")
     arg.setDefaultValue('results_panel')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('design_load_details_output_file_name', false)
     arg.setDisplayName('Design Load Details Output File Name')
-    arg.setDescription("The name of the file w/ additional HVAC design load details. If not provided, defaults to 'results_design_load_details.csv' (or '.json' or '.msgpack').")
+    arg.setDescription("The name of the file w/ additional HVAC design load details. If not provided, defaults to 'results_design_load_details.csv' (or '.json' or '.msgpack'). Use 'null' to skip.")
     arg.setDefaultValue('results_design_load_details')
     args << arg
 
@@ -152,8 +152,8 @@ class HPXMLToOpenStudio < OpenStudio::Measure::ModelMeasure
         end
       end
 
-      # Merge unit models into final model
       if hpxml.buildings.size > 1
+        # Merge unit models into final model
         Model.merge_unit_models(model, hpxml_osm_map)
       end
 
@@ -208,20 +208,26 @@ class HPXMLToOpenStudio < OpenStudio::Measure::ModelMeasure
       args[:output_dir] = File.expand_path(args[:output_dir])
     end
 
-    if File.extname(args[:annual_output_file_name]).length == 0
-      args[:annual_output_file_name] = "#{args[:annual_output_file_name]}.#{args[:output_format]}"
+    if args[:annual_output_file_name] != 'null'
+      if File.extname(args[:annual_output_file_name]).length == 0
+        args[:annual_output_file_name] = "#{args[:annual_output_file_name]}.#{args[:output_format]}"
+      end
+      args[:annual_output_file_path] = File.join(args[:output_dir], args[:annual_output_file_name])
     end
-    args[:annual_output_file_path] = File.join(args[:output_dir], args[:annual_output_file_name])
 
-    if File.extname(args[:electric_panel_output_file_name]).length == 0
-      args[:electric_panel_output_file_name] = "#{args[:electric_panel_output_file_name]}.#{args[:output_format]}"
+    if args[:electric_panel_output_file_name] != 'null'
+      if File.extname(args[:electric_panel_output_file_name]).length == 0
+        args[:electric_panel_output_file_name] = "#{args[:electric_panel_output_file_name]}.#{args[:output_format]}"
+      end
+      args[:electric_panel_output_file_path] = File.join(args[:output_dir], args[:electric_panel_output_file_name])
     end
-    args[:electric_panel_output_file_path] = File.join(args[:output_dir], args[:electric_panel_output_file_name])
 
-    if File.extname(args[:design_load_details_output_file_name]).length == 0
-      args[:design_load_details_output_file_name] = "#{args[:design_load_details_output_file_name]}.#{args[:output_format]}"
+    if args[:design_load_details_output_file_name] != 'null'
+      if File.extname(args[:design_load_details_output_file_name]).length == 0
+        args[:design_load_details_output_file_name] = "#{args[:design_load_details_output_file_name]}.#{args[:output_format]}"
+      end
+      args[:design_load_details_output_file_path] = File.join(args[:output_dir], args[:design_load_details_output_file_name])
     end
-    args[:design_load_details_output_file_path] = File.join(args[:output_dir], args[:design_load_details_output_file_name])
 
     args[:hpxml_defaults_path] = File.join(args[:output_dir], 'in.xml')
   end

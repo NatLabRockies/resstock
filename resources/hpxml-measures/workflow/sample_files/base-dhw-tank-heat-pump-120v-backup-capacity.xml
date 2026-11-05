@@ -385,11 +385,12 @@
           <WaterHeatingSystem>
             <SystemIdentifier id='WaterHeatingSystem1'/>
             <FuelType>electricity</FuelType>
-            <WaterHeaterType>instantaneous water heater</WaterHeaterType>
+            <WaterHeaterType>heat pump water heater</WaterHeaterType>
             <Location>other exterior</Location>
-            <PerformanceAdjustment>0.92</PerformanceAdjustment>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
-            <UniformEnergyFactor>0.98</UniformEnergyFactor>
+            <BackupHeatingCapacity>3071.0</BackupHeatingCapacity>
+            <UniformEnergyFactor>3.5</UniformEnergyFactor>
+            <HPWHVoltage>120V</HPWHVoltage>
           </WaterHeatingSystem>
           <HotWaterDistribution>
             <SystemIdentifier id='HotWaterDistribution1'/>

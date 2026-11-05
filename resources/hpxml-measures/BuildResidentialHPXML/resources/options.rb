@@ -93,7 +93,7 @@ end
 # Returns the property descriptions in the given TSV resource file.
 #
 # @param tsv_file_name [String] Name of the TSV resource file
-# @return [Hash<string, string>] Map of property name => description
+# @return [Hash] Map of property name => description
 def get_property_descriptions(tsv_file_name)
   csv_data = get_csv_data_for_tsv_file(tsv_file_name)
   property_descriptions = {}
@@ -111,6 +111,7 @@ end
 # Reads the data (or retrieves the cached data) from the given TSV resource file.
 # Uses a global variable so the data is only read once.
 #
+# @param tsv_file_name [String] Name of the TSV resource file
 # @return [CSV::Table] CSV data for the TSV file
 def get_csv_data_for_tsv_file(tsv_file_name)
   if $csv_data.nil?

@@ -303,7 +303,7 @@
               <HeatingSystemFuel>electricity</HeatingSystemFuel>
               <HeatingCapacity>35000.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
-                <Units>AFUE</Units>
+                <Units>Percent</Units>
                 <Value>1.0</Value>
               </AnnualHeatingEfficiency>
               <FractionHeatLoadServed>1.0</FractionHeatLoadServed>

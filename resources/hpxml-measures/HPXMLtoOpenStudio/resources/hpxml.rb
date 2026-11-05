@@ -87,6 +87,7 @@ class HPXML < Object
   ColorMediumDark = 'medium dark'
   ColorMediumLight = 'medium light'
   ColorReflective = 'reflective'
+  ColorWhite = 'white'
   DehumidifierTypePortable = 'portable'
   DehumidifierTypeWholeHome = 'whole-home'
   DryingMethodConventional = 'conventional'
@@ -222,6 +223,10 @@ class HPXML < Object
   HeatPumpSizingACCA = 'ACCA'
   HeatPumpSizingHERS = 'HERS'
   HeatPumpSizingMaxLoad = 'MaxLoad'
+  HPWHVoltage240 = '240V'
+  HPWHVoltage120 = '120V'
+  HPWHVoltage120Dedicated = '120V dedicated circuit'
+  HPWHVoltage120Shared = '120V shared circuit'
   HVACCompressorTypeSingleStage = 'single stage'
   HVACCompressorTypeTwoStage = 'two stage'
   HVACCompressorTypeVariableSpeed = 'variable speed'
@@ -376,7 +381,6 @@ class HPXML < Object
   ResidentialTypeSFD = 'single-family detached'
   RoofTypeAsphaltShingles = 'asphalt or fiberglass shingles'
   RoofTypeConcrete = 'concrete'
-  RoofTypeCool = 'cool roof'
   RoofTypeClayTile = 'slate or tile shingles'
   RoofTypeEPS = 'expanded polystyrene sheathing'
   RoofTypeMetal = 'metal surfacing'
@@ -577,6 +581,12 @@ class HPXML < Object
 
   attr_accessor(:contents)
 
+  # Initialize the HPXML object.
+  #
+  # @param hpxml_path [String] The path to an existing HPXML file, or nil to create an empty HPXML object
+  # @param schema_validator [OpenStudio::XMLValidator] OpenStudio XMLValidator object
+  # @param schematron_validator [OpenStudio::XMLValidator] OpenStudio XMLValidator object
+  # @param building_id [String or nil] HPXML Building ID; if provided, the HPXML object is created with only the one Building element
   def initialize(hpxml_path: nil, schema_validator: nil, schematron_validator: nil, building_id: nil)
     @hpxml_path = hpxml_path
     @errors = []
@@ -776,6 +786,10 @@ class HPXML < Object
   class BaseElement
     attr_accessor(:parent_object, :additional_properties)
 
+    # Initialize the BaseElement object.
+    #
+    # @param parent_object [HPXML or HPXML::Building] The parent of the BaseElement object
+    # @param hpxml_element [Oga::XML::Element or nil] The XML element with properties to parse
     def initialize(parent_object, hpxml_element = nil, **kwargs)
       @parent_object = parent_object
       @additional_properties = AdditionalProperties.new
@@ -826,6 +840,8 @@ class HPXML < Object
     end
 
     # Returns how the object is formatted when using .to_s.
+    #
+    # @return [String] String representation of object properties.
     def to_s
       return to_h.to_s
     end
@@ -846,6 +862,10 @@ class HPXML < Object
   class BaseArrayElement < Array
     attr_accessor(:parent_object, :additional_properties)
 
+    # Initialize the BaseArrayElement object.
+    #
+    # @param parent_object [HPXML or HPXML::Building] The parent of the BaseArrayElement object
+    # @param hpxml_element [Oga::XML::Element or nil] The XML element with properties to parse
     def initialize(parent_object, hpxml_element = nil)
       @parent_object = parent_object
       @additional_properties = AdditionalProperties.new
@@ -882,6 +902,8 @@ class HPXML < Object
     end
 
     # Returns how the object is formatted when using .to_s.
+    #
+    # @return [String] String representation of the object.
     def to_s
       return map { |x| x.to_s }
     end
@@ -890,11 +912,14 @@ class HPXML < Object
   # Object for high-level HPXML header information.
   # Applies to all Buildings (i.e., outside the Building elements).
   class Header < BaseElement
-    def initialize(hpxml_element, *args, **kwargs)
-      @emissions_scenarios = EmissionsScenarios.new(hpxml_element)
-      @utility_bill_scenarios = UtilityBillScenarios.new(hpxml_element)
-      @unavailable_periods = UnavailablePeriods.new(hpxml_element)
-      super(hpxml_element, *args, **kwargs)
+    # Initialize the Header object.
+    #
+    # @param parent_object [HPXML] The parent HPXML object
+    def initialize(parent_object, *args, **kwargs)
+      @emissions_scenarios = EmissionsScenarios.new(parent_object)
+      @utility_bill_scenarios = UtilityBillScenarios.new(parent_object)
+      @unavailable_periods = UnavailablePeriods.new(parent_object)
+      super(parent_object, *args, **kwargs)
     end
     CLASS_ATTRS = [:emissions_scenarios,    # [HPXML::EmissionSenarios]
                    :utility_bill_scenarios, # [HPXML::UtilityBillScenarios]
@@ -2187,11 +2212,11 @@ class HPXML < Object
             end
             next unless match
 
-            if (surf_type == :foundation_walls) && (surf.depth_below_grade != surf2.depth_below_grade)
+            if surf_type == :foundation_walls
               if like_foundation_walls[surf].nil?
-                like_foundation_walls[surf] = [{ bgdepth: surf.depth_below_grade, length: surf.area / surf.height }]
+                like_foundation_walls[surf] = [{ bgdepth: surf.depth_below_grade, area: surf.area, height: surf.height }]
               end
-              like_foundation_walls[surf] << { bgdepth: surf2.depth_below_grade, length: surf2.area / surf2.height }
+              like_foundation_walls[surf] << { bgdepth: surf2.depth_below_grade, area: surf2.area, height: surf2.height }
             end
 
             # Update values
@@ -2229,8 +2254,11 @@ class HPXML < Object
       end
 
       like_foundation_walls.each do |foundation_wall, properties|
+        next unless properties.map { |p| p[:bgdepth] }.uniq.size > 1
+
         # Calculate weighted-average (by length) below-grade depth
-        foundation_wall.depth_below_grade = properties.map { |p| p[:bgdepth] * p[:length] }.sum(0.0) / properties.map { |p| p[:length] }.sum
+        lengths = properties.map { |p| p[:area] / p[:height] }
+        foundation_wall.depth_below_grade = properties.zip(lengths).map { |p, length| p[:bgdepth] * length }.sum(0.0) / lengths.sum
       end
     end
   end
@@ -2664,6 +2692,9 @@ class HPXML < Object
 
   # Object for /HPXML/Building/BuildingDetails/ClimateandRiskZones.
   class ClimateandRiskZones < BaseElement
+    # Initialize ClimateandRiskZones object.
+    #
+    # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
     def initialize(hpxml_bldg, *args, **kwargs)
       @climate_zone_ieccs = ClimateZoneIECCs.new(hpxml_bldg)
       super(hpxml_bldg, *args, **kwargs)
@@ -2781,7 +2812,7 @@ class HPXML < Object
 
     # Populates the HPXML object(s) from the XML document.
     #
-    # @param climate_and_risk_zones [Oga::XML::Element] The current ClimateZoneIECC XML element
+    # @param climate_zone_iecc [Oga::XML::Element] The current ClimateZoneIECC XML element
     # @return [nil]
     def from_doc(climate_zone_iecc)
       return if climate_zone_iecc.nil?
@@ -2815,6 +2846,9 @@ class HPXML < Object
 
   # Object for /HPXML/Building/BuildingDetails/Zones/Zone.
   class Zone < BaseElement
+    # Initialize Zone object.
+    #
+    # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
     def initialize(hpxml_bldg, *args, **kwargs)
       @spaces = Spaces.new(hpxml_bldg)
       super(hpxml_bldg, *args, **kwargs)
@@ -3871,6 +3905,7 @@ class HPXML < Object
              :orientation,                    # [String] Orientation (HPXML::OrientationXXX)
              :azimuth,                        # [Integer] Azimuth (deg)
              :roof_type,                      # [String] RoofType (HPXML::RoofTypeXXX)
+             :cool_roof,                      # [Boolean] CoolRoof
              :roof_color,                     # [String] RoofColor (HPXML::ColorXXX)
              :solar_absorptance,              # [Double] SolarAbsorptance
              :emittance,                      # [Double] Emittance
@@ -4012,6 +4047,7 @@ class HPXML < Object
       XMLHelper.add_element(roof, 'Orientation', @orientation, :string, @orientation_isdefaulted) unless @orientation.nil?
       XMLHelper.add_element(roof, 'Azimuth', @azimuth, :integer, @azimuth_isdefaulted) unless @azimuth.nil?
       XMLHelper.add_element(roof, 'RoofType', @roof_type, :string, @roof_type_isdefaulted) unless @roof_type.nil?
+      XMLHelper.add_element(roof, 'CoolRoof', @cool_roof, :boolean, @cool_roof_isdefaulted) unless @cool_roof.nil?
       XMLHelper.add_element(roof, 'RoofColor', @roof_color, :string, @roof_color_isdefaulted) unless @roof_color.nil?
       XMLHelper.add_element(roof, 'SolarAbsorptance', @solar_absorptance, :float, @solar_absorptance_isdefaulted) unless @solar_absorptance.nil?
       XMLHelper.add_element(roof, 'Emittance', @emittance, :float, @emittance_isdefaulted) unless @emittance.nil?
@@ -4063,6 +4099,7 @@ class HPXML < Object
       @orientation = XMLHelper.get_value(roof, 'Orientation', :string)
       @azimuth = XMLHelper.get_value(roof, 'Azimuth', :integer)
       @roof_type = XMLHelper.get_value(roof, 'RoofType', :string)
+      @cool_roof = XMLHelper.get_value(roof, 'CoolRoof', :boolean)
       @roof_color = XMLHelper.get_value(roof, 'RoofColor', :string)
       @solar_absorptance = XMLHelper.get_value(roof, 'SolarAbsorptance', :float)
       @emittance = XMLHelper.get_value(roof, 'Emittance', :float)
@@ -6274,9 +6311,12 @@ class HPXML < Object
 
   # Object for /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/HeatingSystem.
   class HeatingSystem < BaseElement
-    def initialize(hpxml_element, *args, **kwargs)
-      @heating_detailed_performance_data = HeatingDetailedPerformanceData.new(hpxml_element)
-      super(hpxml_element, *args, **kwargs)
+    # Initialize HeatingSystem object.
+    #
+    # @param parent_object [HPXML::Building] The parent HPXML Building object
+    def initialize(parent_object, *args, **kwargs)
+      @heating_detailed_performance_data = HeatingDetailedPerformanceData.new(parent_object)
+      super(parent_object, *args, **kwargs)
     end
     CLASS_ATTRS = [:heating_detailed_performance_data] # [HPXML::HeatingDetailedPerformanceData]
     ATTRS = [:primary_system,                   # [Boolean] ../PrimarySystems/PrimaryHeatingSystem/@id
@@ -6591,9 +6631,12 @@ class HPXML < Object
 
   # Object for /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/CoolingSystem.
   class CoolingSystem < BaseElement
-    def initialize(hpxml_element, *args, **kwargs)
-      @cooling_detailed_performance_data = CoolingDetailedPerformanceData.new(hpxml_element)
-      super(hpxml_element, *args, **kwargs)
+    # Initialize CoolingSystem object.
+    #
+    # @param parent_object [HPXML::Building] The parent HPXML Building object
+    def initialize(parent_object, *args, **kwargs)
+      @cooling_detailed_performance_data = CoolingDetailedPerformanceData.new(parent_object)
+      super(parent_object, *args, **kwargs)
     end
     CLASS_ATTRS = [:cooling_detailed_performance_data] # [HPXML::CoolingDetailedPerformanceData]
     ATTRS = [:primary_system,                                      # [Boolean] ../PrimarySystems/PrimaryCoolingSystem/@idref
@@ -6912,10 +6955,13 @@ class HPXML < Object
 
   # Object for /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/HeatPump.
   class HeatPump < BaseElement
-    def initialize(hpxml_element, *args, **kwargs)
-      @cooling_detailed_performance_data = CoolingDetailedPerformanceData.new(hpxml_element)
-      @heating_detailed_performance_data = HeatingDetailedPerformanceData.new(hpxml_element)
-      super(hpxml_element, *args, **kwargs)
+    # Initialize HeatPump object.
+    #
+    # @param parent_object [HPXML::Building] The parent HPXML Building object
+    def initialize(parent_object, *args, **kwargs)
+      @cooling_detailed_performance_data = CoolingDetailedPerformanceData.new(parent_object)
+      @heating_detailed_performance_data = HeatingDetailedPerformanceData.new(parent_object)
+      super(parent_object, *args, **kwargs)
     end
     CLASS_ATTRS = [:cooling_detailed_performance_data, # [HPXML::CoolingDetailedPerformanceData]
                    :heating_detailed_performance_data] # [HPXML::HeatingDetailedPerformanceData]
@@ -7680,6 +7726,9 @@ class HPXML < Object
 
   # Object for /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution.
   class HVACDistribution < BaseElement
+    # Initialize HVACDistribution object.
+    #
+    # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
     def initialize(hpxml_bldg, *args, **kwargs)
       @duct_leakage_measurements = DuctLeakageMeasurements.new(hpxml_bldg)
       @ducts = Ducts.new(hpxml_bldg)
@@ -8554,6 +8603,7 @@ class HPXML < Object
              :energy_factor,                          # [Double] EnergyFactor (frac)
              :uniform_energy_factor,                  # [Double] UniformEnergyFactor (frac)
              :hpwh_operating_mode,                    # [String] HPWHOperatingMode (HPXML::WaterHeaterHPWHOperatingModeXXX)
+             :hpwh_voltage,                           # [String] HPWHVoltage (HPXML::HPWHVoltageXXX)
              :hpwh_ducting_supply,                    # [String] HPWHDucting/SupplyAirSource (HPXML::LocationXXX)
              :hpwh_ducting_exhaust,                   # [String] HPWHDucting/ExhaustAirTermination (HPXML::LocationXXX)
              :first_hour_rating,                      # [Double] FirstHourRating (gal/hr)
@@ -8563,6 +8613,8 @@ class HPXML < Object
              :standby_loss_units,                     # [String] StandbyLoss/Units (HPXML::UnitsXXX)
              :standby_loss_value,                     # [Double] StandbyLoss/Value
              :temperature,                            # [Double] HotWaterTemperature (F)
+             :has_mixing_valve,                       # [Boolean] HasMixingValve
+             :mixing_valve_setpoint,                  # [Double] MixingValveSetpoint (F)
              :uses_desuperheater,                     # [Boolean] UsesDesuperheater
              :related_hvac_idref,                     # [String] RelatedHVACSystem/@idref
              :tank_model_type,                        # [String] extension/TankModelType (HPXML::WaterHeaterTankModelTypeXXX)
@@ -8657,6 +8709,7 @@ class HPXML < Object
       XMLHelper.add_element(water_heating_system, 'EnergyFactor', @energy_factor, :float, @energy_factor_isdefaulted) unless @energy_factor.nil?
       XMLHelper.add_element(water_heating_system, 'UniformEnergyFactor', @uniform_energy_factor, :float) unless @uniform_energy_factor.nil?
       XMLHelper.add_element(water_heating_system, 'HPWHOperatingMode', @hpwh_operating_mode, :string, @hpwh_operating_mode_isdefaulted) unless @hpwh_operating_mode.nil?
+      XMLHelper.add_element(water_heating_system, 'HPWHVoltage', @hpwh_voltage, :string, @hpwh_voltage_isdefaulted) unless @hpwh_voltage.nil?
       if (not @hpwh_ducting_exhaust.nil?) || (not @hpwh_ducting_supply.nil?)
         hpwh_ducting = XMLHelper.add_element(water_heating_system, 'HPWHDucting')
         XMLHelper.add_element(hpwh_ducting, 'SupplyAirSource', @hpwh_ducting_supply, :string, @hpwh_ducting_supply_isdefaulted) unless @hpwh_ducting_supply.nil?
@@ -8676,6 +8729,8 @@ class HPXML < Object
         XMLHelper.add_element(standby_loss, 'Value', @standby_loss_value, :float, @standby_loss_value_isdefaulted)
       end
       XMLHelper.add_element(water_heating_system, 'HotWaterTemperature', @temperature, :float, @temperature_isdefaulted) unless @temperature.nil?
+      XMLHelper.add_element(water_heating_system, 'HasMixingValve', @has_mixing_valve, :boolean, @has_mixing_valve_isdefaulted) unless @has_mixing_valve.nil?
+      XMLHelper.add_element(water_heating_system, 'MixingValveSetpoint', @mixing_valve_setpoint, :float, @mixing_valve_setpoint_isdefaulted) unless @mixing_valve_setpoint.nil?
       XMLHelper.add_element(water_heating_system, 'UsesDesuperheater', @uses_desuperheater, :boolean) unless @uses_desuperheater.nil?
       if not @related_hvac_idref.nil?
         related_hvac_idref_el = XMLHelper.add_element(water_heating_system, 'RelatedHVACSystem')
@@ -8712,6 +8767,7 @@ class HPXML < Object
       @energy_factor = XMLHelper.get_value(water_heating_system, 'EnergyFactor', :float)
       @uniform_energy_factor = XMLHelper.get_value(water_heating_system, 'UniformEnergyFactor', :float)
       @hpwh_operating_mode = XMLHelper.get_value(water_heating_system, 'HPWHOperatingMode', :string)
+      @hpwh_voltage = XMLHelper.get_value(water_heating_system, 'HPWHVoltage', :string)
       @hpwh_ducting_supply = XMLHelper.get_value(water_heating_system, 'HPWHDucting/SupplyAirSource', :string)
       @hpwh_ducting_exhaust = XMLHelper.get_value(water_heating_system, 'HPWHDucting/ExhaustAirTermination', :string)
       @first_hour_rating = XMLHelper.get_value(water_heating_system, 'FirstHourRating', :float)
@@ -8721,6 +8777,8 @@ class HPXML < Object
       @standby_loss_units = XMLHelper.get_value(water_heating_system, 'StandbyLoss/Units', :string)
       @standby_loss_value = XMLHelper.get_value(water_heating_system, 'StandbyLoss/Value', :float)
       @temperature = XMLHelper.get_value(water_heating_system, 'HotWaterTemperature', :float)
+      @has_mixing_valve = XMLHelper.get_value(water_heating_system, 'HasMixingValve', :boolean)
+      @mixing_valve_setpoint = XMLHelper.get_value(water_heating_system, 'MixingValveSetpoint', :float)
       @uses_desuperheater = XMLHelper.get_value(water_heating_system, 'UsesDesuperheater', :boolean)
       @related_hvac_idref = HPXML::get_idref(XMLHelper.get_element(water_heating_system, 'RelatedHVACSystem'))
       @tank_model_type = XMLHelper.get_value(water_heating_system, 'extension/TankModelType', :string)
@@ -9158,9 +9216,11 @@ class HPXML < Object
              :array_azimuth,             # [Integer] ArrayAzimuth (deg)
              :array_tilt,                # [Double] ArrayTilt (deg)
              :max_power_output,          # [Double] MaxPowerOutput (W)
+             :collector_area,            # [Double] CollectorArea (ft2)
              :number_of_panels,          # [Integer] NumberOfPanels
              :system_losses_fraction,    # [Double] SystemLossesFraction (frac)
              :year_modules_manufactured, # [Integer] YearModulesManufactured
+             :year_installed,            # [Integer] YearInstalled
              :inverter_idref,            # [String] AttachedToInverter/@idref
              :number_of_bedrooms_served] # [Integer] extension/NumberofBedroomsServed
     attr_accessor(*ATTRS)
@@ -9214,10 +9274,12 @@ class HPXML < Object
       XMLHelper.add_element(pv_system, 'ArrayOrientation', @array_orientation, :string, @array_orientation_isdefaulted) unless @array_orientation.nil?
       XMLHelper.add_element(pv_system, 'ArrayAzimuth', @array_azimuth, :integer, @array_azimuth_isdefaulted) unless @array_azimuth.nil?
       XMLHelper.add_element(pv_system, 'ArrayTilt', @array_tilt, :float) unless @array_tilt.nil?
-      XMLHelper.add_element(pv_system, 'MaxPowerOutput', @max_power_output, :float) unless @max_power_output.nil?
-      XMLHelper.add_element(pv_system, 'NumberOfPanels', @number_of_panels, :integer) unless @number_of_panels.nil?
+      XMLHelper.add_element(pv_system, 'MaxPowerOutput', @max_power_output, :float, @max_power_output_isdefaulted) unless @max_power_output.nil?
+      XMLHelper.add_element(pv_system, 'CollectorArea', @collector_area, :float, @collector_area_isdefaulted) unless @collector_area.nil?
+      XMLHelper.add_element(pv_system, 'NumberOfPanels', @number_of_panels, :integer, @number_of_panels_isdefaulted) unless @number_of_panels.nil?
       XMLHelper.add_element(pv_system, 'SystemLossesFraction', @system_losses_fraction, :float, @system_losses_fraction_isdefaulted) unless @system_losses_fraction.nil?
-      XMLHelper.add_element(pv_system, 'YearModulesManufactured', @year_modules_manufactured, :integer) unless @year_modules_manufactured.nil?
+      XMLHelper.add_element(pv_system, 'YearModulesManufactured', @year_modules_manufactured, :integer, @year_modules_manufactured_isdefaulted) unless @year_modules_manufactured.nil?
+      XMLHelper.add_element(pv_system, 'YearInstalled', @year_installed, :integer, @year_installed_isdefaulted) unless @year_installed.nil?
       if not @inverter_idref.nil?
         attached_to_inverter = XMLHelper.add_element(pv_system, 'AttachedToInverter')
         XMLHelper.add_attribute(attached_to_inverter, 'idref', @inverter_idref)
@@ -9241,9 +9303,11 @@ class HPXML < Object
       @array_azimuth = XMLHelper.get_value(pv_system, 'ArrayAzimuth', :integer)
       @array_tilt = XMLHelper.get_value(pv_system, 'ArrayTilt', :float)
       @max_power_output = XMLHelper.get_value(pv_system, 'MaxPowerOutput', :float)
+      @collector_area = XMLHelper.get_value(pv_system, 'CollectorArea', :float)
       @number_of_panels = XMLHelper.get_value(pv_system, 'NumberOfPanels', :integer)
       @system_losses_fraction = XMLHelper.get_value(pv_system, 'SystemLossesFraction', :float)
       @year_modules_manufactured = XMLHelper.get_value(pv_system, 'YearModulesManufactured', :integer)
+      @year_installed = XMLHelper.get_value(pv_system, 'YearInstalled', :integer)
       @inverter_idref = HPXML::get_idref(XMLHelper.get_element(pv_system, 'AttachedToInverter'))
       @number_of_bedrooms_served = XMLHelper.get_value(pv_system, 'extension/NumberofBedroomsServed', :integer)
     end
@@ -9421,7 +9485,7 @@ class HPXML < Object
 
     # Populates the HPXML object(s) from the XML document.
     #
-    # @param battery [Oga::XML::Element] The current Battery XML element
+    # @param charger [Oga::XML::Element] The current ElectricVehicleCharger XML element
     # @return [nil]
     def from_doc(charger)
       return if charger.nil?
@@ -9563,7 +9627,7 @@ class HPXML < Object
 
     # Populates the HPXML object(s) from the XML document.
     #
-    # @param battery [Oga::XML::Element] The current Battery XML element
+    # @param vehicle [Oga::XML::Element] The current Vehicle XML element
     # @return [nil]
     def from_doc(vehicle)
       return if vehicle.nil?
@@ -9630,10 +9694,13 @@ class HPXML < Object
 
   # Object for /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel.
   class ElectricPanel < BaseElement
-    def initialize(hpxml_element, *args, **kwargs)
-      @branch_circuits = BranchCircuits.new(hpxml_element)
-      @service_feeders = ServiceFeeders.new(hpxml_element)
-      super(hpxml_element, *args, **kwargs)
+    # Initialize ElectricPanel object.
+    #
+    # @param parent_object [HPXML::Building] The parent HPXML Building object
+    def initialize(parent_object, *args, **kwargs)
+      @branch_circuits = BranchCircuits.new(parent_object)
+      @service_feeders = ServiceFeeders.new(parent_object)
+      super(parent_object, *args, **kwargs)
     end
     CLASS_ATTRS = [:branch_circuits,
                    :service_feeders]
@@ -9840,7 +9907,7 @@ class HPXML < Object
 
     # Adds this object to the provided Oga XML element.
     #
-    # @param building [Oga::XML::Element] The current Building XML element
+    # @param electric_panel [Oga::XML::Element] The current ElectricPanel XML element
     # @return [nil]
     def to_doc(electric_panel)
       return if nil?
@@ -9984,7 +10051,7 @@ class HPXML < Object
 
     # Adds this object to the provided Oga XML element.
     #
-    # @param building [Oga::XML::Element] The current Building XML element
+    # @param electric_panel [Oga::XML::Element] The current ElectricPanel XML element
     # @return [nil]
     def to_doc(electric_panel)
       return if nil?
@@ -12265,6 +12332,20 @@ class HPXML < Object
             HPXML::LocationOtherHousingUnit]
   end
 
+  # Returns the set of all location types that have scheduled temperatures (i.e., not
+  # modeled as thermal zones).
+  #
+  # @return [Array<String>] List of conditioned locations (HPXML::LocationXXX)
+  def self.scheduled_locations
+    return [HPXML::LocationOtherHousingUnit,
+            HPXML::LocationOtherHeatedSpace,
+            HPXML::LocationOtherMultifamilyBufferSpace,
+            HPXML::LocationOtherNonFreezingSpace,
+            HPXML::LocationExteriorWall,
+            HPXML::LocationUnderSlab,
+            HPXML::LocationManufacturedHomeBelly]
+  end
+
   # Returns the set of all location types that are multifamily common spaces.
   #
   # @return [Array<String>] List of multifamily common space locations (HPXML::LocationXXX)
@@ -12458,7 +12539,7 @@ class HPXML < Object
   # Gets the IDREF attribute for all instances of the given element.
   #
   # @param parent [Oga::XML::Element] The parent HPXML element
-  # @param element [Oga::XML::Element] The HPXML element
+  # @param element_name [String] The name of the child element(s) with the idref attribute
   # @return [Array<String>] The list of element IDREF attributes
   def self.get_idrefs(parent, element_name)
     idrefs = []
@@ -12606,7 +12687,7 @@ class HPXML < Object
 
   # Returns attached branch circuits for provided component ID.
   #
-  # @param component [HPXML::XXX] HPXML component
+  # @param id [String] HPXML component system identifier
   # @param electric_panels [Array<HPXML::ElectricPanel>] List of electric panel objects
   # @return [Array<HPXML::BranchCircuit>] List of branch circuit objects
   def self.branch_circuits(id, electric_panels)
@@ -12625,7 +12706,7 @@ class HPXML < Object
 
   # Returns attached service feeders for provided component ID.
   #
-  # @param id [String] SystemIdentifier/@id
+  # @param id [String] HPXML component system identifier
   # @param electric_panels [Array<HPXML::ElectricPanel>] List of electric panel objects
   # @return [Array<HPXML::ServiceFeeder>] List of service feeder objects
   def self.service_feeders(id, electric_panels)

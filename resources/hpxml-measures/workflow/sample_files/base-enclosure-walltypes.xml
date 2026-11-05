@@ -323,7 +323,7 @@
             </WallType>
             <Area>109.0</Area>
             <Siding>composite shingle siding</Siding>
-            <Color>reflective</Color>
+            <Color>white</Color>
             <InteriorFinish>
               <Type>plaster</Type>
               <Thickness>0.5</Thickness>

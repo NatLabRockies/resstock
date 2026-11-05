@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_schedule_file</name>
   <uid>f770b2db-1a9f-4e99-99a7-7f3161a594b1</uid>
-  <version_id>b32e378c-d611-44a6-9e46-9204efecef5a</version_id>
-  <version_modified>2026-04-24T03:16:09Z</version_modified>
+  <version_id>05c413b2-6bde-4bab-9728-39f3b359e701</version_id>
+  <version_modified>2026-08-27T17:58:31Z</version_modified>
   <xml_checksum>03F02484</xml_checksum>
   <class_name>BuildResidentialScheduleFile</class_name>
   <display_name>Schedule File Builder</display_name>
@@ -133,7 +133,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>458BFD23</checksum>
+      <checksum>AFA48F71</checksum>
     </file>
     <file>
       <filename>README.md</filename>
@@ -229,7 +229,7 @@
       <filename>schedules.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>97FAE82D</checksum>
+      <checksum>0061F06C</checksum>
     </file>
     <file>
       <filename>shower_cluster_size_probability.csv</filename>

@@ -328,8 +328,6 @@ module HotWaterAndAppliances
     if hpxml_bldg.hot_water_distributions.size > 0
       hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
 
-      t_mix = 105.0 # F, Temperature of mixed water at fixtures
-
       # Set mains water temperature
       swmt = model.getSiteWaterMainsTemperature
       swmt.setCalculationMethod('Correlation')
@@ -345,9 +343,11 @@ module HotWaterAndAppliances
         swmt.setTemperatureOffset(temp_offset_c)
       end
 
-      mw_temp_schedule = Model.add_schedule_constant(
+      # Create water temperature schedule for fixtures
+      t_mix = 105.0 # F, Temperature of mixed water at fixtures
+      fixtures_temp_schedule = Model.add_schedule_constant(
         model,
-        name: 'mixed water temperature schedule',
+        name: 'fixtures water temperature schedule',
         value: UnitConversions.convert(t_mix, 'F', 'C'),
         limits: EPlus::ScheduleTypeLimitsTemperature
       )
@@ -374,11 +374,23 @@ module HotWaterAndAppliances
 
     if Constants::ERIVersions.index(eri_version) < Constants::ERIVersions.index('2014A')
       # Calculate annual average mixed water fraction
-      avg_mw_fraction = calc_mixed_water_fraction(eri_version, hpxml_bldg, t_mix, weather)
+      avg_mw_fraction = calc_mixed_water_fraction(hpxml_bldg, t_mix, weather, schedules_file)
     end
 
     hpxml_bldg.water_heating_systems.each do |water_heating_system|
       non_solar_fraction = 1.0 - Waterheater.get_water_heater_solar_fraction(water_heating_system, hpxml_bldg)
+
+      # Create water temperature schedule for appliances; only needed
+      # when there's a mixing valve.
+      appliances_temp_schedule = nil
+      if water_heating_system.has_mixing_valve
+        appliances_temp_schedule = Model.add_schedule_constant(
+          model,
+          name: 'hot water temperature schedule',
+          value: UnitConversions.convert(water_heating_system.mixing_valve_setpoint, 'F', 'C'),
+          limits: EPlus::ScheduleTypeLimitsTemperature
+        )
+      end
 
       gpd_frac = water_heating_system.fraction_dhw_load_served # Fixtures fraction
       if gpd_frac > 0
@@ -404,7 +416,7 @@ module HotWaterAndAppliances
           peak_flow_rate: unit_multiplier * fx_peak_flow * gpd_frac * non_solar_fraction,
           flow_rate_schedule: fixtures_schedule,
           water_use_connections: water_use_connections[water_heating_system.id],
-          target_temperature_schedule: mw_temp_schedule
+          target_temperature_schedule: fixtures_temp_schedule
         )
         fx_wue.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by reporting measure
 
@@ -416,7 +428,7 @@ module HotWaterAndAppliances
           peak_flow_rate: unit_multiplier * dist_water_peak_flow * gpd_frac * non_solar_fraction,
           flow_rate_schedule: fixtures_schedule,
           water_use_connections: water_use_connections[water_heating_system.id],
-          target_temperature_schedule: mw_temp_schedule
+          target_temperature_schedule: fixtures_temp_schedule
         )
         dist_wue.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by reporting measure
 
@@ -489,7 +501,7 @@ module HotWaterAndAppliances
             peak_flow_rate: unit_multiplier * cw_peak_flow * gpd_frac * non_solar_fraction,
             flow_rate_schedule: water_cw_schedule,
             water_use_connections: water_use_connections[water_heating_system.id],
-            target_temperature_schedule: nil
+            target_temperature_schedule: appliances_temp_schedule
           )
           cw_wue.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by reporting measure
         end
@@ -526,7 +538,7 @@ module HotWaterAndAppliances
         peak_flow_rate: unit_multiplier * dw_peak_flow * gpd_frac * non_solar_fraction,
         flow_rate_schedule: water_dw_schedule,
         water_use_connections: water_use_connections[water_heating_system.id],
-        target_temperature_schedule: nil
+        target_temperature_schedule: appliances_temp_schedule
       )
       dw_wue.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by reporting measure
     end
@@ -1083,19 +1095,23 @@ module HotWaterAndAppliances
   # Calculates the annual average mixed water adjustment fraction. The fraction converts from
   # gallons of mixed water to gallons of hot water that needs to be served by the water heater.
   #
-  # @param eri_version [String] Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param t_mix [Double] Temperature of mixed water at fixtures (F)
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param schedules_file [SchedulesFile] SchedulesFile wrapper class instance of detailed schedule files
   # @return [Double] Annual average mixed water adjustment fraction
-  def self.calc_mixed_water_fraction(eri_version, hpxml_bldg, t_mix, weather)
+  def self.calc_mixed_water_fraction(hpxml_bldg, t_mix, weather, schedules_file)
     hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
 
     # WH Setpoint: Weighted average by fraction DHW load served
     t_set = 0.0
     hpxml_bldg.water_heating_systems.each do |water_heating_system|
       wh_setpoint = water_heating_system.temperature
-      wh_setpoint = Defaults.get_water_heater_temperature(eri_version) if wh_setpoint.nil? # using detailed schedules
+      if wh_setpoint.nil?
+        # Detailed setpoint schedule; use average value
+        sf = schedules_file.schedules[SchedulesFile::Columns[:WaterHeaterSetpoint].name]
+        wh_setpoint = sf.sum.to_f / sf.size
+      end
       t_set += wh_setpoint * water_heating_system.fraction_dhw_load_served
     end
 
