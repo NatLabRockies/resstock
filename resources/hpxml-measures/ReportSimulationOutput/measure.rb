@@ -409,9 +409,15 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       next unless hpxml_bldgs_size > 1
 
       for unit_num in 0..(hpxml_bldgs_size - 1)
-        Model.add_output_meter(model, meter_name: Model.make_unit_meter_name(fuel.meter, unit_num, hpxml_bldgs_size), reporting_frequency: 'runperiod')
+        meter_name = Model.make_unit_meter_name(fuel.meter, unit_num, hpxml_bldgs_size)
+
+        # Check if unit has this fuel type
+        meter = (model.getMeterCustoms + model.getMeterCustomDecrements).find { |m| m.name.to_s.upcase == meter_name.upcase }
+        next if meter.nil?
+
+        Model.add_output_meter(model, meter_name: meter_name, reporting_frequency: 'runperiod')
         if args[:include_timeseries_fuel_consumptions] && args[:include_timeseries_dwelling_unit_outputs]
-          Model.add_output_meter(model, meter_name: Model.make_unit_meter_name(fuel.meter, unit_num, hpxml_bldgs_size), reporting_frequency: args[:timeseries_frequency])
+          Model.add_output_meter(model, meter_name: meter_name, reporting_frequency: args[:timeseries_frequency])
         end
       end
     end
@@ -535,13 +541,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       Model.add_output_variable(model, key_value: '*', variable_name: 'Zone Mean Air Temperature', reporting_frequency: args[:timeseries_frequency])
 
       # For reporting temperature-scheduled spaces timeseries temperatures.
-      keys = [HPXML::LocationOtherHeatedSpace,
-              HPXML::LocationOtherMultifamilyBufferSpace,
-              HPXML::LocationOtherNonFreezingSpace,
-              HPXML::LocationOtherHousingUnit,
-              HPXML::LocationExteriorWall,
-              HPXML::LocationUnderSlab]
-      keys.each do |key|
+      HPXML::scheduled_locations.each do |key|
         schedules = @model.getScheduleConstants.select { |sch| sch.additionalProperties.getFeatureAsString('ObjectType').to_s == key }
         next if schedules.empty?
 
@@ -1175,9 +1175,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       end
 
       # Scheduled temperatures
-      [HPXML::LocationOtherHeatedSpace, HPXML::LocationOtherMultifamilyBufferSpace,
-       HPXML::LocationOtherNonFreezingSpace, HPXML::LocationOtherHousingUnit,
-       HPXML::LocationExteriorWall, HPXML::LocationUnderSlab].each do |sch_location|
+      HPXML::scheduled_locations.each do |sch_location|
         @model.getScheduleConstants.each do |schedule|
           next unless schedule.additionalProperties.getFeatureAsString('ObjectType').to_s == sch_location
 

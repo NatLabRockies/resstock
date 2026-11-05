@@ -66,6 +66,7 @@ class Material
   #
   # @param mat1 [Material] The first material to combine
   # @param mat2 [Material] The second material to combine
+  # @param new_name [String] The new name for the combined material
   # @return [Material] The combined material object
   def self.combine(mat1, mat2, new_name)
     rvalue = mat2.thick_in / mat2.k_in + mat1.thick_in / mat1.k_in
@@ -114,13 +115,13 @@ class Material
   # @return [Material] The material object
   def self.AirFilmOutside(no_wind_exposure = false, apply_ashrae140_assumptions = false)
     if no_wind_exposure
-      rvalue = 0.455 # hr-ft-F/Btu
+      rvalue = 0.455 # hr-ft2-F/Btu
     else
       if apply_ashrae140_assumptions
-        rvalue = 0.174 # hr-ft-F/Btu
+        rvalue = 0.174 # hr-ft2-F/Btu
       else
-        rvalue_winter = 0.17 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
-        rvalue_summer = 0.25 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
+        rvalue_winter = 0.17 # hr-ft2-F/Btu (ASHRAE 2005, F25.2, Table 1)
+        rvalue_summer = 0.25 # hr-ft2-F/Btu (ASHRAE 2005, F25.2, Table 1)
         rvalue = (rvalue_winter + rvalue_summer) / 2.0
       end
     end
@@ -131,7 +132,7 @@ class Material
   #
   # @return [Material] The material object
   def self.AirFilmIndoorWall
-    rvalue = 0.68 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
+    rvalue = 0.68 # hr-ft2-F/Btu (ASHRAE 2005, F25.2, Table 1)
     return self.AirFilm(rvalue)
   end
 
@@ -143,7 +144,7 @@ class Material
   # @return [Material] The material object
   def self.AirFilmIndoorFloorAverage
     rvalue_down = self.AirFilmIndoorFloorDown.rvalue
-    rvalue_up = 0.61 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
+    rvalue_up = 0.61 # hr-ft2-F/Btu (ASHRAE 2005, F25.2, Table 1)
     rvalue = (rvalue_down + rvalue_up) / 2.0
     return self.AirFilm(rvalue)
   end
@@ -154,7 +155,7 @@ class Material
   #
   # @return [Material] The material object
   def self.AirFilmIndoorFloorDown
-    rvalue = 0.92 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
+    rvalue = 0.92 # hr-ft2-F/Btu (ASHRAE 2005, F25.2, Table 1)
     return self.AirFilm(rvalue)
   end
 
@@ -165,23 +166,23 @@ class Material
   # @return [Material] The material object
   def self.AirFilmIndoorRoof(surface_angle, apply_ashrae140_assumptions = false)
     if apply_ashrae140_assumptions
-      rvalue = 0.752 # hr-ft-F/Btu
+      rvalue = 0.752 # hr-ft2-F/Btu
     else
       # Correlation functions used to interpolate between values provided
       # in ASHRAE 2005, F25.2, Table 1 - which only provides values for
       # 0, 45, and 90 degrees.
       # Uses the average of upward/downward heat flow values with the assumption
       # that the temperature above the roof can be either hotter or colder.
-      rvalue_up = 0.002 * Math::exp(0.0398 * surface_angle) + 0.608 # hr-ft-F/Btu (evaluates to 0.62 at 45 degrees, when direction of heat flow is upward)
-      rvalue_down = 0.32 * Math::exp(-0.0154 * surface_angle) + 0.6 # hr-ft-F/Btu (evaluates to 0.76 at 45 degrees, when direction of heat flow is downward)
-      rvalue = (rvalue_up + rvalue_down) / 2.0 # hr-ft-F/Btu
+      rvalue_up = 0.002 * Math::exp(0.0398 * surface_angle) + 0.608 # hr-ft2-F/Btu (evaluates to 0.62 at 45 degrees, when direction of heat flow is upward)
+      rvalue_down = 0.32 * Math::exp(-0.0154 * surface_angle) + 0.6 # hr-ft2-F/Btu (evaluates to 0.76 at 45 degrees, when direction of heat flow is downward)
+      rvalue = (rvalue_up + rvalue_down) / 2.0 # hr-ft2-F/Btu
     end
     return self.AirFilm(rvalue)
   end
 
   # Creates a material for the combined layer of, e.g., carpet and bare floor.
   #
-  # @param floorFraction [Double] Fraction of the floor that is covered (i.e., not bare)
+  # @param floor_fraction [Double] Fraction of the floor that is covered (i.e., not bare)
   # @param rvalue [Double] Thermal resistance (hr-ft2-F/Btu)
   # @return [Material] The material object
   def self.CoveringBare(floor_fraction = 0.8, rvalue = 2.08)
@@ -333,18 +334,11 @@ class Material
 
   # Creates a material for a radiant batter (in an attic).
   #
-  # @param install_grade [Integer] Installation grade (1-3)
+  # @param install_grade [Integer] Installation grade as defined by RESNET (1-3)
   # @param is_attic_floor [Boolean] True if the radiant barrier is on the attic floor (as opposed to roof of the attic)
   # @return [Material] The material object
-  def self.RadiantBarrier(grade, is_attic_floor = false)
-    # FUTURE: Merge w/ Constructions.get_gap_factor
-    if grade == 1
-      gap_frac = 0.0
-    elsif grade == 2
-      gap_frac = 0.02
-    elsif grade == 3
-      gap_frac = 0.05
-    end
+  def self.RadiantBarrier(install_grade, is_attic_floor = false)
+    gap_frac = Constructions.get_install_grade_gap_fraction(install_grade, true)
     if is_attic_floor
       # Assume reduced effectiveness due to accumulation of dust per https://web.ornl.gov/sci/buildings/tools/radiant/rb2/
       rb_emittance = 0.5
@@ -377,7 +371,7 @@ class Material
     case roof_type
     when HPXML::RoofTypeMetal
       mat_roof = new(name: roof_type, thick_in: 0.02, k_in: 346.9, rho: 487.0, cp: 0.11)
-    when HPXML::RoofTypeAsphaltShingles, HPXML::RoofTypeWoodShingles, HPXML::RoofTypeShingles, HPXML::RoofTypeCool
+    when HPXML::RoofTypeAsphaltShingles, HPXML::RoofTypeWoodShingles, HPXML::RoofTypeShingles
       mat_roof = new(name: roof_type, thick_in: 0.25, k_in: 1.128, rho: 70.0, cp: 0.35)
     when HPXML::RoofTypeConcrete
       mat_roof = new(name: roof_type, thick_in: 0.75, k_in: 7.63, rho: 131.1, cp: 0.199)
@@ -414,7 +408,8 @@ class BaseMaterial
   #
   # @return [BaseMaterial] The base material object
   def self.Gypsum
-    return new(rho: 50.0, cp: 0.2, k_in: 1.1112)
+    # Values from ASHRAE 140 Class II tests for plasterboard
+    return new(rho: 50.0, cp: 0.26, k_in: 1.1112)
   end
 
   # Creates a base material with properties for wood.

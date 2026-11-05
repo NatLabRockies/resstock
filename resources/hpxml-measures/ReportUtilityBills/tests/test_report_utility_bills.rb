@@ -1180,7 +1180,7 @@ class ReportUtilityBillsTest < Minitest::Test
     assert_equal(@args_hash.size, found_args.size)
 
     # Run OSW
-    command = "#{OpenStudio.getOpenStudioCLI} run -w #{osw_path}"
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" run -w #{osw_path}"
     success = system(command)
     assert(success)
 

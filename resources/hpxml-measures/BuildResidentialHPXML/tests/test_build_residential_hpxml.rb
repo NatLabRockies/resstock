@@ -56,7 +56,6 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'extra-sfa-slab.xml' => 'base-sfa.xml',
       'extra-sfa-vented-crawlspace.xml' => 'base-sfa.xml',
       'extra-sfa-unvented-crawlspace.xml' => 'base-sfa.xml',
-      'extra-sfa-conditioned-crawlspace.xml' => 'base-sfa.xml',
       'extra-sfa-unconditioned-basement.xml' => 'base-sfa.xml',
       'extra-sfa-ambient.xml' => 'base-sfa.xml',
 
@@ -150,6 +149,9 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'error-protruding-garage-under-gable-roof.xml' => 'base-sfd.xml',
       'error-ambient-with-garage.xml' => 'base-sfd.xml',
       'error-could-not-find-epw-file.xml' => 'base-sfd.xml',
+      'error-general-basement-to-specific-foundation-type.xml' => 'extra-sfa-slab.xml',
+      'error-general-crawlspace-to-specific-foundation-type.xml' => 'extra-sfa-unconditioned-basement.xml',
+      'error-general-attic-to-specific-attic-type.xml' => 'extra-sfa-atticroof-flat.xml',
 
       'warning-tiny-home-wide-garage.xml' => 'base-sfd.xml',
       'warning-tiny-home-deep-garage.xml' => 'base-sfd.xml',
@@ -166,8 +168,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'error-heating-system-and-heat-pump.xml' => ['Multiple central heating systems are not currently supported.'],
       'error-cooling-system-and-heat-pump.xml' => ['Multiple central cooling systems are not currently supported.'],
       'error-sfd-adiabatic-walls.xml' => ['No adiabatic surfaces can be applied to single-family detached homes.'],
-      'error-mf-conditioned-basement' => ['Conditioned basement/crawlspace foundation type for apartment units is not currently supported.'],
-      'error-mf-conditioned-crawlspace' => ['Conditioned basement/crawlspace foundation type for apartment units is not currently supported.'],
+      'error-mf-conditioned-basement' => ['Conditioned basement foundation type for apartment units is not currently supported.'],
       'error-second-heating-system-but-no-primary-heating.xml' => ['A second heating system was specified without a primary heating system.'],
       'error-sfa-above-apartment.xml' => ['Single-family attached units cannot be above another unit.'],
       'error-sfa-below-apartment.xml' => ['Single-family attached units cannot be below another unit.'],
@@ -177,7 +178,10 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'error-hip-roof-and-protruding-garage.xml' => ['Cannot handle protruding garage and hip roof.'],
       'error-protruding-garage-under-gable-roof.xml' => ['Cannot handle protruding garage and attic ridge running from front to back.'],
       'error-ambient-with-garage.xml' => ['Cannot handle garages with an ambient foundation type.'],
-      'error-could-not-find-epw-file.xml' => ['Could not find EPW file at']
+      'error-could-not-find-epw-file.xml' => ['Could not find EPW file at'],
+      'error-general-basement-to-specific-foundation-type.xml' => ["Specified 'basement' for water heater location but foundation type is 'SlabOnGrade'."],
+      'error-general-crawlspace-to-specific-foundation-type.xml' => ["Specified 'crawlspace' for water heater location but foundation type is 'UnconditionedBasement'."],
+      'error-general-attic-to-specific-attic-type.xml' => ["Specified 'attic' for water heater location but attic type is 'FlatRoof'."],
     }
 
     expected_warnings = {
@@ -233,11 +237,11 @@ class BuildResidentialHPXMLTest < Minitest::Test
         _test_measure(runner, expected_errors[hpxml_file], expected_warnings[hpxml_file])
 
         if not success
+          next if hpxml_file.start_with?('error')
+
           runner.result.stepErrors.each do |s|
             puts "Error: #{s}"
           end
-
-          next if hpxml_file.start_with?('error')
 
           flunk "Error: Did not successfully generate #{hpxml_file}."
         end
@@ -565,9 +569,6 @@ class BuildResidentialHPXMLTest < Minitest::Test
     when 'extra-sfa-unvented-crawlspace.xml'
       args['geometry_foundation_type'] = 'Crawlspace, Unvented'
       args['enclosure_floor_over_foundation'] = 'Wood Frame, R-15'
-    when 'extra-sfa-conditioned-crawlspace.xml'
-      args['geometry_foundation_type'] = 'Crawlspace, Conditioned'
-      args['enclosure_floor_over_foundation'] = 'Wood Frame, Uninsulated'
     when 'extra-sfa-unconditioned-basement.xml'
       args['geometry_foundation_type'] = 'Basement, Unconditioned'
       args['enclosure_floor_over_foundation'] = 'Wood Frame, R-15'
@@ -682,8 +683,6 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['geometry_attached_walls'] = '1 Side: Left'
     when 'error-mf-conditioned-basement'
       args['geometry_foundation_type'] = 'Basement, Conditioned'
-    when 'error-mf-conditioned-crawlspace'
-      args['geometry_foundation_type'] = 'Crawlspace, Conditioned'
     when 'error-second-heating-system-but-no-primary-heating.xml'
       args['hvac_heating_system'] = 'None'
       args['hvac_heating_system_2'] = 'Fireplace, 100% Efficiency'
@@ -709,6 +708,12 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['geometry_foundation_type'] = 'Ambient'
     when 'error-could-not-find-epw-file.xml'
       args['location_epw_path'] = 'foo.epw'
+    when 'error-general-basement-to-specific-foundation-type.xml'
+      args['dhw_water_heater_location'] = 'Basement'
+    when 'error-general-crawlspace-to-specific-foundation-type.xml'
+      args['dhw_water_heater_location'] = 'Crawlspace'
+    when 'error-general-attic-to-specific-attic-type.xml'
+      args['dhw_water_heater_location'] = 'Attic'
     end
 
     # Warning

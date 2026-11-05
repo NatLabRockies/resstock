@@ -20,17 +20,13 @@ module InternalGains
     end
     return if n_occ <= 0
 
-    occ_gain, _hrs_per_day, sens_frac, _lat_frac = Defaults.get_occupancy_values()
-    activity_per_person = UnitConversions.convert(occ_gain, 'Btu/hr', 'W')
-
-    # Hard-coded convective, radiative, latent, and lost fractions
-    occ_sens = sens_frac
-    occ_rad = 0.558 * occ_sens
+    occ_tot_btu_per_day, sens_frac, _lat_frac = Defaults.get_occupancy_values()
 
     # Create schedule
     people_sch = nil
     people_col_name = SchedulesFile::Columns[:Occupants].name
     if not schedules_file.nil?
+      activity_per_person = schedules_file.calc_design_level_from_daily_kwh(col_name: SchedulesFile::Columns[:Occupants].name, daily_kwh: UnitConversions.convert(occ_tot_btu_per_day, 'Btu', 'kWh'))
       people_sch = schedules_file.create_schedule_file(model, col_name: people_col_name)
     end
     if people_sch.nil?
@@ -40,8 +36,9 @@ module InternalGains
       weekend_sch = building_occupancy.weekend_fractions.split(',').map(&:to_f)
       weekend_sch = weekend_sch.map { |v| v / weekend_sch.max }.join(',')
       monthly_sch = building_occupancy.monthly_multipliers
-      people_sch = MonthWeekdayWeekendSchedule.new(model, Constants::ObjectTypeOccupants + ' schedule', weekday_sch, weekend_sch, monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: people_unavailable_periods)
-      people_sch = people_sch.schedule
+      people_sch_obj = MonthWeekdayWeekendSchedule.new(model, Constants::ObjectTypeOccupants + ' schedule', weekday_sch, weekend_sch, monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: people_unavailable_periods)
+      activity_per_person = people_sch_obj.calc_design_level_from_daily_kwh(UnitConversions.convert(occ_tot_btu_per_day, 'Btu', 'kWh'))
+      people_sch = people_sch_obj.schedule
     else
       runner.registerWarning("Both '#{people_col_name}' schedule file and weekday fractions provided; the latter will be ignored.") if !building_occupancy.weekday_fractions.nil?
       runner.registerWarning("Both '#{people_col_name}' schedule file and weekend fractions provided; the latter will be ignored.") if !building_occupancy.weekend_fractions.nil?
@@ -52,7 +49,7 @@ module InternalGains
     activity_sch = Model.add_schedule_constant(
       model,
       name: "#{Constants::ObjectTypeOccupants} activity schedule",
-      value: activity_per_person
+      value: activity_per_person # W/person
     )
 
     # Add people definition for the occ
@@ -62,8 +59,8 @@ module InternalGains
     occ.setSpace(spaces[HPXML::LocationConditionedSpace])
     occ_def.setName(Constants::ObjectTypeOccupants)
     occ_def.setNumberofPeople(n_occ)
-    occ_def.setFractionRadiant(occ_rad)
-    occ_def.setSensibleHeatFraction(occ_sens)
+    occ_def.setFractionRadiant(0.558 * sens_frac) # Hard-coded radiative fraction
+    occ_def.setSensibleHeatFraction(sens_frac)
     occ_def.setMeanRadiantTemperatureCalculationType('ZoneAveraged')
     occ_def.setCarbonDioxideGenerationRate(0)
     occ_def.setEnableASHRAE55ComfortWarnings(false)

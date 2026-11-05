@@ -39,6 +39,7 @@
     "hvac_ducts": "0 CFM25 per 100ft2, Uninsulated",
     "dhw_water_heater": "None",
     "lighting": "None",
+    "location_soil_type": "0.8 Btu/hr-ft-F",
     "appliance_clothes_washer": "None",
     "appliance_clothes_dryer": "None",
     "appliance_dishwasher": "None",
@@ -720,7 +721,8 @@
   },
   "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard-combi-tankless.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml",
-    "dhw_water_heater": "Space-Heating Boiler w/ Tankless Coil"
+    "dhw_water_heater": "Space-Heating Boiler w/ Tankless Coil",
+    "dhw_water_heater_location": null
   },
   "sample_files/base-bldgtype-mf-unit-shared-boiler-only-fan-coil.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml",
@@ -794,7 +796,7 @@
   },
   "sample_files/base-bldgtype-mf-unit-shared-pv-battery.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-pv.xml",
-    "battery": "20.0 kWh"
+    "battery": "Detailed Example: 20.0 kWh, 6 kW, Other Heated Space"
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
@@ -817,11 +819,8 @@
   },
   "sample_files/base-dhw-combi-tankless.xml": {
     "parent_hpxml": "sample_files/base-dhw-indirect.xml",
-    "dhw_water_heater": "Space-Heating Boiler w/ Tankless Coil"
-  },
-  "sample_files/base-dhw-combi-tankless-outside.xml": {
-    "parent_hpxml": "sample_files/base-dhw-combi-tankless.xml",
-    "dhw_water_heater_location": "Outside"
+    "dhw_water_heater": "Space-Heating Boiler w/ Tankless Coil",
+    "dhw_water_heater_location": null
   },
   "sample_files/base-dhw-desuperheater.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml"
@@ -840,7 +839,8 @@
   },
   "sample_files/base-dhw-desuperheater-tankless.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
-    "dhw_water_heater": "Electricity, Tankless, UEF 0.98"
+    "dhw_water_heater": "Electricity, Tankless, UEF 0.98",
+    "dhw_water_heater_location": null
   },
   "sample_files/base-dhw-desuperheater-var-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed.xml"
@@ -973,6 +973,15 @@
     "parent_hpxml": "sample_files/base.xml",
     "dhw_water_heater": "Electricity, Heat Pump, UEF 3.50"
   },
+  "sample_files/base-dhw-tank-heat-pump-120v.xml": {
+    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
+  },
+    "sample_files/base-dhw-tank-heat-pump-120v-backup-capacity.xml": {
+    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump-outside.xml"
+  },
+  "sample_files/base-dhw-tank-heat-pump-120v-dedicated-circuit.xml": {
+    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
+  },
   "sample_files/base-dhw-tank-heat-pump-confined-space.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
   },
@@ -1023,11 +1032,8 @@
   },
   "sample_files/base-dhw-tankless-electric.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "dhw_water_heater": "Electricity, Tankless, UEF 0.98"
-  },
-  "sample_files/base-dhw-tankless-electric-outside.xml": {
-    "parent_hpxml": "sample_files/base-dhw-tankless-electric.xml",
-    "dhw_water_heater_location": "Outside"
+    "dhw_water_heater": "Electricity, Tankless, UEF 0.98",
+    "dhw_water_heater_location": null
   },
   "sample_files/base-dhw-tankless-electric-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-electric.xml",
@@ -1035,7 +1041,8 @@
   },
   "sample_files/base-dhw-tankless-gas.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "dhw_water_heater": "Natural Gas, Tankless, UEF 0.82"
+    "dhw_water_heater": "Natural Gas, Tankless, UEF 0.82",
+    "dhw_water_heater_location": null
   },
   "sample_files/base-dhw-tankless-gas-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-gas.xml",
@@ -1061,6 +1068,9 @@
   "sample_files/base-dhw-setpoint-temperature.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "dhw_water_heater": "Detailed Example: Electricity, Tank, UEF 0.94, 135F"
+  },
+  "sample_files/base-dhw-setpoint-temperature-mixing-valve.xml": {
+    "parent_hpxml": "sample_files/base-dhw-setpoint-temperature.xml"
   },
   "sample_files/base-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1091,6 +1101,11 @@
     "geometry_garage_type": "2 Car, Right, Fully Inset",
     "enclosure_floor_over_garage": "Wood Frame, R-38",
     "enclosure_carpet": "80% Carpet"
+  },
+  "sample_files/base-enclosure-beds-0.xml": {
+    "parent_hpxml": "sample_files/base.xml",
+    "geometry_unit_num_bedrooms": "0",
+    "geometry_unit_num_bathrooms": "Default"
   },
   "sample_files/base-enclosure-beds-1.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1299,17 +1314,6 @@
     "parent_hpxml": "sample_files/base.xml",
     "enclosure_foundation_wall": "Concrete Block Foam Core, Whole Wall, R-18.9"
   },
-  "sample_files/base-foundation-conditioned-crawlspace.xml": {
-    "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_conditioned_floor_area": "1350",
-    "geometry_foundation_type": "Crawlspace, Conditioned",
-    "enclosure_floor_over_foundation": "Wood Frame, R-15",
-    "enclosure_carpet": "80% Carpet",
-    "hvac_ducts": "0 CFM25 per 100ft2, R-4",
-    "hvac_ducts_supply_location": "Crawlspace",
-    "hvac_ducts_return_location": "Crawlspace",
-    "dhw_water_heater_location": "Crawlspace"
-  },
   "sample_files/base-foundation-slab.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_conditioned_floor_area": "1350",
@@ -1469,7 +1473,17 @@
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
     "hvac_heat_pump": "Central HP, SEER2 21.0, HSPF2 9.2"
   },
-  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-autosize-maxload.xml": {
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-autosize-acca.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
+    "hvac_heat_pump_capacity": "Autosize (ACCA)",
+    "hvac_heat_pump_backup_capacity": "Autosize"
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-autosize-hers.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
+    "hvac_heat_pump_capacity": "Autosize",
+    "hvac_heat_pump_backup_capacity": "Autosize"
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-autosize-maxload-supplemental-backup.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
     "hvac_heat_pump_capacity": "Autosize (MaxLoad)",
     "hvac_heat_pump_backup_capacity": "Autosize (Supplemental)"
@@ -2487,6 +2501,7 @@
     "hvac_ducts_supply_location": "Conditioned Space",
     "hvac_ducts_return_location": "Conditioned Space",
     "dhw_water_heater": "Propane, Tankless, UEF 0.82",
+    "dhw_water_heater_location": null,
     "misc_fireplace": "Detailed Example: Wood, 55 therm/yr"
   },
   "sample_files/base-bldgtype-mf-whole-building-inter-unit-heat-transfer.xml": {
@@ -2539,6 +2554,9 @@
     "parent_hpxml": "sample_files/base-pv-battery.xml",
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/battery.csv"
   },
+  "sample_files/base-pv-collector-area.xml": {
+    "parent_hpxml": "sample_files/base-pv.xml"
+  },
   "sample_files/base-pv-generators.xml": {
     "parent_hpxml": "sample_files/base-pv.xml"
   },
@@ -2551,6 +2569,9 @@
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/battery.csv"
   },
   "sample_files/base-pv-inverters.xml": {
+    "parent_hpxml": "sample_files/base-pv.xml"
+  },
+  "sample_files/base-pv-number-of-panels.xml": {
     "parent_hpxml": "sample_files/base-pv.xml"
   },
   "sample_files/base-residents-0.xml": {

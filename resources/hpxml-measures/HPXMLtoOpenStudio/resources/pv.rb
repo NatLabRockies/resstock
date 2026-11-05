@@ -9,10 +9,12 @@ module PV
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
   def self.apply(runner, model, hpxml_bldg)
+    total_max_power_output = hpxml_bldg.pv_systems.map { |pv| pv.max_power_output }.sum
+    return if total_max_power_output <= 0
+
     # Get inverter efficiency
     # If multiple inverters with different efficiencies, calculate PV size weighted-average
     inverter_efficiency = 0.0
-    total_max_power_output = hpxml_bldg.pv_systems.map { |pv| pv.max_power_output }.sum
     hpxml_bldg.pv_systems.each do |pv_system|
       inverter_efficiency += (pv_system.inverter.inverter_efficiency * pv_system.max_power_output / total_max_power_output)
     end
@@ -100,23 +102,33 @@ module PV
     elcd.addGenerator(gpvwatts)
   end
 
-  # Calculation from HEScore for module power from year.
+  # Calculates the maximum power output of the array.
   #
-  # @param year_modules_manufactured [Integer] year of manufacture of the modules
-  # @return [Double] the calculated module power from year (W/panel)
-  def self.calc_module_power_from_year(year_modules_manufactured)
-    return 13.3 * year_modules_manufactured - 26494.0 # W/panel
+  # @param number_of_panels [Integer] Number of PV panels
+  # @param pv_year [Integer] Year panels were manufactured or installed
+  # @return [Double] The maximum power output for the array (W)
+  def self.calc_max_power_output_from_num_panels(number_of_panels, pv_year)
+    # Equation from Home Energy Score
+    return [Float((number_of_panels * (13.3 * pv_year - 26494.0)).round), 0.0].max
   end
 
-  # Calculation from HEScore for losses fraction from year.
+  # Calculates the system losses fraction using an assumed annual degradation.
   #
-  # @param year_modules_manufactured [Integer] year of manufacture of the modules
-  # @param default_loss_fraction [Double] the default loss fraction
+  # @param pv_year [Integer] Year panels were manufactured or installed
   # @return [Double] the calculated losses fraction from year
-  def self.calc_losses_fraction_from_year(year_modules_manufactured, default_loss_fraction)
-    age = Time.new.year - year_modules_manufactured
-    age_losses = 1.0 - 0.995**Float(age)
-    losses_fraction = 1.0 - (1.0 - default_loss_fraction) * (1.0 - age_losses)
-    return losses_fraction
+  def self.calc_losses_fraction_from_year(pv_year)
+    base_loss_fraction = 0.14 # Default from PV Watts, excludes age-based degradation
+    degradation_per_year = 0.995 # 0.5%/yr
+    age = [Time.new.year - pv_year, 0].max
+    return 1.0 - (1.0 - base_loss_fraction) * degradation_per_year**age
+  end
+
+  # Calculates the number of PV panels for a given array area.
+  #
+  # @param collector_area [Double] Total area of PV array (ft2)
+  # @return [Integer] Number of panels (#)
+  def self.calc_num_panels_from_area(collector_area)
+    # Assumption from Home Energy Score
+    return [(collector_area / 17.6).round, 1].max
   end
 end

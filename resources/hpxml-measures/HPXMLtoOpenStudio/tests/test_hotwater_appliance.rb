@@ -20,12 +20,23 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cleanup_output_files([@tmp_hpxml_path])
   end
 
-  def get_ee_kwh(model, name)
+  def get_ee_kwh_per_year(model, name, schedules_file = nil)
+    sch_file_col_name_map = {
+      Constants::ObjectTypeClothesWasher => :ClothesWasher,
+      Constants::ObjectTypeDishwasher => :Dishwasher,
+      Constants::ObjectTypeClothesDryer => :ClothesDryer,
+      Constants::ObjectTypeCookingRange => :CookingRange,
+    }
+
     kwh_yr = 0.0
     model.getElectricEquipments.each do |ee|
       next unless ee.endUseSubcategory.start_with? name
 
-      hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ee.schedule.get)
+      if ee.schedule.get.to_ScheduleFile.is_initialized
+        hrs = schedules_file.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[sch_file_col_name_map[name]].name)
+      else
+        hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ee.schedule.get)
+      end
       kwh_yr += UnitConversions.convert(hrs * ee.designLevel.get * ee.multiplier * ee.space.get.multiplier, 'Wh', 'kWh')
     end
     return kwh_yr
@@ -47,19 +58,24 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     end
   end
 
-  def get_oe_kbtu(model, name)
-    kwh_yr = []
+  def get_oe_kbtu_per_year(model, name, schedules_file = nil)
+    sch_file_col_name_map = {
+      Constants::ObjectTypeGeneralWaterUseSensible => :GeneralWaterUse,
+      Constants::ObjectTypeGeneralWaterUseLatent => :GeneralWaterUse,
+    }
+
+    kbtu_yr = 0.0
     model.getOtherEquipments.each do |oe|
       next unless oe.endUseSubcategory.start_with? name
 
-      hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, oe.schedule.get)
-      kwh_yr << UnitConversions.convert(hrs * oe.otherEquipmentDefinition.designLevel.get * oe.multiplier * oe.space.get.multiplier, 'Wh', 'kBtu')
+      if oe.schedule.get.to_ScheduleFile.is_initialized
+        hrs = schedules_file.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[sch_file_col_name_map[name]].name)
+      else
+        hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, oe.schedule.get)
+      end
+      kbtu_yr += UnitConversions.convert(hrs * oe.otherEquipmentDefinition.designLevel.get * oe.multiplier * oe.space.get.multiplier, 'Wh', 'kBtu')
     end
-    if kwh_yr.empty?
-      return
-    else
-      return kwh_yr.sum(0.0)
-    end
+    return kbtu_yr
   end
 
   def get_oe_fuel(model, name)
@@ -94,59 +110,116 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     end
   end
 
-  def get_wu_gpd(model, name)
-    gpd = []
+  def get_occ_kbtu_per_year(model, schedules_file = nil)
+    kbtu_yr = 0.0
+    model.getPeoples.each do |people|
+      lvl = people.activityLevelSchedule.get.to_ScheduleConstant.get.value
+      if people.numberofPeopleSchedule.get.to_ScheduleFile.is_initialized
+        col_name = :Occupants
+        hrs = schedules_file.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[col_name].name)
+      else
+        hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, people.numberofPeopleSchedule.get)
+      end
+      kbtu_yr += UnitConversions.convert(lvl * hrs * people.numberOfPeople.get * people.multiplier * people.space.get.multiplier, 'Wh', 'kBtu')
+    end
+    return kbtu_yr
+  end
+
+  def get_occ_shf(model)
+    sens_frac = []
+    model.getPeoples.each do |people|
+      sens_frac << people.peopleDefinition.sensibleHeatFraction.get
+    end
+    if sens_frac.empty?
+      return
+    else
+      return sens_frac.sum(0.0) / sens_frac.size
+    end
+  end
+
+  def get_wu_gpd(model, name, schedules_file = nil)
+    sch_file_col_name_map = {
+      Constants::ObjectTypeClothesWasher => :HotWaterClothesWasher,
+      Constants::ObjectTypeDishwasher => :HotWaterDishwasher,
+      Constants::ObjectTypeFixtures => :HotWaterFixtures,
+      Constants::ObjectTypeDistributionWaste => :HotWaterFixtures,
+    }
+
+    gpd = 0.0
     model.getWaterUseEquipments.each do |wue|
       next unless wue.waterUseEquipmentDefinition.endUseSubcategory.start_with? name
 
-      full_load_hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, wue.flowRateFractionSchedule.get)
-      gpd << UnitConversions.convert(full_load_hrs * wue.waterUseEquipmentDefinition.peakFlowRate * wue.multiplier, 'm^3/s', 'gal/min') * 60.0 / 365.0
+      if wue.flowRateFractionSchedule.get.to_ScheduleFile.is_initialized
+        hrs = schedules_file.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[sch_file_col_name_map[name]].name)
+      else
+        hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, wue.flowRateFractionSchedule.get)
+      end
+      gpd += UnitConversions.convert(hrs * wue.waterUseEquipmentDefinition.peakFlowRate * wue.multiplier, 'm^3/s', 'gal/min') * 60.0 / 365.0
     end
-    if gpd.empty?
+    return gpd
+  end
+
+  def get_wu_target_temp(model, name)
+    target_temps = []
+    model.getWaterUseEquipments.each do |wue|
+      next unless wue.waterUseEquipmentDefinition.endUseSubcategory.start_with? name
+      next unless wue.waterUseEquipmentDefinition.targetTemperatureSchedule.is_initialized
+
+      target_temps << UnitConversions.convert(wue.waterUseEquipmentDefinition.targetTemperatureSchedule.get.to_ScheduleConstant.get.value, 'C', 'F')
+    end
+    if target_temps.empty?
       return
     else
-      return gpd.sum(0.0)
+      return target_temps.sum(0.0) / target_temps.size
     end
   end
 
   def test_base
     hpxml_names = ['base.xml',
-                   'base-misc-usage-multiplier.xml']
+                   'base-misc-usage-multiplier.xml', # Test w/ usage multipliers
+                   'base-schedules-detailed-occupancy-stochastic.xml'] # Test w/ detailed schedules
 
     hpxml_names.each do |hpxml_name|
       args_hash = {}
       args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, hpxml_name))
       model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
+      if not hpxml_bldg.header.schedules_filepaths.empty?
+        schedules_file = SchedulesFile.new(runner: nil,
+                                           schedules_paths: hpxml_bldg.header.schedules_filepaths,
+                                           year: model.yearDescription.get.assumedYear,
+                                           output_path: nil)
+      end
+
       # water use equipment hot water gal/day
       fixture_gpd = 44.87 * hpxml_bldg.water_heating.water_fixtures_usage_multiplier
       dist_gpd = 15.42 * hpxml_bldg.water_heating.water_fixtures_usage_multiplier
       cw_gpd = 3.52 * hpxml_bldg.clothes_washers[0].usage_multiplier
       dw_gpd = 2.44 * hpxml_bldg.dishwashers[0].usage_multiplier
-      assert_in_delta(cw_gpd, get_wu_gpd(model, Constants::ObjectTypeClothesWasher), 0.01)
-      assert_in_delta(dw_gpd, get_wu_gpd(model, Constants::ObjectTypeDishwasher), 0.01)
-      assert_in_delta(fixture_gpd, get_wu_gpd(model, Constants::ObjectTypeFixtures), 0.01)
-      assert_in_delta(dist_gpd, get_wu_gpd(model, Constants::ObjectTypeDistributionWaste), 0.01)
+      assert_in_delta(cw_gpd, get_wu_gpd(model, Constants::ObjectTypeClothesWasher, schedules_file), 0.01)
+      assert_in_delta(dw_gpd, get_wu_gpd(model, Constants::ObjectTypeDishwasher, schedules_file), 0.01)
+      assert_in_delta(fixture_gpd, get_wu_gpd(model, Constants::ObjectTypeFixtures, schedules_file), 0.01)
+      assert_in_delta(dist_gpd, get_wu_gpd(model, Constants::ObjectTypeDistributionWaste, schedules_file), 0.01)
 
       # electric equipment
       cw_ee_kwh_yr = 101.7 * hpxml_bldg.clothes_washers[0].usage_multiplier
       cw_sens_frac = 0.27
       cw_lat_frac = 0.03
-      assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+      assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher, schedules_file), 0.1)
       assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
       assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
       dw_ee_kwh_yr = 83.3 * hpxml_bldg.dishwashers[0].usage_multiplier
       dw_sens_frac = 0.3
       dw_lat_frac = 0.300
-      assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+      assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher, schedules_file), 0.1)
       assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
       assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
       cd_ee_kwh_yr = 421.0 * hpxml_bldg.clothes_dryers[0].usage_multiplier
       cd_sens_frac = 0.135
       cd_lat_frac = 0.015
-      assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+      assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer, schedules_file), 0.1)
       assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
       assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -158,20 +231,28 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
       cook_ee_kwh_yr = 448.0 * hpxml_bldg.cooking_ranges[0].usage_multiplier
       cook_sens_frac = 0.72
       cook_lat_frac = 0.080
-      assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+      assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange, schedules_file), 0.1)
       assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
       assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
       # other equipment
       water_sens = -895.7 * hpxml_bldg.building_occupancy.general_water_use_usage_multiplier
       water_lat = 908.8 * hpxml_bldg.building_occupancy.general_water_use_usage_multiplier
-      assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+      assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible, schedules_file), 0.1)
       assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
       assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-      assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+      assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent, schedules_file), 0.1)
       assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
       assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
+
+      # people
+      sens_gains = 3716.0 # Btu/person/day
+      lat_gains = 2884.0 # Btu/person/day
+      tot_gains = sens_gains + lat_gains # Btu/person/day
+      num_occupants = Geometry.get_occupancy_default_num(hpxml_bldg.building_construction.number_of_bedrooms)
+      assert_in_delta(UnitConversions.convert(tot_gains * num_occupants * 365, 'Btu', 'kBtu'), get_occ_kbtu_per_year(model, schedules_file), 0.1)
+      assert_in_delta(sens_gains / tot_gains, get_occ_shf(model), 0.01)
 
       # mains temperature
       assert_equal('Correlation', model.getSiteWaterMainsTemperature.calculationMethod)
@@ -179,6 +260,13 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
       assert_in_delta(23.15, model.getSiteWaterMainsTemperature.maximumDifferenceInMonthlyAverageOutdoorAirTemperatures.get, 0.01)
       assert_in_delta(1.0, model.getSiteWaterMainsTemperature.temperatureMultiplier, 0.01)
       assert_in_delta(0.0, model.getSiteWaterMainsTemperature.temperatureOffset, 0.01)
+
+      # target temperatures
+      fixtures_temp = 105 # deg-F
+      assert_in_delta(fixtures_temp, get_wu_target_temp(model, Constants::ObjectTypeFixtures), 0.01)
+      assert_in_delta(fixtures_temp, get_wu_target_temp(model, Constants::ObjectTypeDistributionWaste), 0.01)
+      assert_nil(get_wu_target_temp(model, Constants::ObjectTypeDishwasher))
+      assert_nil(get_wu_target_temp(model, Constants::ObjectTypeClothesWasher))
     end
   end
 
@@ -201,21 +289,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 101.7
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 83.3
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 421.0
     cd_sens_frac = 0.135
     cd_lat_frac = 0.015
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -227,18 +315,18 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 448.0
     cook_sens_frac = 0.72
     cook_lat_frac = 0.080
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
   end
@@ -262,21 +350,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 104.6
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 85.2
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 432.9
     cd_sens_frac = 0.135
     cd_lat_frac = 0.015
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -288,25 +376,25 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 448.0
     cook_sens_frac = 0.72
     cook_lat_frac = 0.080
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
 
     # recirc
     hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
     pump_kwh_yr = 8.76 * hot_water_distribution.shared_recirculation_pump_power * hpxml_bldg.building_construction.number_of_bedrooms.to_f / hot_water_distribution.shared_recirculation_number_of_bedrooms_served
-    assert_in_delta(pump_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
+    assert_in_delta(pump_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
 
     # zero bedroom
     args_hash = {}
@@ -316,7 +404,7 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     # recirc
     hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
     pump_kwh_yr = 8.76 * hot_water_distribution.shared_recirculation_pump_power * 1.0 / hot_water_distribution.shared_recirculation_number_of_bedrooms_served
-    assert_in_delta(pump_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
+    assert_in_delta(pump_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
   end
 
   def test_dhw_shared_laundry
@@ -338,21 +426,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 104.6
     cw_sens_frac = 0.0
     cw_lat_frac = 0.0
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 85.2
     dw_sens_frac = 0.0
     dw_lat_frac = 0.0
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 432.9
     cd_sens_frac = 0.0
     cd_lat_frac = 0.0
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -364,18 +452,18 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 448.0
     cook_sens_frac = 0.72
     cook_lat_frac = 0.080
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
   end
@@ -419,7 +507,7 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     # Get HPXML values
     hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
     pump_kwh_yr = 0.15 * hot_water_distribution.recirculation_pump_power
-    assert_in_delta(pump_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
+    assert_in_delta(pump_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
   end
 
   def test_dhw_recirc_manual
@@ -430,7 +518,7 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     # Get HPXML values
     hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
     pump_kwh_yr = 0.10 * hot_water_distribution.recirculation_pump_power
-    assert_in_delta(pump_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
+    assert_in_delta(pump_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
   end
 
   def test_dhw_recirc_no_control
@@ -441,7 +529,7 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     # Get HPXML values
     hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
     pump_kwh_yr = 8.76 * hot_water_distribution.recirculation_pump_power
-    assert_in_delta(pump_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
+    assert_in_delta(pump_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
   end
 
   def test_dhw_recirc_timer
@@ -452,7 +540,7 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     # Get HPXML values
     hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
     pump_kwh_yr = 8.76 * hot_water_distribution.recirculation_pump_power
-    assert_in_delta(pump_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
+    assert_in_delta(pump_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
   end
 
   def test_dhw_recirc_temp
@@ -463,7 +551,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     # Get HPXML values
     hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
     pump_kwh_yr = 1.46 * hot_water_distribution.recirculation_pump_power
-    assert_in_delta(pump_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
+    assert_in_delta(pump_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeHotWaterRecircPump), 0.1)
+  end
+
+  def test_dhw_mixing_valve
+    args_hash = {}
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-dhw-setpoint-temperature-mixing-valve.xml'))
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+
+    # target temperatures
+    fixtures_temp = 105 # deg-F
+    appliances_temp = hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint
+    assert_in_delta(fixtures_temp, get_wu_target_temp(model, Constants::ObjectTypeFixtures), 0.01)
+    assert_in_delta(fixtures_temp, get_wu_target_temp(model, Constants::ObjectTypeDistributionWaste), 0.01)
+    assert_in_delta(appliances_temp, get_wu_target_temp(model, Constants::ObjectTypeDishwasher), 0.01)
+    assert_in_delta(appliances_temp, get_wu_target_temp(model, Constants::ObjectTypeClothesWasher), 0.01)
   end
 
   def test_appliances_none
@@ -472,33 +574,33 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
 
     # water use equipment hot water gal/day
-    assert_nil(get_wu_gpd(model, Constants::ObjectTypeClothesWasher))
-    assert_nil(get_wu_gpd(model, Constants::ObjectTypeDishwasher))
+    assert_equal(0.0, get_wu_gpd(model, Constants::ObjectTypeClothesWasher))
+    assert_equal(0.0, get_wu_gpd(model, Constants::ObjectTypeDishwasher))
 
     # electric equipment
-    assert_equal(0.0, get_ee_kwh(model, Constants::ObjectTypeClothesWasher))
+    assert_equal(0.0, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher))
     assert(get_ee_fractions(model, Constants::ObjectTypeClothesWasher).empty?)
 
-    assert_equal(0.0, get_ee_kwh(model, Constants::ObjectTypeDishwasher))
+    assert_equal(0.0, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher))
     assert(get_ee_fractions(model, Constants::ObjectTypeDishwasher).empty?)
 
-    assert_equal(0.0, get_ee_kwh(model, Constants::ObjectTypeClothesDryer))
+    assert_equal(0.0, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer))
     assert(get_ee_fractions(model, Constants::ObjectTypeClothesDryer).empty?)
 
-    assert_equal(0.0, get_ee_kwh(model, Constants::ObjectTypeRefrigerator))
+    assert_equal(0.0, get_ee_kwh_per_year(model, Constants::ObjectTypeRefrigerator))
     assert(get_ee_fractions(model, Constants::ObjectTypeRefrigerator).empty?)
 
-    assert_equal(0.0, get_ee_kwh(model, Constants::ObjectTypeCookingRange))
+    assert_equal(0.0, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange))
     assert(get_ee_fractions(model, Constants::ObjectTypeCookingRange).empty?)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
   end
@@ -518,21 +620,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 101.7
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 166.5
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 422.7
     cd_sens_frac = 0.9
     cd_lat_frac = 0.1
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -544,18 +646,18 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 448.0
     cook_sens_frac = 0.72
     cook_lat_frac = 0.080
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
   end
@@ -575,21 +677,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 101.7
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 83.3
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 37.6
     cd_sens_frac = 0.135
     cd_lat_frac = 0.015
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -601,29 +703,29 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 30.7
     cook_sens_frac = 0.64
     cook_lat_frac = 0.16
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
 
     cd_fuel_kwh = 1706.6
-    assert_in_delta(cd_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_equal(EPlus::FuelTypeOil, get_oe_fuel(model, Constants::ObjectTypeClothesDryer))
     assert_in_delta(cd_sens_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
     cook_fuel_kwh = 3070.0
-    assert_in_delta(cook_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_equal(EPlus::FuelTypeOil, get_oe_fuel(model, Constants::ObjectTypeCookingRange))
     assert_in_delta(cook_sens_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
@@ -644,21 +746,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 101.7
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 83.3
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 37.6
     cd_sens_frac = 0.135
     cd_lat_frac = 0.015
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -670,29 +772,29 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 30.7
     cook_sens_frac = 0.64
     cook_lat_frac = 0.16
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
 
     cd_fuel_kwh = 1706.6
-    assert_in_delta(cd_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_equal(EPlus::FuelTypeNaturalGas, get_oe_fuel(model, Constants::ObjectTypeClothesDryer))
     assert_in_delta(cd_sens_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
     cook_fuel_kwh = 3070.0
-    assert_in_delta(cook_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_equal(EPlus::FuelTypeNaturalGas, get_oe_fuel(model, Constants::ObjectTypeCookingRange))
     assert_in_delta(cook_sens_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
@@ -713,21 +815,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 101.7
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 83.3
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 37.6
     cd_sens_frac = 0.135
     cd_lat_frac = 0.015
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -739,29 +841,29 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 30.7
     cook_sens_frac = 0.64
     cook_lat_frac = 0.16
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
 
     cd_fuel_kwh = 1706.6
-    assert_in_delta(cd_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_equal(EPlus::FuelTypePropane, get_oe_fuel(model, Constants::ObjectTypeClothesDryer))
     assert_in_delta(cd_sens_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
     cook_fuel_kwh = 3070.0
-    assert_in_delta(cook_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_equal(EPlus::FuelTypePropane, get_oe_fuel(model, Constants::ObjectTypeCookingRange))
     assert_in_delta(cook_sens_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
@@ -782,21 +884,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 101.7
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 83.3
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 37.6
     cd_sens_frac = 0.135
     cd_lat_frac = 0.015
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -808,29 +910,29 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 30.7
     cook_sens_frac = 0.64
     cook_lat_frac = 0.16
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
 
     cd_fuel_kwh = 1706.6
-    assert_in_delta(cd_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_equal(EPlus::FuelTypeWoodCord, get_oe_fuel(model, Constants::ObjectTypeClothesDryer))
     assert_in_delta(cd_sens_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
     cook_fuel_kwh = 3070.0
-    assert_in_delta(cook_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_equal(EPlus::FuelTypeWoodCord, get_oe_fuel(model, Constants::ObjectTypeCookingRange))
     assert_in_delta(cook_sens_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
@@ -851,21 +953,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 101.7
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 83.3
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 37.6
     cd_sens_frac = 0.135
     cd_lat_frac = 0.015
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -877,29 +979,29 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 30.7
     cook_sens_frac = 0.64
     cook_lat_frac = 0.16
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -895.7
     water_lat = 908.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
 
     cd_fuel_kwh = 1706.6
-    assert_in_delta(cd_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_equal(EPlus::FuelTypeCoal, get_oe_fuel(model, Constants::ObjectTypeClothesDryer))
     assert_in_delta(cd_sens_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_oe_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
     cook_fuel_kwh = 3070.0
-    assert_in_delta(cook_fuel_kwh, get_oe_kbtu(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_fuel_kwh, get_oe_kbtu_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_equal(EPlus::FuelTypeCoal, get_oe_fuel(model, Constants::ObjectTypeCookingRange))
     assert_in_delta(cook_sens_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_oe_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
@@ -917,20 +1019,23 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     assert_equal(0, get_wu_gpd(model, Constants::ObjectTypeDistributionWaste))
 
     # electric equipment
-    assert_equal(0, get_ee_kwh(model, Constants::ObjectTypeClothesWasher))
-    assert_equal(0, get_ee_kwh(model, Constants::ObjectTypeDishwasher))
-    assert_equal(0, get_ee_kwh(model, Constants::ObjectTypeClothesDryer))
-    assert_equal(0, get_ee_kwh(model, Constants::ObjectTypeCookingRange))
+    assert_equal(0, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher))
+    assert_equal(0, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher))
+    assert_equal(0, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer))
+    assert_equal(0, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange))
 
     # other equipment
-    assert_equal(0, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible))
-    assert_equal(0, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent))
+    assert_equal(0, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible))
+    assert_equal(0, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent))
+
+    # people
+    assert_in_delta(0, get_occ_kbtu_per_year(model), 0.1)
   end
 
   def test_operational_1_occupant
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-residents-1.xml'))
-    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     # water use equipment hot water gal/day
     fixture_gpd = 13.76
@@ -946,21 +1051,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 64.9
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 58.5
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 268.8
     cd_sens_frac = 0.135
     cd_lat_frac = 0.015
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -972,26 +1077,34 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 326.7
     cook_sens_frac = 0.72
     cook_lat_frac = 0.080
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -431.4
     water_lat = 437.8
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
+
+    # people
+    sens_gains = 3716.0 # Btu/person/day
+    lat_gains = 2884.0 # Btu/person/day
+    tot_gains = sens_gains + lat_gains # Btu/person/day
+    num_occupants = hpxml_bldg.building_occupancy.number_of_residents
+    assert_in_delta(UnitConversions.convert(tot_gains * num_occupants * 365, 'Btu', 'kBtu'), get_occ_kbtu_per_year(model), 0.1)
+    assert_in_delta(sens_gains / tot_gains, get_occ_shf(model), 0.01)
   end
 
   def test_operational_5point5_occupants
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-residents-5-5.xml'))
-    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     # water use equipment hot water gal/day
     fixture_gpd = 97.46
@@ -1007,21 +1120,21 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cw_ee_kwh_yr = 149.6
     cw_sens_frac = 0.27
     cw_lat_frac = 0.03
-    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesWasher), 0.1)
+    assert_in_delta(cw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesWasher), 0.1)
     assert_in_delta(cw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[0], 0.01)
     assert_in_delta(cw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesWasher)[1], 0.01)
 
     dw_ee_kwh_yr = 173.8
     dw_sens_frac = 0.3
     dw_lat_frac = 0.300
-    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeDishwasher), 0.1)
+    assert_in_delta(dw_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeDishwasher), 0.1)
     assert_in_delta(dw_sens_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[0], 0.01)
     assert_in_delta(dw_lat_frac, get_ee_fractions(model, Constants::ObjectTypeDishwasher)[1], 0.01)
 
     cd_ee_kwh_yr = 1113.0
     cd_sens_frac = 0.135
     cd_lat_frac = 0.015
-    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeClothesDryer), 0.1)
+    assert_in_delta(cd_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeClothesDryer), 0.1)
     assert_in_delta(cd_sens_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[0], 0.01)
     assert_in_delta(cd_lat_frac, get_ee_fractions(model, Constants::ObjectTypeClothesDryer)[1], 0.01)
 
@@ -1033,20 +1146,28 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     cook_ee_kwh_yr = 691.8
     cook_sens_frac = 0.72
     cook_lat_frac = 0.080
-    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh(model, Constants::ObjectTypeCookingRange), 0.1)
+    assert_in_delta(cook_ee_kwh_yr, get_ee_kwh_per_year(model, Constants::ObjectTypeCookingRange), 0.1)
     assert_in_delta(cook_sens_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[0], 0.01)
     assert_in_delta(cook_lat_frac, get_ee_fractions(model, Constants::ObjectTypeCookingRange)[1], 0.01)
 
     # other equipment
     water_sens = -1828.7
     water_lat = 1855.6
-    assert_in_delta(water_sens, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
+    assert_in_delta(water_sens, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseSensible), 0.1)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[0], 0.01)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseSensible)[1], 0.01)
 
-    assert_in_delta(water_lat, get_oe_kbtu(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
+    assert_in_delta(water_lat, get_oe_kbtu_per_year(model, Constants::ObjectTypeGeneralWaterUseLatent), 0.1)
     assert_in_delta(0.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[0], 0.01)
     assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
+
+    # people
+    sens_gains = 3716.0 # Btu/person/day
+    lat_gains = 2884.0 # Btu/person/day
+    tot_gains = sens_gains + lat_gains # Btu/person/day
+    num_occupants = hpxml_bldg.building_occupancy.number_of_residents
+    assert_in_delta(UnitConversions.convert(tot_gains * num_occupants * 365, 'Btu', 'kBtu'), get_occ_kbtu_per_year(model), 0.1)
+    assert_in_delta(sens_gains / tot_gains, get_occ_shf(model), 0.01)
   end
 
   def _test_measure(args_hash)

@@ -385,11 +385,10 @@
           <WaterHeatingSystem>
             <SystemIdentifier id='WaterHeatingSystem1'/>
             <FuelType>electricity</FuelType>
-            <WaterHeaterType>instantaneous water heater</WaterHeaterType>
-            <Location>other exterior</Location>
-            <PerformanceAdjustment>0.92</PerformanceAdjustment>
+            <WaterHeaterType>storage water heater</WaterHeaterType>
+            <Location>conditioned space</Location>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
-            <UniformEnergyFactor>0.98</UniformEnergyFactor>
+            <UniformEnergyFactor>0.94</UniformEnergyFactor>
           </WaterHeatingSystem>
           <HotWaterDistribution>
             <SystemIdentifier id='HotWaterDistribution1'/>
@@ -411,6 +410,25 @@
             <LowFlow>false</LowFlow>
           </WaterFixture>
         </WaterHeating>
+        <Photovoltaics>
+          <PVSystem>
+            <SystemIdentifier id='PVSystem1'/>
+            <ArrayAzimuth>180</ArrayAzimuth>
+            <ArrayTilt>20.0</ArrayTilt>
+            <CollectorArea>200.0</CollectorArea>
+            <SystemLossesFraction>0.15</SystemLossesFraction>
+            <YearInstalled>2026</YearInstalled>
+          </PVSystem>
+          <PVSystem>
+            <SystemIdentifier id='PVSystem2'/>
+            <ModuleType>premium</ModuleType>
+            <ArrayAzimuth>90</ArrayAzimuth>
+            <ArrayTilt>20.0</ArrayTilt>
+            <CollectorArea>80.0</CollectorArea>
+            <SystemLossesFraction>0.17</SystemLossesFraction>
+            <YearInstalled>2026</YearInstalled>
+          </PVSystem>
+        </Photovoltaics>
       </Systems>
       <Appliances>
         <ClothesWasher>

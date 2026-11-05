@@ -2,7 +2,6 @@ Option Name	Type	Height [ft]	Height Above Grade [ft]	Rim Joist Height [in]
 Slab-on-Grade	SlabOnGrade	0	0	0
 "Crawlspace, Vented"	VentedCrawlspace	4	1	9.25
 "Crawlspace, Unvented"	UnventedCrawlspace	4	1	9.25
-"Crawlspace, Conditioned"	ConditionedCrawlspace	4	1	9.25
 "Basement, Unconditioned"	UnconditionedBasement	8	1	9.25
 "Basement, Unconditioned, Half Above-Grade"	UnconditionedBasement	8	4	9.25
 "Basement, Conditioned"	ConditionedBasement	8	1	9.25

@@ -530,12 +530,11 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_building_construction_values(default_hpxml_bldg, 21600, 8.0, 2, 1, -7)
 
-    # Test defaults w/ conditioned crawlspace
-    hpxml, hpxml_bldg = _create_hpxml('base-foundation-conditioned-crawlspace.xml')
-    hpxml_bldg.building_construction.conditioned_building_volume = nil
+    # Test defaults w/ zero bedrooms
+    hpxml_bldg.building_construction.number_of_bedrooms = 0
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_building_construction_values(default_hpxml_bldg, 16200, 8.0, 2, 1, 0)
+    _test_default_building_construction_values(default_hpxml_bldg, 21600, 8.0, 1, 1, -7)
 
     # Test defaults w/ belly-and-wing foundation
     hpxml, hpxml_bldg = _create_hpxml('base-foundation-belly-wing-skirt.xml')
@@ -617,13 +616,6 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_infiltration_values(default_hpxml_bldg, 1350 * 8, false)
-
-    # Test defaults w/ conditioned crawlspace
-    hpxml, hpxml_bldg = _create_hpxml('base-foundation-conditioned-crawlspace.xml')
-    hpxml_bldg.air_infiltration_measurements[0].infiltration_volume = nil
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-    _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_infiltration_values(default_hpxml_bldg, 1350 * 12, false)
 
     # Test defaults w/ shared system
     hpxml, hpxml_bldg = _create_hpxml('base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml')
@@ -830,17 +822,6 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     assert_in_epsilon(16.22, default_hpxml_bldg.air_infiltration_measurements[0].infiltration_height, 0.01)
     assert_in_epsilon(14500, default_hpxml_bldg.air_infiltration_measurements[0].infiltration_volume, 0.01)
 
-    # Test conditioned crawlspace
-    hpxml, hpxml_bldg = _create_hpxml('base-foundation-conditioned-crawlspace.xml')
-    hpxml_bldg.building_construction.average_ceiling_height = nil
-    hpxml_bldg.building_construction.conditioned_building_volume = nil
-    hpxml_bldg.air_infiltration_measurements[0].infiltration_volume = nil
-    hpxml_bldg.air_infiltration_measurements[0].infiltration_height = nil
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-    _default_hpxml, default_hpxml_bldg = _test_measure()
-    assert_in_epsilon(9.75, default_hpxml_bldg.air_infiltration_measurements[0].infiltration_height, 0.01)
-    assert_in_epsilon(16200, default_hpxml_bldg.air_infiltration_measurements[0].infiltration_volume, 0.01)
-
     # Test unconditioned basement
     hpxml, hpxml_bldg = _create_hpxml('base-foundation-unconditioned-basement.xml')
     hpxml_bldg.building_construction.average_ceiling_height = nil
@@ -952,7 +933,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.roofs[0].radiant_barrier_grade = 3
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeMetal, 0.77, HPXML::ColorDark, 0.88, true, 3, HPXML::InteriorFinishPlaster, 0.25, 123)
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeMetal, 0.77, HPXML::ColorDark, nil, 0.88, true, 3, HPXML::InteriorFinishPlaster, 0.25, 123)
 
     # Test defaults w/ RoofColor
     hpxml_bldg.roofs[0].roof_type = nil
@@ -965,22 +946,29 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.roofs[0].radiant_barrier_grade = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.75, HPXML::ColorLight, 0.90, true, 1, HPXML::InteriorFinishPlaster, 0.5, 45)
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.75, HPXML::ColorLight, nil, 0.90, true, 1, HPXML::InteriorFinishPlaster, 0.5, 45)
+
+    # Test defaults w/ CoolRoof
+    hpxml_bldg.roofs[0].cool_roof = true
+    hpxml_bldg.roofs[0].roof_color = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.75, HPXML::ColorWhite, true, 0.90, true, 1, HPXML::InteriorFinishPlaster, 0.5, 45)
 
     # Test defaults w/ SolarAbsorptance
     hpxml_bldg.roofs[0].solar_absorptance = 0.99
-    hpxml_bldg.roofs[0].roof_color = nil
+    hpxml_bldg.roofs[0].cool_roof = nil
     hpxml_bldg.roofs[0].interior_finish_type = nil
     hpxml_bldg.roofs[0].radiant_barrier = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.99, HPXML::ColorDark, 0.90, false, nil, HPXML::InteriorFinishNotPresent, nil, 45)
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.99, HPXML::ColorDark, nil, 0.90, false, nil, HPXML::InteriorFinishNotPresent, nil, 45)
 
     # Test defaults w/o RoofColor & SolarAbsorptance
     hpxml_bldg.roofs[0].solar_absorptance = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.85, HPXML::ColorMedium, 0.90, false, nil, HPXML::InteriorFinishNotPresent, nil, 45)
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.85, HPXML::ColorMedium, nil, 0.90, false, nil, HPXML::InteriorFinishNotPresent, nil, 45)
 
     # Test defaults w/ conditioned space
     hpxml, hpxml_bldg = _create_hpxml('base-atticroof-cathedral.xml')
@@ -994,7 +982,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.roofs[0].azimuth = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.75, HPXML::ColorLight, 0.90, nil, nil, HPXML::InteriorFinishGypsumBoard, 0.5, 45)
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.75, HPXML::ColorLight, nil, 0.90, nil, nil, HPXML::InteriorFinishGypsumBoard, 0.5, 45)
   end
 
   def test_rim_joists
@@ -1018,7 +1006,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.rim_joists[0].azimuth = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_rim_joist_values(default_hpxml_bldg.rim_joists[0], HPXML::SidingTypeWood, 0.95, HPXML::ColorDark, 0.90, 315)
+    _test_default_rim_joist_values(default_hpxml_bldg.rim_joists[0], HPXML::SidingTypeWood, 0.9, HPXML::ColorDark, 0.90, 315)
 
     # Test defaults w/ SolarAbsorptance
     hpxml_bldg.rim_joists[0].solar_absorptance = 0.99
@@ -1059,7 +1047,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.walls[0].azimuth = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_wall_values(default_hpxml_bldg.walls[0], HPXML::SidingTypeWood, 0.5, HPXML::ColorLight, 0.90, HPXML::InteriorFinishWood, 0.5, 180)
+    _test_default_wall_values(default_hpxml_bldg.walls[0], HPXML::SidingTypeWood, 0.55, HPXML::ColorLight, 0.90, HPXML::InteriorFinishWood, 0.5, 180)
 
     # Test defaults w/ SolarAbsorptance
     hpxml_bldg.walls[0].solar_absorptance = 0.99
@@ -1084,7 +1072,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.walls[1].interior_finish_thickness = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_wall_values(default_hpxml_bldg.walls[1], HPXML::SidingTypeWood, 0.5, HPXML::ColorLight, 0.90, HPXML::InteriorFinishNotPresent, nil, nil)
+    _test_default_wall_values(default_hpxml_bldg.walls[1], HPXML::SidingTypeWood, 0.55, HPXML::ColorLight, 0.90, HPXML::InteriorFinishNotPresent, nil, nil)
   end
 
   def test_foundation_walls
@@ -1730,7 +1718,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
                                    distribution_system_idref: hpxml_bldg.hvac_distributions[0].id,
                                    heating_system_type: HPXML::HVACTypeFurnace,
                                    heating_system_fuel: HPXML::FuelTypeElectricity,
-                                   heating_efficiency_afue: 1,
+                                   heating_efficiency_percent: 1,
                                    fraction_heat_load_served: 1.0,
                                    fan_watts_per_cfm: 0.55,
                                    fan_motor_type: HPXML::HVACFanMotorTypeBPM)
@@ -3513,76 +3501,77 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
   def test_storage_water_heaters
     # Test inputs not overridden by defaults
     hpxml, hpxml_bldg = _create_hpxml('base-bldgtype-sfa-unit.xml')
-    hpxml_bldg.water_heating_systems.each do |wh|
-      wh.is_shared_system = true
-      wh.number_of_bedrooms_served = 6
-      wh.heating_capacity = 15000.0
-      wh.tank_volume = 44.0
-      wh.recovery_efficiency = 0.95
-      wh.location = HPXML::LocationConditionedSpace
-      wh.temperature = 111
-      wh.uniform_energy_factor = 0.90
-      wh.tank_model_type = HPXML::WaterHeaterTankModelTypeStratified
-      wh.first_hour_rating = nil
-      wh.usage_bin = nil
-    end
+    hpxml_bldg.water_heating_systems[0].is_shared_system = true
+    hpxml_bldg.water_heating_systems[0].number_of_bedrooms_served = 6
+    hpxml_bldg.water_heating_systems[0].heating_capacity = 15000.0
+    hpxml_bldg.water_heating_systems[0].tank_volume = 44.0
+    hpxml_bldg.water_heating_systems[0].recovery_efficiency = 0.95
+    hpxml_bldg.water_heating_systems[0].location = HPXML::LocationConditionedSpace
+    hpxml_bldg.water_heating_systems[0].temperature = 111
+    hpxml_bldg.water_heating_systems[0].uniform_energy_factor = 0.90
+    hpxml_bldg.water_heating_systems[0].tank_model_type = HPXML::WaterHeaterTankModelTypeStratified
+    hpxml_bldg.water_heating_systems[0].first_hour_rating = nil
+    hpxml_bldg.water_heating_systems[0].usage_bin = nil
+    hpxml_bldg.water_heating_systems[0].has_mixing_valve = true
+    hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint = 108
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_storage_water_heater_values(default_hpxml_bldg,
-                                              [true, 15000.0, 44.0, 0.95, HPXML::LocationConditionedSpace, 111, 0.90, HPXML::WaterHeaterTankModelTypeStratified])
+                                              [true, 15000.0, 44.0, 0.95, HPXML::LocationConditionedSpace, 111, 0.90, HPXML::WaterHeaterTankModelTypeStratified, true, 108])
 
     # Test inputs not overridden by defaults w/ Usage Bin
-    hpxml_bldg.water_heating_systems.each do |wh|
-      wh.usage_bin = HPXML::WaterHeaterUsageBinVerySmall
-      wh.first_hour_rating = nil
-    end
+    hpxml_bldg.water_heating_systems[0].usage_bin = HPXML::WaterHeaterUsageBinVerySmall
+    hpxml_bldg.water_heating_systems[0].first_hour_rating = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     assert_nil(default_hpxml_bldg.water_heating_systems[0].first_hour_rating)
     assert_equal(HPXML::WaterHeaterUsageBinVerySmall, default_hpxml_bldg.water_heating_systems[0].usage_bin)
 
     # Test inputs not overridden by defaults w/ FHR
-    hpxml_bldg.water_heating_systems.each do |wh|
-      wh.first_hour_rating = 40
-      wh.usage_bin = nil
-    end
+    hpxml_bldg.water_heating_systems[0].first_hour_rating = 40
+    hpxml_bldg.water_heating_systems[0].usage_bin = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     assert_equal(40, default_hpxml_bldg.water_heating_systems[0].first_hour_rating)
     assert_equal(HPXML::WaterHeaterUsageBinLow, default_hpxml_bldg.water_heating_systems[0].usage_bin)
 
     # Test defaults w/ 3-bedroom house & electric storage water heater
-    hpxml_bldg.water_heating_systems.each do |wh|
-      wh.is_shared_system = nil
-      wh.heating_capacity = nil
-      wh.tank_volume = nil
-      wh.recovery_efficiency = nil
-      wh.location = nil
-      wh.temperature = nil
-      wh.tank_model_type = nil
-      wh.first_hour_rating = nil
-      wh.usage_bin = nil
-    end
+    hpxml_bldg.water_heating_systems[0].is_shared_system = nil
+    hpxml_bldg.water_heating_systems[0].heating_capacity = nil
+    hpxml_bldg.water_heating_systems[0].tank_volume = nil
+    hpxml_bldg.water_heating_systems[0].recovery_efficiency = nil
+    hpxml_bldg.water_heating_systems[0].location = nil
+    hpxml_bldg.water_heating_systems[0].temperature = nil
+    hpxml_bldg.water_heating_systems[0].tank_model_type = nil
+    hpxml_bldg.water_heating_systems[0].first_hour_rating = nil
+    hpxml_bldg.water_heating_systems[0].usage_bin = nil
+    hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_storage_water_heater_values(default_hpxml_bldg,
-                                              [false, 18766.7, 50.0, 0.98, HPXML::LocationBasementConditioned, 125, 0.9, HPXML::WaterHeaterTankModelTypeMixed])
+                                              [false, 18766.7, 50.0, 0.98, HPXML::LocationBasementConditioned, 125, 0.9, HPXML::WaterHeaterTankModelTypeMixed, true, 125])
+
+    # Test defaults w/ detailed hot water schedule
+    hpxml_bldg.header.schedules_filepaths = [File.join(File.dirname(__FILE__), '..', 'resources', 'schedule_files', 'water-heater-setpoints.csv')]
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_storage_water_heater_values(default_hpxml_bldg,
+                                              [false, 18766.7, 50.0, 0.98, HPXML::LocationBasementConditioned, nil, 0.9, HPXML::WaterHeaterTankModelTypeMixed, true, 120])
 
     # Test defaults w/ 5-bedroom house & electric storage water heater
     hpxml, hpxml_bldg = _create_hpxml('base-enclosure-beds-5.xml')
-    hpxml_bldg.water_heating_systems.each do |wh|
-      wh.is_shared_system = nil
-      wh.heating_capacity = nil
-      wh.tank_volume = nil
-      wh.recovery_efficiency = nil
-      wh.location = nil
-      wh.temperature = nil
-      wh.tank_model_type = nil
-    end
+    hpxml_bldg.water_heating_systems[0].is_shared_system = nil
+    hpxml_bldg.water_heating_systems[0].heating_capacity = nil
+    hpxml_bldg.water_heating_systems[0].tank_volume = nil
+    hpxml_bldg.water_heating_systems[0].recovery_efficiency = nil
+    hpxml_bldg.water_heating_systems[0].location = nil
+    hpxml_bldg.water_heating_systems[0].temperature = nil
+    hpxml_bldg.water_heating_systems[0].tank_model_type = nil
+    hpxml_bldg.water_heating_systems[0].has_mixing_valve = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_storage_water_heater_values(default_hpxml_bldg,
-                                              [false, 18766.7, 66.0, 0.98, HPXML::LocationBasementConditioned, 125, 0.94, HPXML::WaterHeaterTankModelTypeMixed])
+                                              [false, 18766.7, 66.0, 0.98, HPXML::LocationBasementConditioned, 125, 0.94, HPXML::WaterHeaterTankModelTypeMixed, false, nil])
 
     # Test defaults w/ 3-bedroom house & 2 storage water heaters (1 electric and 1 natural gas)
     hpxml, hpxml_bldg = _create_hpxml('base-dhw-multiple.xml')
@@ -3596,12 +3585,13 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
       wh.location = nil
       wh.temperature = nil
       wh.tank_model_type = nil
+      wh.has_mixing_valve = nil
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_storage_water_heater_values(default_hpxml_bldg,
-                                              [false, 15354.6, 50.0, 0.98, HPXML::LocationBasementConditioned, 125, 0.94, HPXML::WaterHeaterTankModelTypeMixed],
-                                              [false, 36000.0, 40.0, 0.757, HPXML::LocationBasementConditioned, 125, 0.59, HPXML::WaterHeaterTankModelTypeMixed])
+                                              [false, 15354.6, 50.0, 0.98, HPXML::LocationBasementConditioned, 125, 0.94, HPXML::WaterHeaterTankModelTypeMixed, false, nil],
+                                              [false, 36000.0, 40.0, 0.757, HPXML::LocationBasementConditioned, 125, 0.59, HPXML::WaterHeaterTankModelTypeMixed, false, nil])
   end
 
   def test_tankless_water_heaters
@@ -3636,33 +3626,62 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.water_heating_systems[0].backup_heating_capacity = 5000.0
     hpxml_bldg.water_heating_systems[0].hpwh_confined_space_without_mitigation = true
     hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = 800.0
+    hpxml_bldg.water_heating_systems[0].has_mixing_valve = true
+    hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint = 120
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [44.0, HPXML::WaterHeaterHPWHOperatingModeHeatPumpOnly, 4000.0, 5000.0, true])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [44.0, HPXML::WaterHeaterHPWHOperatingModeHeatPumpOnly, HPXML::HPWHVoltage240, 4000.0, 5000.0, true, true, 120])
 
     # Test defaults
     hpxml_bldg.water_heating_systems[0].tank_volume = nil
     hpxml_bldg.water_heating_systems[0].hpwh_operating_mode = nil
+    hpxml_bldg.water_heating_systems[0].hpwh_voltage = nil
     hpxml_bldg.water_heating_systems[0].heating_capacity = nil
     hpxml_bldg.water_heating_systems[0].backup_heating_capacity = nil
     hpxml_bldg.water_heating_systems[0].hpwh_confined_space_without_mitigation = nil
+    hpxml_bldg.water_heating_systems[0].has_mixing_valve = nil
+    hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [66.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 6366.0, 15355.0, false])
+
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [66.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, HPXML::HPWHVoltage240, 1706.0, 15355.0, false, false, nil])
+
+    # Test defaults w/ 120V dedicated circuit
+    hpxml_bldg.water_heating_systems[0].hpwh_voltage = HPXML::HPWHVoltage120Dedicated
+    hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint = 120
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [66.0, HPXML::WaterHeaterHPWHOperatingModeHeatPumpOnly, HPXML::HPWHVoltage120Dedicated, 1443.0, 0.0, false, true, 120])
+
+    # Test defaults w/ 120V shared circuit
+    hpxml_bldg.water_heating_systems[0].hpwh_voltage = HPXML::HPWHVoltage120Shared
+    hpxml_bldg.water_heating_systems[0].mixing_valve_setpoint = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [66.0, HPXML::WaterHeaterHPWHOperatingModeHeatPumpOnly, HPXML::HPWHVoltage120Shared, 1443.0, 0.0, false, false, nil])
+
+    # Test defaults w/ 120V (unspecified circuit) and high setpoint temp
+    hpxml_bldg.water_heating_systems[0].hpwh_voltage = HPXML::HPWHVoltage120
+    hpxml_bldg.water_heating_systems[0].temperature = 150
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [66.0, HPXML::WaterHeaterHPWHOperatingModeHeatPumpOnly, HPXML::HPWHVoltage120, 1443.0, 0.0, false, true, 125])
 
     # Test defaults w/ num occupants = 1, num bedrooms = 1
+    hpxml_bldg.water_heating_systems[0].hpwh_voltage = nil
+    hpxml_bldg.water_heating_systems[0].temperature = nil
     hpxml_bldg.building_construction.number_of_bedrooms = 1
     hpxml_bldg.building_occupancy.number_of_residents = 1
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [50.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 6366.0, 15355.0, false])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [50.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, HPXML::HPWHVoltage240, 1706.0, 15355.0, false, false, nil])
 
     # Test defaults w/ num occupants = 10, num bedrooms = 1
     hpxml_bldg.building_construction.number_of_bedrooms = 1
     hpxml_bldg.building_occupancy.number_of_residents = 10
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [80.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 6366.0, 15355.0, false])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [80.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, HPXML::HPWHVoltage240, 1706.0, 15355.0, false, false, nil])
   end
 
   def test_indirect_water_heaters
@@ -3853,17 +3872,19 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
                               module_type: HPXML::PVModuleTypePremium,
                               array_azimuth: 123,
                               array_tilt: 0,
-                              max_power_output: 1000,
+                              max_power_output: 4000,
                               inverter_idref: 'Inverter')
     hpxml_bldg.inverters.add(id: 'Inverter',
                              inverter_efficiency: 0.90)
     pv = hpxml_bldg.pv_systems[0]
     inv = hpxml_bldg.inverters[0]
+    current_year = Date.today.year
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_pv_system_values(default_hpxml_bldg, 0.90, 0.20, true, HPXML::LocationGround, HPXML::PVTrackingType1Axis, HPXML::PVModuleTypePremium, 123)
+    _test_default_pv_system_values(default_hpxml_bldg, 4000, 0.90, 0.20, true, HPXML::LocationGround, HPXML::PVTrackingType1Axis,
+                                   HPXML::PVModuleTypePremium, 123, current_year)
 
-    # Test defaults w/o year modules manufactured
+    # Test defaults
     pv.is_shared_system = nil
     pv.system_losses_fraction = nil
     pv.location = nil
@@ -3874,14 +3895,42 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     inv.inverter_efficiency = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_pv_system_values(default_hpxml_bldg, 0.96, 0.14, false, HPXML::LocationRoof, HPXML::PVTrackingTypeFixed, HPXML::PVModuleTypeStandard, 135)
+    _test_default_pv_system_values(default_hpxml_bldg, 4000, 0.96, 0.14, false, HPXML::LocationRoof, HPXML::PVTrackingTypeFixed,
+                                   HPXML::PVModuleTypeStandard, 135, current_year)
+
+    # Test defaults w/ collector area
+    pv.max_power_output = nil
+    pv.collector_area = 200
+    pv.year_installed = 2026
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_pv_system_values(default_hpxml_bldg, 4970, 0.96, 0.14, false, HPXML::LocationRoof, HPXML::PVTrackingTypeFixed,
+                                   HPXML::PVModuleTypeStandard, 135, current_year)
+
+    # Test defaults w/ number of panels
+    pv.collector_area = nil
+    pv.number_of_panels = 10
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_pv_system_values(default_hpxml_bldg, 4518, 0.96, 0.14, false, HPXML::LocationRoof, HPXML::PVTrackingTypeFixed,
+                                   HPXML::PVModuleTypeStandard, 135, current_year)
+
+    # Test defaults w/ year installed
+    pv.max_power_output = 4000
+    pv.year_installed = current_year - 5
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_pv_system_values(default_hpxml_bldg, 4000, 0.96, 0.161, false, HPXML::LocationRoof, HPXML::PVTrackingTypeFixed,
+                                   HPXML::PVModuleTypeStandard, 135, current_year - 5)
 
     # Test defaults w/ year modules manufactured and no inverter
-    pv.year_modules_manufactured = Date.today.year - 10
+    pv.year_installed = nil
+    pv.year_modules_manufactured = current_year - 10
     inv.delete
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_pv_system_values(default_hpxml_bldg, 0.96, 0.182, false, HPXML::LocationRoof, HPXML::PVTrackingTypeFixed, HPXML::PVModuleTypeStandard, 135)
+    _test_default_pv_system_values(default_hpxml_bldg, 4000, 0.96, 0.182, false, HPXML::LocationRoof, HPXML::PVTrackingTypeFixed,
+                                   HPXML::PVModuleTypeStandard, 135, current_year - 10)
   end
 
   def test_electric_panels
@@ -4371,7 +4420,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.clothes_washers[0].monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_clothes_washer_values(default_hpxml_bldg.clothes_washers[0], false, HPXML::LocationConditionedSpace, 0.331, 704.0, 0.08, 0.58, 23.0, 2.874, 999, 1.0, default_cw_sched['WeekdayScheduleFractions'], default_cw_sched['WeekendScheduleFractions'], default_cw_sched['MonthlyScheduleMultipliers'])
+    _test_default_clothes_washer_values(default_hpxml_bldg.clothes_washers[0], false, HPXML::LocationConditionedSpace, 0.331, 704.0, 0.08, 0.58, 23.0, 2.874, 6.0, 1.0, default_cw_sched['WeekdayScheduleFractions'], default_cw_sched['WeekendScheduleFractions'], default_cw_sched['MonthlyScheduleMultipliers'])
   end
 
   def test_clothes_dryers
@@ -4491,12 +4540,6 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _default_hpxml, default_hpxml_bldg = _test_measure()
     default_dw_sched = @default_schedules_csv_data[SchedulesFile::Columns[:Dishwasher].name]
     _test_default_dishwasher_values(default_hpxml_bldg.dishwashers[0], false, HPXML::LocationConditionedSpace, 467.0, 0.12, 1.09, 33.12, 4.0, 12, 1.0, default_dw_sched['WeekdayScheduleFractions'], default_dw_sched['WeekendScheduleFractions'], default_dw_sched['MonthlyScheduleMultipliers'])
-
-    # Test defaults before 301-2019 Addendum A
-    hpxml.header.eri_calculation_versions = ['2019']
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-    _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_dishwasher_values(default_hpxml_bldg.dishwashers[0], false, HPXML::LocationConditionedSpace, 467.0, 999, 999, 999, 999, 12, 1.0, default_dw_sched['WeekdayScheduleFractions'], default_dw_sched['WeekendScheduleFractions'], default_dw_sched['MonthlyScheduleMultipliers'])
   end
 
   def test_refrigerators
@@ -5548,11 +5591,16 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     assert_in_epsilon(sla, foundation.vented_crawlspace_sla, 0.001)
   end
 
-  def _test_default_roof_values(roof, roof_type, solar_absorptance, roof_color, emittance, radiant_barrier,
+  def _test_default_roof_values(roof, roof_type, solar_absorptance, roof_color, cool_roof, emittance, radiant_barrier,
                                 radiant_barrier_grade, int_finish_type, int_finish_thickness, azimuth)
     assert_equal(roof_type, roof.roof_type)
     assert_equal(solar_absorptance, roof.solar_absorptance)
     assert_equal(roof_color, roof.roof_color)
+    if cool_roof.nil?
+      assert_nil(roof.cool_roof)
+    else
+      assert_equal(cool_roof, roof.cool_roof)
+    end
     assert_equal(emittance, roof.emittance)
     if not radiant_barrier.nil?
       assert_equal(radiant_barrier, roof.radiant_barrier)
@@ -6338,20 +6386,30 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     storage_water_heaters = hpxml_bldg.water_heating_systems.select { |w| w.water_heater_type == HPXML::WaterHeaterTypeStorage }
     assert_equal(expected_wh_values.size, storage_water_heaters.size)
     storage_water_heaters.each_with_index do |wh_system, idx|
-      is_shared, heating_capacity, tank_volume, recovery_efficiency, location, temperature, efficiency, tank_model_type = expected_wh_values[idx]
+      is_shared, heating_capacity, tank_volume, recovery_efficiency, location, temperature, efficiency, tank_model_type, has_mix_valve, mix_valve_setpoint = expected_wh_values[idx]
 
       assert_equal(is_shared, wh_system.is_shared_system)
       assert_in_epsilon(heating_capacity, wh_system.heating_capacity, 0.01)
       assert_equal(tank_volume, wh_system.tank_volume)
       assert_in_epsilon(recovery_efficiency, wh_system.recovery_efficiency, 0.01)
       assert_equal(location, wh_system.location)
-      assert_equal(temperature, wh_system.temperature)
+      if temperature.nil?
+        assert_nil(wh_system.temperature)
+      else
+        assert_equal(temperature, wh_system.temperature)
+      end
       if not wh_system.uniform_energy_factor.nil?
         assert_equal(efficiency, wh_system.uniform_energy_factor)
       else
         assert_equal(efficiency, wh_system.energy_factor)
       end
       assert_equal(tank_model_type, wh_system.tank_model_type)
+      assert_equal(has_mix_valve, wh_system.has_mixing_valve)
+      if mix_valve_setpoint.nil?
+        assert_nil(wh_system.mixing_valve_setpoint)
+      else
+        assert_equal(mix_valve_setpoint, wh_system.mixing_valve_setpoint)
+      end
     end
   end
 
@@ -6369,13 +6427,20 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     heat_pump_water_heaters = hpxml_bldg.water_heating_systems.select { |w| w.water_heater_type == HPXML::WaterHeaterTypeHeatPump }
     assert_equal(expected_wh_values.size, heat_pump_water_heaters.size)
     heat_pump_water_heaters.each_with_index do |wh_system, idx|
-      tank_volume, operating_mode, htg_cap, backup_htg_cap, hpwh_confined_space_without_mitigation = expected_wh_values[idx]
+      tank_volume, operating_mode, voltage, htg_cap, backup_htg_cap, hpwh_confined, has_mix_valve, mix_valve_setpoint = expected_wh_values[idx]
 
       assert_equal(tank_volume, wh_system.tank_volume)
       assert_equal(operating_mode, wh_system.hpwh_operating_mode)
+      assert_equal(voltage, wh_system.hpwh_voltage)
       assert_in_epsilon(htg_cap, wh_system.heating_capacity, 0.01)
       assert_in_epsilon(backup_htg_cap, wh_system.backup_heating_capacity, 0.01)
-      assert_equal(hpwh_confined_space_without_mitigation, wh_system.hpwh_confined_space_without_mitigation)
+      assert_equal(hpwh_confined, wh_system.hpwh_confined_space_without_mitigation)
+      assert_equal(has_mix_valve, wh_system.has_mixing_valve)
+      if mix_valve_setpoint.nil?
+        assert_nil(wh_system.mixing_valve_setpoint)
+      else
+        assert_equal(mix_valve_setpoint, wh_system.mixing_valve_setpoint)
+      end
     end
   end
 
@@ -6463,21 +6528,30 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     assert_equal(azimuth, solar_thermal_system.collector_azimuth)
   end
 
-  def _test_default_pv_system_values(hpxml_bldg, interver_efficiency, system_loss_frac, is_shared_system, location, tracking, module_type, azimuth)
+  def _test_default_pv_system_values(hpxml_bldg, max_power_output, interver_efficiency, system_loss_frac,
+                                     is_shared_system, location, tracking, module_type, azimuth, pv_year)
     hpxml_bldg.pv_systems.each do |pv|
+      assert_in_epsilon(max_power_output, pv.max_power_output, 0.01)
       assert_equal(is_shared_system, pv.is_shared_system)
       assert_in_epsilon(system_loss_frac, pv.system_losses_fraction, 0.01)
       assert_equal(location, pv.location)
       assert_equal(tracking, pv.tracking)
       assert_equal(module_type, pv.module_type)
       assert_equal(azimuth, pv.array_azimuth)
+      if not pv.year_modules_manufactured.nil?
+        assert_equal(pv_year, pv.year_modules_manufactured)
+      end
+      if not pv.year_installed.nil?
+        assert_equal(pv_year, pv.year_installed)
+      end
     end
     hpxml_bldg.inverters.each do |inv|
       assert_equal(interver_efficiency, inv.inverter_efficiency)
     end
   end
 
-  def _test_default_electric_panel_values(electric_panel, voltage, max_current_rating, headroom_spaces, rated_total_spaces, occupied_spaces)
+  def _test_default_electric_panel_values(electric_panel, voltage, max_current_rating, headroom_spaces,
+                                          rated_total_spaces, occupied_spaces)
     if voltage.nil?
       assert_nil(electric_panel.voltage)
     else

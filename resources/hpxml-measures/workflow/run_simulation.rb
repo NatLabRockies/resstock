@@ -48,6 +48,11 @@ def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
   args['building_id'] = building_id
   args['debug'] = debug
   args['ems_debug'] = ems_debug
+  if not skip_simulation
+    # Avoid writing out a partial output file at this time; we'll just write
+    # the full output file as part of the ReportSimulationOutput measure.
+    args['annual_output_file_name'] = 'null'
+  end
   measures[measure_subdir] = [args]
 
   if not skip_simulation

@@ -20,59 +20,97 @@ class HPXMLtoOpenStudioMiscLoadsTest < Minitest::Test
     cleanup_output_files([@tmp_hpxml_path])
   end
 
-  def get_kwh_therm_per_year(model, name)
+  def get_kwh_therm_per_year(model, name, schedules_file = nil)
+    sch_file_col_name_map = {
+      Constants::ObjectTypeMiscPlugLoads => :PlugLoadsOther,
+      Constants::ObjectTypeMiscTelevision => :PlugLoadsTV,
+      Constants::ObjectTypeMiscElectricVehicleCharging => :PlugLoadsVehicle,
+      Constants::ObjectTypeMiscWellPump => :PlugLoadsWellPump,
+      Constants::ObjectTypeMiscPoolPump => :PoolPump,
+      Constants::ObjectTypeMiscPoolHeater => :PoolHeater,
+      Constants::ObjectTypeMiscPermanentSpaPump => :PermanentSpaPump,
+      Constants::ObjectTypeMiscPermanentSpaHeater => :PermanentSpaHeater,
+      Constants::ObjectTypeMiscGrill => :FuelLoadsGrill,
+      Constants::ObjectTypeMiscLighting => :FuelLoadsLighting,
+      Constants::ObjectTypeMiscFireplace => :FuelLoadsFireplace,
+    }
+
     kwh_yr = 0.0
     therm_yr = 0.0
     model.getElectricEquipments.each do |ee|
       next unless ee.name.to_s.include?(name)
 
-      hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ee.schedule.get)
+      if ee.schedule.get.to_ScheduleFile.is_initialized
+        hrs = schedules_file.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[sch_file_col_name_map[name]].name)
+      else
+        hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ee.schedule.get)
+      end
       kwh_yr += UnitConversions.convert(hrs * ee.designLevel.get * ee.multiplier * ee.space.get.multiplier, 'Wh', 'kWh')
     end
     model.getGasEquipments.each do |ge|
       next unless ge.name.to_s.include?(name)
 
-      hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ge.schedule.get)
+      if ge.schedule.get.to_ScheduleFile.is_initialized
+        hrs = schedules_file.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[sch_file_col_name_map[name]].name)
+      else
+        hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, ge.schedule.get)
+      end
       therm_yr += UnitConversions.convert(hrs * ge.definition.to_GasEquipmentDefinition.get.designLevel.get * ge.multiplier * ge.space.get.multiplier, 'Wh', 'therm')
     end
     model.getOtherEquipments.each do |oe|
       next unless oe.name.to_s.include?(name)
 
-      hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, oe.schedule.get)
+      if oe.schedule.get.to_ScheduleFile.is_initialized
+        hrs = schedules_file.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[sch_file_col_name_map[name]].name)
+      else
+        hrs = Schedule.annual_equivalent_full_load_hrs(model.yearDescription.get.assumedYear, oe.schedule.get)
+      end
       therm_yr += UnitConversions.convert(hrs * oe.definition.to_OtherEquipmentDefinition.get.designLevel.get * oe.multiplier * oe.space.get.multiplier, 'Wh', 'therm')
     end
     return kwh_yr, therm_yr
   end
 
   def test_misc_loads
-    args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base.xml'))
-    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
+    hpxml_names = ['base.xml',
+                   'base-schedules-detailed-occupancy-stochastic.xml'] # Test w/ detailed schedules
 
-    # Check misc plug loads
-    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPlugLoads)
-    assert_in_delta(2457, kwh_yr, 1.0)
-    assert_equal(0, therm_yr)
+    hpxml_names.each do |hpxml_name|
+      args_hash = {}
+      args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, hpxml_name))
+      model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    # Check television
-    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscTelevision)
-    assert_in_delta(620, kwh_yr, 1.0)
-    assert_equal(0, therm_yr)
+      if not hpxml_bldg.header.schedules_filepaths.empty?
+        schedules_file = SchedulesFile.new(runner: nil,
+                                           schedules_paths: hpxml_bldg.header.schedules_filepaths,
+                                           year: model.yearDescription.get.assumedYear,
+                                           output_path: nil)
+      end
 
-    # Check others
-    objects = [Constants::ObjectTypeMiscElectricVehicleCharging,
-               Constants::ObjectTypeMiscWellPump,
-               Constants::ObjectTypeMiscPoolPump,
-               Constants::ObjectTypeMiscPoolHeater,
-               Constants::ObjectTypeMiscPermanentSpaPump,
-               Constants::ObjectTypeMiscPermanentSpaHeater,
-               Constants::ObjectTypeMiscGrill,
-               Constants::ObjectTypeMiscLighting,
-               Constants::ObjectTypeMiscFireplace]
-    objects.each do |object_name|
-      kwh_yr, therm_yr = get_kwh_therm_per_year(model, object_name)
-      assert_equal(0, kwh_yr)
+      # Check misc plug loads
+      kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPlugLoads, schedules_file)
+      assert_in_delta(2457, kwh_yr, 1.0)
       assert_equal(0, therm_yr)
+
+      # Check television
+      kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscTelevision, schedules_file)
+      assert_in_delta(620, kwh_yr, 1.0)
+      assert_equal(0, therm_yr)
+
+      # Check others
+      objects = [Constants::ObjectTypeMiscElectricVehicleCharging,
+                 Constants::ObjectTypeMiscWellPump,
+                 Constants::ObjectTypeMiscPoolPump,
+                 Constants::ObjectTypeMiscPoolHeater,
+                 Constants::ObjectTypeMiscPermanentSpaPump,
+                 Constants::ObjectTypeMiscPermanentSpaHeater,
+                 Constants::ObjectTypeMiscGrill,
+                 Constants::ObjectTypeMiscLighting,
+                 Constants::ObjectTypeMiscFireplace]
+      objects.each do |object_name|
+        kwh_yr, therm_yr = get_kwh_therm_per_year(model, object_name, schedules_file)
+        assert_equal(0, kwh_yr)
+        assert_equal(0, therm_yr)
+      end
     end
   end
 

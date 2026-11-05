@@ -632,8 +632,20 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeWaterHeater, 804)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeWaterHeater, 879)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeWaterHeater], 2)
+  end
+
+  def test_water_heater_hpwh_120v
+    args_hash = { 'hpxml_path' => File.absolute_path(@tmp_hpxml_path),
+                  'skip_validation' => true }
+
+    hpxml, _hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-120v.xml')
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeWaterHeater, 423)
+    _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeWaterHeater], 1)
   end
 
   def test_clothes_dryer_conventional

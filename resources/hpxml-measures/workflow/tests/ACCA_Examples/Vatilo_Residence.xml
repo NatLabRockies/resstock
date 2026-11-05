@@ -75,7 +75,7 @@
           <Roof>
             <SystemIdentifier id='Roof1'/>
             <InteriorAdjacentTo>attic - vented</InteriorAdjacentTo>
-            <Area>1358.4</Area>
+            <Area>1703.8</Area>
             <RoofType>asphalt or fiberglass shingles</RoofType>
             <RoofColor>dark</RoofColor>
             <Pitch>6.0</Pitch>
@@ -150,7 +150,7 @@
             <FloorType>
               <WoodFrame/>
             </FloorType>
-            <Area>225.0</Area>
+            <Area>324.0</Area>
             <Insulation>
               <SystemIdentifier id='Floor2Insulation'/>
               <AssemblyEffectiveRValue>2.1</AssemblyEffectiveRValue>
@@ -181,8 +181,8 @@
           <Slab>
             <SystemIdentifier id='Slab2'/>
             <InteriorAdjacentTo>garage</InteriorAdjacentTo>
-            <Area>15.0</Area>
-            <ExposedPerimeter>45.0</ExposedPerimeter>
+            <Area>324.0</Area>
+            <ExposedPerimeter>54.0</ExposedPerimeter>
             <PerimeterInsulation>
               <SystemIdentifier id='Slab2PerimeterInsulation'/>
               <Layer>
@@ -352,7 +352,7 @@
           </Door>
           <Door>
             <SystemIdentifier id='Door2'/>
-            <AttachedToWall idref='Wall1'/>
+            <AttachedToWall idref='Wall2'/>
             <Area>21.0</Area>
             <Azimuth>0</Azimuth>
             <RValue>2.86</RValue>

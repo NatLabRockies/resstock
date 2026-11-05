@@ -322,11 +322,7 @@ module Geometry
         # create attic zone
         attic_zone = OpenStudio::Model::ThermalZone.new(model)
         attic_space.setThermalZone(attic_zone)
-        if attic_type == HPXML::AtticTypeVented
-          attic_space_name = HPXML::LocationAtticVented
-        elsif attic_type == HPXML::AtticTypeUnvented
-          attic_space_name = HPXML::LocationAtticUnvented
-        end
+        attic_space_name = HPXML::get_location_from_attic_type(attic_type)
         attic_zone.setName(attic_space_name)
       when HPXML::AtticTypeConditioned
         attic_space.setThermalZone(conditioned_zone)
@@ -344,12 +340,15 @@ module Geometry
     end
 
     # Foundation
+    if foundation_type.start_with? HPXML::FoundationTypeBellyAndWing
+      foundation_type = HPXML::FoundationTypeBellyAndWing
+    end
     if [HPXML::FoundationTypeCrawlspaceVented,
         HPXML::FoundationTypeCrawlspaceUnvented,
-        HPXML::FoundationTypeCrawlspaceConditioned,
         HPXML::FoundationTypeBasementUnconditioned,
         HPXML::FoundationTypeBasementConditioned,
-        HPXML::FoundationTypeAmbient].include?(foundation_type) || foundation_type.start_with?(HPXML::FoundationTypeBellyAndWing)
+        HPXML::FoundationTypeAmbient,
+        HPXML::FoundationTypeBellyAndWing].include?(foundation_type)
 
       z = -foundation_height
 
@@ -367,24 +366,7 @@ module Geometry
       foundation_space = OpenStudio::Model::Space::fromFloorPrint(foundation_polygon, foundation_height, model)
       foundation_space = foundation_space.get
       assign_indexes(model, footprint_polygon: foundation_polygon, space: foundation_space)
-      case foundation_type
-      when HPXML::FoundationTypeCrawlspaceVented
-        foundation_space_name = HPXML::LocationCrawlspaceVented
-      when HPXML::FoundationTypeCrawlspaceUnvented
-        foundation_space_name = HPXML::LocationCrawlspaceUnvented
-      when HPXML::FoundationTypeCrawlspaceConditioned
-        foundation_space_name = HPXML::LocationCrawlspaceConditioned
-      when HPXML::FoundationTypeBasementUnconditioned
-        foundation_space_name = HPXML::LocationBasementUnconditioned
-      when HPXML::FoundationTypeBasementConditioned
-        foundation_space_name = HPXML::LocationBasementConditioned
-      when HPXML::FoundationTypeAmbient
-        foundation_space_name = HPXML::LocationOutside
-      else
-        if foundation_type.start_with? HPXML::FoundationTypeBellyAndWing
-          foundation_space_name = HPXML::LocationManufacturedHomeUnderBelly
-        end
-      end
+      foundation_space_name = HPXML::get_location_from_foundation_type(foundation_type)
       foundation_zone.setName(foundation_space_name)
       foundation_space.setName(foundation_space_name)
       foundation_space_type = OpenStudio::Model::SpaceType.new(model)
@@ -804,21 +786,7 @@ module Geometry
 
       # create foundation zone
       foundation_zone = OpenStudio::Model::ThermalZone.new(model)
-
-      case foundation_type
-      when HPXML::FoundationTypeCrawlspaceVented
-        foundation_space_name = HPXML::LocationCrawlspaceVented
-      when HPXML::FoundationTypeCrawlspaceUnvented
-        foundation_space_name = HPXML::LocationCrawlspaceUnvented
-      when HPXML::FoundationTypeCrawlspaceConditioned
-        foundation_space_name = HPXML::LocationCrawlspaceConditioned
-      when HPXML::FoundationTypeBasementUnconditioned
-        foundation_space_name = HPXML::LocationBasementUnconditioned
-      when HPXML::FoundationTypeBasementConditioned
-        foundation_space_name = HPXML::LocationBasementConditioned
-      when HPXML::FoundationTypeAmbient
-        foundation_space_name = HPXML::LocationOutside
-      end
+      foundation_space_name = HPXML::get_location_from_foundation_type(foundation_type)
       foundation_zone.setName(foundation_space_name)
       foundation_space.setName(foundation_space_name)
       foundation_space_type = OpenStudio::Model::SpaceType.new(model)
@@ -886,11 +854,7 @@ module Geometry
         # create attic zone
         attic_zone = OpenStudio::Model::ThermalZone.new(model)
         attic_space.setThermalZone(attic_zone)
-        if attic_type == HPXML::AtticTypeVented
-          attic_space_name = HPXML::LocationAtticVented
-        elsif attic_type == HPXML::AtticTypeUnvented
-          attic_space_name = HPXML::LocationAtticUnvented
-        end
+        attic_space_name = HPXML::get_location_from_attic_type(attic_type)
         attic_zone.setName(attic_space_name)
       end
       attic_space.setName(attic_space_name)
@@ -1098,21 +1062,7 @@ module Geometry
 
       # create foundation zone
       foundation_zone = OpenStudio::Model::ThermalZone.new(model)
-
-      case foundation_type
-      when HPXML::FoundationTypeCrawlspaceVented
-        foundation_space_name = HPXML::LocationCrawlspaceVented
-      when HPXML::FoundationTypeCrawlspaceUnvented
-        foundation_space_name = HPXML::LocationCrawlspaceUnvented
-      when HPXML::FoundationTypeCrawlspaceConditioned
-        foundation_space_name = HPXML::LocationCrawlspaceConditioned
-      when HPXML::FoundationTypeBasementUnconditioned
-        foundation_space_name = HPXML::LocationBasementUnconditioned
-      when HPXML::FoundationTypeBasementConditioned
-        foundation_space_name = HPXML::LocationBasementConditioned
-      when HPXML::FoundationTypeAmbient
-        foundation_space_name = HPXML::LocationOutside
-      end
+      foundation_space_name = HPXML::get_location_from_foundation_type(foundation_type)
       foundation_zone.setName(foundation_space_name)
       foundation_space.setName(foundation_space_name)
       foundation_space_type = OpenStudio::Model::SpaceType.new(model)
@@ -1178,11 +1128,7 @@ module Geometry
         # create attic zone
         attic_zone = OpenStudio::Model::ThermalZone.new(model)
         attic_space.setThermalZone(attic_zone)
-        if attic_type == HPXML::AtticTypeVented
-          attic_space_name = HPXML::LocationAtticVented
-        elsif attic_type == HPXML::AtticTypeUnvented
-          attic_space_name = HPXML::LocationAtticUnvented
-        end
+        attic_space_name = HPXML::get_location_from_attic_type(attic_type)
         attic_zone.setName(attic_space_name)
       end
       attic_space.setName(attic_space_name)

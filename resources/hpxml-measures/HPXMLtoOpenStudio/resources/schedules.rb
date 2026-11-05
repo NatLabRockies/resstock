@@ -5,7 +5,7 @@ class ScheduleConstant
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param sch_name [String] name that is assigned to the OpenStudio Schedule object
   # @param val [Double] the constant schedule value
-  # @param schedule_type_limits_name [String] data type for the values contained in the schedule
+  # @param schedule_type_limits_name [String or nil] data type for the values contained in the schedule
   # @param unavailable_periods [HPXML::UnavailablePeriods] Object that defines periods for, e.g., power outages or vacancies
   def initialize(model, sch_name, val = 1.0, schedule_type_limits_name = nil, unavailable_periods: [])
     @schedule = create_schedule(model, sch_name, val, schedule_type_limits_name, unavailable_periods)
@@ -60,7 +60,7 @@ class HourlyByMonthSchedule
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param sch_name [String] name that is assigned to the OpenStudio Schedule object
   # @param weekday_month_by_hour_values [Array<Array<Double>>] a 12-element array of 24-element arrays of numbers
-  # @param weekday_month_by_hour_values [Array<Array<Double>>] a 12-element array of 24-element arrays of numbers
+  # @param weekend_month_by_hour_values [Array<Array<Double>>] a 12-element array of 24-element arrays of numbers
   # @param schedule_type_limits_name [String] data type for the values contained in the schedule
   # @param normalize_values [Boolean] whether to divide schedule values by the max value
   # @param unavailable_periods [HPXML::UnavailablePeriods] Object that defines periods for, e.g., power outages or vacancies
@@ -197,6 +197,7 @@ class HourlyByDaySchedule
   # @param sch_name [String] name that is assigned to the OpenStudio Schedule object
   # @param weekday_day_by_hour_values [Array<Array<Double>>] a 365-element array of 24-element arrays of numbers
   # @param weekend_day_by_hour_values [Array<Array<Double>>] a 365-element array of 24-element arrays of numbers
+  # @param schedule_type_limits_name [String or nil] data type for the values contained in the schedule
   # @param normalize_values [Boolean] whether to divide schedule values by the max value
   # @param unavailable_periods [HPXML::UnavailablePeriods] Object that defines periods for, e.g., power outages or vacancies
   def initialize(model, sch_name, weekday_day_by_hour_values, weekend_day_by_hour_values,
@@ -1036,6 +1037,7 @@ class SchedulesFile
   # @param year [Integer] the calendar year
   # @param unavailable_periods [HPXML::UnavailablePeriods] Object that defines periods for, e.g., power outages or vacancies
   # @param output_path [String] the file path for which to export a single detailed schedule CSV file and also reference from OpenStudio ScheduleFile objects
+  # @param offset_db [Double] On-off thermostat deadband (F)
   def initialize(runner: nil,
                  schedules_paths:,
                  year:,
@@ -1462,7 +1464,7 @@ class SchedulesFile
 
   # Convert detailed setpoint schedule values from F to C.
   #
-  # @param offset_db [Double] On-off thermostat deadband
+  # @param offset_db [Double] On-off thermostat deadband (F)
   # @return [nil]
   def convert_setpoints(offset_db)
     setpoint_col_names = Columns.values.select { |c| c.type == :setpoint }.map { |c| c.name }

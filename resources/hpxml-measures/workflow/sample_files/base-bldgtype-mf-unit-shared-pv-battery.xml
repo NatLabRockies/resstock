@@ -337,6 +337,7 @@
           <Battery>
             <SystemIdentifier id='Battery1'/>
             <IsSharedSystem>true</IsSharedSystem>
+            <Location>other heated space</Location>
             <BatteryType>Li-ion</BatteryType>
             <NominalCapacity>
               <Units>kWh</Units>

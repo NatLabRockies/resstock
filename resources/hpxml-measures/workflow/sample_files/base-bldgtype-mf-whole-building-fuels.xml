@@ -386,7 +386,6 @@
             <SystemIdentifier id='WaterHeatingSystem1'/>
             <FuelType>propane</FuelType>
             <WaterHeaterType>instantaneous water heater</WaterHeaterType>
-            <Location>conditioned space</Location>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
             <UniformEnergyFactor>0.82</UniformEnergyFactor>
           </WaterHeatingSystem>
@@ -886,7 +885,6 @@
             <SystemIdentifier id='WaterHeatingSystem1_2'/>
             <FuelType>propane</FuelType>
             <WaterHeaterType>instantaneous water heater</WaterHeaterType>
-            <Location>conditioned space</Location>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
             <UniformEnergyFactor>0.82</UniformEnergyFactor>
           </WaterHeatingSystem>
@@ -1291,7 +1289,6 @@
             <SystemIdentifier id='WaterHeatingSystem1_3'/>
             <FuelType>propane</FuelType>
             <WaterHeaterType>instantaneous water heater</WaterHeaterType>
-            <Location>conditioned space</Location>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
             <UniformEnergyFactor>0.82</UniformEnergyFactor>
           </WaterHeatingSystem>
@@ -1696,7 +1693,6 @@
             <SystemIdentifier id='WaterHeatingSystem1_4'/>
             <FuelType>propane</FuelType>
             <WaterHeaterType>instantaneous water heater</WaterHeaterType>
-            <Location>conditioned space</Location>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
             <UniformEnergyFactor>0.82</UniformEnergyFactor>
           </WaterHeatingSystem>
@@ -2149,7 +2145,6 @@
             <SystemIdentifier id='WaterHeatingSystem1_5'/>
             <FuelType>propane</FuelType>
             <WaterHeaterType>instantaneous water heater</WaterHeaterType>
-            <Location>conditioned space</Location>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
             <UniformEnergyFactor>0.82</UniformEnergyFactor>
           </WaterHeatingSystem>
@@ -2602,7 +2597,6 @@
             <SystemIdentifier id='WaterHeatingSystem1_6'/>
             <FuelType>propane</FuelType>
             <WaterHeaterType>instantaneous water heater</WaterHeaterType>
-            <Location>conditioned space</Location>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
             <UniformEnergyFactor>0.82</UniformEnergyFactor>
           </WaterHeatingSystem>
