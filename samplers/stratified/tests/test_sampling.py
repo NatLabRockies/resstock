@@ -2,7 +2,8 @@ import pathlib
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from sampler.sampling_utils import read_char_tsv, get_param2tsv, get_samples
-from sampler.run_sampler import sample_param, sample_all, take_samples_per_segment
+from sampler.run_sampler import sample_param, sample_all, take_samples_per_segment, select_segments
+import pytest
 from collections import Counter
 import pandas as pd
 import polars as pl
@@ -148,6 +149,58 @@ def test_segment_vars_are_characteristics_the_allocator_joins_on():
         'Heating Fuel',
         'Sampling Region',
     }
+
+
+def test_segment_families_are_the_keys_the_allocator_never_releases():
+    config = read_sampler_config()
+
+    # The allocator's fallback ladder releases vintage and federal poverty level only
+    assert set(config['segment_family_vars']) == {'Sampling Region', 'Geometry Building Type RECS', 'Heating Fuel'}
+    assert set(config['segment_family_vars']) <= set(config['segment_vars'])
+
+
+def make_initial_samples(counts: dict[tuple[str, str], int]) -> pl.DataFrame:
+    """Initial samples with a (family, segment) pair per row, `count` rows of each."""
+    rows = [(family, segment) for (family, segment), n in counts.items() for _ in range(n)]
+    return pl.DataFrame(rows, schema=['family', 'segment'], orient='row')
+
+
+def test_select_segments_without_families_keeps_the_most_populous():
+    df = make_initial_samples({('f1', 'a'): 50, ('f1', 'b'): 40, ('f1', 'c'): 30, ('f2', 'd'): 5})
+
+    kept = select_segments(df, ['family', 'segment'], 3)
+
+    assert kept['segment'].to_list() == ['a', 'b', 'c']
+    assert kept['count'].to_list() == [50, 40, 30]
+
+
+def test_select_segments_guarantees_every_family_its_most_populous_segment():
+    df = make_initial_samples({('f1', 'a'): 50, ('f1', 'b'): 40, ('f1', 'c'): 30,
+                               ('f2', 'd'): 5, ('f2', 'e'): 3, ('f3', 'g'): 1})
+
+    kept = select_segments(df, ['family', 'segment'], 4, family_cols=['family'])
+
+    # f2 and f3 each keep their largest segment; the one place left goes to the largest other
+    assert set(kept['segment']) == {'a', 'd', 'g', 'b'}
+    assert kept['segment'].to_list() == ['a', 'b', 'd', 'g'], "kept segments stay in rank order"
+    assert set(kept.columns) == {'family', 'segment', 'count'}
+
+
+def test_select_segments_breaks_ties_reproducibly():
+    df = make_initial_samples({('f1', 'b'): 10, ('f1', 'a'): 10, ('f2', 'd'): 2, ('f2', 'c'): 2})
+
+    kept = select_segments(df, ['family', 'segment'], 2, family_cols=['family'])
+
+    assert kept['segment'].to_list() == ['a', 'c']
+
+
+def test_select_segments_refuses_more_families_than_segments():
+    df = make_initial_samples({('f1', 'a'): 5, ('f2', 'b'): 5, ('f3', 'c'): 5})
+
+    with pytest.raises(ValueError, match='3 families'):
+        select_segments(df, ['family', 'segment'], 2, family_cols=['family'])
+    with pytest.raises(ValueError, match='not segment columns'):
+        select_segments(df, ['segment'], 2, family_cols=['family'])
 
 
 def test_one_config_value_sets_both_the_segment_count_and_the_take():

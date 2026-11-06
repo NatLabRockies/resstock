@@ -51,5 +51,6 @@ resstock-sampler sample -p ../project_national -n 550000 -o geo_samples.csv
 The sampler config file is located at `sampler/sampler_config.yaml`. You can modify the config file to change the parameters used for sampling.
 
 - `segment_vars`: The characteristics whose combination defines a segment. Each is a characteristic the allocator later joins on, so a characteristic that only flows downhill through the TSVs does not belong here.
+- `segment_family_vars`: A subset of `segment_vars` whose combinations (families) each keep their most populous segment before the remaining segments are ranked by size. They are the characteristics the allocator's fallback never releases (sampling region, building type, heating fuel), so a family left without a segment would leave its housing units without a building. Leave it out to rank on size alone.
 - `segment_selection_sample_size`: Size of the initial sample used to rank segments by how much stock they cover.
 - `num_samples_per_segment`: Buildings kept per segment. This single value sets both how many segments are kept and how many buildings are taken from each. The take is a random draw within the segment, seeded from `RANDOM_SEED` in `sampler.py` so a rerun reproduces it.

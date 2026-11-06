@@ -5,6 +5,14 @@ segment_vars:
     - "Heating Fuel"
     - "Sampling Region"
 
+# Every combination of these (a subset of segment_vars) keeps at least its most populous
+# segment before the rest are ranked by size. They are the keys the allocator's fallback
+# never releases, so a family with no segment leaves its housing units without a building.
+segment_family_vars:
+    - "Sampling Region"
+    - "Geometry Building Type RECS"
+    - "Heating Fuel"
+
 segment_selection_sample_size: 50000000  # Determine segments using 50M samples
 
 # Buildings kept per segment. Sets both the number of segments retained

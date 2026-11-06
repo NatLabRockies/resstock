@@ -142,6 +142,54 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
     return sample_df
 
 
+def select_segments(initial_samples_df: pl.DataFrame, segment_cols: list[str], num_segments: int,
+                    family_cols: list[str] | None = None) -> pl.DataFrame:
+    """Choose which segments to keep, most populous first, guaranteeing every family one.
+
+    Segments are ranked by how many of the initial samples fall in them, with the segment values
+    breaking count ties so the choice is reproducible. Without `family_cols` the top
+    `num_segments` are kept. With them, every family (a combination of `family_cols`, a subset of
+    `segment_cols`) that the initial samples reach first keeps its own most populous segment, and
+    the remaining places go to the most populous of the other segments.
+
+    The guarantee is there for the allocator. Its fallback ladder releases vintage and federal
+    poverty level, but never the sampling region, building type or heating fuel, so a housing unit
+    whose family has no sampled building at all finds none. Ranking on counts alone drops whole
+    families in the tail once the sampling regions get small: at 1M datapoints and 300 regions,
+    3% of housing units went unmatched.
+
+    Args:
+        initial_samples_df: Initial samples, one row per sample, carrying the segment columns
+        segment_cols: Columns whose combination defines a segment
+        num_segments: How many segments to keep
+        family_cols: Columns whose combination defines a family, each guaranteed one segment
+
+    Returns:
+        Frame of the kept segments: the segment columns and their initial-sample count
+    """
+    ranked = (
+        initial_samples_df.group_by(segment_cols, maintain_order=True)
+        .agg(pl.len().alias("count"))
+        .sort(["count", *segment_cols], descending=[True, *([False] * len(segment_cols))])
+        .with_row_index("_rank")
+    )
+    if not family_cols:
+        return ranked.head(num_segments).drop("_rank")
+
+    missing = [c for c in family_cols if c not in segment_cols]
+    if missing:
+        raise ValueError(f"Family columns {missing} are not segment columns {segment_cols}")
+    firsts = ranked.filter(pl.col("_rank") == pl.col("_rank").min().over(family_cols))
+    if firsts.height > num_segments:
+        raise ValueError(f"{firsts.height:,} families need a segment each, but only {num_segments:,} segments "
+                         f"are kept; raise the datapoints or lower num_samples_per_segment")
+    rest = ranked.join(firsts.select("_rank"), on="_rank", how="anti").head(num_segments - firsts.height)
+    kept = pl.concat([firsts, rest]).sort("_rank")
+    print(f"Kept {kept.height:,} segments: one for each of {firsts.height:,} families of {family_cols}, "
+          f"then the {rest.height:,} most populous of the rest")
+    return kept.drop("_rank")
+
+
 def take_samples_per_segment(df: pl.DataFrame, segment_cols: list[str], num_samples_per_segment: int,
                              random_seed: int = RANDOM_SEED) -> pl.DataFrame:
     """Take a random `num_samples_per_segment` rows out of each segment.
@@ -248,6 +296,8 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     segment_cols = sorted(segment_vars)
     initial_sample_size = config.get('segment_selection_sample_size', 10000000)
     num_samples_per_segment = config.get('num_samples_per_segment', DEFAULT_NUM_SAMPLES_PER_SEGMENT)
+    # Sorted for the same reason as segment_cols; empty keeps the plain most-populous ranking
+    family_cols = sorted(config.get('segment_family_vars', []))
     initial_samples_df = None
     init_start_time = time.time()
     print(project, num_datapoints, output, segment_vars)
@@ -256,13 +306,9 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     print(f"Initial sampling completed in {time.time() - init_start_time:.2f} seconds. Sample size: {initial_samples_df.shape}")
     initial_samples_df = initial_samples_df.drop("Building")
     num_segments = num_datapoints // num_samples_per_segment
-    # Select the most populous segments, using segment values to break count ties reproducibly.
-    top_segments = (
-        initial_samples_df.group_by(segment_cols, maintain_order=True)
-        .agg(pl.len().alias("count"))
-        .sort(["count", *segment_cols], descending=[True, *([False] * len(segment_cols))])
-        .limit(num_segments)
-    )
+    # Select the most populous segments, after one for every family, using segment values to break
+    # count ties reproducibly.
+    top_segments = select_segments(initial_samples_df, segment_cols, num_segments, family_cols)
     new_df = initial_samples_df.join(top_segments, on=segment_cols, validate="m:1", how="left", maintain_order="left")
     valid_df = new_df.filter(~pl.col('count').is_null())
     valid_df = valid_df.drop("count")
