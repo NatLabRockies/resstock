@@ -448,7 +448,7 @@ def test_a_region_staged_as_several_files_keeps_every_catalogue_row(tmp_path, mo
 
 
 def test_cell_keyed_sampling_regions_join_on_county_and_puma_and_skip_cec(tmp_path):
-    # v5: regions keyed by County x PUMA cell, California included, so the CEC lookup is not read
+    # v5/v6: regions keyed by County x PUMA cell, California included, so the CEC lookup is not read
     write_catalogue_files(tmp_path)
     (tmp_path / "cec_cz_by_tract_2010_lkup.json").unlink()
     cells = {"G0100010|G01000100": 10601, "G3600610|G36006100": 360501, "G0600010|G06000100": 60801}

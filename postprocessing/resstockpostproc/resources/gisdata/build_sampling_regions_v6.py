@@ -1,19 +1,28 @@
-"""Apply the v5 sampling regions and County x PUMA weather to the sampler, options_lookup and allocator.
+"""Apply the v6 sampling regions and County x PUMA weather to the sampler, options_lookup and allocator.
 
-v5 replaces the county-built regions (v1/v3) with 300 regions clustered on weather from County x PUMA
-cells, and gives each cell its own weather file. Both come from one table, `sampling_regions_v5_cells.csv`,
-built by the 2026-08 New Sampling change documentation analysis (`sampling_regions_v5_build.py`):
+v6 replaces the county-built regions (v1/v3) with 200 regions clustered on weather from County x PUMA
+cells, and gives each cell its own weather file. Both come from one table, `sampling_regions_v6_cells.csv`,
+built by the 2026-08 New Sampling change documentation analysis (`sampling_regions_v5_build.py` and
+`region_count_tradeoff.py`, at K = 200):
+
+v5 was the same design at 300 regions. It doubled the sampler's segments (sampling region x building
+type x vintage x heating fuel x federal poverty level) to about 300,000, against a budget of 83,333
+segments at 1M datapoints, and left 3% of housing units without a building in new_sampling_test_8_15.
+At 200 regions there are about 221,000, and the sampler guarantees every sampling region x building
+type x heating fuel family a segment (see samplers/stratified). The weather files are the same as v5's,
+since each cell's file does not depend on how many regions there are. v5's cell table, allocator key and
+validation are kept beside v6's, for the runs drawn with them.
 
   * Weather: each cell takes the AMY2018 county weather file whose station best matches the degree days
     where the cell's housing units are, among files on the county's own (zip code) UTC offset, so the
     simulation clock does not change.
   * Regions: within each state x UTC offset piece, cells are ordered by an energy index of their weather
     (2.34 kWh per HDD65 + 1.73 kWh per CDD65, fitted on the 6_15 run) and cut into contiguous runs by an
-    optimal 1-D partition; 300 regions are spread over the pieces greedily by the reduction in
+    optimal 1-D partition; 200 regions are spread over the pieces greedily by the reduction in
     within-region variance, with a floor of 0.02% of housing units per region. California is clustered
     like every other state (no CEC climate zones). A region never crosses a state line or a clock.
 
-    v5_id = state_fips * 10000 + abs(utc_offset) * 100 + k     (k = 1-based rank by energy index)
+    v6_id = state_fips * 10000 + abs(utc_offset) * 100 + k     (k = 1-based rank by energy index)
 
 The table covers the cells that hold 2010 tracts. The sampler also has 11 cells under county codes that
 postdate them or that the tracts leave out (Alaska's 2013-2019 splits, Kusilvak, Oglala Lakota, Kalawao);
@@ -23,14 +32,14 @@ County row's zip code (zipcode_weather_stations.csv). The 82 Puerto Rico cells o
 have no County row and no weather file, and are left as they are.
 
 Writes:
-  sampling_regions_v5.json                  "county|puma" -> region, for every sampler cell (the allocator's key)
-  sampling_regions_v5_validation.txt        the checks below
+  sampling_regions_v6.json                  "county|puma" -> region, for every sampler cell (the allocator's key)
+  sampling_regions_v6_validation.txt        the checks below
   project_national/housing_characteristics/Sampling Region.tsv   (Dependency=County and PUMA)
   project_testing/housing_characteristics/County and PUMA.tsv    (Dependency=County, from the national one)
   resources/options_lookup.tsv              Sampling Region options; location_epw_path moved from County
                                             to County and PUMA
 
-Usage:  python -I -X utf8 build_sampling_regions_v5.py
+Usage:  python -I -X utf8 build_sampling_regions_v6.py
 """
 
 import csv
@@ -41,7 +50,11 @@ from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
-CELLS = os.path.join(HERE, "sampling_regions_v5_cells.csv")
+VERSION = "v6"
+N_REGIONS = 200
+SCRIPT = f"postprocessing\\resstockpostproc\\resources\\gisdata\\build_sampling_regions_{VERSION}.py"
+CELLS = os.path.join(HERE, f"sampling_regions_{VERSION}_cells.csv")
+REGION_COL = f"sampling_region_{VERSION}"
 NATIONAL = os.path.join(REPO, "project_national", "housing_characteristics")
 TESTING = os.path.join(REPO, "project_testing", "housing_characteristics")
 OPTIONS_LOOKUP = os.path.join(REPO, "resources", "options_lookup.tsv")
@@ -87,7 +100,7 @@ def read_options_lookup():
 
 
 def main():
-    say("v5 sampling regions: 300 weather-clustered regions on County x PUMA cells, County x PUMA weather")
+    say(f"{VERSION} sampling regions: {N_REGIONS} weather-clustered regions on County x PUMA cells, County x PUMA weather")
 
     # ---- inputs ------------------------------------------------------------
     with open(CELLS, encoding="utf-8", newline="") as f:
@@ -125,7 +138,7 @@ def main():
         elif (county, r[0].split(", ")[1]) not in table:
             own_epw[county] = epw_of_cell[r[0]]
         own_tz[county] = tz_of_name[name]
-    say(f"  cell table: {len(table):,} cells, {len({r['sampling_region_v5'] for r in table.values()})} regions")
+    say(f"  cell table: {len(table):,} cells, {len({r[REGION_COL] for r in table.values()})} regions")
     say(
         f"  sampler cells (County and PUMA.tsv options): {len(cells):,}; "
         f"County rows with a weather file: {len(epw_of_name):,}"
@@ -138,14 +151,14 @@ def main():
         county, puma = cell.split(", ")
         if (county, puma) in table:
             r = table[(county, puma)]
-            region[cell], epw[cell], offset[cell] = r["sampling_region_v5"], r["epw_file"], r["utc_offset"]
+            region[cell], epw[cell], offset[cell] = r[REGION_COL], r["epw_file"], r["utc_offset"]
             how["in the cell table"] += 1
             continue
         same = [k for k in table if k[1] == puma and table[k]["utc_offset"] == own_tz[county]]
         if not same:
             raise SystemExit(f"no cell of PUMA {puma} on UTC offset {own_tz[county]} to take a region from for {cell}")
         k = max(same, key=lambda k: units_by_cell[k])
-        region[cell], offset[cell], epw[cell] = table[k]["sampling_region_v5"], own_tz[county], own_epw[county]
+        region[cell], offset[cell], epw[cell] = table[k][REGION_COL], own_tz[county], own_epw[county]
         how["same PUMA and offset's largest cell"] += 1
         say(f"    {cell}: region {region[cell]} (from {k[0]}, offset {offset[cell]}), weather {epw[cell]}")
     say("  sampler cells by source: " + ", ".join(f"{k} {v:,}" for k, v in how.items()))
@@ -159,9 +172,9 @@ def main():
         regions_by_state[cell[1:3]].add(rid)
 
     # ---- allocator key ------------------------------------------------------
-    v5 = {cell.replace(", ", "|"): int(rid) for cell, rid in sorted(region.items())}
-    with open(os.path.join(HERE, "sampling_regions_v5.json"), "w", encoding="utf-8") as f:
-        json.dump(v5, f, indent=1, sort_keys=True)
+    key = {cell.replace(", ", "|"): int(rid) for cell, rid in sorted(region.items())}
+    with open(os.path.join(HERE, f"sampling_regions_{VERSION}.json"), "w", encoding="utf-8") as f:
+        json.dump(key, f, indent=1, sort_keys=True)
 
     # ---- Sampling Region.tsv: one row per County and PUMA option, as County.tsv --------
     dep = [i for i, h in enumerate(cty_head) if h.startswith("Dependency=")]
@@ -178,10 +191,10 @@ def main():
         hot[pos[region[r[0]]]] = "1"
         sr_rows.append([r[0]] + hot + [r[i] for i in tail_idx])
     sr_comments = [
-        r"# Created by: postprocessing\resstockpostproc\resources\gisdata\build_sampling_regions_v5.py",
+        f"# Created by: {SCRIPT}",
         "# Description: The sampling region that the sample is located.",
-        "# Source: 300 regions clustered on County x PUMA weather within each state and UTC offset "
-        "(2026-08 New Sampling change documentation, sampling_regions_v5_cells.csv).",
+        f"# Source: {N_REGIONS} regions clustered on County x PUMA weather within each state and UTC offset "
+        f"(2026-08 New Sampling change documentation, sampling_regions_{VERSION}_cells.csv).",
     ]
     write_tsv(os.path.join(NATIONAL, "Sampling Region.tsv"), sr_head, sr_rows, sr_comments)
 
@@ -216,7 +229,7 @@ def main():
         ["Dependency=County"] + [f"Option={c}" for c in t_cells],
         t_rows,
         [
-            "# Created by: postprocessing\\resstockpostproc\\resources\\gisdata\\build_sampling_regions_v5.py",
+            f"# Created by: {SCRIPT}",
             "# Description: The GISJOIN identifier for the County and the Public Use Microdata Area "
             "that the sample is located.",
             "# Source: project_national County and PUMA.tsv and County.tsv, "
@@ -248,7 +261,7 @@ def main():
     # ---- checks ---------------------------------------------------------------
     say()
     say("=== checks ===")
-    check(len(ids) == 300, f"{len(ids)} regions")
+    check(len(ids) == N_REGIONS, f"{len(ids)} regions")
     check(len(region) == len(cells), f"every sampler cell has a region ({len(region):,})")
     check(not [r for r in span_state.values() if len(r) > 1], "no region spans two states")
     check(not [r for r in span_tz.values() if len(r) > 1], "no region mixes UTC offsets")
@@ -258,7 +271,7 @@ def main():
     say(f"  cells simulated on another county's weather file: {other:,} of {len(epw):,}")
     check(
         sorted(int(h[len("Option=") :]) for h in sr_head if h.startswith("Option=")) == ids,
-        "Sampling Region.tsv options are the v5 ids",
+        f"Sampling Region.tsv options are the {VERSION} ids",
     )
     check(
         all(sum(v == "1" for v in r[1 : len(ids) + 1]) == 1 for r in sr_rows),
@@ -297,7 +310,7 @@ def main():
     say()
     say("  regions by state: " + ", ".join(f"{s} {len(v)}" for s, v in sorted(regions_by_state.items())))
 
-    with open(os.path.join(HERE, "sampling_regions_v5_validation.txt"), "w", encoding="utf-8") as f:
+    with open(os.path.join(HERE, f"sampling_regions_{VERSION}_validation.txt"), "w", encoding="utf-8") as f:
         f.write(chr(10).join(out) + chr(10))
 
 

@@ -166,7 +166,7 @@ class BuildExistingModelTest < Minitest::Test
     end
   end
 
-  # Verifies that v5 regions, built from County and PUMA cells, resolve to their counties through County.tsv.
+  # Verifies that v5/v6 regions, built from County and PUMA cells, resolve to their counties through County.tsv.
   def test_sampling_region_counties_from_county_and_puma_cells
     Dir.mktmpdir do |root|
       characteristics_dir = File.join(root, 'housing_characteristics')

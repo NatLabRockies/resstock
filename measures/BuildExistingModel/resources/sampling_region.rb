@@ -4,7 +4,7 @@ require 'csv'
 
 module SamplingRegion
   # Finds the counties a sampling region covers, from the project's Sampling Region.tsv.
-  # The TSV depends on County (v1/v3 regions) or on County and PUMA (v5 regions, built from cells);
+  # The TSV depends on County (v1/v3 regions) or on County and PUMA (v5/v6 regions, built from cells);
   # cells are translated to their counties through County.tsv.
   # @param characteristics_dir [String] Project housing characteristics directory
   # @param region [String] Sampling Region option of the building

@@ -296,14 +296,14 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
     # Align vacant row join keys with how the buildstock sample labels vacant buildings
     return coerce_vacant_join_keys(catalogue_df)
 
-# Separates the county and PUMA gisjoins in the keys of a cell-keyed sampling regions file (v5)
+# Separates the county and PUMA gisjoins in the keys of a cell-keyed sampling regions file (v5, v6)
 CELL_KEY_SEPARATOR = "|"
 
 
 def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: str) -> pl.DataFrame:
     """Load sampling regions mapping, downloading from S3 if necessary.
 
-    v1 and v3 map counties to regions ({"G0100010": 7}); v5 maps County x PUMA cells
+    v1 and v3 map counties to regions ({"G0100010": 7}); v5 and v6 map County x PUMA cells
     ({"G0100010|G01002100": 10602}), and covers California itself.
 
     Args:
@@ -362,7 +362,7 @@ def sampling_region_key_columns(sampling_regions_df: pl.DataFrame) -> list[str]:
 
 
 def no_cec_climate_zones() -> pl.DataFrame:
-    """An empty CEC lookup, for versions whose regions cover California themselves (v5)."""
+    """An empty CEC lookup, for versions whose regions cover California themselves (v5, v6)."""
 
     return pl.DataFrame(schema={"in.nhgis_tract_gisjoin": pl.Utf8, "in.sampling_region_id": pl.Int64})
 
@@ -450,7 +450,7 @@ def assign_sampling_regions(
 ) -> pl.LazyFrame:
     """Attach the sampling region each catalogue row falls in.
 
-    Uses county-based (v1, v3) or County x PUMA-based (v5) sampling regions, and for the
+    Uses county-based (v1, v3) or County x PUMA-based (v5, v6) sampling regions, and for the
     county-based versions CEC climate zone-based sampling regions for California tracts.
 
     The assignment depends only on the tract, county and PUMA gisjoins, so it can be applied
@@ -461,13 +461,13 @@ def assign_sampling_regions(
         catalogue: Catalogue data with tract, county and PUMA information
         sampling_regions_df: County (or County x PUMA) to sampling region mapping
         cec_2010_cz_lkup_df: California tract to sampling region mapping via CEC climate zones
-            (empty for v5)
+            (empty for v5 and v6)
 
     Returns:
         LazyFrame with an in.sampling_region_id column, as a string to match the type in bs_df
     """
 
-    # Join catalogue with county or cell-based sampling regions (covers most of US, or all of it for v5)
+    # Join catalogue with county or cell-based sampling regions (covers most of US, or all of it for v5 and v6)
     lf = catalogue.join(sampling_regions_df.lazy(), on=sampling_region_key_columns(sampling_regions_df), how="left")
 
     # Join with CEC climate zone-based sampling regions (covers California)
@@ -685,7 +685,7 @@ def partition_catalogue_by_sampling_region(
 
     catalogue_lf = scan_catalogue(output_dir, catalogue_file_version)
     sampling_regions_df = load_sampling_regions(output_dir, sampling_region_version)
-    # Cell-keyed versions (v5) cluster California like every other state, so the CEC zones do not apply
+    # Cell-keyed versions (v5, v6) cluster California like every other state, so the CEC zones do not apply
     if "in.nhgis_puma_gisjoin" in sampling_regions_df.columns:
         cec_2010_cz_lkup_df = no_cec_climate_zones()
     else:

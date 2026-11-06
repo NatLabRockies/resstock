@@ -78,7 +78,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
                                        rename_upgrades_path: str | None = None,
                                        allocation_seed: int | None = DEFAULT_ALLOCATION_SEED,
                                        null_building_threshold: float = DEFAULT_NULL_BUILDING_THRESHOLD,
-                                       sampling_region_version: str = "v5",
+                                       sampling_region_version: str = "v6",
                                        ) -> None:
     """
     Export metadata and annual results for the given raw BuildStockBatch results.
@@ -331,7 +331,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--sampling_region_version",
-        default="v5",
+        default="v6",
         help=(
             "Version of sampling_regions_<version>.json to join on (stratified sampler only); "
             "must match the Sampling Region.tsv the sample was drawn with"
