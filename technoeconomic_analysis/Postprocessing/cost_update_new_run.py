@@ -34,8 +34,8 @@ def er_heating_cost(df):
 
 def hp_heating_cost_adjustment(df):
     df['hp_cost_adjustment'] = 0
-    df['upgrade_costs.size_heat_pump_backup_primary_k_btu_h'] = df['upgrade_costs.size_heat_pump_backup_primary_k_btu_h']/34.1214
-    df['num_10kw_hpbkup'] = df['upgrade_costs.size_heat_pump_backup_primary_k_btu_h'].apply(np.ceil)
+    df['upgrade_costs.size_heat_pump_backup_primary_10kwh'] = df['upgrade_costs.size_heat_pump_backup_primary_k_btu_h']/34.1214
+    df['num_10kw_hpbkup'] = df['upgrade_costs.size_heat_pump_backup_primary_10kwh'].apply(np.ceil)
     for i, row in df.iterrows():
         ##### HVAC Has Ducts
         if row['build_existing_model.hvac_has_ducts'] == 'Yes':
