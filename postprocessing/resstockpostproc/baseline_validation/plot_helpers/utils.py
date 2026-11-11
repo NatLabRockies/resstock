@@ -39,7 +39,7 @@ def get_buildstock_query(
     skip_reports: bool = False,
 ) -> BuildStockQuery:
     """Create and configure a BuildStockQuery instance.
-    
+
     BuildStockQuery will automatically fetch the Athena workgroup's configured
     query output location. You only need to provide query_unload_s3_bucket in
     workflow.yaml if you want to override the workgroup's default.

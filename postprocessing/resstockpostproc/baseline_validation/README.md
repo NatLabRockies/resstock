@@ -145,7 +145,7 @@ data_sources:
   - db_name: buildstock_sdr
     table_name: my_run
     name: my_data
-    query_unload_s3_bucket: "my-personal-bucket"  # Optional override
+    query_unload_s3_bucket: "my-personal-bucket" # Optional override
     # ... other fields
 ```
 
@@ -190,8 +190,6 @@ The next run will recreate caches as needed with your new configuration.
 **Note**: Reference data caches (`eia_annual_data_cache`, `recs_annual_data_cache_v2`) are safe to keep unless you're updating reference datasets.
 
 **Symptom of a stale/mis-keyed cache**: a data source you added to `workflow.yaml` is silently missing from plots, with no corresponding warning in `run.log`. The data-loading cache is supposed to auto-invalidate when `data_sources` changes (via a hash in `_get_workflow_state_hash()` in `shared_utils/caching.py`), but if that hash computation ever throws (it's wrapped in a bare `try/except: return None`), invalidation silently no-ops and stale results from a prior `data_sources` config get reused. If you suspect this, clear `postprocessing/.cache` manually using the commands above and re-run.
-
-
 
 ## Developing and Testing
 

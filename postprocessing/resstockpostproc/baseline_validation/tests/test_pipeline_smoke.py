@@ -37,7 +37,10 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 # Shared helpers
 # ──────────────────────────────────────────────────────────────────────────────
 
-_EXPECTED_SOURCES: set[str] = {src.name for src in workflow.data_sources}
+_EXPECTED_SOURCES: set[str] = {
+    workflow.data_source_labels[src.name].label if src.name in workflow.data_source_labels else src.name
+    for src in workflow.data_sources
+}
 
 
 def _assert_nonempty(df: pl.DataFrame | None, label: str) -> pl.DataFrame:
@@ -50,10 +53,7 @@ def _assert_has_all_sources(df: pl.DataFrame, label: str) -> None:
     """Every configured workflow source must appear in the merged data."""
     found = set(df["source"].unique().to_list())
     missing = _EXPECTED_SOURCES - found
-    assert not missing, (
-        f"{label}: sources missing from data — {sorted(missing)}.\n"
-        f"Found: {sorted(found)}"
-    )
+    assert not missing, f"{label}: sources missing from data — {sorted(missing)}.\nFound: {sorted(found)}"
 
 
 def _assert_figure_has_traces(fig: go.Figure, label: str) -> None:
@@ -147,11 +147,11 @@ class TestPipelineSmoke:
         _assert_figure_has_traces(fig, label)
 
     # ------------------------------------------------------------------
-    # LRD annual electricity by utility (eiaid)
+    # LRD annual electricity by utility
     # Exercises: LRD static parquet + ResStock Athena baseline table
     # (_md_national_parquet view) via utility.aggregate_annual_by_eiaid.
     # ------------------------------------------------------------------
-    def test_lrd_annual_electricity_by_eiaid(self):
+    def test_lrd_annual_electricity_by_utility(self):
         label = "LRD annual electricity by utility (Athena baseline table query)"
         spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
@@ -159,7 +159,7 @@ class TestPipelineSmoke:
             resolution=Resolution.year,
             aggregation_type=Metric.average,
             coverage=CoverageType.all_units,
-            group_by="eiaid",
+            group_by="utility",
             view=ViewType.value_view,
         )
         data = _assert_nonempty(get_plot_data(spec), label)
@@ -167,11 +167,8 @@ class TestPipelineSmoke:
         # check that at least one ResStock source appears (not necessarily all).
         found = set(data["source"].unique().to_list())
         resstock_found = _EXPECTED_SOURCES & found
-        assert resstock_found, (
-            f"{label}: no ResStock sources found in data.\n"
-            f"Found sources: {sorted(found)}"
-        )
-        assert "eiaid" in data.columns, f"{label}: missing eiaid column"
+        assert resstock_found, f"{label}: no ResStock sources found in data.\nFound sources: {sorted(found)}"
+        assert "utility" in data.columns, f"{label}: missing utility column"
 
         fig, _title = lrd_plotter.create_plot(data, spec)
         _assert_figure_has_traces(fig, label)
@@ -191,9 +188,7 @@ class TestPipelineSmoke:
             lf = pl.scan_parquet(path)
             schema = lf.collect_schema()
             assert len(schema) > 0, f"Parquet schema empty for source '{src.name}'"
-            assert "weight" in schema.names(), (
-                f"Missing 'weight' column in parquet for source '{src.name}'"
-            )
+            assert "weight" in schema.names(), f"Missing 'weight' column in parquet for source '{src.name}'"
 
     # ------------------------------------------------------------------
     # Natural gas monthly (second fuel type, different timeseries columns)

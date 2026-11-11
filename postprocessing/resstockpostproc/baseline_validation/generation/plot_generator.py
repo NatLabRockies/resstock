@@ -105,9 +105,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     log_file_path = output_root / "run.log"
     log_file_handler = logging.FileHandler(log_file_path, mode="w", encoding="utf-8")
     log_file_handler.setLevel(logging.WARNING)
-    log_file_handler.setFormatter(
-        logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - %(message)s")
-    )
+    log_file_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - %(message)s"))
     root_logger = logging.getLogger()
     root_logger.addHandler(log_file_handler)
 

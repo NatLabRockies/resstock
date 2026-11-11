@@ -359,7 +359,9 @@ def _consume_result(future, sub_key):
     return result
 
 
-def _render_parallel(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result, log_file_path=None) -> None:
+def _render_parallel(
+    plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result, log_file_path=None
+) -> None:
     """Run plot_args in a ProcessPoolExecutor, calling handle_result on each completion."""
     max_workers = max(2, min(8, (os.cpu_count() or 4) - 2))
     logger.info(f"Using {max_workers} worker processes")
@@ -419,7 +421,9 @@ def render_all_work_items(
 
     with _tqdm_logging_context(len(plot_args)) as pbar:
         if parallel:
-            _render_parallel(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result, log_file_path=log_file_path)
+            _render_parallel(
+                plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result, log_file_path=log_file_path
+            )
         else:
             _render_sequential(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result)
 

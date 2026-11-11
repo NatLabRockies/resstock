@@ -227,22 +227,28 @@ def test_generate_plots_closes_run_log_handler(monkeypatch, tmp_path):
         return handler
 
     monkeypatch.setattr(plot_generator.logging, "FileHandler", tracking_file_handler)
-    monkeypatch.setattr(plot_generator, "generate_all_templates", lambda: [])
-    monkeypatch.setattr(plot_generator, "build_render_gate", lambda templates, test_only: set())
-    monkeypatch.setattr(plot_generator, "dashboard_output_root", lambda workflow: tmp_path)
-    monkeypatch.setattr(plot_generator, "comparisons_index_tsv_path", lambda output_root: output_root / "comparisons_index.tsv")
-    monkeypatch.setattr(plot_generator, "dashboard_html_path", lambda output_root: output_root / "comparison_dashboard.html")
-    monkeypatch.setattr(plot_generator, "comparisons_index_data_dir", lambda output_root: output_root / "dashboard_data")
+    monkeypatch.setattr(plot_generator, "generate_all_templates", list)
+    monkeypatch.setattr(plot_generator, "build_render_gate", lambda _templates, _test_only: set())
+    monkeypatch.setattr(plot_generator, "dashboard_output_root", lambda _workflow: tmp_path)
+    monkeypatch.setattr(
+        plot_generator, "comparisons_index_tsv_path", lambda output_root: output_root / "comparisons_index.tsv"
+    )
+    monkeypatch.setattr(
+        plot_generator, "dashboard_html_path", lambda output_root: output_root / "comparison_dashboard.html"
+    )
+    monkeypatch.setattr(
+        plot_generator, "comparisons_index_data_dir", lambda output_root: output_root / "dashboard_data"
+    )
     monkeypatch.setattr(plot_generator, "dashboard_assets_dir", lambda output_root: output_root / "assets")
     monkeypatch.setattr(plot_generator, "ensure_plotly_asset", lambda path: path / "plotly.min.js")
-    monkeypatch.setattr(plot_generator, "expand_templates", lambda templates, test_only=False: [])
-    monkeypatch.setattr(plot_generator, "build_plot_args", lambda work_items, render_keys: ({}, [], {}))
-    monkeypatch.setattr(plot_generator, "render_all_work_items", lambda *args, **kwargs: None)
-    monkeypatch.setattr(plot_generator, "generate_stacked_pages", lambda *args, **kwargs: 0)
-    monkeypatch.setattr(plot_generator, "_cleanup_raw_plot_html", lambda *args, **kwargs: None)
-    monkeypatch.setattr(plot_generator, "write_canonical_index", lambda *args, **kwargs: None)
-    monkeypatch.setattr(plot_generator.TimingStats, "start_trace", lambda *args, **kwargs: None)
-    monkeypatch.setattr(plot_generator.TimingStats, "stop_trace", lambda *args, **kwargs: None)
+    monkeypatch.setattr(plot_generator, "expand_templates", lambda _templates, **_kwargs: [])
+    monkeypatch.setattr(plot_generator, "build_plot_args", lambda _work_items, _render_keys: ({}, [], {}))
+    monkeypatch.setattr(plot_generator, "render_all_work_items", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(plot_generator, "generate_stacked_pages", lambda *_args, **_kwargs: 0)
+    monkeypatch.setattr(plot_generator, "_cleanup_raw_plot_html", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(plot_generator, "write_canonical_index", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(plot_generator.TimingStats, "start_trace", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(plot_generator.TimingStats, "stop_trace", lambda *_args, **_kwargs: None)
     monkeypatch.setattr(plot_generator.TimingStats, "summary", lambda: "timing summary")
 
     plot_generator.generate_plots(test_only=True)

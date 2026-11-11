@@ -48,7 +48,8 @@ class DataSourceConfig(NoExtraModel):
         default=False,
         description=(
             "If True, skips validation of timeseries timestamp offsets. "
-            "Set to True if your timeseries data has non-standard intervals (e.g., aggregated to hourly instead of minute-level)."
+            "Set to True if your timeseries data has non-standard intervals "
+            "(e.g., aggregated to hourly instead of minute-level)."
         ),
     )
 

@@ -9,16 +9,16 @@ data_sources:
     name: option_based_resstock
     db_schema: resstock_oedi_new
     skip_missing_enduses: true
-    has_upgrades: false  # baseline only run will have no upgrades
-    skip_timestamp_offset_validation: true  # they are agg to hourly instead of timestep
+    has_upgrades: false # baseline only run will have no upgrades
+    skip_timestamp_offset_validation: true # they are agg to hourly instead of timestep
     baseline_metadata_and_annual_results_parquet_url: s3://resstock-core/heating_calibration/post_sdr_baseline_061926/pub_annual/upgrade=0/results_up00.parquet
   - db_name: resstock_core
     table_name: post_sdr_baseline_sheltered_flue_090426 # post_sdr_baseline_061926
     name: ob_resstock_sheltered_flue # option_based_resstock
     db_schema: resstock_oedi_new
     skip_missing_enduses: true
-    has_upgrades: false  # baseline only run will have no upgrades
-    skip_timestamp_offset_validation: true  # they are agg to hourly instead of timestep
+    has_upgrades: false # baseline only run will have no upgrades
+    skip_timestamp_offset_validation: true # they are agg to hourly instead of timestep
     baseline_metadata_and_annual_results_parquet_url: s3://resstock-core/heating_calibration/post_sdr_baseline_sheltered_flue_090426/pub_annual/upgrade=0/results_up00.parquet # s3://resstock-core/heating_calibration/post_sdr_baseline_061926/pub_annual/upgrade=0/results_up00.parquet
   - db_name: buildstock_sdr
     table_name: resstock_amy2018_r1_2025

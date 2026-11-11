@@ -57,9 +57,7 @@ def get_timeseries_all(
                 resolution=resolution,
             )
         except Exception as exc:
-            logger.warning(
-                "Skipping timeseries for source '%s': %s", data_source.name, exc, exc_info=True
-            )
+            logger.warning("Skipping timeseries for source '%s': %s", data_source.name, exc, exc_info=True)
             continue
         annual_df = get_annual(data_source, by, occupied_only=occupied_only)
         value_cols = [col for col in df.columns if col.endswith("_value")]
