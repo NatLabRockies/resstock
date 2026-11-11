@@ -64,6 +64,7 @@ workflow_generator:
       simulation_control_run_period_end_month: 12
       simulation_control_run_period_end_day_of_month: 31
       simulation_control_run_period_calendar_year: 2007
+      add_component_loads: true
 
     # Emissions scenarios
     emissions:
@@ -83,11 +84,11 @@ workflow_generator:
       include_timeseries_fuel_consumptions: true
       include_timeseries_end_use_consumptions: true
       include_timeseries_emissions: true
-      include_timeseries_emission_fuels: true
-      include_timeseries_emission_end_uses: true
+      include_timeseries_emission_fuels: false
+      include_timeseries_emission_end_uses: false
       include_timeseries_hot_water_uses: true
       include_timeseries_total_loads: true
-      include_timeseries_component_loads: false
+      include_timeseries_component_loads: true
       include_timeseries_unmet_hours: true
       include_timeseries_zone_temperatures: true
       include_timeseries_zone_conditions: true

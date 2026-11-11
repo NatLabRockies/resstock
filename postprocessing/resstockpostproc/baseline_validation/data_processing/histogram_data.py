@@ -51,6 +51,12 @@ def get_distribution_histogram_data(plot_spec: PlotSpec) -> pl.DataFrame:
     for col, val in plot_spec.focus_on:
         if col in out.columns:
             out = out.filter(pl.col(col) == val)
+        else:
+            logger.warning(
+                "Skipping histogram focus_on filter because column is missing. column=%s value=%s",
+                col,
+                val,
+            )
 
     # Drop focus_on filter columns (already applied) but keep group_by column.
     cols_to_keep = {plot_spec.group_by} if plot_spec.group_by else set()
@@ -142,8 +148,8 @@ def _load_resstock_hist_rows(
     except ValueError as exc:
         if "Missing required quantity column" not in str(exc):
             raise
-        logger.info(
-            "Skipping histogram source %s for quantity %s because the raw parquet lacks that enduse column.",
+        logger.warning(
+            "Skipping histogram source %s for quantity %s because raw parquet lacks that enduse column.",
             data_source.name,
             quantity,
         )
