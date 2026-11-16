@@ -642,6 +642,11 @@ jobs:
         run: |
           set -o pipefail  # ensures the pipeline fails if buildstock_local fails, not just the tee command
 
+          # The committed YAML uses the stratified sampler for production runs. CI runs the
+          # minimal buildstock from sdr-options-analysis instead, with ACS 2021 5-year B25001
+          # (no territories) as the flat weight total.
+          python .github/scripts/use_precomputed_sample_in_yaml.py project_national/sdr_upgrades_amy2018.yml resources/sdr_minimal_buildstock.csv 139647020
+
           EXTRA_ARGS=""
           if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
             echo "Running on develop branch, using --replace_existing"
