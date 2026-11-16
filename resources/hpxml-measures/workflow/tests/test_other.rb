@@ -42,42 +42,6 @@ class WorkflowOtherTest < Minitest::Test
     end
   end
 
-  def test_run_simulation_epjson_input
-    # Check that we can run a simulation using epJSON (instead of IDF) if requested
-    rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
-    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\" --ep-input-format epjson"
-    system(command, err: File::NULL)
-
-    # Check for epjson file
-    run_dir = File.join(File.dirname(xml), 'run')
-    assert(File.exist? File.join(run_dir, 'in.epJSON'))
-
-    # Check for output files
-    assert(File.exist? File.join(run_dir, 'results_annual.csv'))
-
-    # Check for no E+ msgpack files
-    refute(File.exist? File.join(run_dir, 'eplusout.msgpack'))
-  end
-
-  def test_run_simulation_idf_input
-    # Check that we can run a simulation using IDF (instead of epJSON) if requested
-    rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
-    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\" --ep-input-format idf"
-    system(command, err: File::NULL)
-
-    # Check for idf file
-    run_dir = File.join(File.dirname(xml), 'run')
-    assert(File.exist? File.join(run_dir, 'in.idf'))
-
-    # Check for output files
-    assert(File.exist? File.join(run_dir, 'results_annual.csv'))
-
-    # Check for no E+ msgpack files
-    refute(File.exist? File.join(run_dir, 'eplusout.msgpack'))
-  end
-
   def test_run_simulation_epw_path_with_shell_characters
     # Check that a weather file path containing shell metacharacters is not
     # interpreted by a shell

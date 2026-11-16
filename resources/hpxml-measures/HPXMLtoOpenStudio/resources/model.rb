@@ -419,7 +419,7 @@ module Model
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param name [String] Name for the OpenStudio object
-  # @param fluid_type [String] Fluid type (Eplus::FluidXXX)
+  # @param fluid_type [String] Fluid type (EPlus::FluidXXX)
   # @param glycol_concentration [Integer] Percent glycol concentration, only used if fluid is propylene glycol
   # @param volume [Double] Volume of the entire loop, both demand and supply side (m^3)
   # @param min_temp [Double] Minimum loop temperature (C)
@@ -682,6 +682,31 @@ module Model
     curve.setCoefficient4x(coeff[3])
     curve.setCoefficient5y(coeff[4])
     curve.setCoefficient6z(coeff[5])
+    return curve
+  end
+
+  # Adds a CurveExponent object to the OpenStudio model.
+  #
+  # y = C1 + C2*x^C3
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param coeff [Array<Double>] Coefficients for the above equation
+  # @param min_x [Double] Minimum allowable value for x
+  # @param max_x [Double] Maximum allowable value for x
+  # @return [OpenStudio::Model::CurveExponent] The model object
+  def self.add_curve_exponent(model, name:, coeff:, min_x: nil, max_x: nil)
+    if coeff.length != 3
+      fail 'Error: There must be 3 coefficients in an exponent curve'
+    end
+
+    curve = OpenStudio::Model::CurveExponent.new(model)
+    curve.setName(name)
+    curve.setCoefficient1Constant(coeff[0])
+    curve.setCoefficient2Constant(coeff[1])
+    curve.setCoefficient3Constant(coeff[2])
+    curve.setMinimumValueofx(min_x) unless min_x.nil?
+    curve.setMaximumValueofx(max_x) unless max_x.nil?
     return curve
   end
 
