@@ -1461,6 +1461,9 @@
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml",
     "hvac_heat_pump": "Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance"
   },
+  "sample_files/base-hvac-air-to-air-heat-pump-2-speed-fan-motor-type.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml"
+  },
   "sample_files/base-hvac-air-to-air-heat-pump-2-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml",
     "location_epw_path": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
@@ -1516,6 +1519,9 @@
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-furnace.xml",
     "hvac_heat_pump_capacity": "Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit",
     "hvac_heating_system_2_capacity": "Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit"
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-fan-motor-type.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-pan-heater-continuous-mode.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml"

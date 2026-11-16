@@ -34,7 +34,7 @@ module MathTools
           + (fx2y2 / Float((x2 - x1) * (y2 - y1))) * (x - x1) * (y - y1)
   end
 
-  # Calculates the result of a biquadratic polynomial with independent variables.
+  # Calculates the result of a biquadratic polynomial with independent variables,
   # x and y, and a list of coefficients, c:
   #
   # z = c[1] + c[2]*x + c[3]*x**2 + c[4]*y + c[5]*y**2 + c[6]*x*y
@@ -52,7 +52,7 @@ module MathTools
     return z
   end
 
-  # Calculates the result of a quadratic polynomial with independent variable.
+  # Calculates the result of a quadratic polynomial with independent variable
   # x and a list of coefficients, c:
   #
   # y = c[1] + c[2]*x + c[3]*x**2
@@ -70,7 +70,7 @@ module MathTools
     return y
   end
 
-  # Calculates the result of a quadlinear polynomial with independent variable.
+  # Calculates the result of a quadlinear polynomial with independent variables,
   # w, x, y, z and a list of coefficients, c:
   #
   # y = c[1] + c[2]*w + c[3]*x + c[4]*y + c[5]*z
@@ -91,7 +91,7 @@ module MathTools
     return y
   end
 
-  # Calculates the result of a quintlinear polynomial with independent variable.
+  # Calculates the result of a quintlinear polynomial with independent variables,
   # v, w, x, y, z and a list of coefficients, c:
   #
   # y = c[1] + c[2]*v + c[3]*w + c[4]*x + c[5]*y + c[6]*z
@@ -113,7 +113,7 @@ module MathTools
     return y
   end
 
-  # Calculates the result of a bicubic polynomial with independent variables.
+  # Calculates the result of a bicubic polynomial with independent variables,
   # x and y, and a list of coefficients, c:
   #
   # z = c[1] + c[2]*x + c[3]*y + c[4]*x**2 + c[5]*x*y + c[6]*y**2 + \
@@ -130,6 +130,24 @@ module MathTools
 
     z = c[0] + c[1] * x + c[2] * x**2 + c[3] * y + c[4] * y**2 + c[5] * x * y + \
         c[6] * x**3 + c[7] * y**3 + c[8] * x**2 * y + c[9] * x * y**2
+
+    return z
+  end
+
+  # Calculates the result of an exponent polynomial with independent variable
+  # x and a list of coefficients, c:
+  #
+  # z = c[1] + c[2]*x**c[3]
+  #
+  # @param x [Double] independent variable 1
+  # @param c [Array<Double>] list of 3 coefficients
+  # @return [Double] result of exponent polynomial
+  def self.exponent(x, c)
+    if c.size != 3
+      fail 'Error: There must be 3 coefficients in an exponent polynomial'
+    end
+
+    z = c[0] + c[1] * x**c[2]
 
     return z
   end

@@ -204,11 +204,9 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     expected_fan_power_fractions = expected_fan_cfm_fractions.map { |cfm_fraction| cfm_fraction**2.75 }
     unitary_system = model.getAirLoopHVACUnitarySystems[0]
     fan = unitary_system.supplyFan.get.to_FanSystemModel.get
-    fan.speeds.map { |speed| speed.flowFraction }.sort.each_with_index do |ff, i|
-      assert_in_epsilon(ff, expected_fan_cfm_fractions[i])
-    end
-    fan.speeds.map { |speed| speed.electricPowerFraction.get }.sort.each_with_index do |pf, i|
-      assert_in_epsilon(pf, expected_fan_power_fractions[i])
+    expected_fan_cfm_fractions.each_with_index do |ff, i|
+      pf = fan.electricPowerFunctionofFlowFractionCurve.get.evaluate(ff)
+      assert_in_epsilon(pf, expected_fan_power_fractions[i], tol)
     end
     assert_in_epsilon(fan.electricPowerPerUnitFlowRate, expected_watts_per_flow)
 
@@ -303,10 +301,9 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     unitary_system = model.getAirLoopHVACUnitarySystems[0]
     fan = unitary_system.supplyFan.get.to_FanSystemModel.get
     fan.speeds.map { |speed| speed.flowFraction }.sort.each_with_index do |ff, i|
-      assert_in_epsilon(ff, expected_fan_cfm_fractions[i])
-    end
-    fan.speeds.map { |speed| speed.electricPowerFraction.get }.sort.each_with_index do |pf, i|
-      assert_in_epsilon(pf, expected_fan_power_fractions[i])
+      assert_in_epsilon(ff, expected_fan_cfm_fractions[i], tol)
+      pf = fan.electricPowerFunctionofFlowFractionCurve.get.evaluate(ff)
+      assert_in_epsilon(pf, expected_fan_power_fractions[i], tol)
     end
     assert_in_epsilon(fan.electricPowerPerUnitFlowRate, expected_watts_per_flow)
 
@@ -387,10 +384,9 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     unitary_system = model.getAirLoopHVACUnitarySystems[0]
     fan = unitary_system.supplyFan.get.to_FanSystemModel.get
     fan.speeds.map { |speed| speed.flowFraction }.sort.each_with_index do |ff, i|
-      assert_in_epsilon(ff, expected_fan_cfm_fractions[i])
-    end
-    fan.speeds.map { |speed| speed.electricPowerFraction.get }.sort.each_with_index do |pf, i|
-      assert_in_epsilon(pf, expected_fan_power_fractions[i])
+      assert_in_epsilon(ff, expected_fan_cfm_fractions[i], tol)
+      pf = fan.electricPowerFunctionofFlowFractionCurve.get.evaluate(ff)
+      assert_in_epsilon(pf, expected_fan_power_fractions[i], tol)
     end
     assert_in_epsilon(fan.electricPowerPerUnitFlowRate, expected_watts_per_flow)
 
@@ -489,11 +485,9 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     expected_fan_power_fractions = expected_fan_cfm_fractions.map { |cfm_fraction| cfm_fraction**3 }
     unitary_system = model.getAirLoopHVACUnitarySystems[0]
     fan = unitary_system.supplyFan.get.to_FanSystemModel.get
-    fan.speeds.map { |speed| speed.flowFraction }.sort.each_with_index do |ff, i|
-      assert_in_epsilon(ff, expected_fan_cfm_fractions[i])
-    end
-    fan.speeds.map { |speed| speed.electricPowerFraction.get }.sort.each_with_index do |pf, i|
-      assert_in_epsilon(pf, expected_fan_power_fractions[i])
+    expected_fan_cfm_fractions.each_with_index do |ff, i|
+      pf = fan.electricPowerFunctionofFlowFractionCurve.get.evaluate(ff)
+      assert_in_epsilon(pf, expected_fan_power_fractions[i], tol)
     end
     assert_in_epsilon(fan.electricPowerPerUnitFlowRate, expected_watts_per_flow)
   end

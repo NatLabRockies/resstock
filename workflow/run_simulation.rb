@@ -17,7 +17,7 @@ $timeseries_types = ['ALL', 'total', 'fuels', 'enduses', 'systemuses', 'emission
                      'dwellingunits']
 
 def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
-                 output_format, building_id, ep_input_format, stochastic_schedules,
+                 output_format, building_id, stochastic_schedules,
                  hourly_outputs, daily_outputs, monthly_outputs, timestep_outputs,
                  skip_simulation, master_seed, ems_debug)
 
@@ -120,7 +120,7 @@ def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
     measures[measure_subdir] = [args]
   end
 
-  results = run_hpxml_workflow(rundir, measures, measures_dir, debug: debug, ep_input_format: ep_input_format, run_measures_only: skip_simulation)
+  results = run_hpxml_workflow(rundir, measures, measures_dir, debug: debug, run_measures_only: skip_simulation)
 
   return results[:success]
 end
@@ -187,11 +187,6 @@ OptionParser.new do |opts|
     options[:master_seed] = t
   end
 
-  options[:ep_input_format] = 'idf'
-  opts.on('--ep-input-format TYPE', 'EnergyPlus input file format (idf, epjson)') do |t|
-    options[:ep_input_format] = t
-  end
-
   opts.on('-b', '--building-id ID', 'ID of HPXML Building to simulate') do |t|
     options[:building_id] = t
   end
@@ -254,7 +249,7 @@ else
     puts "BuildingID: #{options[:building_id]}"
   end
   success = run_workflow(basedir, rundir, options[:hpxml], options[:debug], options[:skip_validation], options[:add_comp_loads],
-                         options[:output_format], options[:building_id], options[:ep_input_format], options[:stochastic_schedules],
+                         options[:output_format], options[:building_id], options[:stochastic_schedules],
                          options[:hourly_outputs], options[:daily_outputs], options[:monthly_outputs], options[:timestep_outputs],
                          options[:skip_simulation], options[:master_seed], options[:ems_debug])
 
