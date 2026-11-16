@@ -1,0 +1,56 @@
+"""Shared weighted-statistics helpers for RECS/ResStock annual aggregation."""
+
+from __future__ import annotations
+
+import numpy as np
+
+
+# 9-element quartile grid used by both RECS and ResStock annual loaders.
+# Indices match QUARTILE_INDICES in plot_semantics (min=0, q1=3, median=4, q3=5, max=8).
+ANNUAL_QUANTILES = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
+
+
+def weighted_quantiles(
+    data: np.ndarray,
+    weights: np.ndarray,
+    quantiles: list[float],
+) -> np.ndarray:
+    """Return weighted quantiles of ``data`` at the cumulative-weight cutoffs ``quantiles``."""
+    # Sort data and weights by data values
+    sorted_indices = np.argsort(data)
+    sorted_data = data[sorted_indices]
+    sorted_weights = weights[sorted_indices]
+
+    # Calculate cumulative weights
+    cumsum_weights = np.cumsum(sorted_weights)
+    total_weight = cumsum_weights[-1]
+
+    # Normalize cumulative weights to [0, 1]
+    cumsum_normalized = cumsum_weights / total_weight
+
+    # Calculate quantiles
+    result = np.zeros(len(quantiles))
+    for i, q in enumerate(quantiles):
+        if q == 0:
+            result[i] = sorted_data[0]
+        elif q == 1:
+            result[i] = sorted_data[-1]
+        else:
+            # Find the index where cumulative weight exceeds quantile
+            idx = np.searchsorted(cumsum_normalized, q)
+            if idx == 0:
+                result[i] = sorted_data[0]
+            elif idx >= len(sorted_data):
+                result[i] = sorted_data[-1]
+            else:
+                # Linear interpolation
+                w0 = cumsum_normalized[idx - 1]
+                w1 = cumsum_normalized[idx]
+                v0 = sorted_data[idx - 1]
+                v1 = sorted_data[idx]
+                if w1 - w0 > 0:
+                    result[i] = v0 + (v1 - v0) * (q - w0) / (w1 - w0)
+                else:
+                    result[i] = v0
+
+    return result

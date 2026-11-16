@@ -90,7 +90,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           name: emissions_scenario_name,
           emissions_type: (args[:emissions_types].split(',').map(&:strip)[i] rescue nil),
           elec_units: (args[:emissions_electricity_units].split(',').map(&:strip)[i] rescue nil),
-          elec_schedule_filepath: (args[:emissions_electricity_filepaths].split(',').map(&:strip)[i] rescue nil),
+          elec_schedule_filepath: (args[:emissions_electricity_filepaths].split(',').map { |filepath| filepath.strip.empty? ? nil : filepath.strip }[i] rescue nil),
+          elec_value: (Float(args[:emissions_electricity_values].split(',').map(&:strip)[i]) rescue nil),
           natural_gas_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
           natural_gas_value: (Float(args[:emissions_natural_gas_values].split(',').map(&:strip)[i]) rescue nil),
           propane_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
@@ -418,6 +419,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                            cooling_system.compressor_type)
       end
       hpxml_bldg.heat_pumps.each do |heat_pump|
+        heat_pump.heating_capacity_fraction_17F = args[:hvac_heat_pump_heating_capacity_fraction_17_f] unless args[:hvac_heat_pump_heating_capacity_fraction_17_f].nil?
         heat_pump.heating_autosizing_factor = args[:heat_pump_heating_autosizing_factor] unless args[:heat_pump_heating_autosizing_factor].nil?
         heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
         heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?

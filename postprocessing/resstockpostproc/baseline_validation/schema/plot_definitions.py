@@ -1,0 +1,468 @@
+"""Generate baseline validation plot templates and slot triples.
+
+PlotTemplates describe WHAT to plot (metric identity + eligible chars).
+generate_slot_triples() enumerates HOW to slice it (filter_1, filter_2,
+group_by). The expansion loop in plot_generator.py combines these
+to produce concrete PlotSpec objects for each data slice.
+
+Usage:
+    templates = generate_all_templates()
+    triples = generate_slot_triples(template.eligible_chars, allow_cross_filter=True)
+"""
+
+from __future__ import annotations
+
+from collections.abc import Iterator
+from itertools import chain
+from dataclasses import dataclass
+
+from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    GEOGRAPHIC_DIMENSIONS,
+    PlotSpec,
+    Metric,
+    CoverageType,
+    Resolution,
+    ComparisonDataset,
+    ViewType,
+    Layout,
+)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Constants: what combinations are valid per comparison dataset
+# ─────────────────────────────────────────────────────────────────────────────
+
+EIA_QUANTITIES: list[DataCol] = [
+    DataCol.UNITS_COUNT,
+    DataCol.ELECTRICITY_TOTAL,
+    DataCol.NATURAL_GAS_TOTAL,
+]
+
+RECS_QUANTITIES: list[DataCol] = [
+    DataCol.UNITS_COUNT,
+    DataCol.ALL,
+    DataCol.ELECTRICITY_TOTAL,
+    DataCol.NATURAL_GAS_TOTAL,
+    DataCol.ELECTRICITY_SPACE_COOLING,
+    DataCol.ELECTRICITY_SPACE_HEATING,
+    DataCol.ELECTRICITY_WATER_HEATING,
+    DataCol.NATURAL_GAS_SPACE_HEATING,
+    DataCol.NATURAL_GAS_WATER_HEATING,
+    DataCol.ELECTRICITY_PLUG_LOADS,
+    DataCol.ELECTRICITY_REFRIGERATOR,
+    DataCol.ELECTRICITY_LIGHTING,
+    DataCol.ELECTRICITY_TELEVISION,
+    DataCol.ELECTRICITY_CLOTHES_DRYER,
+    DataCol.ELECTRICITY_COOLING_FAN_PUMPS,
+    DataCol.ELECTRICITY_HEATING_FANS_PUMPS,
+    DataCol.ELECTRICITY_FREEZER,
+    DataCol.ELECTRICITY_COOKING,
+    DataCol.ELECTRICITY_POOL_PUMPS,
+    DataCol.ELECTRICITY_CEILING_FANS,
+    DataCol.ELECTRICITY_DISHWASHER,
+    DataCol.ELECTRICITY_CLOTHES_WASHER,
+    DataCol.ELECTRICITY_POOL_HEATER,
+    DataCol.ELECTRICITY_EV_CHARGING,
+    DataCol.NATURAL_GAS_COOKING,
+    DataCol.NATURAL_GAS_POOL_HEATER,
+    DataCol.NATURAL_GAS_CLOTHES_DRYER,
+    DataCol.PROPANE_TOTAL,
+    DataCol.PROPANE_SPACE_HEATING,
+    DataCol.PROPANE_WATER_HEATING,
+    DataCol.PROPANE_COOKING,
+    DataCol.PROPANE_CLOTHES_DRYER,
+    DataCol.FUEL_OIL_TOTAL,
+    DataCol.FUEL_OIL_SPACE_HEATING,
+    DataCol.FUEL_OIL_WATER_HEATING,
+]
+
+LRD_QUANTITIES: list[DataCol] = [DataCol.ELECTRICITY_TOTAL]
+
+EIA_GROUP_BYS = ["state"]
+
+RECS_GROUP_BYS = [
+    "state",
+    "census_division_recs",
+    "geometry_building_type_recs",
+    "vintage",
+    "building_america_climate_zone",
+    "heating_fuel",
+]
+
+LRD_GROUP_BYS = ["utility"]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Eligible chars per source / resolution
+# ─────────────────────────────────────────────────────────────────────────────
+# The ordering matters: Filter 2 can only use chars that come AFTER Filter 1
+# in this tuple (upper-triangle dedup). Keep geographic dimensions together
+# at the front so the geographic exclusion logic is transparent.
+
+RECS_ANNUAL_CHARS = tuple(RECS_GROUP_BYS)  # all 6 chars available
+RECS_MONTHLY_CHARS = ("state",)  # monthly RECS data is pre-aggregated at state level
+EIA_CHARS = ("state",)  # EIA only supports state-level grouping
+LRD_CHARS = ("utility",)  # LRD only supports utility-level grouping
+
+# Chars allowed as F1/F2 in cross-filter triples. All 6 chars remain available
+# as group_by (Block 1 base plots and Block 2 sub-grouping), but only
+# these three can drive the expensive focus-value expansion as filters.
+RECS_CROSS_FILTER_CHARS = ("state", "census_division_recs", "geometry_building_type_recs")
+
+
+@dataclass(frozen=True)
+class PlotTemplate:
+    """Metric identity plus the eligible chars for slot-triple expansion.
+
+    ``group_by`` and ``focus_on`` are deliberately excluded — the slot-triple
+    generator and expansion loop own those.
+    """
+
+    comparison_dataset: ComparisonDataset
+    quantity: DataCol
+    resolution: Resolution
+    aggregation_type: Metric
+    coverage: CoverageType
+    view: ViewType
+    eligible_chars: tuple[str, ...]
+
+
+SlotTriple = tuple[str | None, str | None, str | None]
+"""(filter_1, filter_2, group_by) — None means the slot is unused."""
+
+
+def _is_geo_conflict(a: str | None, b: str | None) -> bool:
+    """Return True if both a and b are geographic dimensions."""
+    return (a in GEOGRAPHIC_DIMENSIONS) and (b in GEOGRAPHIC_DIMENSIONS)
+
+
+def generate_slot_triples(
+    eligible_chars: tuple[str, ...],
+    allow_cross_filter: bool = False,
+    cross_filter_chars: tuple[str, ...] | None = None,
+) -> list[SlotTriple]:
+    """Enumerate (filter_1, filter_2, group_by) triples for a char set.
+
+    Upper-triangle dedup: F2 only draws from chars AFTER F1 in
+    ``eligible_chars``, which prevents (A,B)/(B,A) duplicates. Block 2
+    (F1 set) is emitted only when ``allow_cross_filter`` is True — that
+    path is restricted to sources with microdata (RECS annual).
+    ``cross_filter_chars`` optionally restricts which chars may appear
+    in F1/F2 slots of Block 2; group_by always draws from all eligible
+    chars. Geographic dimensions never co-occur in a triple.
+    """
+    triples: list[SlotTriple] = []
+
+    # --- Block 1: F1=None (base plots) ---
+    # Overview with no grouping
+    triples.append((None, None, None))
+    # Grouped by each eligible char
+    for char in eligible_chars:
+        triples.append((None, None, char))
+
+    if not allow_cross_filter:
+        # Without cross-filter, F1 can only be used as a same-dimension
+        # focus (drilling into one entity of the group_by).
+        # That expansion is handled by focus_val in the main loop, not here.
+        return triples
+
+    # --- Block 2: F1=char (cross-filter — requires allow_cross_filter) ---
+    cf_set = set(cross_filter_chars) if cross_filter_chars is not None else None
+    for i, f1 in enumerate(eligible_chars):
+        if cf_set is not None and f1 not in cf_set:
+            continue
+
+        # F1 set, F2=None, agg=None (filtered, no sub-grouping)
+        triples.append((f1, None, None))
+
+        # F1 set, F2=None, agg=other char (cross-filter with sub-grouping)
+        for agg in eligible_chars:
+            if agg == f1:
+                continue
+            if _is_geo_conflict(f1, agg):
+                continue
+            triples.append((f1, None, agg))
+
+        # F1 set, F2=char[j>i], agg=None (two-filter drill-down)
+        for j in range(i + 1, len(eligible_chars)):
+            f2 = eligible_chars[j]
+            if _is_geo_conflict(f1, f2):
+                continue
+            if cf_set is not None and f2 not in cf_set:
+                continue
+            triples.append((f1, f2, None))
+
+    return triples
+
+
+# Quantities with monthly resolution in RECS
+RECS_MONTHLY_QUANTITIES: set[DataCol] = {
+    DataCol.ELECTRICITY_TOTAL,
+    DataCol.NATURAL_GAS_TOTAL,
+    DataCol.ELECTRICITY_SPACE_COOLING,
+    DataCol.ELECTRICITY_SPACE_HEATING,
+    DataCol.ELECTRICITY_WATER_HEATING,
+    DataCol.NATURAL_GAS_SPACE_HEATING,
+    DataCol.NATURAL_GAS_WATER_HEATING,
+}
+
+# 100% penetration — users-only coverage and penetration rows are meaningless
+RECS_FULL_PENETRATION: set[DataCol] = {DataCol.ELECTRICITY_TOTAL}
+
+# LRD metric tuples: (Resolution, ViewType)
+# All LRD metrics are average + all_units (enforced by PlotSpec validators)
+_LRD_METRICS: list[tuple[Resolution, ViewType]] = [
+    (Resolution.year, ViewType.value_view),
+    (Resolution.month, ViewType.value_view),
+    (Resolution.day_of_year, ViewType.value_view),
+    (Resolution.hour_of_day, ViewType.value_view),
+    (Resolution.hour_of_day_summer, ViewType.value_view),
+    (Resolution.hour_of_day_winter, ViewType.value_view),
+    (Resolution.hour_of_day_matrix, ViewType.value_view),
+    (Resolution.hour_of_year, ViewType.value_view),
+    (Resolution.top_100_hours, ViewType.value_view),
+]
+
+SpecFamily = list[PlotSpec]
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+def _extra_views_for(spec: PlotSpec) -> list[ViewType]:
+    """Determine any companion extra-views for a main spec."""
+    if spec.is_distribution_metric:
+        return []
+
+    if spec.is_all_enduses:
+        return [ViewType.diff_view]
+
+    if spec.comparison_dataset == ComparisonDataset.lrd:
+        if spec.resolution == Resolution.hour_of_year and spec.view == ViewType.value_view:
+            # 8760 load duration curve does NOT get diff_view;
+            # temperature views are separate specs, not extras
+            return []
+        if spec.view == ViewType.temp_view:
+            return [ViewType.temp_distribution_view]
+        return []
+
+    # Monthly single-entity (U.S. Total overview or state-focused) → diff view
+    # as a grouped bar plot. focus_on being set at template-expansion time
+    # signals this spec will resolve to a single entity; monthly validators
+    # forbid cross-dimension filters so len(focus_on) >= 1 implies single-entity.
+    if spec.resolution == Resolution.month and spec.focus_on:
+        return [ViewType.diff_view]
+
+    # EIA/RECS state or utility with annual resolution → diff view
+    if spec.group_by in ("state", "utility"):
+        if spec.resolution == Resolution.year:
+            return [ViewType.diff_view]
+        return []  # monthly tilemaps don't get diff view
+
+    # Non-state grouped bars → diff view
+    if spec.view == ViewType.value_view:
+        return [ViewType.diff_view]
+
+    return []
+
+
+def _extra_layouts_for(spec: PlotSpec) -> list[Layout]:
+    """Determine any companion layout variants for a spec family."""
+    if spec.is_distribution_metric:
+        return [Layout.histogram]
+    if spec.comparison_dataset not in (ComparisonDataset.eia, ComparisonDataset.recs):
+        return []
+    if spec.resolution != Resolution.year:
+        return []
+    if spec.group_by != "state":
+        return []
+    if spec.is_all_enduses:
+        return []
+    return [Layout.two_column]
+
+
+def _make_related_specs(spec: PlotSpec) -> SpecFamily:
+    """Build an ordered family of related specs for one slot triple.
+
+    Order:
+      1) main view in auto layout
+      2) any extra views in auto layout
+      3) main view in each extra layout
+      4) extra views in each extra layout
+    """
+    family = [spec]
+    extra_views = _extra_views_for(spec)
+    auto_specs = family + [spec.model_copy(update={"view": view}) for view in extra_views]
+
+    related: list[PlotSpec] = list(auto_specs)
+    for layout in _extra_layouts_for(spec):
+        related.extend(s.model_copy(update={"layout": layout}) for s in auto_specs)
+    return related
+
+
+def _make_spec(
+    comparison_dataset: ComparisonDataset,
+    quantity: DataCol,
+    resolution: Resolution,
+    aggregation_type: Metric,
+    coverage: CoverageType,
+    group_by: str | None,
+    view: ViewType = ViewType.value_view,
+    layout: Layout = Layout.auto,
+) -> PlotSpec:
+    return PlotSpec(
+        comparison_dataset=comparison_dataset,
+        quantity=quantity,
+        resolution=resolution,
+        aggregation_type=aggregation_type,
+        coverage=coverage,
+        group_by=group_by,
+        view=view,
+        layout=layout,
+    )
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Template generators
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+def _eia_templates() -> Iterator[PlotTemplate]:
+    """Generate EIA plot templates (no group_by baked in)."""
+
+    def mk(q, res, agg_type, cov, view=ViewType.value_view):
+        return PlotTemplate(
+            comparison_dataset=ComparisonDataset.eia,
+            quantity=q,
+            resolution=res,
+            aggregation_type=agg_type,
+            coverage=cov,
+            view=view,
+            eligible_chars=EIA_CHARS,
+        )
+
+    for quantity in EIA_QUANTITIES:
+        if quantity == DataCol.UNITS_COUNT:
+            yield mk(DataCol.UNITS_COUNT, Resolution.year, Metric.total, CoverageType.all_units)
+            continue
+
+        for res, agg_type in [
+            (Resolution.year, Metric.total),
+            (Resolution.year, Metric.average),
+            (Resolution.month, Metric.total),
+            (Resolution.month, Metric.average),
+        ]:
+            yield mk(quantity, res, agg_type, CoverageType.all_units)
+
+        if quantity == DataCol.NATURAL_GAS_TOTAL:
+            for res in (Resolution.year, Resolution.month):
+                yield mk(quantity, res, Metric.average, CoverageType.users_only)
+            yield mk(quantity, Resolution.year, Metric.penetration, CoverageType.all_units, ViewType.value_view)
+
+
+def _all_enduses_templates() -> Iterator[PlotTemplate]:
+    """Emit All Enduses templates.
+
+    Distribution metric is intentionally excluded because PlotSpec requires
+    distribution to use a specific end-use quantity (not DataCol.ALL).
+    """
+
+    def mk(agg, cov, view):
+        return PlotTemplate(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.ALL,
+            resolution=Resolution.year,
+            aggregation_type=agg,
+            coverage=cov,
+            view=view,
+            eligible_chars=RECS_ANNUAL_CHARS,
+        )
+
+    yield mk(Metric.total, CoverageType.all_units, ViewType.value_view)
+    yield mk(Metric.average, CoverageType.all_units, ViewType.value_view)
+    yield mk(Metric.average, CoverageType.users_only, ViewType.value_view)
+    yield mk(Metric.penetration, CoverageType.all_units, ViewType.value_view)
+
+
+def _recs_energy_templates(quantity: DataCol) -> Iterator[PlotTemplate]:
+    """Emit all templates for one RECS energy quantity."""
+    has_monthly = quantity in RECS_MONTHLY_QUANTITIES
+    skip_users = quantity in RECS_FULL_PENETRATION
+
+    def mk(res, agg_type, cov, view=ViewType.value_view, chars=RECS_ANNUAL_CHARS):
+        return PlotTemplate(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=quantity,
+            resolution=res,
+            aggregation_type=agg_type,
+            coverage=cov,
+            view=view,
+            eligible_chars=chars,
+        )
+
+    # Annual templates (all 6 chars eligible)
+    yield mk(Resolution.year, Metric.total, CoverageType.all_units)
+    yield mk(Resolution.year, Metric.average, CoverageType.all_units)
+    if not skip_users:
+        yield mk(Resolution.year, Metric.average, CoverageType.users_only)
+    yield mk(Resolution.year, Metric.distribution, CoverageType.all_units, ViewType.value_view)
+    if not skip_users:
+        yield mk(Resolution.year, Metric.distribution, CoverageType.users_only, ViewType.value_view)
+        yield mk(Resolution.year, Metric.penetration, CoverageType.all_units, ViewType.value_view)
+
+    # Monthly templates (only state eligible)
+    if has_monthly:
+        yield mk(Resolution.month, Metric.total, CoverageType.all_units, chars=RECS_MONTHLY_CHARS)
+        yield mk(Resolution.month, Metric.average, CoverageType.all_units, chars=RECS_MONTHLY_CHARS)
+        if not skip_users:
+            yield mk(Resolution.month, Metric.average, CoverageType.users_only, chars=RECS_MONTHLY_CHARS)
+
+
+def _recs_templates() -> Iterator[PlotTemplate]:
+    """Generate all RECS plot templates."""
+    for quantity in RECS_QUANTITIES:
+        if quantity == DataCol.UNITS_COUNT:
+            yield PlotTemplate(
+                comparison_dataset=ComparisonDataset.recs,
+                quantity=DataCol.UNITS_COUNT,
+                resolution=Resolution.year,
+                aggregation_type=Metric.total,
+                coverage=CoverageType.all_units,
+                view=ViewType.value_view,
+                eligible_chars=RECS_ANNUAL_CHARS,
+            )
+        elif quantity == DataCol.ALL:
+            yield from _all_enduses_templates()
+        else:
+            yield from _recs_energy_templates(quantity)
+
+
+def _lrd_templates() -> Iterator[PlotTemplate]:
+    """Generate all LRD plot templates."""
+    for quantity in LRD_QUANTITIES:
+        for resolution, view in _LRD_METRICS:
+            yield PlotTemplate(
+                comparison_dataset=ComparisonDataset.lrd,
+                quantity=quantity,
+                resolution=resolution,
+                aggregation_type=Metric.average,
+                coverage=CoverageType.all_units,
+                view=view,
+                eligible_chars=LRD_CHARS,
+            )
+            if resolution == Resolution.hour_of_year:
+                yield PlotTemplate(
+                    comparison_dataset=ComparisonDataset.lrd,
+                    quantity=quantity,
+                    resolution=resolution,
+                    aggregation_type=Metric.average,
+                    coverage=CoverageType.all_units,
+                    view=ViewType.temp_view,
+                    eligible_chars=LRD_CHARS,
+                )
+
+
+def generate_all_templates() -> list[PlotTemplate]:
+    """Return the complete ordered list of plot templates."""
+    return list(chain(_eia_templates(), _recs_templates(), _lrd_templates()))

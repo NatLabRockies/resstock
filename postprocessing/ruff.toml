@@ -48,7 +48,7 @@ ignore = [
     "PLR0912", # too-many-branches
     "PLR0913", # too-many-arguments
     "PLR0915", # too-many-statements
-    "PD901", # df for variable assignment
+    "PD901", # df for variable assignment is our convention in polars code
     "PGH003", # Use specific rule codes when ignoring type issues instead of type: ignore
     "I001", # isort
     "TID252", # relative imports are used in the dashboard to keep things simple
@@ -72,3 +72,8 @@ ban-relative-imports = "all"
     "PT009",   # pytest-unittest-assertion
     "S101",    # assert
 ]
+# Files dominated by HTML/JS template strings where wrapping a line would
+# change the emitted dashboard output. Short lines checked by eye.
+"**/baseline_validation/io_managers/data_table.py" = ["E501"]
+"**/baseline_validation/dashboard/create_html_viewer.py" = ["E501"]
+"**/baseline_validation/io_managers/html_utils.py" = ["E501"]

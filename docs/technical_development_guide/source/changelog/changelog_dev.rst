@@ -7,6 +7,55 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: workflow, emissions, feature
+        :pullreq: 1574
+
+        **Date**: 2026-10-06
+
+        Title:
+        Support constant electricity emissions factors
+
+        Description:
+        Add support for constant electricity emissions factors through the ``elec_value`` emissions scenario field.
+        Values are specified in kg/MWh, including zero, and each scenario must specify exactly one of ``elec_folder``
+        or ``elec_value``. Update the residential workflow generator to version ``2026.10.05``.
+
+        Assignees: Joe Robertson
+
+    .. change::
+        :tags: postprocessing, technical reference guide
+        :pullreq: 1561
+
+        **Date**: 2026-07-13
+
+        Title:
+        Fix units for utility bills in SDR resources
+
+        Description:
+        Fix units for utility bill arguments in sdr_column_definitions.csv.
+        Make some variable rate updates in the technical reference guide.
+
+        Assignees: Joe Robertson
+
+    .. change::
+        :tags: feature, software, postprocessing
+        :pullreq: 1529
+
+        **Date**: 2026-04-22
+
+        Title:
+        Add baseline_validation tool to resstockpostproc
+
+        Description:
+        Adds a baseline validation tool that compares a ResStock baseline run against public data sources
+        (EIA 861, EIA 176, RECS 2020, LRD) and generates an interactive comparison dashboard. Supports annual and
+        monthly resolutions across U.S. Total, state, census division, building type, vintage, climate zone, and
+        heating-fuel aggregations. A baseline-validation CI job runs the tool under --test on every PR and
+        uploads the generated dashboard as a CI artifact for review.
+
+        Assignees: Rajendra Adhikari
+
+    .. change::
         :tags: feature
         :pullreq: 1503
 

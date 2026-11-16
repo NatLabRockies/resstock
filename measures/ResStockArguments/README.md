@@ -59,7 +59,7 @@ Path to the EPW file. Either this or the Zip Code input above must be provided.
 
 **Location: Site Type**
 
-The terrain/shielding of the home, for the infiltration model. Defaults to 'Suburban, Normal' for single-family detached and manufactured home and 'Suburban, Well-Shielded' for single-family attached and apartment units.
+The terrain/shielding of the home, for the infiltration model.
 
 - **Name:** ``location_site_type``
 - **Type:** ``Choice``
@@ -148,7 +148,7 @@ The number of bedrooms in the unit.
 
 **Geometry: Unit Number of Bathrooms**
 
-The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.
+The number of bathrooms in the unit.
 
 - **Name:** ``geometry_unit_num_bathrooms``
 - **Type:** ``Choice``
@@ -207,7 +207,7 @@ The foundation type of the building. Garages are assumed to be over slab-on-grad
 
 - **Required:** ``true``
 
-- **Choices:** `Slab-on-Grade`, `Crawlspace, Vented`, `Crawlspace, Unvented`, `Crawlspace, Conditioned`, `Basement, Unconditioned`, `Basement, Unconditioned, Half Above-Grade`, `Basement, Conditioned`, `Basement, Conditioned, Half Above-Grade`, `Ambient`, `Above Apartment`, `Belly and Wing, With Skirt`, `Belly and Wing, No Skirt`, `Detailed Example: Crawlspace, Vented, Above-Grade`, `ASHRAE 140 Tests: Basement, Conditioned`, `ASHRAE 140 Tests: Basement, Unconditioned`
+- **Choices:** `Slab-on-Grade`, `Crawlspace, Vented`, `Crawlspace, Unvented`, `Basement, Unconditioned`, `Basement, Unconditioned, Half Above-Grade`, `Basement, Conditioned`, `Basement, Conditioned, Half Above-Grade`, `Ambient`, `Above Apartment`, `Belly and Wing, With Skirt`, `Belly and Wing, No Skirt`, `Detailed Example: Crawlspace, Vented, Above-Grade`, `ASHRAE 140 Tests: Basement, Conditioned`, `ASHRAE 140 Tests: Basement, Unconditioned`
 
 <br/>
 
@@ -411,7 +411,7 @@ The material type and color of the roof.
 
 - **Required:** ``false``
 
-- **Choices:** `Asphalt/Fiberglass Shingles, Dark`, `Asphalt/Fiberglass Shingles, Medium Dark`, `Asphalt/Fiberglass Shingles, Medium`, `Asphalt/Fiberglass Shingles, Medium Light`, `Asphalt/Fiberglass Shingles, Light`, `Asphalt/Fiberglass Shingles, Reflective`, `Tile/Slate, Dark`, `Tile/Slate, Medium Dark`, `Tile/Slate, Medium`, `Tile/Slate, Medium Light`, `Tile/Slate, Light`, `Tile/Slate, Reflective`, `Metal, Dark`, `Metal, Medium Dark`, `Metal, Medium`, `Metal, Medium Light`, `Metal, Light`, `Metal, Reflective`, `Wood Shingles/Shakes, Dark`, `Wood Shingles/Shakes, Medium Dark`, `Wood Shingles/Shakes, Medium`, `Wood Shingles/Shakes, Medium Light`, `Wood Shingles/Shakes, Light`, `Wood Shingles/Shakes, Reflective`, `Shingles, Dark`, `Shingles, Medium Dark`, `Shingles, Medium`, `Shingles, Medium Light`, `Shingles, Light`, `Shingles, Reflective`, `Synthetic Sheeting, Dark`, `Synthetic Sheeting, Medium Dark`, `Synthetic Sheeting, Medium`, `Synthetic Sheeting, Medium Light`, `Synthetic Sheeting, Light`, `Synthetic Sheeting, Reflective`, `EPS Sheathing, Dark`, `EPS Sheathing, Medium Dark`, `EPS Sheathing, Medium`, `EPS Sheathing, Medium Light`, `EPS Sheathing, Light`, `EPS Sheathing, Reflective`, `Concrete, Dark`, `Concrete, Medium Dark`, `Concrete, Medium`, `Concrete, Medium Light`, `Concrete, Light`, `Concrete, Reflective`, `Cool Roof`, `ASHRAE 140 Tests: Low Solar Absorptance`, `ASHRAE 140 Tests: Typical Solar Absorptance`, `HERS Reference`
+- **Choices:** `Asphalt/Fiberglass Shingles, Dark`, `Asphalt/Fiberglass Shingles, Medium Dark`, `Asphalt/Fiberglass Shingles, Medium`, `Asphalt/Fiberglass Shingles, Medium Light`, `Asphalt/Fiberglass Shingles, Light`, `Asphalt/Fiberglass Shingles, White`, `Asphalt/Fiberglass Shingles, Reflective`, `Tile/Slate, Dark`, `Tile/Slate, Medium Dark`, `Tile/Slate, Medium`, `Tile/Slate, Medium Light`, `Tile/Slate, Light`, `Tile/Slate, White`, `Tile/Slate, Reflective`, `Metal, Dark`, `Metal, Medium Dark`, `Metal, Medium`, `Metal, Medium Light`, `Metal, Light`, `Metal, White`, `Metal, Reflective`, `Wood Shingles/Shakes, Dark`, `Wood Shingles/Shakes, Medium Dark`, `Wood Shingles/Shakes, Medium`, `Wood Shingles/Shakes, Medium Light`, `Wood Shingles/Shakes, Light`, `Wood Shingles/Shakes, White`, `Wood Shingles/Shakes, Reflective`, `Shingles, Dark`, `Shingles, Medium Dark`, `Shingles, Medium`, `Shingles, Medium Light`, `Shingles, Light`, `Shingles, White`, `Shingles, Reflective`, `Synthetic Sheeting, Dark`, `Synthetic Sheeting, Medium Dark`, `Synthetic Sheeting, Medium`, `Synthetic Sheeting, Medium Light`, `Synthetic Sheeting, Light`, `Synthetic Sheeting, White`, `Synthetic Sheeting, Reflective`, `EPS Sheathing, Dark`, `EPS Sheathing, Medium Dark`, `EPS Sheathing, Medium`, `EPS Sheathing, Medium Light`, `EPS Sheathing, Light`, `EPS Sheathing, White`, `EPS Sheathing, Reflective`, `Concrete, Dark`, `Concrete, Medium Dark`, `Concrete, Medium`, `Concrete, Medium Light`, `Concrete, Light`, `Concrete, White`, `Concrete, Reflective`, `ASHRAE 140 Tests: Low Solar Absorptance`, `ASHRAE 140 Tests: Typical Solar Absorptance`, `HERS Reference`
 
 <br/>
 
@@ -697,7 +697,7 @@ The type and efficiency of the heat pump.
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Central HP, SEER2 7.6, HSPF2 5.1`, `Central HP, SEER2 9.5, HSPF2 5.8`, `Central HP, SEER2 12.4, HSPF2 6.6`, `Central HP, SEER2 13.4, HSPF2 7.0`, `Central HP, SEER2 13.8, HSPF2 7.2`, `Central HP, SEER2 14.0, HSPF2 7.3`, `Central HP, SEER2 14.3, HSPF2 7.4`, `Central HP, SEER2 15.0, HSPF2 7.6`, `Central HP, SEER2 16.0, HSPF2 7.9`, `Central HP, SEER2 17.0, HSPF2 8.2`, `Central HP, SEER2 18.0, HSPF2 8.5`, `Central HP, SEER2 19.0, HSPF2 8.7`, `Central HP, SEER2 20.0, HSPF2 9.0`, `Central HP, SEER2 21.0, HSPF2 9.2`, `Central HP, SEER2 22.0, HSPF2 9.5`, `Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4`, `Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7`, `Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1`, `Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5`, `Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8`, `Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0`, `Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4`, `Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7`, `Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1`, `Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4`, `Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7`, `Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0`, `Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4`, `Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7`, `Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0`, `Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3`, `Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7`, `Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3`, `Geothermal HP, EER 16.6, COP 3.6`, `Geothermal HP, EER 18.6, COP 3.8`, `Geothermal HP, EER 20.5, COP 4.0`, `Geothermal HP, EER 30.9, COP 4.4`, `Room HP, CEER 8.4, COP 2.7`, `Room HP, CEER 9.7, COP 3.0`, `Room HP, CEER 10.6, COP 3.3`, `Room HP, CEER 11.8, COP 3.6`, `Room HP, CEER 13.1, COP 3.9`, `Packaged Terminal HP, EER 8.5, COP 2.7`, `Packaged Terminal HP, EER 9.8, COP 3.0`, `Packaged Terminal HP, EER 10.7, COP 3.3`, `Packaged Terminal HP, EER 11.9, COP 3.6`, `Packaged Terminal HP, EER 13.2, COP 3.9`, `Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance`, `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance`, `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance`, `HERS HVAC Tests: Central HP, SEER2 12.4, HSPF2 8.4`
+- **Choices:** `None`, `Central HP, SEER2 7.6, HSPF2 5.1`, `Central HP, SEER2 9.5, HSPF2 5.8`, `Central HP, SEER2 12.4, HSPF2 6.6`, `Central HP, SEER2 13.4, HSPF2 7.0`, `Central HP, SEER2 13.8, HSPF2 7.2`, `Central HP, SEER2 14.0, HSPF2 7.3`, `Central HP, SEER2 14.3, HSPF2 7.4`, `Central HP, SEER2 15.0, HSPF2 7.6`, `Central HP, SEER2 15.2, HSPF2 7.8`, `Central HP, SEER2 16.0, HSPF2 7.9`, `Central HP, SEER2 17.0, HSPF2 8.2`, `Central HP, SEER2 18.0, HSPF2 8.5`, `Central HP, SEER2 19.0, HSPF2 8.7`, `Central HP, SEER2 20.0, HSPF2 9.0`, `Central HP, SEER2 21.0, HSPF2 9.2`, `Central HP, SEER2 22.0, HSPF2 9.5`, `Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4`, `Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7`, `Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1`, `Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5`, `Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8`, `Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0`, `Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4`, `Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7`, `Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1`, `Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4`, `Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7`, `Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0`, `Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4`, `Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7`, `Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0`, `Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3`, `Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7`, `Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3`, `Geothermal HP, EER 16.6, COP 3.6`, `Geothermal HP, EER 18.6, COP 3.8`, `Geothermal HP, EER 20.5, COP 4.0`, `Geothermal HP, EER 30.9, COP 4.4`, `Room HP, CEER 8.4, COP 2.7`, `Room HP, CEER 9.7, COP 3.0`, `Room HP, CEER 10.6, COP 3.3`, `Room HP, CEER 11.8, COP 3.6`, `Room HP, CEER 13.1, COP 3.9`, `Packaged Terminal HP, EER 8.5, COP 2.7`, `Packaged Terminal HP, EER 9.8, COP 3.0`, `Packaged Terminal HP, EER 10.7, COP 3.3`, `Packaged Terminal HP, EER 11.9, COP 3.6`, `Packaged Terminal HP, EER 13.2, COP 3.9`, `Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance`, `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance`, `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance`, `HERS HVAC Tests: Central HP, SEER2 12.4, HSPF2 8.4`, `Central HP, SEER2 17.3, HSPF2 8.7, Detailed Performance`
 
 <br/>
 
@@ -749,7 +749,7 @@ Specifies the minimum compressor temperature and/or maximum HP backup temperatur
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `-20F Min Compressor Temp`, `-15F Min Compressor Temp`, `-10F Min Compressor Temp`, `-5F Min Compressor Temp`, `0F Min Compressor Temp`, `5F Min Compressor Temp`, `10F Min Compressor Temp`, `15F Min Compressor Temp`, `20F Min Compressor Temp`, `25F Min Compressor Temp`, `30F Min Compressor Temp`, `35F Min Compressor Temp`, `40F Min Compressor Temp`, `30F Min Compressor Temp, 30F Max HP Backup Temp`, `35F Min Compressor Temp, 35F Max HP Backup Temp`, `40F Min Compressor Temp, 40F Max HP Backup Temp`, `Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp`, `Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp`
+- **Choices:** `Default`, `-20F Min Compressor Temp`, `-15F Min Compressor Temp`, `-10F Min Compressor Temp`, `-5F Min Compressor Temp`, `0F Min Compressor Temp`, `5F Min Compressor Temp`, `10F Min Compressor Temp`, `15F Min Compressor Temp`, `20F Min Compressor Temp`, `25F Min Compressor Temp`, `30F Min Compressor Temp`, `35F Min Compressor Temp`, `40F Min Compressor Temp`, `30F Min Compressor Temp, 30F Max HP Backup Temp`, `35F Min Compressor Temp, 35F Max HP Backup Temp`, `40F Min Compressor Temp, 40F Max HP Backup Temp`, `50F Min Compressor Temp, 50F Max HP Backup Temp`, `30F Min Compressor Temp, 50F Max HP Backup Temp`, `10F Min Compressor Temp, 50F Max HP Backup Temp`, `-10F Min Compressor Temp, 50F Max HP Backup Temp`, `Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp`, `Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp`
 
 <br/>
 
@@ -762,7 +762,7 @@ The type and efficiency of the heat pump backup. Use 'None' if there is no backu
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Integrated, Electricity, 100% Efficiency`, `Integrated, Natural Gas, 60% AFUE`, `Integrated, Natural Gas, 76% AFUE`, `Integrated, Natural Gas, 80% AFUE`, `Integrated, Natural Gas, 92.5% AFUE`, `Integrated, Natural Gas, 95% AFUE`, `Integrated, Fuel Oil, 60% AFUE`, `Integrated, Fuel Oil, 76% AFUE`, `Integrated, Fuel Oil, 80% AFUE`, `Integrated, Fuel Oil, 92.5% AFUE`, `Integrated, Fuel Oil, 95% AFUE`, `Integrated, Propane, 60% AFUE`, `Integrated, Propane, 76% AFUE`, `Integrated, Propane, 80% AFUE`, `Integrated, Propane, 92.5% AFUE`, `Integrated, Propane, 95% AFUE`, `Separate Heating System`
+- **Choices:** `None`, `Integrated, Electricity, 100% Efficiency`, `Integrated, Natural Gas, 60% AFUE`, `Integrated, Natural Gas, 76% AFUE`, `Integrated, Natural Gas, 80% AFUE`, `Integrated, Natural Gas, 92.5% AFUE`, `Integrated, Natural Gas, 95% AFUE`, `Integrated, Fuel Oil, 60% AFUE`, `Integrated, Fuel Oil, 76% AFUE`, `Integrated, Fuel Oil, 80% AFUE`, `Integrated, Fuel Oil, 83% AFUE`, `Integrated, Fuel Oil, 85% AFUE`, `Integrated, Fuel Oil, 92.5% AFUE`, `Integrated, Fuel Oil, 95% AFUE`, `Integrated, Propane, 60% AFUE`, `Integrated, Propane, 76% AFUE`, `Integrated, Propane, 80% AFUE`, `Integrated, Propane, 92.5% AFUE`, `Integrated, Propane, 95% AFUE`, `Separate Heating System`
 
 <br/>
 
@@ -1153,7 +1153,7 @@ The size and type of battery storage.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `5.0 kWh`, `7.5 kWh`, `10.0 kWh`, `12.5 kWh`, `15.0 kWh`, `17.5 kWh`, `20.0 kWh`, `Detailed Example: 20.0 kWh, 6 kW, Garage`, `Detailed Example: 20.0 kWh, 6 kW, Outside`, `Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency`
+- **Choices:** `None`, `5.0 kWh`, `7.5 kWh`, `10.0 kWh`, `12.5 kWh`, `15.0 kWh`, `17.5 kWh`, `20.0 kWh`, `Detailed Example: 20.0 kWh, 6 kW, Garage`, `Detailed Example: 20.0 kWh, 6 kW, Outside`, `Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency`, `Detailed Example: 20.0 kWh, 6 kW, Other Heated Space`, `Detailed Example: 20.0 kWh, 6 kW, Other Multifamily Buffer Space`, `Detailed Example: 20.0 kWh, 6 kW, Other Non-Freezing Space`
 
 <br/>
 
@@ -2106,6 +2106,19 @@ The type and efficiency of the existing heat pump.
 
 <br/>
 
+**HVAC: Heat Pump Heating Capacity Fraction 17F**
+
+Heating output capacity at 17F.
+
+- **Name:** ``hvac_heat_pump_heating_capacity_fraction_17_f``
+- **Type:** ``Double``
+
+- **Units:** ``frac``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC: Heat Pump Heating Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
@@ -2706,6 +2719,17 @@ Electricity emissions factors values, specified as an absolute/relative path to 
 Fossil fuel emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MBtu and kg/MBtu are allowed.
 
 - **Name:** ``emissions_fossil_fuel_units``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**Emissions: Electricity Values**
+
+Electricity emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.
+
+- **Name:** ``emissions_electricity_values``
 - **Type:** ``String``
 
 - **Required:** ``false``

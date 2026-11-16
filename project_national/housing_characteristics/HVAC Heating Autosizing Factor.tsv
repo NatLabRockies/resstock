@@ -1,4 +1,4 @@
-Dependency=HVAC Heating Efficiency	Dependency=HVAC System Is Scaled	Option=None	Option=40% Oversized	sampling_probability
+Dependency=HVAC Heating Efficiency	Dependency=HVAC System Is Scaled	Option=None	Option=20% Oversized	sampling_probability
 ASHP, SEER2 9.5, 5.8 HSPF2	Yes	1	0	0
 ASHP, SEER2 12.4, 6.6 HSPF2	Yes	1	0	0
 ASHP, SEER2 14.3, 7.4 HSPF2	Yes	1	0	0

@@ -188,6 +188,17 @@ Relative paths of electricity emissions factor schedule files with hourly values
 
 <br/>
 
+**Emissions: Electricity Values**
+
+Electricity emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.
+
+- **Name:** ``emissions_electricity_values``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **Emissions: Natural Gas Values**
 
 Natural gas emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.

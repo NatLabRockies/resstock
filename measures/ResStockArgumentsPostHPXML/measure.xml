@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>25eb3210-d38b-48f2-8670-57fde85b3842</version_id>
-  <version_modified>2026-07-08T22:26:35Z</version_modified>
+  <version_id>de847490-3b21-4233-ba01-222887c4c133</version_id>
+  <version_modified>2026-11-16T20:40:18Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -99,7 +99,7 @@
     <argument>
       <name>location_site_type</name>
       <display_name>Location: Site Type</display_name>
-      <description>The terrain/shielding of the home, for the infiltration model. Defaults to 'Suburban, Normal' for single-family detached and manufactured home and 'Suburban, Well-Shielded' for single-family attached and apartment units.</description>
+      <description>The terrain/shielding of the home, for the infiltration model.</description>
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -513,7 +513,7 @@
     <argument>
       <name>geometry_unit_num_bathrooms</name>
       <display_name>Geometry: Unit Number of Bathrooms</display_name>
-      <description>The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.</description>
+      <description>The number of bathrooms in the unit.</description>
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -838,10 +838,6 @@
         <choice>
           <value>Crawlspace, Unvented</value>
           <display_name>Crawlspace, Unvented</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Conditioned</value>
-          <display_name>Crawlspace, Conditioned</display_name>
         </choice>
         <choice>
           <value>Basement, Unconditioned</value>
@@ -1781,6 +1777,10 @@
           <display_name>Asphalt/Fiberglass Shingles, Light</display_name>
         </choice>
         <choice>
+          <value>Asphalt/Fiberglass Shingles, White</value>
+          <display_name>Asphalt/Fiberglass Shingles, White</display_name>
+        </choice>
+        <choice>
           <value>Asphalt/Fiberglass Shingles, Reflective</value>
           <display_name>Asphalt/Fiberglass Shingles, Reflective</display_name>
         </choice>
@@ -1803,6 +1803,10 @@
         <choice>
           <value>Tile/Slate, Light</value>
           <display_name>Tile/Slate, Light</display_name>
+        </choice>
+        <choice>
+          <value>Tile/Slate, White</value>
+          <display_name>Tile/Slate, White</display_name>
         </choice>
         <choice>
           <value>Tile/Slate, Reflective</value>
@@ -1829,6 +1833,10 @@
           <display_name>Metal, Light</display_name>
         </choice>
         <choice>
+          <value>Metal, White</value>
+          <display_name>Metal, White</display_name>
+        </choice>
+        <choice>
           <value>Metal, Reflective</value>
           <display_name>Metal, Reflective</display_name>
         </choice>
@@ -1851,6 +1859,10 @@
         <choice>
           <value>Wood Shingles/Shakes, Light</value>
           <display_name>Wood Shingles/Shakes, Light</display_name>
+        </choice>
+        <choice>
+          <value>Wood Shingles/Shakes, White</value>
+          <display_name>Wood Shingles/Shakes, White</display_name>
         </choice>
         <choice>
           <value>Wood Shingles/Shakes, Reflective</value>
@@ -1877,6 +1889,10 @@
           <display_name>Shingles, Light</display_name>
         </choice>
         <choice>
+          <value>Shingles, White</value>
+          <display_name>Shingles, White</display_name>
+        </choice>
+        <choice>
           <value>Shingles, Reflective</value>
           <display_name>Shingles, Reflective</display_name>
         </choice>
@@ -1899,6 +1915,10 @@
         <choice>
           <value>Synthetic Sheeting, Light</value>
           <display_name>Synthetic Sheeting, Light</display_name>
+        </choice>
+        <choice>
+          <value>Synthetic Sheeting, White</value>
+          <display_name>Synthetic Sheeting, White</display_name>
         </choice>
         <choice>
           <value>Synthetic Sheeting, Reflective</value>
@@ -1925,6 +1945,10 @@
           <display_name>EPS Sheathing, Light</display_name>
         </choice>
         <choice>
+          <value>EPS Sheathing, White</value>
+          <display_name>EPS Sheathing, White</display_name>
+        </choice>
+        <choice>
           <value>EPS Sheathing, Reflective</value>
           <display_name>EPS Sheathing, Reflective</display_name>
         </choice>
@@ -1949,12 +1973,12 @@
           <display_name>Concrete, Light</display_name>
         </choice>
         <choice>
-          <value>Concrete, Reflective</value>
-          <display_name>Concrete, Reflective</display_name>
+          <value>Concrete, White</value>
+          <display_name>Concrete, White</display_name>
         </choice>
         <choice>
-          <value>Cool Roof</value>
-          <display_name>Cool Roof</display_name>
+          <value>Concrete, Reflective</value>
+          <display_name>Concrete, Reflective</display_name>
         </choice>
         <choice>
           <value>ASHRAE 140 Tests: Low Solar Absorptance</value>
@@ -4551,6 +4575,10 @@
           <display_name>Central HP, SEER2 15.0, HSPF2 7.6</display_name>
         </choice>
         <choice>
+          <value>Central HP, SEER2 15.2, HSPF2 7.8</value>
+          <display_name>Central HP, SEER2 15.2, HSPF2 7.8</display_name>
+        </choice>
+        <choice>
           <value>Central HP, SEER2 16.0, HSPF2 7.9</value>
           <display_name>Central HP, SEER2 16.0, HSPF2 7.9</display_name>
         </choice>
@@ -4733,6 +4761,10 @@
         <choice>
           <value>HERS HVAC Tests: Central HP, SEER2 12.4, HSPF2 8.4</value>
           <display_name>HERS HVAC Tests: Central HP, SEER2 12.4, HSPF2 8.4</display_name>
+        </choice>
+        <choice>
+          <value>Central HP, SEER2 17.3, HSPF2 8.7, Detailed Performance</value>
+          <display_name>Central HP, SEER2 17.3, HSPF2 8.7, Detailed Performance</display_name>
         </choice>
       </choices>
     </argument>
@@ -5123,6 +5155,22 @@
           <display_name>40F Min Compressor Temp, 40F Max HP Backup Temp</display_name>
         </choice>
         <choice>
+          <value>50F Min Compressor Temp, 50F Max HP Backup Temp</value>
+          <display_name>50F Min Compressor Temp, 50F Max HP Backup Temp</display_name>
+        </choice>
+        <choice>
+          <value>30F Min Compressor Temp, 50F Max HP Backup Temp</value>
+          <display_name>30F Min Compressor Temp, 50F Max HP Backup Temp</display_name>
+        </choice>
+        <choice>
+          <value>10F Min Compressor Temp, 50F Max HP Backup Temp</value>
+          <display_name>10F Min Compressor Temp, 50F Max HP Backup Temp</display_name>
+        </choice>
+        <choice>
+          <value>-10F Min Compressor Temp, 50F Max HP Backup Temp</value>
+          <display_name>-10F Min Compressor Temp, 50F Max HP Backup Temp</display_name>
+        </choice>
+        <choice>
           <value>Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp</value>
           <display_name>Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp</display_name>
         </choice>
@@ -5180,6 +5228,14 @@
         <choice>
           <value>Integrated, Fuel Oil, 80% AFUE</value>
           <display_name>Integrated, Fuel Oil, 80% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Integrated, Fuel Oil, 83% AFUE</value>
+          <display_name>Integrated, Fuel Oil, 83% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Integrated, Fuel Oil, 85% AFUE</value>
+          <display_name>Integrated, Fuel Oil, 85% AFUE</display_name>
         </choice>
         <choice>
           <value>Integrated, Fuel Oil, 92.5% AFUE</value>
@@ -8273,6 +8329,18 @@
         <choice>
           <value>Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency</value>
           <display_name>Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 20.0 kWh, 6 kW, Other Heated Space</value>
+          <display_name>Detailed Example: 20.0 kWh, 6 kW, Other Heated Space</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 20.0 kWh, 6 kW, Other Multifamily Buffer Space</value>
+          <display_name>Detailed Example: 20.0 kWh, 6 kW, Other Multifamily Buffer Space</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 20.0 kWh, 6 kW, Other Non-Freezing Space</value>
+          <display_name>Detailed Example: 20.0 kWh, 6 kW, Other Non-Freezing Space</display_name>
         </choice>
       </choices>
     </argument>
@@ -11887,6 +11955,15 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>hvac_heat_pump_heating_capacity_fraction_17_f</name>
+      <display_name>HVAC: Heat Pump Heating Capacity Fraction 17F</display_name>
+      <description>Heating output capacity at 17F.</description>
+      <type>Double</type>
+      <units>frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>heat_pump_heating_autosizing_factor</name>
       <display_name>HVAC: Heat Pump Heating Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
@@ -12384,6 +12461,14 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>emissions_electricity_values</name>
+      <display_name>Emissions: Electricity Values</display_name>
+      <description>Electricity emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>emissions_natural_gas_values</name>
       <display_name>Emissions: Natural Gas Values</display_name>
       <description>Natural gas emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
@@ -12590,7 +12675,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>DE1AA52C</checksum>
+      <checksum>DC27F922</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -12674,7 +12759,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>30E35BE3</checksum>
+      <checksum>3C4F4E28</checksum>
     </file>
     <file>
       <filename>test_hvac_load_flexibility.rb</filename>

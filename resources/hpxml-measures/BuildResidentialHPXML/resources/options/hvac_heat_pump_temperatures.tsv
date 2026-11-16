@@ -16,6 +16,10 @@ Default
 "30F Min Compressor Temp, 30F Max HP Backup Temp"	30	30
 "35F Min Compressor Temp, 35F Max HP Backup Temp"	35	35
 "40F Min Compressor Temp, 40F Max HP Backup Temp"	40	40
+"50F Min Compressor Temp, 50F Max HP Backup Temp"	50	50
+"30F Min Compressor Temp, 50F Max HP Backup Temp"	30	50
+"10F Min Compressor Temp, 50F Max HP Backup Temp"	10	50
+"-10F Min Compressor Temp, 50F Max HP Backup Temp"	-10	50
 "Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp"	5	35
 "Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp"	25	45
 		

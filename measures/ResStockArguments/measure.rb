@@ -336,6 +336,12 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The type and efficiency of the existing heat pump.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_heat_pump_heating_capacity_fraction_17_f', false)
+    arg.setDisplayName('HVAC: Heat Pump Heating Capacity Fraction 17F')
+    arg.setDescription('Heating output capacity at 17F.')
+    arg.setUnits('frac')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_heating_autosizing_factor', false)
     arg.setDisplayName('HVAC: Heat Pump Heating Autosizing Factor')
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
@@ -631,7 +637,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Fossil fuel emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MBtu and kg/MBtu are allowed.')
     args << arg
 
-    resstock_fuels(include_electricity: false).each do |fuel|
+    resstock_fuels(include_electricity: true).each do |fuel|
       arg = OpenStudio::Measure::OSArgument.makeStringArgument("emissions_#{OpenStudio::toUnderscoreCase(fuel)}_values", false)
       arg.setDisplayName("Emissions: #{fuel.split(' ').map(&:capitalize).join(' ')} Values")
       arg.setDescription("#{fuel.capitalize} emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.")

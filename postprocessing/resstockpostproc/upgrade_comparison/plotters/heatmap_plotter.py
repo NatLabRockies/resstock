@@ -14,7 +14,7 @@ from plotly.subplots import make_subplots
 __all__ = ["create_plot"]
 
 from resstockpostproc.upgrade_comparison.plotters import plot_utils
-from resstockpostproc.upgrade_comparison import theme
+from resstockpostproc.shared_utils.generic_plotters import theme
 from resstockpostproc.upgrade_comparison.schema.plot_spec import PlotSpec
 from resstockpostproc.upgrade_comparison.schema.workflow_schema import QuantityGroup
 

@@ -75,7 +75,7 @@ def load_data(workflow: WorkflowConfig, selected_upgrades: list[int] | None = No
 
     if not lazyframes:
         raise ValueError(f"No data found in {local_results_dir}. Make sure the s3_results_dir is synced.")
-    return pl.concat(lazyframes.values(), how="diagonal")
+    return pl.concat(lazyframes.values(), how="diagonal_relaxed")
 
 
 def download_data(workflow: WorkflowConfig) -> None:
