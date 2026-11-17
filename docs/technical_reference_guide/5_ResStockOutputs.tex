@@ -5,9 +5,19 @@ ResStock produces a range of results around energy, housing characteristics, sch
 %Tables - basically our data dictionaries (ideally automated). Data dictionaries are already automated but need heavy QC
 The ResStock workflow generates a sample of residential housing units using the conditional distributions and sampling methodology described in Section \ref{sec:sampling_methodology}. Each housing unit sample is specified using a set of characteristics, which include location, housing type, vintage,  heating fuel, building size and geometry, materials, information on the HVAC system, insulation, infiltration, appliances, as well as information on occupant demographics and  behavior. These characteristics are used for the model creation process, but they are also available as metadata associated with the results. The metadata is useful for performing analysis and slicing the data into segments. Some characteristics directly impact the OpenStudio model creation (e.g., wall insulation levels), whereas others are meta-parameters used as tags (e.g., ISO/RTO region) or as characteristics that correlate with other energy-relevant characteristics (e.g., vintage). Each of these characteristics is described in detail in Section \ref{sec:resstock_inputs}, and are summarized in Table \ref{table:hc_output_fields}. In published ResStock datasets, these housing characteristics are the fields that use the ``in'' prefix followed by the housing characteristic name, for example ``in.windows'' for the Windows characteristic. If an upgrade or measure changes a housing characteristic, the post-upgrade characteristic uses the ``upgrade'' prefix, for example ``upgrade.windows.''
 
-Most national ResStock data releases have approximately one sample for every 250 housing units that actually exist in the modeled geography, though this can vary if the sample size is increased or decreased. Taken together, the set of samples describes the housing stock with its intrinsic variety and is used as both an output of ResStock and an input to further steps in the ResStock workflow (see Section \ref{sec:workflow} for more information about the workflow).
+A national ResStock data release has roughly one sample for every 140 to 250 housing units that actually exist, depending on the sample size. Because the sample is stratified, the number of housing units a building represents varies from building to building: the \texttt{weight} column gives it, and every stock-level statistic must be weighted by it (Section \ref{sec:sample_weights}). Taken together, the set of samples describes the housing stock with its intrinsic variety and is used as both an output of ResStock and an input to further steps in the ResStock workflow (see Section \ref{sec:workflow} for more information about the workflow).
 
 Note that ResStock assigns certain characteristics that are not always used. Two examples of this are \textit{cooling setpoint} in housing units with no cooling system, and \textit{clothes washer usage level} in housing units with no clothes washer. This doesn't impact the building energy models, this is merely a mechanism that allows for variability in probability distributions if the schedules are used for an upgrade. These characteristics, however, can lead to confusion because they're preserved in the metadata as being assigned even if they're not modeled. For further discussion see the the BuildStock Batch \href{https://buildstockbatch.readthedocs.io/en/v2023.10.0/project_defn.html#upgrade-scenarios}{Upgrade Scenario} documentation.
+
+\subsection{Location Columns}\label{sec:output_location_columns}
+A simulated building stands for housing units in many places. The allocation step (Section \ref{sec:allocation}) assigns each building to housing units anywhere in its sampling region, which can span several counties and PUMAs but never crosses a state line or a UTC offset. The location columns therefore come in two kinds.
+
+\begin{itemize}
+    \item \textbf{Where the building was simulated.} The housing characteristics that describe location below the state, such as county, PUMA, city, climate zones, census division, grid regions and weather file coordinates, carry the \texttt{in.as\_simulated\_} prefix, for example \texttt{in.as\_simulated\_county}. They describe the one location the building was modeled in, whose weather file and other location-dependent inputs it used. They do not describe where the housing units it represents are. Filtering on them answers ``which buildings were simulated here'', not ``which housing units are here''.
+    \item \textbf{Where the housing units are.} \texttt{in.state}, \texttt{in.state\_name}, \texttt{in.nhgis\_state\_gisjoin}, \texttt{in.census\_division\_name} and \texttt{in.census\_region\_name} describe the housing units. Since a sampling region never crosses a state line, these are the same for the building and its units, and \texttt{in.as\_simulated\_state} always equals \texttt{in.state}. The county, PUMA and tract of the housing units (\texttt{in.nhgis\_county\_gisjoin}, \texttt{in.nhgis\_puma\_gisjoin} and \texttt{in.nhgis\_tract\_gisjoin}) are only in the county, PUMA and tract tables, where a building appears once for each geography it was allocated to, with the weight of its units there.
+\end{itemize}
+
+To report results for a county or PUMA, use the county or PUMA tables rather than filtering the national table on \texttt{in.as\_simulated\_county} or \texttt{in.as\_simulated\_puma}. \texttt{in.sampling\_region\_id} gives the building's sampling region (Section \ref{sec:sampling_region_characteristic}).
 
 
 \begin{customLongTable}{ |p{6cm}|p{9cm}| }
@@ -16,24 +26,39 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         applicability & Whether the upgrade is applicable to this model. Always True for baseline.  \\ \hline
         bldg\_id & The identifier for this model, which can be traced back to the building characteristics input file \\ \hline
         completed\_status & Whether the simulation for this model was successful or not \\ \hline
-        in.ahs\_region & American Housing Survey region \\ \hline
-        in.aiannh\_area & The sample is or is not located in census-designated American Indian/Alaska Native/Native Hawaiian Area \\ \hline
         in.air\_leakage\_to\_outside\_ach50 & Nominal air infiltration rate \\ \hline
         in.applicable & Whether the upgrade is applicable to this model. Always True for baseline.  \\ \hline
         in.area\_median\_income & Area median income of the household occupying the housing unit \\ \hline
-        in.ashrae\_iecc\_climate\_zone\_2004 & IECC climate zone according to ASHRAE 169 in 2004 and IECC in 2012 \\ \hline
-        in.ashrae\_iecc\_climate\_zone\_2004\_sub\_cz\_split & Climate zone according to ASHRAE 169 in 2004 and IECC in 2012, where climate zone 2A is split between counties in TX, LA versus FL, GA, AL, and MS and climate zone 1A is split between FL and HI\\ \hline
+        in.as\_simulated\_ahs\_region & American Housing Survey region, where the building was simulated \\ \hline
+        in.as\_simulated\_aiannh\_area & Whether the building was simulated in a census-designated American Indian/Alaska Native/Native Hawaiian Area \\ \hline
+        in.as\_simulated\_ashrae\_iecc\_climate\_zone\_2004 & IECC climate zone according to ASHRAE 169 in 2004 and IECC in 2012, where the building was simulated \\ \hline
+        in.as\_simulated\_ashrae\_iecc\_climate\_zone\_2004\_sub\_cz\_split & Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 where the building was simulated, with climate zone 2A split between counties in TX, LA versus FL, GA, AL, and MS and climate zone 1A split between FL and HI \\ \hline
+        in.as\_simulated\_building\_america\_climate\_zone & Building America climate zone, where the building was simulated \\ \hline
+        in.as\_simulated\_cec\_climate\_zone & California Energy Code climate zone, where the building was simulated \\ \hline
+        in.as\_simulated\_census\_division & 2010 U.S. Census Division, where the building was simulated \\ \hline
+        in.as\_simulated\_census\_division\_recs & Census Division as used in RECS 2015, where the building was simulated \\ \hline
+        in.as\_simulated\_census\_region & 2010 U.S. Census Region, where the building was simulated \\ \hline
+        in.as\_simulated\_city & The census-designated city where the building was simulated \\ \hline
+        in.as\_simulated\_county & County GISJOIN identifier, where the building was simulated \\ \hline
+        in.as\_simulated\_county\_and\_puma & The GISJOIN identifier for the County and the PUMA where the building was simulated \\ \hline
+        in.as\_simulated\_county\_metro\_status & Whether the county is part of a census-defined metro area, where the building was simulated \\ \hline
+        in.as\_simulated\_energystar\_climate\_zone\_2023 & Climate zones for windows, doors, and skylights per ENERGY STAR guidelines as of 2023, where the building was simulated \\ \hline
+        in.as\_simulated\_generation\_and\_emissions\_assessment\_region & Generation and carbon emissions assessment (GEA) region from Cambium 2023, where the building was simulated \\ \hline
+        in.as\_simulated\_iso\_rto\_region & ISO or RTO region, where the building was simulated \\ \hline
+        in.as\_simulated\_location\_region & Custom ResStock region, where the building was simulated \\ \hline
+        in.as\_simulated\_metropolitan\_and\_micropolitan\_statistical\_area & The census metropolitan or micropolitan statistical area where the building was simulated \\ \hline
+        in.as\_simulated\_puma & The 2010 U.S.~Census PUMA where the building was simulated \\ \hline
+        in.as\_simulated\_puma\_metro\_status & The PUMA metropolitan status, where the building was simulated \\ \hline
+        in.as\_simulated\_reeds\_balancing\_area & Regional Energy Deployment System Model balancing area, where the building was simulated \\ \hline
+        in.as\_simulated\_state & State where the building was simulated; always the same as in.state \\ \hline
+        in.as\_simulated\_state\_metro\_median\_income & The census-supplied median income for households in the metro area where the building was simulated \\ \hline
         in.bathroom\_spot\_vent\_hour & Bathroom spot ventilation daily start hour \\ \hline
         in.battery & The presence, size, location, and efficiency of an on-site battery (not modeled in 2024.2 dataset) \\ \hline
         in.bedrooms & Number of bedrooms \\ \hline
-        in.building\_america\_climate\_zone & Building America climate zone \\ \hline
         in.buildstock\_csv\_path & Where the building characteristics file is located \\ \hline
-        in.cec\_climate\_zone & California Energy Code climate zone \\ \hline
         in.ceiling\_fan & Presence and energy usage of ceiling fans at medium speed \\ \hline
-        in.census\_division & 2010 U.S. Census Division \\ \hline
-        in.census\_division\_recs & Census Division as used in RECS 2015 \\ \hline
-        in.census\_region & 2010 U.S. Census Region \\ \hline
-        in.city & The census-designated city where the sample is located \\ \hline
+        in.census\_division\_name & 2010 U.S.~Census Division of the housing units \\ \hline
+        in.census\_region\_name & 2010 U.S.~Census Region of the housing units \\ \hline
         in.clothes\_dryer & The presence, rated efficiency, and fuel type of the clothes dryer in the housing unit \\ \hline
         in.clothes\_dryer\_usage\_level & Clothes dryer energy usage level multiplier \\ \hline
         in.clothes\_washer & Presence and rated efficiency of the clothes washer \\ \hline
@@ -48,9 +73,6 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.cooling\_unavailable\_days & The number of days in a year the cooling system is unavailable. \\ \hline
         in.cooling\_unavailable\_period & The time during the year when the cooling system is unavailable. \\ \hline
         in.corridor & Type of corridor \\ \hline
-        in.county & County GISJOIN identifier \\ \hline
-        in.county\_and\_puma & The GISJOIN identifier for the County and the PUMA that the sample is located \\ \hline
-        in.county\_metro\_status & Whether the county is part of a census-defined metro area \\ \hline
         in.county\_name & The name of the county the building is located in \\ \hline
         in.dehumidifier & Presence, water removal rate, and humidity setpoint of dehumidifier (not modeled in 2024.2 dataset) \\ \hline
         in.dishwasher & Presence and rated efficiency of dishwasher \\ \hline
@@ -69,9 +91,7 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.electric\_vehicle\_miles\_traveled & Annual miles traveled by EV \\ \hline
         in.electric\_vehicle\_outlet\_access & The type of outlet access available for EV \\ \hline
         in.electric\_vehicle\_ownership & Whether the EV is present or not \\ \hline
-        in.energystar\_climate\_zone\_2023 & Climate zones for windows, doors, and skylights per ENERGY STAR guidelines as of 2023 \\ \hline
         in.federal\_poverty\_level & Federal poverty level of the household occupying the housing unit \\ \hline
-        in.generation\_and\_emissions\_assessment\_region & Generation and carbon emissions assessment (GEA) region from Cambium 2023 \\ \hline
         in.geometry\_attic\_type & Type of attic \\ \hline
         in.geometry\_building\_horizontal\_location\_mf & Location of the multifamily unit horizontally within the building (left, middle, right) \\ \hline
         in.geometry\_building\_horizontal\_location\_sfa & Location of the single-family attached unit horizontally within the building (left, middle, right) \\ \hline
@@ -139,13 +159,10 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.insulation\_slab & Slab insulation level \\ \hline
         in.insulation\_wall & Wall construction type and insulation level \\ \hline
         in.interior\_shading & Fraction of the window area shaded from the interior in the summer and winter \\ \hline
-        in.iso\_rto\_region & ISO or RTO region \\ \hline
         in.lighting & Fraction of lighting types \\ \hline
         in.lighting\_interior\_use & Interior lighting usage relative to the national average \\ \hline
         in.lighting\_other\_use & Exterior and garage lighting usage relative to the national average \\ \hline
-        in.location\_region & Custom ResStock region \\ \hline
         in.mechanical\_ventilation & Mechanical ventilation type and efficiency \\ \hline
-        in.metropolitan\_and\_micropolitan\_statistical\_area & The census metropolitan or micropolitan statistical area where this model is located \\ \hline
         in.misc\_extra\_refrigerator & Presence and rated efficiency of extra refrigerator \\ \hline
         in.misc\_freezer & Presence and rated efficiency of standalone freezer \\ \hline
         in.misc\_gas\_fireplace & Presence of gas fireplace \\ \hline
@@ -158,31 +175,29 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.misc\_well\_pump & Presence and efficiency of well pump \\ \hline
         in.natural\_ventilation & Schedule of natural ventilation from windows \\ \hline
         in.neighbors & Presence and distance between the housing unit and the nearest neighbors to the left and right. \\ \hline
+        in.nhgis\_state\_gisjoin & NHGIS GISJOIN identifier of the state of the housing units \\ \hline
         in.occupants & The number of occupants living in the housing unit \\ \hline
         in.orientation & Orientation of the building \\ \hline
         in.overhangs & Presence, depth, and location of window overhangs \\ \hline
         in.plug\_load\_diversity & Plug load diversity multiplier relative to the national average \\ \hline
         in.plug\_loads & Plug load usage level relative to the national average \\ \hline
-        in.puma & The  2010 U.S. Census PUMA where the sample is located \\ \hline
-        in.puma\_metro\_status & The PUMA metropolitan status \\ \hline
         in.pv\_orientation & Presence and orientation of rooftop PV system \\ \hline
         in.pv\_system\_size & Presence and size of rooftop PV system \\ \hline
         in.radiant\_barrier & Presence of radiant barrier in attic \\ \hline
         in.range\_spot\_vent\_hour & Range spot ventilation daily start hour \\ \hline
-        in.reeds\_balancing\_area & Regional Energy Deployment System Model balancing area \\ \hline
         in.refrigerator & The presence and rated efficiency of the primary refrigerator \\ \hline
         in.refrigerator\_usage\_level & Refrigerator energy usage level multiplier \\ \hline
         in.representative\_income & The income assumed for the household in this unit for energy burden calculation \\ \hline
         in.roof\_material & Roof material type \\ \hline
+        in.sampling\_region\_id & Sampling region of the building (Section \ref{sec:sampling_region_characteristic}) \\ \hline
         in.solar\_hot\_water & Presence, size, and location of solar hot water system \\ \hline
         in.sqft..ft2 & Finished floor area of the representative housing unit \\ \hline
-        in.state & State \\ \hline
-        in.state\_metro\_median\_income & The census-supplied median income for households in the metro area where this unit is located. \\ \hline
+        in.state & State the housing units are in; the building is always simulated in the same state \\ \hline
+        in.state\_name & Full name of the state of the housing units \\ \hline
         in.tenure & The tenancy (owner or renter) of the household occupying the housing unit \\ \hline
         in.units\_represented & Number of housing units the building model represents (this field is no longer used) \\ \hline
-        in.usage\_level & Usage of major appliances relative to the national average \\ \hline
         in.upgrade\_name & Name of the upgrade applied, or Baseline when no upgrade is applied \\ \hline
-
+        in.usage\_level & Usage of major appliances relative to the national average \\ \hline
         in.vacancy\_status & Presence of occupants \\ \hline
         in.vintage & Range in which the building was constructed \\ \hline
         in.vintage\_acs & Range in which the building was constructed using ACS bins \\ \hline
@@ -190,10 +205,9 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.water\_heater\_fuel & Water heater fuel \\ \hline
         in.water\_heater\_in\_unit & Individual water heater present or not present in the housing unit that solely serves the specific housing unit \\ \hline
         in.water\_heater\_location & Water heater location for the housing unit if applicable \\ \hline
-        in.weather\_file\_city & City of weather file \\ \hline
-
+        in.weather\_file\_city & City of the weather file the building was simulated with, which is often in a different county from \texttt{in.as\_simulated\_county} \\ \hline
         in.window\_areas & Window to wall ratios of the front, back, left, and right walls  \\ \hline
-        in.windows & Construction type and efficiency levels of windows \\
+        in.windows & Construction type and efficiency levels of windows \\ \hline
 \end{customLongTable}
 
 In addition to the housing characteristics themselves, several other ResStock outputs receive the ``in.'' prefix. These are inputs that are not provided as housing characteristics, but that are necessary inputs to the model. Most of these values are specified in the \href{https://github.com/NREL/resstock/blob/v3.2.0-2024.2/project_national/EUSSRR2_project_500k_AMY2018.yml}{project configuration file}.
@@ -232,8 +246,8 @@ In addition to the housing characteristics themselves, several other ResStock ou
         in.utility\_bill\_scenario\_names & Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If multiple scenarios, use a comma-separated list. \\ \hline
         in.utility\_bill\_simple\_filepaths & Relative paths of simple utility rates. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. \\ \hline
 
-        in.weather\_file\_latitude & Latitude of location of weather file. \\ \hline
-        in.weather\_file\_longitude & Longitude of location of weather file. \\ \hline
+        in.as\_simulated\_weather\_file\_latitude & Latitude of the weather file the building was simulated with \\ \hline
+        in.as\_simulated\_weather\_file\_longitude & Longitude of the weather file the building was simulated with \\ \hline
     \end{customLongTable}
 
 \section{Energy Consumption by Fuel and End Use}

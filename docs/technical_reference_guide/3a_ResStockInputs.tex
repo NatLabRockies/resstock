@@ -114,12 +114,13 @@ In ResStock there are three input files describing geographies relevant to the e
 
 \subsection{Other Geographies}
 
-In this section, we cover other miscellaneous geographies in ResStock. This includes four input files:
+In this section, we cover other miscellaneous geographies in ResStock. This includes five input files:
 \begin{itemize}
     \item Census Division RECS
     \item Custom State
     \item Location Region
-    \item American Housing Survey Region.
+    \item American Housing Survey Region
+    \item Sampling Region.
 \end{itemize}
 
 \subsubsection{Census Division RECS}
@@ -134,8 +135,11 @@ In this section, we cover other miscellaneous geographies in ResStock. This incl
 \subsubsection{American Housing Survey Region}
 \input{characteristics/AHS Region}
 
+\subsubsection{Sampling Region}
+\input{characteristics/Sampling Region}
+
 \subsection{Weather Data}
-Weather data are closely related to the specification of geography inputs, since weather varies by location. In ResStock, weather data are not specified in the Housing Characteristics input data like most things, but are specified as their own set of input files. In ResStock, weather files are specified at the county level, although sometimes adjacent counties share the same weather files.
+Weather data are closely related to the specification of geography inputs, since weather varies by location. In ResStock, weather data are not specified in the Housing Characteristics input data like most things, but are specified as their own set of input files. In ResStock, there is one weather file for each county, and each County and PUMA cell is assigned one of them, which need not be its own county's.
 
 As is standard in most building energy models, ResStock can be run with either Typical Meteorological Year (TMY) or Actual Meteorological Year (AMY) data. Hypothetically, ResStock could be run with any other weather data in EPW format, but all data releases to date have been based upon TMY or AMY data. TMY are synthetically constructed files based upon historic weather where each month of the year is picked from the most representative (i.e., ``typical'') real month from the previous 30 years (\cite{Wilcox2008}). This has the advantage of avoiding extreme or unusual weather, and can be appropriate for analyses that aggregate annual energy use. However, TMY files, by design, will not capture worst-case or extreme situations. Also, given that TMYs are constructed upon historical weather, it is unlikely they truly represent what is ``typical'' for a location given the reality of accelerating climate change. ``Typical'' is a moving target, and what was typical 10 years ago is less likely to be typical today. Furthermore, TMY has the disadvantage that adjacent weather stations might not use the same historical years for the same months. For example, a TMY in Denver, CO, might use 2012 for the July file, but 30 miles (40 kilometers) away, the Boulder, CO, TMY station might use 1999 for July. This misalignment of weather years can lead to modeling of non-coincident temporal energy use in ResStock and will likely lead to the underrepresentation of electricity peaks when considering geographies spread across more than one weather file.
 
@@ -148,7 +152,9 @@ Since ResStock is a composite model of many EnergyPlus models, it employs the st
 We develop custom AMY weather data files by pulling historic hourly temperature, humidity, wind speed/direction, and atmospheric pressure from the \href{https://www.ncei.noaa.gov/products/land-based-station/integrated-surface-database}{Integrated Surface Database}, developed by the National Oceanic and Atmospheric Administration's National Climatic Data Center. Additionally, we add in satellite-derived solar radiation data from NLR’s National Solar Radiation Database~\citep{nsrdb}. Ground-based solar radiation data are not widely collected, so using satellite-derived solar radiation data is standard practice for both the solar industry and building energy modelers using historical weather data. Caveats and further information on the data compilation and gap filling of this custom AMY approach can be found in Section 2.4 of \citet{Wilson2022}.
 
 \subsubsection{Mapping Weather Files to ResStock Samples}
-To produce weather files for ResStock, we develop AMY EPWs for approximately 1,200 weather stations pulling data from the year 2018---with the 2018 AMY roughly mapping to the locations of the TMY3 data.\footnote{Occasionally nearby stations are used if data are missing from the target weather station.} In ResStock, each county is assigned one of these available 1,200  weather stations. Each county will receive a weather station that is located in the county if one is available; if not, the county will be assigned a weather station closest to the county's population centroid, with prioritization of stations in the same climate zone. Timestamps are shifted if the chosen weather file is in a different time zone. All housing units within a given county will use the assigned weather data for that county for simulations. Within the model, actual weather file assignment occurs in the options\_lookup.tsv as a parameter input into the ResStockArguments script.
+To produce weather files for ResStock, we develop AMY EPWs for approximately 1,200 weather stations pulling data from the year 2018---with the 2018 AMY roughly mapping to the locations of the TMY3 data.\footnote{Occasionally nearby stations are used if data are missing from the target weather station.} Each county has a weather file built from one of these stations: a station located in the county if one is available; if not, the station closest to the county's population centroid, with prioritization of stations in the same climate zone. Timestamps are shifted if the chosen station is in a different time zone.
+
+A sample is not simulated on its county's file directly. Each County and PUMA cell (the part of a county that lies in one PUMA) is assigned the county weather file whose station best matches the heating and cooling degree days where the cell's housing units are, among nearby files on the county's own UTC offset (Section \ref{sec:sampling_region_characteristic}). The file is often another county's: a cell in a large or mountainous county can be better matched by a neighboring county's station than by its own. All samples in a cell use the cell's weather file. Within the model, weather file assignment occurs in the options\_lookup.tsv, on the County and PUMA characteristic, as a parameter input into the ResStockArguments script.
 
 \subsubsection{Weather Files and Equipment Sizing}
 In addition to the 8,760 timeseries of weather variables in the timeseries energy simulation, EPW files also provide a header with basic information on the weather location. ResStock uses some of this header information for sizing HVAC equipment---see Table \ref{Tab:Packages}.
