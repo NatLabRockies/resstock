@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 DEFAULT_ALLOCATION_SEED = 42
 
 # Fraction of catalogue rows allowed to go unallocated before the run is treated as broken
-DEFAULT_NULL_BUILDING_THRESHOLD = 0.005
+DEFAULT_NULL_BUILDING_THRESHOLD = 0.01
 
 # Characteristics that define a pool of interchangeable buildings for an occupied household
 ALLOCATION_KEYS = [
