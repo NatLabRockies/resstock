@@ -430,7 +430,7 @@ module HVAC
 
     # Fan
     hvac_system = cooling_system.nil? ? heating_system : cooling_system
-    fan = create_supply_fan(model, obj_name, fan_watts_per_cfm, fan_cfms, hvac_system)
+    fan = create_supply_fan(model, obj_name, fan_watts_per_cfm, fan_cfms, hvac_system, htg_coil, clg_coil, htg_supp_coil)
     if (not cooling_system.nil?) && (not heating_system.nil?) && (cooling_system == heating_system)
       add_fan_pump_disaggregation_ems_program(model, fan, htg_coil, clg_coil, htg_supp_coil, cooling_system)
     else
@@ -854,9 +854,9 @@ module HVAC
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param geothermal_loop [HPXML::GeothermalLoop] The HPXML geothermal loop of interest
   # @param heat_pump [HPXML::HeatPump] The HPXML heat pump of interest
-  # @param air_loop_unitary [OpenStudio::Model::AirLoopHVACUnitarySystem] Air loop for the HVAC system
-  # @param htg_coil [OpenStudio::Model::CoilHeatingWaterToAirHeatPumpEquationFit or OpenStudio::Model::CoilHeatingWaterToAirHeatPumpVariableSpeedEquationFit] OpenStudio Heating Coil object
-  # @param clg_coil [OpenStudio::Model::CoilCoolingWaterToAirHeatPumpEquationFit or OpenStudio::Model::CoilCoolingWaterToAirHeatPumpVariableSpeedEquationFit] OpenStudio Cooling Coil object
+  # @param air_loop_unitary [OpenStudio::Model::AirLoopHVACUnitarySystem] HVAC system model object
+  # @param htg_coil [OpenStudio::Model::CoilHeatingWaterToAirHeatPumpXXXEquationFit] Heating coil model object
+  # @param clg_coil [OpenStudio::Model::CoilCoolingWaterToAirHeatPumpXXXEquationFit] Cooling coil model object
   # @param htg_supp_coil [OpenStudio::Model::CoilHeatingXXX] Heat pump backup heating coil model object
   # @param control_zone [OpenStudio::Model::ThermalZone] Conditioned space thermal zone
   # @return [nil]
@@ -2045,8 +2045,8 @@ module HVAC
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param pump [OpenStudio::Model::PumpVariableSpeed] OpenStudio variable speed pump object
   # @param control_zone [OpenStudio::Model::ThermalZone] Conditioned space thermal zone
-  # @param htg_coil [OpenStudio::Model::CoilHeatingWaterToAirHeatPumpEquationFit or OpenStudio::Model::CoilHeatingWaterToAirHeatPumpVariableSpeedEquationFit] OpenStudio Heating Coil object
-  # @param clg_coil [OpenStudio::Model::CoilCoolingWaterToAirHeatPumpEquationFit or OpenStudio::Model::CoilCoolingWaterToAirHeatPumpVariableSpeedEquationFit] OpenStudio Cooling Coil object
+  # @param htg_coil [OpenStudio::Model::CoilHeatingWaterToAirHeatPumpXXXEquationFit] Heating coil model object
+  # @param clg_coil [OpenStudio::Model::CoilCoolingWaterToAirHeatPumpXXXEquationFit] Cooling coil model object
   # @return [nil]
   def self.add_ghp_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil)
     # Sensors
@@ -2273,7 +2273,7 @@ module HVAC
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param dehumidifier [OpenStudio::Model::ZoneHVACDehumidifierDX] The dehumidifier model object
   # @param fraction_served [Double] Fraction of dehumidification load served
-  # @param conditioned_space [OpenStudio::Model::Space] OpenStudio Space object for conditioned zone
+  # @param conditioned_space [OpenStudio::Model::Space] Conditioned space model object
   # @return [nil]
   def self.add_dehumidifier_load_adjustment_ems_program(model, dehumidifier, fraction_served, conditioned_space)
     # sensor
@@ -2409,8 +2409,11 @@ module HVAC
   # @param fan_watts_per_cfm [Double] Blower fan efficacy (W/cfm)
   # @param fan_cfms [Array<Double>] Fan airflow rates at all speeds, both heating and cooling
   # @param hvac_system [HPXML::HeatingSystem or HPXML::CoolingSystem or HPXML::HeatPump] The HPXML HVAC system of interest
+  # @param htg_coil [OpenStudio::Model::CoilHeatingXXX] Heating coil model object
+  # @param clg_coil [OpenStudio::Model::CoilCoolingXXX] Cooling coil model object
+  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingXXX] Heat pump backup heating coil model object
   # @return [OpenStudio::Model::FanSystemModel] OpenStudio FanSystemModel object
-  def self.create_supply_fan(model, obj_name, fan_watts_per_cfm, fan_cfms, hvac_system)
+  def self.create_supply_fan(model, obj_name, fan_watts_per_cfm, fan_cfms, hvac_system, htg_coil = nil, clg_coil = nil, htg_supp_coil = nil)
     max_fan_cfm = Float(fan_cfms.max) # Convert to float to prevent integer division below
     fan = Model.add_fan_system_model(
       model,
@@ -2447,54 +2450,73 @@ module HVAC
       fan.addSpeed(fan_ratio.round(5))
     end
 
-    add_fan_power_ems_program(model, fan, hvac_system)
+    add_fan_power_ems_program(model, fan, hvac_system, htg_coil, clg_coil, htg_supp_coil)
 
     return fan
   end
 
   # Creates an EMS program to override the fan power:
-  # 1. If a heat pump w/ separate backup, disable fan power below the heat pump's
-  #    minimum operating temperature; the backup heating system will be operating
-  #    instead. TODO: Might be able to remove this when
-  #    https://github.com/NatLabRockies/EnergyPlus/issues/11903 is fixed.
+  # 1. If a heat pump, work around an EnergyPlus bug where the fan RTF=1 even if
+  #    there's no supplemental coil or the supplemental coil is cycling. TODO: Remove
+  #    this when https://github.com/NatLabRockies/EnergyPlus/issues/11903 is fixed.
   # 2. If a variable-speed system, work around an EnergyPlus bug. TODO: Remove
   #    this when https://github.com/NatLabRockies/EnergyPlus/issues/11909 is fixed.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param fan [OpenStudio::Model::FanSystemModel] OpenStudio FanSystemModel object
+  # @param fan [OpenStudio::Model::FanSystemModel] HVAC supply fan model object
   # @param hvac_system [HPXML::HeatingSystem or HPXML::CoolingSystem or HPXML::HeatPump] The HPXML HVAC system of interest
+  # @param htg_coil [OpenStudio::Model::CoilHeatingXXX] Heating coil model object
+  # @param clg_coil [OpenStudio::Model::CoilCoolingXXX] Cooling coil model object
+  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingXXX] Heat pump backup heating coil model object
   # @return [nil]
-  def self.add_fan_power_ems_program(model, fan, hvac_system)
-    hvac_ap = hvac_system.additional_properties
-
-    is_air_source_hp = hvac_system.is_a?(HPXML::HeatPump) && [HPXML::HVACTypeHeatPumpAirToAir,
-                                                              HPXML::HVACTypeHeatPumpMiniSplit,
-                                                              HPXML::HVACTypeHeatPumpPTHP,
-                                                              HPXML::HVACTypeHeatPumpRoom].include?(hvac_system.heat_pump_type)
-    is_hp_with_sep_backup = is_air_source_hp && (not hvac_system.backup_system.nil?) && (not hvac_ap.hp_min_temp.nil?) # CompressorLockoutTemperature input does not apply to GSHPs
+  def self.add_fan_power_ems_program(model, fan, hvac_system, htg_coil, clg_coil, htg_supp_coil)
+    is_ashp = hvac_system.is_a?(HPXML::HeatPump) && [HPXML::HVACTypeHeatPumpAirToAir,
+                                                     HPXML::HVACTypeHeatPumpMiniSplit,
+                                                     HPXML::HVACTypeHeatPumpPTHP,
+                                                     HPXML::HVACTypeHeatPumpRoom].include?(hvac_system.heat_pump_type)
     is_var_speed = hvac_system.respond_to?(:compressor_type) && (hvac_system.compressor_type == HPXML::HVACCompressorTypeVariableSpeed)
 
-    return unless (is_var_speed || is_hp_with_sep_backup)
+    return unless (is_var_speed || is_ashp)
 
     # Sensors
-    if is_hp_with_sep_backup
-      t_out_sensor = model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorSiteOutdoorAirDBTemp }
-    end
     if is_var_speed
       # Fan runtime fraction for each speed
       # TODO: Switch to the single RTF output variable when https://github.com/NatLabRockies/EnergyPlus/issues/11577 is available
-      rtf_sensors = []
+      fan_rtf_sensors = []
       for i in 1..fan.numberofSpeeds
         if fan.numberofSpeeds == 1
           var_name = 'Fan Runtime Fraction'
         else
           var_name = "Fan Runtime Fraction Speed #{i}"
         end
-        rtf_sensors << Model.add_ems_sensor(
+        fan_rtf_sensors << Model.add_ems_sensor(
           model,
           name: "#{fan.name} rtf s",
           output_var_or_meter_name: var_name,
           key_name: fan.name
+        )
+      end
+    end
+    if is_ashp
+      htg_rtf_sensor = Model.add_ems_sensor(
+        model,
+        name: "#{htg_coil.name} rtf s",
+        output_var_or_meter_name: 'Heating Coil Runtime Fraction',
+        key_name: htg_coil.name
+      )
+      clg_rtf_sensor = Model.add_ems_sensor(
+        model,
+        name: "#{clg_coil.name} rtf s",
+        output_var_or_meter_name: 'Cooling Coil Runtime Fraction',
+        key_name: clg_coil.name
+      )
+      if not htg_supp_coil.nil?
+        # RTF not available for electric coils, so we use heating rate instead
+        htg_supp_rate_sensor = Model.add_ems_sensor(
+          model,
+          name: "#{htg_supp_coil.name} htg rate s",
+          output_var_or_meter_name: 'Heating Coil Heating Rate',
+          key_name: htg_supp_coil.name
         )
       end
     end
@@ -2511,6 +2533,12 @@ module HVAC
       comp_type_and_control: EPlus::EMSActuatorFanPressureRise
     )
 
+    # Global variable (to reuse in duct EMS program)
+    global_var_supp_only_cyc_rtf = Model.add_ems_global_var(
+      model,
+      var_name: "#{fan.name} supp only cycl rtf global"
+    )
+
     # Program
     fan_power_program = Model.add_ems_program(
       model,
@@ -2518,23 +2546,37 @@ module HVAC
     )
     fan_power_program.addLine("  Set #{fan_eff_actuator.name} = NULL")
     fan_power_program.addLine("  Set #{fan_press_actuator.name} = NULL")
-    if is_hp_with_sep_backup
-      # Disable fan power below min HP temperature
-      fan_power_program.addLine("If #{t_out_sensor.name} < #{UnitConversions.convert(hvac_ap.hp_min_temp, 'F', 'C').round(2)}")
-      fan_power_program.addLine("  Set #{fan_eff_actuator.name} = 1")
-      fan_power_program.addLine("  Set #{fan_press_actuator.name} = 0")
-      fan_power_program.addLine('Else')
+
+    # Determine whether we need to override the fan power due to supplemental
+    # coil cycling or absence of a supplemental coil
+    fan_power_program.addLine('Set SuppOnlyCyclingRuntimeFraction = -1') # Flag indicating the timestep is not supplemental coil only operation
+    if is_ashp
+      fan_power_program.addLine("If #{htg_rtf_sensor.name} <= 0.001 && #{clg_rtf_sensor.name} <= 0.001")
+      if htg_supp_coil.nil?
+        fan_power_program.addLine('  Set SuppOnlyCyclingRuntimeFraction = 0')
+      else
+        # Determine supplemental coil runtime fraction to scale fan power
+        if htg_supp_coil.is_a? OpenStudio::Model::CoilHeatingElectricMultiStage
+          # Either cycling between off and first stage, or always on
+          fan_power_program.addLine("  Set SuppOnlyCyclingRuntimeFraction = @MIN (#{htg_supp_rate_sensor.name} / #{htg_supp_coil.stages[0].nominalCapacity.get}) 1")
+        else
+          fan_power_program.addLine("  Set SuppOnlyCyclingRuntimeFraction = #{htg_supp_rate_sensor.name} / #{htg_supp_coil.nominalCapacity.get}")
+        end
+      end
+      fan_power_program.addLine('EndIf')
     end
+
     if is_var_speed
       # Set fan power based on fan power curve evaluated at intermediate flow fraction
-      fan_power_program.addLine('Set RuntimeFraction = 0')
-      rtf_sensors.each do |rtf_sensor|
-        fan_power_program.addLine("Set RuntimeFraction = RuntimeFraction + #{rtf_sensor.name}")
+      fan_power_program.addLine('Set FanRuntimeFraction = 0')
+      fan_rtf_sensors.each do |fan_rtf_sensor|
+        fan_power_program.addLine("Set FanRuntimeFraction = FanRuntimeFraction + #{fan_rtf_sensor.name}")
       end
-      fan_power_program.addLine('If RuntimeFraction >= 0.999') # Only need to override when NOT cycling on/off
+      # Only need to override when fan running between min/max speeds (RTF=1) and not supplemental coil only operation
+      fan_power_program.addLine('If (FanRuntimeFraction >= 0.999) && (SuppOnlyCyclingRuntimeFraction <= 0)')
       fan_power_program.addLine('  Set FlowFraction = 0')
-      rtf_sensors.each_with_index do |rtf_sensor, i|
-        fan_power_program.addLine("  Set FlowFraction = FlowFraction + (#{rtf_sensor.name} * #{fan.speeds[i].flowFraction})")
+      fan_rtf_sensors.each_with_index do |fan_rtf_sensor, i|
+        fan_power_program.addLine("  Set FlowFraction = FlowFraction + (#{fan_rtf_sensor.name} * #{fan.speeds[i].flowFraction})")
       end
       curve_type, coeff = get_fan_power_curve_spec(hvac_system)
       if curve_type == 'quadratic'
@@ -2546,18 +2588,24 @@ module HVAC
       # so we scale things using the power curve to get the desired power.
       fan_power_program.addLine('  Set DiscretePowerFraction = 0')
       power_curve = fan.electricPowerFunctionofFlowFractionCurve.get
-      rtf_sensors.each_with_index do |rtf_sensor, i|
+      fan_rtf_sensors.each_with_index do |fan_rtf_sensor, i|
         power_fraction = power_curve.evaluate(fan.speeds[i].flowFraction)
-        fan_power_program.addLine("  Set DiscretePowerFraction = DiscretePowerFraction + (#{rtf_sensor.name} * #{power_fraction})")
+        fan_power_program.addLine("  Set DiscretePowerFraction = DiscretePowerFraction + (#{fan_rtf_sensor.name} * #{power_fraction})")
       end
       fan_power_program.addLine('  If DiscretePowerFraction > 0')
       fan_power_program.addLine("    Set #{fan_press_actuator.name} = #{fan.designPressureRise} * FanPowerFraction / DiscretePowerFraction")
       fan_power_program.addLine('  EndIf')
       fan_power_program.addLine('EndIf')
     end
-    if is_hp_with_sep_backup
+
+    if is_ashp
+      # Need to adjust the fan power that E+ calculated to account for supplemental coil fan cycling
+      fan_power_program.addLine('If (SuppOnlyCyclingRuntimeFraction >= 0) && (SuppOnlyCyclingRuntimeFraction < 1)')
+      fan_power_program.addLine("    Set #{fan_press_actuator.name} = SuppOnlyCyclingRuntimeFraction * #{fan.designPressureRise}")
       fan_power_program.addLine('EndIf')
     end
+
+    fan_power_program.addLine("Set #{global_var_supp_only_cyc_rtf.name} = SuppOnlyCyclingRuntimeFraction")
 
     # Calling manager
     Model.add_ems_program_calling_manager(
@@ -2620,7 +2668,7 @@ module HVAC
   # @param htg_cfm [Double] Heating airflow rate (cfm)
   # @param clg_cfm [Double] Cooling airflow rate (cfm)
   # @param supp_max_temp [Double] Maximum outdoor temperature for heat pump backup heating (F)
-  # @return [OpenStudio::Model::AirLoopHVACUnitarySystem] OpenStudio Air Loop HVAC Unitary System object
+  # @return [OpenStudio::Model::AirLoopHVACUnitarySystem] HVAC system model object
   def self.create_air_loop_unitary_system(model, obj_name, fan, htg_coil, clg_coil, htg_supp_coil, htg_cfm, clg_cfm, supp_max_temp = nil)
     cycle_fan_sch = Model.add_schedule_constant(
       model,
@@ -2670,7 +2718,7 @@ module HVAC
   # @param airflow_cfm [Double] Maximum airflow rate (cfm)
   # @param heating_system [HPXML::HeatingSystem or HPXML::HeatPump] The HPXML heating system or heat pump of interest
   # @param hvac_unavailable_periods [Hash] Map of htg/clg => HPXML::UnavailablePeriods for heating/cooling
-  # @return [OpenStudio::Model::AirLoopHVAC] OpenStudio Air Loop HVAC object
+  # @return [OpenStudio::Model::AirLoopHVAC] Air loop model object
   def self.create_air_loop(model, obj_name, hvac_object, control_zone, hvac_sequential_load_fracs, airflow_cfm, heating_system, hvac_unavailable_periods)
     air_loop = OpenStudio::Model::AirLoopHVAC.new(model)
     air_loop.setAvailabilitySchedule(model.alwaysOnDiscreteSchedule)
@@ -3474,7 +3522,7 @@ module HVAC
   # This is called every time EMS uses this actuator to avoid conflicts across different EMS programs.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectric or OpenStudio::Model::CoilHeatingElectricMultiStage] OpenStudio Supplemental Heating Coil object
+  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectricXXX] Heat pump backup heating coil model object
   # @return [Array<OpenStudio::Model::EnergyManagementSystemActuator, OpenStudio::Model::EnergyManagementSystemGlobalVariable>] OpenStudio EMS Actuator and Global Variable objects for supplemental coil availability schedule
   def self.get_supp_coil_avail_sch_actuator(model, htg_supp_coil)
     actuator = model.getEnergyManagementSystemActuators.find { |act| act.name.get.include? Model.ems_friendly_name(htg_supp_coil.availabilitySchedule.name) }
@@ -3520,8 +3568,8 @@ module HVAC
   # Back up coil is turned on after 5 mins that heat pump is not able to maintain setpoints.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectric or OpenStudio::Model::CoilHeatingElectricMultiStage] OpenStudio Supplemental Heating Coil object
-  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] OpenStudio Heating Coil object
+  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectricXXX] Heat pump backup heating coil model object
+  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] Heating coil model object
   # @param has_deadband_control [Boolean] Whether to apply on off thermostat deadband
   # @param cooling_system [HPXML::CoolingSystem or HPXML::HeatPump] The HPXML cooling system or heat pump of interest
   # @return [nil]
@@ -3622,8 +3670,8 @@ module HVAC
   # @param system_ap [HPXML::AdditionalProperties] HPXML Cooling System or HPXML Heating System Additional Properties
   # @param coil_name [String] Cooling or heating coil name
   # @param is_cooling [Boolean] True if apply to cooling system
-  # @param cap_fff_curve [OpenStudio::Model::CurveQuadratic] OpenStudio CurveQuadratic object for heat pump capacity function of air flow rates
-  # @param eir_fff_curve [OpenStudio::Model::CurveQuadratic] OpenStudio CurveQuadratic object for heat pump eir function of air flow rates
+  # @param cap_fff_curve [OpenStudio::Model::CurveQuadratic] Heat pump capacity function of air flow rates
+  # @param eir_fff_curve [OpenStudio::Model::CurveQuadratic] Heat pump EIR function of air flow rates
   # @return [nil]
   def self.add_capacity_degradation_ems_proram(model, system_ap, coil_name, is_cooling, cap_fff_curve, eir_fff_curve)
     # Note: Currently only available in 1 min time step
@@ -3756,8 +3804,8 @@ module HVAC
   # Observe 5 mins before ramping up the speed level, or enable the backup coil.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param unitary_system [OpenStudio::Model::AirLoopHVACUnitarySystem] OpenStudio Air Loop HVAC Unitary System object
-  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectric or OpenStudio::Model::CoilHeatingElectricMultiStage] OpenStudio Supplemental Heating Coil object
+  # @param unitary_system [OpenStudio::Model::AirLoopHVACUnitarySystem] HVAC system model object
+  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectricXXX] Heat pump backup heating coil model object
   # @param has_deadband_control [Boolean] Whether to apply on off thermostat deadband
   # @param cooling_system [HPXML::CoolingSystem or HPXML::HeatPump] The HPXML cooling system or heat pump of interest
   # @return [nil]
@@ -3892,12 +3940,12 @@ module HVAC
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param air_loop_unitary [OpenStudio::Model::AirLoopHVACUnitarySystem] Air loop for the HVAC system
+  # @param air_loop_unitary [OpenStudio::Model::AirLoopHVACUnitarySystem] HVAC system model object
   # @param heating_system [HPXML::HeatingSystem or HPXML::HeatPump] The HPXML heating system or heat pump of interest
   # @param cooling_system [HPXML::CoolingSystem or HPXML::HeatPump] The HPXML cooling system or heat pump of interest
-  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectric or CoilHeatingElectricMultiStage] OpenStudio Supplemental Heating Coil object
-  # @param clg_coil [OpenStudio::Model::CoilCoolingDXMultiSpeed] OpenStudio MultiStage Cooling Coil object
-  # @param htg_coil [OpenStudio::Model::CoilHeatingDXMultiSpeed] OpenStudio MultiStage Heating Coil object
+  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectricXXX] Heat pump backup heating coil model object
+  # @param clg_coil [OpenStudio::Model::CoilCoolingDXMultiSpeed] Cooling coil model object
+  # @param htg_coil [OpenStudio::Model::CoilHeatingDXMultiSpeed] Heating coil model object
   # @param schedules_file [SchedulesFile] SchedulesFile wrapper class instance of detailed schedule files
   # @return [nil]
   def self.add_variable_speed_power_ems_program(runner, model, air_loop_unitary, heating_system, cooling_system, htg_supp_coil, clg_coil, htg_coil, schedules_file)
@@ -4189,9 +4237,9 @@ module HVAC
   # Observe 5 mins before ramping up the speed level.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param unitary_system [OpenStudio::Model::AirLoopHVACUnitarySystem] OpenStudio Air Loop HVAC Unitary System object
-  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectric or CoilHeatingElectricMultiStage] OpenStudio Supplemental Heating Coil object
-  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] OpenStudio Heating Coil object
+  # @param unitary_system [OpenStudio::Model::AirLoopHVACUnitarySystem] HVAC system model object
+  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingElectricXXX] Heat pump backup heating coil model object
+  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] Heating coil model object
   # @return [nil]
   def self.add_backup_staging_ems_program(model, unitary_system, htg_supp_coil, htg_coil)
     return unless htg_supp_coil.is_a? OpenStudio::Model::CoilHeatingElectricMultiStage
@@ -4346,10 +4394,10 @@ module HVAC
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param cooling_system [HPXML::CoolingSystem or HPXML::HeatPump] The HPXML cooling system or heat pump of interest
-  # @param air_loop_unitary [OpenStudio::Model::AirLoopHVACUnitarySystem] OpenStudio Air Loop HVAC Unitary System object
+  # @param air_loop_unitary [OpenStudio::Model::AirLoopHVACUnitarySystem] HVAC system model object
   # @param clg_coil [OpenStudio::Model::CoilCoolingXXX] Cooling coil model object
-  # @param fan [OpenStudio::Model::FanSystemModel] OpenStudio FanSystemModel object
-  # @param conditioned_space [OpenStudio::Model::Space] OpenStudio Space object for conditioned zone
+  # @param fan [OpenStudio::Model::FanSystemModel] HVAC supply fan model object
+  # @param conditioned_space [OpenStudio::Model::Space] Conditioned space model object
   # @param unit_multiplier [Integer] Number of similar dwelling units
   # @return [nil]
   def self.add_latent_degradation_ems_program(model, hpxml_header, cooling_system, air_loop_unitary, clg_coil, fan, conditioned_space, unit_multiplier)
@@ -4964,7 +5012,7 @@ module HVAC
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param heating_system [HPXML::HeatingSystem or HPXML::HeatPump] The HPXML heating system or heat pump of interest
   # @param cooling_system [HPXML::CoolingSystem or HPXML::HeatPump] The HPXML cooling system or heat pump of interest
-  # @param air_loop_unitary [OpenStudio::Model::AirLoopHVACUnitarySystem] OpenStudio Air Loop HVAC Unitary System object
+  # @param air_loop_unitary [OpenStudio::Model::AirLoopHVACUnitarySystem] HVAC system model object
   # @param htg_coil [OpenStudio::Model::CoilHeatingXXX] Heating coil model object
   # @param clg_coil [OpenStudio::Model::CoilCoolingXXX] Cooling coil model object
   # @return [nil]
@@ -5040,11 +5088,11 @@ module HVAC
   # We use EMS to account for unavailable periods; see https://github.com/NatLabRockies/OpenStudio-HPXML/pull/2151.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] OpenStudio Heating Coil object
-  # @param clg_coil [OpenStudio::Model::CoilCoolingDXSingleSpeed or OpenStudio::Model::CoilCoolingDXMultiSpeed] OpenStudio Cooling Coil object
-  # @param conditioned_space [OpenStudio::Model::Space] OpenStudio Space object for conditioned zone
+  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] Heating coil model object
+  # @param clg_coil [OpenStudio::Model::CoilCoolingDXSingleSpeed or OpenStudio::Model::CoilCoolingDXMultiSpeed] Cooling coil model object
+  # @param conditioned_space [OpenStudio::Model::Space] Conditioned space model object
   # @param hvac_system [HPXML::CoolingSystem or HPXML::HeatPump] The HPXML HVAC system of interest
-  # @param unitary_system [OpenStudio::Model::AirLoopHVACUnitarySystem] OpenStudio Air Loop HVAC Unitary System object
+  # @param unitary_system [OpenStudio::Model::AirLoopHVACUnitarySystem] HVAC system model object
   # @return [nil]
   def self.apply_crankcase_heater_ems_program(model, htg_coil, clg_coil, conditioned_space, hvac_system, unitary_system)
     return unless hvac_system.crankcase_heater_watts.to_f > 0
@@ -5203,8 +5251,8 @@ module HVAC
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param ems_program [OpenStudio::Model::EnergyManagementSystemProgram] OpenStudio EMS program w/ defrost model
-  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] OpenStudio Heating Coil object
-  # @param conditioned_space [OpenStudio::Model::Space] OpenStudio Space object for conditioned zone
+  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] Heating coil model object
+  # @param conditioned_space [OpenStudio::Model::Space] Conditioned space model object
   # @param heat_pump [HPXML::HeatPump] The HPXML heat pump of interest
   # @param hp_min_temp [Double] Minimum heat pump compressor operating temperature for heating
   # @return [nil]
@@ -5258,8 +5306,8 @@ module HVAC
   # The defrost model is defined per RESNET HERS Addendum 82.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] OpenStudio Heating Coil object
-  # @param conditioned_space [OpenStudio::Model::Space] OpenStudio Space object for conditioned zone
+  # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] Heating coil model object
+  # @param conditioned_space [OpenStudio::Model::Space] Conditioned space model object
   # @param heat_pump [HPXML::HeatPump] HPXML Heat Pump object
   # @param unit_multiplier [Integer] Number of similar dwelling units
   # @return [OpenStudio::Model::EnergyManagementSystemProgram] OpenStudio EMS program for defrost model
