@@ -199,6 +199,24 @@ def test_state_aggregation_averages_emissions_over_the_regions_housing_units():
     ]
 
 
+def test_housing_units_without_a_gea_region_keep_null_emissions():
+    """AK has no GEA region, so its housing units' electricity and total emissions are null, not 0."""
+    alloc_wts = make_alloc_wts_plus_bills().with_columns(
+        pl.Series(ELEC_EMISSIONS, [None, None, 1000.0, 2000.0], dtype=pl.Float64)
+    )
+    by_state = aggregate_allocated_weights_to_geography(alloc_wts, geographic_aggregation_levels=["in.state"])
+    by_tract = aggregate_allocated_weights_to_geography(
+        alloc_wts, geographic_aggregation_levels=["in.nhgis_tract_gisjoin"]
+    )
+
+    assert by_state.collect().sort(["bldg_id", "in.state"]).select(["bldg_id", "in.state", ELEC_EMISSIONS]).rows() == [
+        (1, "AK", None),
+        (1, "WA", 1000.0),
+        (2, "WA", 2000.0),
+    ]
+    assert by_tract.collect().sort("in.nhgis_tract_gisjoin")[ELEC_EMISSIONS].to_list() == [None, None, 1000.0, 2000.0]
+
+
 def test_per_region_emissions_columns_are_dropped_from_the_simulation_outputs():
     sim_outs = pl.DataFrame(
         {

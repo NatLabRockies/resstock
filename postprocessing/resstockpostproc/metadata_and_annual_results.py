@@ -89,8 +89,15 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
     # Emissions are averaged the same way but not rounded. Counties nest within GEA regions,
     # so at tract and county level the average is the region's emissions; over a state or
     # PUMA spanning regions it is the housing-unit-weighted average, which times the summed
-    # weight still gives the geography's total.
+    # weight still gives the geography's total. Housing units with no GEA region (AK and HI,
+    # which Cambium does not cover) have null electricity and total emissions; they stay null
+    # rather than summing to 0.
     weight_sum = pl.col("weight").sum()
+
+    def wtd_mean_or_null(col: str) -> pl.Expr:
+        mean = (pl.col(col) * pl.col("weight")).sum() / weight_sum
+        return pl.when(pl.col(col).is_not_null().any()).then(mean).otherwise(None).alias(col)
+
     wtd_agg_outs = alloc_wts.select(
         [
             pl.col("weight"),
@@ -110,7 +117,7 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
     ).agg(
         [weight_sum]
         + [((pl.col(col) * pl.col("weight")).sum() / weight_sum).round(2).alias(col) for col in cost_cols]
-        + [((pl.col(col) * pl.col("weight")).sum() / weight_sum).alias(col) for col in emissions_cols]
+        + [wtd_mean_or_null(col) for col in emissions_cols]
         # + [pl.col(["in.sqft..ft2"]).first()]
     )
 
