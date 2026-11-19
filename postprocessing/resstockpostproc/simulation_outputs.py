@@ -11,6 +11,7 @@ from fsspec import url_to_fs
 
 
 from resstockpostproc.utils import (
+    CALC_EMISSIONS_COL_PREFIXES,
     col_name_to_intensity,
     col_name_to_savings,
     fix_site_energy_total,
@@ -308,6 +309,8 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
         "out.capacity" in col or
         "out.unmet_hours.ev" in col
         )]
+    # The all-fuel emissions totals are calc. columns, see fix_all_fuels_emissions
+    out_cols += [col for col in all_cols if col.startswith(CALC_EMISSIONS_COL_PREFIXES)]
     # Selectively include the following for params
     out_panel_cols = [col for col in all_cols if
         "out.params.panel_load_total_load" in col
@@ -632,16 +635,15 @@ def downselect_fuel_emissions_cols(df: pl.LazyFrame):
     """
 
     for each scenario
-        out.emissions.electricity.total.lrmer_lowrecost_15..co2e_kg (This uses the net column from the raw result)
-        out.emissions.electricity.total.aer_lowrecosthighngprice_avg..co2e_kg
+        out.emissions.electricity.lrmer_low_re_cost_15..co2e_kg (This uses the net column from the raw result)
+        calc.emissions.total_with_lrmer_low_re_cost_15..co2e_kg (total for a scenario)
 
-    Downselect to just one column for natural gas, propane, and fuel oil emissions
-    because
-    out.emissions.natural_gas.lrmer_low_re_cost_high_ng_price_25..co2e_kg --> out.emissions.natural_gas.total..co2e_kg
-    out.emissions.fuel_oil.lrmer_low_re_cost_high_ng_price_25..co2e_kg --> out.emissions.fuel_oil.total..co2e_kg
-    out.emissions.propane.lrmer_low_re_cost_high_ng_price_25..co2e_kg --> out.emissions.propane.total..co2e_kg
-
-    out.emissions.total.lrmer_midcase_15..co2e_kg (total for a scenario)
+    Downselect to just one column for natural gas, propane, and fuel oil emissions, named as
+    ComStock names them, without a scenario or end use, because their emissions factors do not
+    depend on the scenario:
+    out.emissions.natural_gas.lrmer_low_re_cost_high_ng_price_25..co2e_kg --> out.emissions.natural_gas..co2e_kg
+    out.emissions.fuel_oil.lrmer_low_re_cost_high_ng_price_25..co2e_kg --> out.emissions.fuel_oil..co2e_kg
+    out.emissions.propane.lrmer_low_re_cost_high_ng_price_25..co2e_kg --> out.emissions.propane..co2e_kg
     """
     logger.info("Downselecting fuel emissions to one scenario")
     all_cols = df.collect_schema().names()
@@ -658,7 +660,7 @@ def downselect_fuel_emissions_cols(df: pl.LazyFrame):
         if i == 0:  # noqa: SIM108
             # Keep the first scenario's columns and rename them. Built from the fuel rather than by
             # replacing the scenario name, which would also rewrite "fuel_oil" for a scenario named "fuel".
-            df = df.rename({fuel_col: f"out.emissions.{fuel}.total..co2e_kg" for fuel, fuel_col in fuel_cols})
+            df = df.rename({fuel_col: f"out.emissions.{fuel}..co2e_kg" for fuel, fuel_col in fuel_cols})
             # for col in cols:
             #     logger.info(f"Renaming {col} to {col.replace(scenario, "total")}")
         else:

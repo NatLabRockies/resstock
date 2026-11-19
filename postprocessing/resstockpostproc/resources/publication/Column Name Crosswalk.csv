@@ -538,39 +538,39 @@ out.utility_bills.propane_bill..usd,,out.bills.propane.usd
 out.utility_bills.propane_bill_savings..usd,,out.bills.propane.usd.savings
 out.utility_bills.total_bill..usd,,out.bills.all_fuels.usd
 out.utility_bills.total_bill_savings..usd,,out.bills.all_fuels.usd.savings
-out.emissions.electricity.aer_high_re_cost_avg..co2e_kg,out.emissions.electricity.total.aer_highrecost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.aer_high_re_cost_low_ng_price_avg..co2e_kg,out.emissions.electricity.total.aer_highrecostlowngprice_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.aer_low_re_cost_avg..co2e_kg,out.emissions.electricity.total.aer_lowrecost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.aer_low_re_cost_high_ng_price_avg..co2e_kg,out.emissions.electricity.total.aer_lowrecosthighngprice_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.aer_mid_case_avg..co2e_kg,out.emissions.electricity.total.aer_midcase_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_high_re_cost_15..co2e_kg,out.emissions.electricity.total.lrmer_highrecost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_high_re_cost_25..co2e_kg,out.emissions.electricity.total.lrmer_highrecost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_kg,out.emissions.electricity.total.lrmer_highrecostlowngprice_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_kg,out.emissions.electricity.total.lrmer_highrecostlowngprice_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_low_re_cost_15..co2e_kg,out.emissions.electricity.total.lrmer_lowrecost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_low_re_cost_25..co2e_kg,out.emissions.electricity.total.lrmer_lowrecost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_kg,out.emissions.electricity.total.lrmer_lowrecosthighngprice_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_kg,out.emissions.electricity.total.lrmer_lowrecosthighngprice_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_mid_case_15..co2e_kg,out.emissions.electricity.total.lrmer_midcase_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.electricity.lrmer_mid_case_25..co2e_kg,out.emissions.electricity.total.lrmer_midcase_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.fuel_oil.total..co2e_kg,out.emissions.fuel_oil.total..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.natural_gas.total..co2e_kg,out.emissions.natural_gas.total..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.propane.total..co2e_kg,out.emissions.propane.total..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.aer_high_re_cost_avg..co2e_kg,out.emissions.total.aer_highrecost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.aer_high_re_cost_low_ng_price_avg..co2e_kg,out.emissions.total.aer_highrecostlowngprice_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.aer_low_re_cost_avg..co2e_kg,out.emissions.total.aer_lowrecost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.aer_low_re_cost_high_ng_price_avg..co2e_kg,out.emissions.total.aer_lowrecosthighngprice_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.aer_mid_case_avg..co2e_kg,out.emissions.total.aer_midcase_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_high_re_cost_15..co2e_kg,out.emissions.total.lrmer_highrecost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_high_re_cost_25..co2e_kg,out.emissions.total.lrmer_highrecost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_high_re_cost_low_ng_price_15..co2e_kg,out.emissions.total.lrmer_highrecostlowngprice_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_high_re_cost_low_ng_price_25..co2e_kg,out.emissions.total.lrmer_highrecostlowngprice_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_low_re_cost_15..co2e_kg,out.emissions.total.lrmer_lowrecost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_low_re_cost_25..co2e_kg,out.emissions.total.lrmer_lowrecost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_low_re_cost_high_ng_price_15..co2e_kg,out.emissions.total.lrmer_lowrecosthighngprice_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_low_re_cost_high_ng_price_25..co2e_kg,out.emissions.total.lrmer_lowrecosthighngprice_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_mid_case_15..co2e_kg,out.emissions.total.lrmer_midcase_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
-out.emissions.total.lrmer_mid_case_25..co2e_kg,out.emissions.total.lrmer_midcase_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.aer_high_re_cost_avg..co2e_kg,out.emissions.electricity.aer_high_re_cost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.aer_high_re_cost_low_ng_price_avg..co2e_kg,out.emissions.electricity.aer_high_re_cost_low_ng_price_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.aer_low_re_cost_avg..co2e_kg,out.emissions.electricity.aer_low_re_cost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.aer_low_re_cost_high_ng_price_avg..co2e_kg,out.emissions.electricity.aer_low_re_cost_high_ng_price_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.aer_mid_case_avg..co2e_kg,out.emissions.electricity.aer_mid_case_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_high_re_cost_15..co2e_kg,out.emissions.electricity.lrmer_high_re_cost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_high_re_cost_25..co2e_kg,out.emissions.electricity.lrmer_high_re_cost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_kg,out.emissions.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_kg,out.emissions.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_low_re_cost_15..co2e_kg,out.emissions.electricity.lrmer_low_re_cost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_low_re_cost_25..co2e_kg,out.emissions.electricity.lrmer_low_re_cost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_kg,out.emissions.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_kg,out.emissions.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_mid_case_15..co2e_kg,out.emissions.electricity.lrmer_mid_case_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_mid_case_25..co2e_kg,out.emissions.electricity.lrmer_mid_case_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.fuel_oil..co2e_kg,out.emissions.fuel_oil..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.natural_gas..co2e_kg,out.emissions.natural_gas..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.propane..co2e_kg,out.emissions.propane..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_aer_high_re_cost_avg..co2e_kg,calc.emissions.total_with_aer_high_re_cost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_aer_high_re_cost_low_ng_price_avg..co2e_kg,calc.emissions.total_with_aer_high_re_cost_low_ng_price_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_aer_low_re_cost_avg..co2e_kg,calc.emissions.total_with_aer_low_re_cost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_aer_low_re_cost_high_ng_price_avg..co2e_kg,calc.emissions.total_with_aer_low_re_cost_high_ng_price_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_aer_mid_case_avg..co2e_kg,calc.emissions.total_with_aer_mid_case_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_high_re_cost_15..co2e_kg,calc.emissions.total_with_lrmer_high_re_cost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_high_re_cost_25..co2e_kg,calc.emissions.total_with_lrmer_high_re_cost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_high_re_cost_low_ng_price_15..co2e_kg,calc.emissions.total_with_lrmer_high_re_cost_low_ng_price_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_high_re_cost_low_ng_price_25..co2e_kg,calc.emissions.total_with_lrmer_high_re_cost_low_ng_price_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_low_re_cost_15..co2e_kg,calc.emissions.total_with_lrmer_low_re_cost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_low_re_cost_25..co2e_kg,calc.emissions.total_with_lrmer_low_re_cost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_low_re_cost_high_ng_price_15..co2e_kg,calc.emissions.total_with_lrmer_low_re_cost_high_ng_price_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_low_re_cost_high_ng_price_25..co2e_kg,calc.emissions.total_with_lrmer_low_re_cost_high_ng_price_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_mid_case_15..co2e_kg,calc.emissions.total_with_lrmer_mid_case_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+calc.emissions.total_with_lrmer_mid_case_25..co2e_kg,calc.emissions.total_with_lrmer_mid_case_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
 out.emissions_reduction.electricity.aer_high_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
 out.emissions_reduction.electricity.aer_high_re_cost_low_ng_price_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
 out.emissions_reduction.electricity.aer_low_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
@@ -586,24 +586,24 @@ out.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_kg,
 out.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
 out.emissions_reduction.electricity.lrmer_mid_case_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
 out.emissions_reduction.electricity.lrmer_mid_case_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.fuel_oil.total..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.natural_gas.total..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.propane.total..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.aer_high_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.aer_high_re_cost_low_ng_price_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.aer_low_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.aer_low_re_cost_high_ng_price_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.aer_mid_case_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_high_re_cost_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_high_re_cost_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_low_re_cost_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_low_re_cost_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_mid_case_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
-out.emissions_reduction.total.lrmer_mid_case_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.fuel_oil..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.natural_gas..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.propane..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_aer_high_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_aer_high_re_cost_low_ng_price_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_aer_low_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_aer_low_re_cost_high_ng_price_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_aer_mid_case_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_high_re_cost_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_high_re_cost_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_high_re_cost_low_ng_price_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_high_re_cost_low_ng_price_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_low_re_cost_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_low_re_cost_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_low_re_cost_high_ng_price_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_low_re_cost_high_ng_price_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_mid_case_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+calc.emissions_reduction.total_with_lrmer_mid_case_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
 out.energy_burden..percentage,,out.energy_burden.percentage
 out.energy_burden_savings..percentage,,out.energy_burden.percentage.savings
 ,out.outdoor_air_drybulb_temp..c,out.outdoor_air_dryblub_temp.c
@@ -713,24 +713,24 @@ calc.weighted.emissions.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_mmt
 calc.weighted.emissions.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
 calc.weighted.emissions.electricity.lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
 calc.weighted.emissions.electricity.lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.fuel_oil.total..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.natural_gas.total..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.propane.total..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.aer_high_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.aer_high_re_cost_low_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.aer_low_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.aer_low_re_cost_high_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.aer_mid_case_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_high_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_high_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_high_re_cost_low_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_high_re_cost_low_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_low_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_low_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_low_re_cost_high_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions.total.lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.fuel_oil..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.natural_gas..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.propane..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_aer_high_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_aer_high_re_cost_low_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_aer_low_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_aer_low_re_cost_high_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_aer_mid_case_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_high_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_high_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_high_re_cost_low_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_high_re_cost_low_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_low_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_low_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_low_re_cost_high_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total_with_lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
 calc.weighted.emissions_reduction.electricity.aer_high_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
 calc.weighted.emissions_reduction.electricity.aer_high_re_cost_low_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
 calc.weighted.emissions_reduction.electricity.aer_low_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
@@ -746,24 +746,24 @@ calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_15
 calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
 calc.weighted.emissions_reduction.electricity.lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
 calc.weighted.emissions_reduction.electricity.lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.fuel_oil.total..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.natural_gas.total..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.propane.total..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.aer_high_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.aer_high_re_cost_low_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.aer_low_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.aer_low_re_cost_high_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.aer_mid_case_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_high_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_high_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_low_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_low_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
-calc.weighted.emissions_reduction.total.lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.fuel_oil..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.natural_gas..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.propane..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_aer_high_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_aer_high_re_cost_low_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_aer_low_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_aer_low_re_cost_high_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_aer_mid_case_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_high_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_high_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_high_re_cost_low_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_high_re_cost_low_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_low_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_low_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_low_re_cost_high_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total_with_lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
 calc.weighted.fuel_oil.heating.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
 calc.weighted.fuel_oil.heating.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
 calc.weighted.fuel_oil.heating_hp_bkup.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2

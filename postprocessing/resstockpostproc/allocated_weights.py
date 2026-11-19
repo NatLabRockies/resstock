@@ -1508,8 +1508,9 @@ COUNTY_GISJOIN_ALIASES = {"G4601130": "G4601020", "G0201580": "G0202700"}
 # out.emissions.electricity.lrmer_mid_case_25_miso_central..co2e_kg. Under a "Sampling Region"
 # emissions scenario every building is run once under the emissions factors of each GEA region in
 # its sampling region, and the scenario name ends in that region's name, lowercased with spaces
-# replaced by underscores.
-EMISSIONS_COL_PATTERN = re.compile(r"^out\.(emissions|emissions_reduction)\..+\.\.co2e_kg$")
+# replaced by underscores. The all-fuel totals are calc. columns, e.g.
+# calc.emissions.total_with_lrmer_mid_case_25_miso_central..co2e_kg (see fix_all_fuels_emissions).
+EMISSIONS_COL_PATTERN = re.compile(r"^(out|calc)\.(emissions|emissions_reduction)\..+\.\.co2e_kg$")
 EMISSIONS_COL_SUFFIX = "..co2e_kg"
 
 

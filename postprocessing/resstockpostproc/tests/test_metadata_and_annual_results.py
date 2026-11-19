@@ -223,14 +223,14 @@ def test_per_region_emissions_columns_are_dropped_from_the_simulation_outputs():
             "bldg_id": [1],
             "out.emissions.electricity.lrmer_mid_case_25_miso_central..co2e_kg": [1.0],
             "out.emissions_reduction.electricity.lrmer_mid_case_25_miso_central..co2e_kg": [0.5],
-            "out.emissions.natural_gas.total..co2e_kg": [2.0],
+            "out.emissions.natural_gas..co2e_kg": [2.0],
             "out.electricity.total.energy_consumption..kwh": [100.0],
         }
     ).lazy()
     kept = drop_gea_region_emissions_columns(sim_outs).collect_schema().names()
     assert kept == [
         "bldg_id",
-        "out.emissions.natural_gas.total..co2e_kg",
+        "out.emissions.natural_gas..co2e_kg",
         "out.electricity.total.energy_consumption..kwh",
     ]
 
@@ -248,8 +248,13 @@ def test_only_the_generic_emissions_columns_are_flagged_for_publication():
     assert len(scenarios) == 15
     for scenario in scenarios:
         for kind in ("emissions", "emissions_reduction"):
-            for fuel in ("electricity", "total"):
-                assert f"out.{kind}.{fuel}.{scenario}..co2e_kg" in published
+            assert f"out.{kind}.electricity.{scenario}..co2e_kg" in published
+            assert f"calc.{kind}.total_with_{scenario}..co2e_kg" in published
+            assert f"calc.weighted.{kind}.total_with_{scenario}..co2e_mmt" in published
+    for kind in ("emissions", "emissions_reduction"):
+        for fuel in ("natural_gas", "fuel_oil", "propane"):
+            assert f"out.{kind}.{fuel}..co2e_kg" in published
+            assert f"calc.weighted.{kind}.{fuel}..co2e_mmt" in published
     # The per-region columns must still be imported, the emissions step is built on them
     imported = {m["published_name"] for m in get_col_maps() if m["import_from_raw"] == "yes"}
     assert "out.emissions.electricity.lrmer_mid_case_25_miso_central..co2e_kg" in imported

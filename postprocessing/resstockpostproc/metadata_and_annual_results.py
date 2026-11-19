@@ -10,6 +10,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import lru_cache
 
 from resstockpostproc.utils import (
+    CALC_EMISSIONS_COL_PREFIXES,
     col_name_to_weighted,
     conversion_factor,
     get_col_maps,
@@ -607,7 +608,8 @@ def add_weighted_cols(df: pl.LazyFrame, log: bool = True) -> pl.LazyFrame:
     if log:
         logger.info("Adding weighted columns")
     all_cols = df.collect_schema().names()
-    wtd_cols = [col for col in all_cols if "out." in col and (
+    # The all-fuel emissions totals are calc. columns (see fix_all_fuels_emissions) but are weighted too
+    wtd_cols = [col for col in all_cols if ("out." in col or col.startswith(CALC_EMISSIONS_COL_PREFIXES)) and (
         ".energy_consumption." in col or
         ".energy_savings." in col or
         ".emissions." in col or

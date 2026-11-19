@@ -61,11 +61,24 @@ def fix_site_energy_total(df: pl.LazyFrame):
             updated_cols.append(net_electricity_col.alias(f"out.electricity.net.{suffix}"))
     return df.with_columns(updated_cols)
 
+def total_emissions_col(scenario: str) -> str:
+    """The all-fuel emissions total of a scenario, named as ComStock names its totals, e.g.
+    calc.emissions.total_with_lrmer_mid_case_25..co2e_kg. It is a calc. column because it is built
+    in postprocessing rather than reported by the simulation."""
+    return f"{TOTAL_EMISSIONS_COL_PREFIX}{scenario}..co2e_kg"
+
+
+# The all-fuel emissions totals and their reductions, which are calc. columns but per housing unit
+# like the out. columns: they are averaged, weighted and given savings as out. columns are.
+TOTAL_EMISSIONS_COL_PREFIX = "calc.emissions.total_with_"
+CALC_EMISSIONS_COL_PREFIXES = ("calc.emissions.", "calc.emissions_reduction.")
+
+
 def fix_all_fuels_emissions(df: pl.LazyFrame):
     """
-    Build out.emissions.total.<scenario>..co2e_kg for each electricity emissions scenario as its
-    electricity emissions plus the natural gas, fuel oil and propane emissions. Coal and wood are
-    left out.
+    Build calc.emissions.total_with_<scenario>..co2e_kg for each electricity emissions scenario as
+    its electricity emissions plus the natural gas, fuel oil and propane emissions. Coal and wood
+    are left out.
 
     The fossil fuel emissions come from the scenario's own fossil fuel columns when it has them.
     Otherwise they come from the one scenario that carries fossil fuel emissions and no electricity
@@ -102,7 +115,7 @@ def fix_all_fuels_emissions(df: pl.LazyFrame):
                     f"scenario carries only fossil fuel emissions: {fossil_only}"
                 )
             scenario_fossil_cols = fossil_cols[fossil_only[0]]
-        new_col = f"out.emissions.total.{scenario}..co2e_kg"
+        new_col = total_emissions_col(scenario)
         total_cols.append(pl.sum_horizontal([electricity_col, *(scenario_fossil_cols or [])]).alias(new_col))
     if fossil_only:
         logger.info(f"Adding the fossil fuel emissions of the {fossil_only} scenario to every scenario's total")

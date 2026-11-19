@@ -3,8 +3,10 @@
 import polars as pl
 import pytest
 
-from resstockpostproc.simulation_outputs import downselect_and_rename_cols, downselect_fuel_emissions_cols
-from resstockpostproc.utils import fix_all_fuels_emissions, get_col_maps
+from resstockpostproc.allocated_weights import gea_region_emissions_columns
+from resstockpostproc.metadata_and_annual_results import add_weighted_cols
+from resstockpostproc.simulation_outputs import add_saving_cols, downselect_and_rename_cols, downselect_fuel_emissions_cols
+from resstockpostproc.utils import fix_all_fuels_emissions, get_col_maps, total_emissions_col
 
 LB_TO_KG = 0.45359237
 FOSSIL = {"natural_gas": 100.0, "fuel_oil": 20.0, "propane": 3.0}
@@ -31,13 +33,13 @@ def _fuel_scenario_outputs() -> pl.LazyFrame:
 def test_fuel_scenario_is_added_to_every_electricity_total():
     out = fix_all_fuels_emissions(_fuel_scenario_outputs()).collect()
     fossil = sum(FOSSIL.values())
-    assert out[_col("total", "lrmer_mid_case_25_nyiso")][0] == pytest.approx(1000.0 + fossil)
-    assert out[_col("total", "lrmer_mid_case_25_pjm_east")][1] == pytest.approx(2000.0 + 2 * fossil)
+    assert out[total_emissions_col("lrmer_mid_case_25_nyiso")][0] == pytest.approx(1000.0 + fossil)
+    assert out[total_emissions_col("lrmer_mid_case_25_pjm_east")][1] == pytest.approx(2000.0 + 2 * fossil)
 
 
 def test_no_total_for_the_fossil_fuel_only_scenario():
     out = fix_all_fuels_emissions(_fuel_scenario_outputs()).collect()
-    assert _col("total", "fuel") not in out.columns
+    assert total_emissions_col("fuel") not in out.columns
 
 
 def test_scenario_with_its_own_fossil_fuels_uses_them():
@@ -50,8 +52,8 @@ def test_scenario_with_its_own_fossil_fuels_uses_them():
         }
     )
     out = fix_all_fuels_emissions(lf).collect()
-    assert out[_col("total", "lrmer_mid_case_25")][0] == pytest.approx(1050.0)
-    assert out[_col("total", "aer_mid_case_avg")][0] == pytest.approx(860.0)
+    assert out[total_emissions_col("lrmer_mid_case_25")][0] == pytest.approx(1050.0)
+    assert out[total_emissions_col("aer_mid_case_avg")][0] == pytest.approx(860.0)
 
 
 def test_coal_and_wood_are_left_out():
@@ -59,7 +61,7 @@ def test_coal_and_wood_are_left_out():
         pl.lit(7.0).alias(_col("coal", "fuel")), pl.lit(9.0).alias(_col("wood_cord", "fuel"))
     )
     out = fix_all_fuels_emissions(lf).collect()
-    assert out[_col("total", "lrmer_mid_case_25_nyiso")][0] == pytest.approx(1000.0 + sum(FOSSIL.values()))
+    assert out[total_emissions_col("lrmer_mid_case_25_nyiso")][0] == pytest.approx(1000.0 + sum(FOSSIL.values()))
 
 
 def test_ambiguous_fossil_fuel_only_scenarios_raise():
@@ -78,7 +80,7 @@ def test_fuel_scenario_columns_are_published_as_fuel_totals():
     # A scenario named "fuel" must not turn fuel_oil into total_oil
     out = downselect_fuel_emissions_cols(_fuel_scenario_outputs()).collect()
     for fuel, value in FOSSIL.items():
-        assert out[f"out.emissions.{fuel}.total..co2e_kg"][0] == pytest.approx(value)
+        assert out[f"out.emissions.{fuel}..co2e_kg"][0] == pytest.approx(value)
         assert _col(fuel, "fuel") not in out.columns
 
 
@@ -93,6 +95,29 @@ def test_raw_fuel_scenario_flows_into_the_published_totals():
     )
     out = downselect_and_rename_cols(raw, get_col_maps())
     out = downselect_fuel_emissions_cols(fix_all_fuels_emissions(out)).collect()
-    assert out[_col("total", "lrmer_mid_case_25_nyiso")][0] == pytest.approx((1000.0 + sum(FOSSIL.values())) * LB_TO_KG)
+    assert out[total_emissions_col("lrmer_mid_case_25_nyiso")][0] == pytest.approx((1000.0 + sum(FOSSIL.values())) * LB_TO_KG)
     for fuel, value in FOSSIL.items():
-        assert out[f"out.emissions.{fuel}.total..co2e_kg"][0] == pytest.approx(value * LB_TO_KG)
+        assert out[f"out.emissions.{fuel}..co2e_kg"][0] == pytest.approx(value * LB_TO_KG)
+
+
+def test_totals_get_reductions_and_weighted_columns():
+    total = total_emissions_col("lrmer_mid_case_25")
+    upgrade = pl.LazyFrame({"bldg_id": [1], total: [600.0]})
+    baseline = pl.LazyFrame({"bldg_id": [1], total: [1000.0]})
+    out = add_saving_cols(upgrade, baseline)
+    out = add_weighted_cols(out.with_columns(pl.lit(2.0).alias("weight")), log=False).collect()
+    assert out["calc.emissions_reduction.total_with_lrmer_mid_case_25..co2e_kg"][0] == pytest.approx(400.0)
+    assert out["calc.weighted.emissions.total_with_lrmer_mid_case_25..co2e_mmt"][0] == pytest.approx(1200.0 / 1e9)
+    assert out["calc.weighted.emissions_reduction.total_with_lrmer_mid_case_25..co2e_mmt"][0] == pytest.approx(800.0 / 1e9)
+
+
+def test_per_region_totals_are_mapped_to_the_generic_total():
+    by_region = gea_region_emissions_columns(
+        [
+            "out.emissions.electricity.lrmer_mid_case_25_miso_central..co2e_kg",
+            total_emissions_col("lrmer_mid_case_25_miso_central"),
+        ]
+    )
+    assert by_region["MISO Central"][total_emissions_col("lrmer_mid_case_25_miso_central")] == total_emissions_col(
+        "lrmer_mid_case_25"
+    )
