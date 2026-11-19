@@ -575,7 +575,7 @@ def _get_elec_util_lookup() -> pl.DataFrame:
     Reads the tract-to-electric-utility lookup table. Cached because this is
     called for every geography combo (and every slice) during an export.
     """
-    elec_util_file = "tract_to_elec_util_v2.csv"
+    elec_util_file = "tract_to_elec_util_v3.csv"
     elec_util_file_path = os.path.abspath(os.path.join(__file__, "..", "resources", "gisdata", elec_util_file))
     logger.info(f"Reading electric utility data file from {elec_util_file_path}")
     return pl.read_csv(elec_util_file_path, infer_schema_length=None)
@@ -590,7 +590,7 @@ def add_electric_utility_column(input_lf: pl.LazyFrame, geography_to_join_on) ->
 
     # Join on the (cached) electric utility data. A left join so that a tract missing from
     # the lookup keeps its rows (with a null utility code) rather than silently dropping
-    # every building in it. Some AK, HI, AZ, and SD tracts are absent from the v2 lookup.
+    # every building in it. The v3 lookup covers every tract in the publish spatial lookup.
     input_lf = input_lf.join(_get_elec_util_lookup().lazy(), on=geography_to_join_on, how="left")
 
     return input_lf
