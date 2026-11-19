@@ -646,17 +646,19 @@ def downselect_fuel_emissions_cols(df: pl.LazyFrame):
     logger.info("Downselecting fuel emissions to one scenario")
     all_cols = df.collect_schema().names()
 
-    fuel_emissions_re = re.compile(r"^out\.emissions\.(natural_gas|fuel_oil|propane).(\w+)..co2e_kg")
+    fuel_emissions_re = re.compile(r"^out\.emissions\.(natural_gas|fuel_oil|propane)\.(\w+)\.\.co2e_kg$")
     scenario2cols = defaultdict(list)
     for col in all_cols:
-        if (match := re.search(fuel_emissions_re, col)):
-            scenario2cols[match[2]].append(col)
+        if (match := fuel_emissions_re.match(col)):
+            scenario2cols[match[2]].append((match[1], col))
 
     for i, s2c in enumerate(scenario2cols.items()):
-        scenario, cols = s2c
+        scenario, fuel_cols = s2c
+        cols = [col for _, col in fuel_cols]
         if i == 0:  # noqa: SIM108
-            # Keep the first scenario's columns and rename them
-            df = df.rename({col: col.replace(scenario, "total") for col in cols})
+            # Keep the first scenario's columns and rename them. Built from the fuel rather than by
+            # replacing the scenario name, which would also rewrite "fuel_oil" for a scenario named "fuel".
+            df = df.rename({fuel_col: f"out.emissions.{fuel}.total..co2e_kg" for fuel, fuel_col in fuel_cols})
             # for col in cols:
             #     logger.info(f"Renaming {col} to {col.replace(scenario, "total")}")
         else:

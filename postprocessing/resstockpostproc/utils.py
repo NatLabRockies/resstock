@@ -63,24 +63,51 @@ def fix_site_energy_total(df: pl.LazyFrame):
 
 def fix_all_fuels_emissions(df: pl.LazyFrame):
     """
-    Recalculate out.all_fuels.total.<scenario_name>.co2e_kg columns using
-    only the subset of fuel total columns. Basically, exclude wood from the all_fuel emissions.
+    Build out.emissions.total.<scenario>..co2e_kg for each electricity emissions scenario as its
+    electricity emissions plus the natural gas, fuel oil and propane emissions. Coal and wood are
+    left out.
+
+    The fossil fuel emissions come from the scenario's own fossil fuel columns when it has them.
+    Otherwise they come from the one scenario that carries fossil fuel emissions and no electricity
+    emissions: runs that put their fossil fuel factors on a separate scenario (e.g. "Fuel", with
+    every electricity scenario's fossil fuel factors set to 0) report the fossil fuel emissions only
+    under that scenario. No total is built for such a fossil-fuel-only scenario.
+
+    Raises:
+        ValueError: If an electricity scenario has no fossil fuel columns of its own and more than
+            one fossil-fuel-only scenario could supply them
     """
-    logger.info("Removing coal and wood from emissions totals")
+    logger.info("Building emissions totals from electricity, natural gas, fuel oil and propane (no coal or wood)")
     all_cols = df.collect_schema().names()
-    all_fuel_cols = []
-    emissions_re = re.compile(r"^out\.emissions\.(electricity|natural_gas|fuel_oil|propane).(\w+)..co2e_kg")
+    emissions_re = re.compile(r"^out\.emissions\.(electricity|natural_gas|fuel_oil|propane)\.(\w+)\.\.co2e_kg$")
 
-    scenario2cols = defaultdict(list)
+    electricity_cols = {}
+    fossil_cols = defaultdict(list)
     for col in all_cols:
-        if match := re.search(emissions_re, col):
-            scenario2cols[match[2]].append(col)
+        if match := emissions_re.match(col):
+            fuel, scenario = match.groups()
+            if fuel == "electricity":
+                electricity_cols[scenario] = col
+            else:
+                fossil_cols[scenario].append(col)
 
-    for scenario, cols in scenario2cols.items():
+    fossil_only = sorted(scenario for scenario in fossil_cols if scenario not in electricity_cols)
+    total_cols = []
+    for scenario, electricity_col in electricity_cols.items():
+        scenario_fossil_cols = fossil_cols.get(scenario)
+        if not scenario_fossil_cols and fossil_only:
+            if len(fossil_only) > 1:
+                raise ValueError(
+                    f"Emissions scenario {scenario} has no fossil fuel emissions of its own, and more than one "
+                    f"scenario carries only fossil fuel emissions: {fossil_only}"
+                )
+            scenario_fossil_cols = fossil_cols[fossil_only[0]]
         new_col = f"out.emissions.total.{scenario}..co2e_kg"
-        all_fuel_cols.append(pl.sum_horizontal(cols).alias(new_col))
+        total_cols.append(pl.sum_horizontal([electricity_col, *(scenario_fossil_cols or [])]).alias(new_col))
+    if fossil_only:
+        logger.info(f"Adding the fossil fuel emissions of the {fossil_only} scenario to every scenario's total")
 
-    return df.with_columns(all_fuel_cols)
+    return df.with_columns(total_cols)
 
 @lru_cache(maxsize=1)
 def get_col_maps():
