@@ -1,45 +1,46 @@
-"""Apply the v6 sampling regions and County x PUMA weather to the sampler, options_lookup and allocator.
+"""Apply the v7 sampling regions and County x PUMA weather to the sampler, options_lookup and allocator.
 
-v6 replaces the county-built regions (v1/v3) with 200 regions clustered on weather from County x PUMA
-cells, and gives each cell its own weather file. Both come from one table, `sampling_regions_v6_cells.csv`,
-built by the 2026-08 New Sampling change documentation analysis (`sampling_regions_v5_build.py` and
-`region_count_tradeoff.py`, at K = 200):
+v7 is the v6 design (200 regions clustered on weather from County x PUMA cells, each cell with its own
+weather file) rebuilt on the AMY2018 weather archive the runs actually use. Both come from one table,
+`sampling_regions_v7_cells.csv`, built by the 2026-08 New Sampling change documentation analysis
+(`sampling_regions_rebuild_kestrel_weather.py`, which runs `sampling_regions_v5_build.py` at K = 200).
 
-v5 was the same design at 300 regions. It doubled the sampler's segments (sampling region x building
-type x vintage x heating fuel x federal poverty level) to about 300,000, against a budget of 83,333
-segments at 1M datapoints, and left 3% of housing units without a building in new_sampling_test_8_15.
-At 200 regions there are about 221,000, and the sampler guarantees every sampling region x building
-type x heating fuel family a segment (see samplers/stratified). The weather files are the same as v5's,
-since each cell's file does not depend on how many regions there are. v5's cell table, allocator key and
-validation are kept beside v6's, for the runs drawn with them.
+v5 and v6 chose their stations from a September 2021 local copy of the archive
+(BuildStock_2018_FIPS_HI.zip), made before a May 2022 fix to its county-to-station mapping. The runs use
+Kestrel's /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip, where 93 county files hold a
+different station (Los Angeles County's is downtown Los Angeles, not Lancaster). So some v6 cells ran on a
+station the design did not choose. Rebuilt on the runs' archive with the same code and settings (which
+reproduce v6 exactly on the old copy), 379 of 4,543 cells (13.1% of units) take a different weather file
+and 502 cells (13.7% of units) a different region. v6's cell table, allocator key and validation are kept
+beside v7's, for the runs drawn with them.
 
   * Weather: each cell takes the AMY2018 county weather file whose station best matches the degree days
     where the cell's housing units are, among files on the county's own (zip code) UTC offset, so the
     simulation clock does not change.
   * Regions: within each state x UTC offset piece, cells are ordered by an energy index of their weather
-    (2.34 kWh per HDD65 + 1.73 kWh per CDD65, fitted on the 6_15 run) and cut into contiguous runs by an
+    (2.22 kWh per HDD65 + 1.57 kWh per CDD65, fitted on the 6_15 run) and cut into contiguous runs by an
     optimal 1-D partition; 200 regions are spread over the pieces greedily by the reduction in
     within-region variance, with a floor of 0.02% of housing units per region. California is clustered
     like every other state (no CEC climate zones). A region never crosses a state line or a clock.
 
-    v6_id = state_fips * 10000 + abs(utc_offset) * 100 + k     (k = 1-based rank by energy index)
+    v7_id = state_fips * 10000 + abs(utc_offset) * 100 + k     (k = 1-based rank by energy index)
 
-The table covers the cells that hold 2010 tracts. The sampler also has 11 cells under county codes that
-postdate them or that the tracts leave out (Alaska's 2013-2019 splits, Kusilvak, Oglala Lakota, Kalawao);
+The table covers the cells that hold 2010 tracts and have a county weather file. The sampler's few other
+cells are under county codes that postdate them or that the tracts leave out;
 each takes the region of the largest cell of the same PUMA on the county's own UTC offset, and keeps the
 weather file its County row sets today. The UTC offset is the one the simulation runs on: that of the
 County row's zip code (zipcode_weather_stations.csv). The 82 Puerto Rico cells only options_lookup lists
 have no County row and no weather file, and are left as they are.
 
 Writes:
-  sampling_regions_v6.json                  "county|puma" -> region, for every sampler cell (the allocator's key)
-  sampling_regions_v6_validation.txt        the checks below
+  sampling_regions_v7.json                  "county|puma" -> region, for every sampler cell (the allocator's key)
+  sampling_regions_v7_validation.txt        the checks below
   project_national/housing_characteristics/Sampling Region.tsv   (Dependency=County and PUMA)
   project_testing/housing_characteristics/County and PUMA.tsv    (Dependency=County, from the national one)
   resources/options_lookup.tsv              Sampling Region options; location_epw_path moved from County
                                             to County and PUMA
 
-Usage:  python -I -X utf8 build_sampling_regions_v6.py
+Usage:  python -I -X utf8 build_sampling_regions_v7.py
 """
 
 import csv
@@ -50,7 +51,7 @@ from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
-VERSION = "v6"
+VERSION = "v7"
 N_REGIONS = 200
 SCRIPT = f"postprocessing\\resstockpostproc\\resources\\gisdata\\build_sampling_regions_{VERSION}.py"
 CELLS = os.path.join(HERE, f"sampling_regions_{VERSION}_cells.csv")

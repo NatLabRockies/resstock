@@ -1,0 +1,26 @@
+v7 sampling regions: 200 weather-clustered regions on County x PUMA cells, County x PUMA weather
+  cell table: 4,543 cells, 200 regions
+  sampler cells (County and PUMA.tsv options): 4,545; County rows with a weather file: 0
+    G0201580, G02000400: region 20902 (from G0200500, offset -9), weather G0202700.epw
+    G4601020, G46000200: region 460701 (from G4600470, offset -7), weather G4601020.epw
+  sampler cells by source: in the cell table 4,543, same PUMA and offset's largest cell 2
+  [ok] County.tsv depends on County and PUMA alone
+  [ok] every County.tsv row is one-hot
+
+=== checks ===
+  [ok] 200 regions
+  [ok] every sampler cell has a region (4,545)
+  [ok] no region spans two states
+  [ok] no region mixes UTC offsets
+  [ok] every cell weather file is a county weather file
+  cells simulated on another county's weather file: 2,869 of 4,545
+  [ok] Sampling Region.tsv options are the v7 ids
+  [ok] Sampling Region.tsv rows one-hot (4,545)
+  [ok] project_testing County and PUMA.tsv rows sum to 1 (5 counties, 152 cells)
+  [ok] options_lookup Sampling Region rows 200 -> 200
+  [ok] no County row sets location_epw_path (3,142 rows)
+  [ok] every sampler cell's County and PUMA row sets location_epw_path (4,545)
+  [ok] every cell table offset is its county's zip code offset
+  [ok] cell weather files as in the cell table
+
+  regions by state: 01 4, 02 2, 04 5, 05 3, 06 9, 08 4, 09 2, 10 2, 11 1, 12 4, 13 4, 15 1, 16 6, 17 4, 18 7, 19 3, 20 3, 21 5, 22 3, 23 3, 24 4, 25 3, 26 7, 27 4, 28 3, 29 5, 30 3, 31 3, 32 3, 33 3, 34 3, 35 4, 36 9, 37 5, 38 3, 39 5, 40 3, 41 5, 42 5, 44 2, 45 3, 46 3, 47 5, 48 8, 49 3, 50 2, 51 4, 53 5, 54 2, 55 5, 56 3
