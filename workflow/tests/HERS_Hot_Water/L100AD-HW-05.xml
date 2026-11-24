@@ -2,7 +2,7 @@
 <HPXML xmlns='http://hpxmlonline.com/2025/12' schemaVersion='5.0'>
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
-    <XMLGeneratedBy>tasks.rb</XMLGeneratedBy>
+    <XMLGeneratedBy>hand</XMLGeneratedBy>
     <CreatedDateAndTime>2000-01-01T00:00:00-07:00</CreatedDateAndTime>
     <Transaction>create</Transaction>
   </XMLTransactionHeaderInformation>
@@ -21,9 +21,6 @@
     <BuildingDetails>
       <BuildingSummary>
         <Site>
-          <Surroundings>stand-alone</Surroundings>
-          <VerticalSurroundings>no units above or below</VerticalSurroundings>
-          <AzimuthOfFrontOfHome>180</AzimuthOfFrontOfHome>
           <Soil>
             <Conductivity>0.8</Conductivity>
           </Soil>

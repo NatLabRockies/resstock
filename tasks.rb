@@ -154,16 +154,7 @@ def create_hpxmls
     hpxml = HPXML.new(hpxml_path: hpxml_path)
     hpxml.header.software_program_used = nil
     hpxml.header.software_program_version = nil
-    if hpxml_path.include?('ASHRAE_Standard_140') || hpxml_path.include?('HERS_HVAC') || hpxml_path.include?('HERS_DSE')
-      apply_hpxml_modification_ashrae_140(hpxml)
-      if hpxml_path.include?('HERS_HVAC') || hpxml_path.include?('HERS_DSE')
-        apply_hpxml_modification_hers_hvac_dse(hpxml_path, hpxml)
-      end
-    elsif hpxml_path.include?('HERS_Hot_Water')
-      apply_hpxml_modification_hers_hot_water(hpxml)
-    else
-      apply_hpxml_modification_sample_files(hpxml_path, hpxml)
-    end
+    apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     check_hpxml(hpxml_path, hpxml)
     hpxml_doc = hpxml.to_doc()
 
@@ -191,181 +182,6 @@ def create_hpxmls
       end
     end
   end
-end
-
-def apply_hpxml_modification_ashrae_140(hpxml)
-  # Set detailed HPXML values for ASHRAE 140 test files
-  hpxml_bldg = hpxml.buildings[0]
-
-  # ------------ #
-  # HPXML Header #
-  # ------------ #
-
-  hpxml.header.xml_generated_by = 'tasks.rb'
-  hpxml.header.created_date_and_time = Time.new(2000, 1, 1, 0, 0, 0, '-07:00').strftime('%Y-%m-%dT%H:%M:%S%:z') # Hard-code to prevent diffs
-  hpxml.header.apply_ashrae140_assumptions = true
-
-  # --------------------- #
-  # HPXML BuildingSummary #
-  # --------------------- #
-
-  hpxml_bldg.site.azimuth_of_front_of_home = nil
-
-  # --------------- #
-  # HPXML Enclosure #
-  # --------------- #
-
-  hpxml_bldg.attics[0].vented_attic_ach = 2.4
-  (hpxml_bldg.walls + hpxml_bldg.rim_joists).each do |wall|
-    if wall.is_a?(HPXML::Wall)
-      if wall.attic_wall_type == HPXML::AtticWallTypeGable
-        wall.insulation_assembly_r_value = 2.15
-      else
-        wall.interior_finish_type = HPXML::InteriorFinishGypsumBoard
-        wall.interior_finish_thickness = 0.5
-      end
-    end
-  end
-  hpxml_bldg.floors.each do |floor|
-    next unless floor.is_ceiling
-
-    floor.interior_finish_type = HPXML::InteriorFinishGypsumBoard
-    floor.interior_finish_thickness = 0.5
-  end
-  hpxml_bldg.foundation_walls.each do |fwall|
-    fwall.thickness = 6.0
-    if fwall.insulation_interior_r_value == 0
-      fwall.interior_finish_type = HPXML::InteriorFinishNotPresent
-    else
-      fwall.interior_finish_type = HPXML::InteriorFinishGypsumBoard
-      fwall.interior_finish_thickness = 0.5
-    end
-  end
-  if hpxml_bldg.doors.size == 1
-    hpxml_bldg.doors[0].area /= 2.0
-    hpxml_bldg.doors << hpxml_bldg.doors[0].dup
-    hpxml_bldg.doors[1].azimuth = 0
-    hpxml_bldg.doors[1].id = 'Door2'
-    hpxml_bldg.doors[0].attached_to_wall_idref = hpxml_bldg.walls[0].id
-  end
-  hpxml_bldg.windows.each do |window|
-    next if window.overhangs_depth.nil?
-
-    window.overhangs_distance_to_bottom_of_window = 6.0
-  end
-  hpxml_bldg.slabs.each do |slab|
-    if slab.perimeter_insulation_r_value == 5
-      slab.perimeter_insulation_r_value = 5.4
-      slab.perimeter_insulation_depth = 2.5
-    end
-  end
-
-  # ---------- #
-  # HPXML HVAC #
-  # ---------- #
-
-  if hpxml_bldg.hvac_controls.empty?
-    hpxml_bldg.hvac_controls.add(id: "HVACControl#{hpxml_bldg.hvac_controls.size + 1}",
-                                 heating_setpoint_temp: 68.0,
-                                 cooling_setpoint_temp: 78.0)
-  end
-
-  # --------------- #
-  # HPXML MiscLoads #
-  # --------------- #
-
-  return unless hpxml_bldg.plug_loads[0].kwh_per_year > 0
-
-  hpxml_bldg.plug_loads[0].weekday_fractions = '0.0203, 0.0203, 0.0203, 0.0203, 0.0203, 0.0339, 0.0426, 0.0852, 0.0497, 0.0304, 0.0304, 0.0406, 0.0304, 0.0254, 0.0264, 0.0264, 0.0386, 0.0416, 0.0447, 0.0700, 0.0700, 0.0731, 0.0731, 0.0660'
-  hpxml_bldg.plug_loads[0].weekend_fractions = '0.0203, 0.0203, 0.0203, 0.0203, 0.0203, 0.0339, 0.0426, 0.0852, 0.0497, 0.0304, 0.0304, 0.0406, 0.0304, 0.0254, 0.0264, 0.0264, 0.0386, 0.0416, 0.0447, 0.0700, 0.0700, 0.0731, 0.0731, 0.0660'
-  hpxml_bldg.plug_loads[0].monthly_multipliers = '1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0'
-end
-
-def apply_hpxml_modification_hers_hvac_dse(hpxml_path, hpxml)
-  # Set detailed HPXML values for HERS HVAC/DSE test files
-  hpxml.header.eri_calculation_versions = ['2022CE']
-  hpxml_bldg = hpxml.buildings[0]
-
-  hpxml_bldg.hvac_systems.each do |hvac_system|
-    hvac_system.fan_watts_per_cfm = 0.5
-  end
-
-  if hpxml_path.include? 'HERS_HVAC'
-    hpxml_bldg.hvac_distributions.clear
-    hpxml_bldg.hvac_distributions.add(id: 'HVACDistribution1',
-                                      distribution_system_type: HPXML::HVACDistributionTypeDSE,
-                                      annual_heating_dse: 1.0,
-                                      annual_cooling_dse: 1.0)
-    if ['HVAC1a.xml', 'HVAC1b.xml', 'HVAC2a.xml', 'HVAC2b.xml', 'HVAC2e.xml'].include? File.basename(hpxml_path)
-      hpxml_bldg.heating_systems[0].heating_capacity = 56100
-      hpxml_bldg.cooling_systems[0].cooling_capacity = 38300
-    elsif ['HVAC2c.xml', 'HVAC2d.xml'].include? File.basename(hpxml_path)
-      hpxml_bldg.heat_pumps[0].heating_capacity = 56100
-      hpxml_bldg.heat_pumps[0].cooling_capacity = 56100
-    end
-  end
-
-  if hpxml_path.include? 'HERS_DSE'
-    if ['HVAC3a.xml', 'HVAC3e.xml'].include? File.basename(hpxml_path)
-      hpxml_bldg.heating_systems[0].heating_capacity = 46600
-      hpxml_bldg.cooling_systems[0].cooling_capacity = 38400
-    elsif ['HVAC3b.xml'].include? File.basename(hpxml_path)
-      hpxml_bldg.heating_systems[0].heating_capacity = 56000
-      hpxml_bldg.cooling_systems[0].cooling_capacity = 38400
-    elsif ['HVAC3c.xml'].include? File.basename(hpxml_path)
-      hpxml_bldg.heating_systems[0].heating_capacity = 49000
-      hpxml_bldg.cooling_systems[0].cooling_capacity = 38400
-    elsif ['HVAC3d.xml'].include? File.basename(hpxml_path)
-      hpxml_bldg.heating_systems[0].heating_capacity = 61000
-      hpxml_bldg.cooling_systems[0].cooling_capacity = 38400
-    elsif ['HVAC3f.xml'].include? File.basename(hpxml_path)
-      hpxml_bldg.heating_systems[0].heating_capacity = 46600
-      hpxml_bldg.cooling_systems[0].cooling_capacity = 49900
-    elsif ['HVAC3g.xml'].include? File.basename(hpxml_path)
-      hpxml_bldg.heating_systems[0].heating_capacity = 46600
-      hpxml_bldg.cooling_systems[0].cooling_capacity = 42200
-    elsif ['HVAC3h.xml'].include? File.basename(hpxml_path)
-      hpxml_bldg.heating_systems[0].heating_capacity = 46600
-      hpxml_bldg.cooling_systems[0].cooling_capacity = 55000
-    end
-
-    # Assign duct surface area
-    hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = nil
-    hpxml_bldg.hvac_distributions[0].ducts[0].duct_fraction_area = nil
-    hpxml_bldg.hvac_distributions[0].ducts[1].duct_fraction_area = nil
-    hpxml_bldg.hvac_distributions[0].ducts[0].duct_surface_area = 308.0
-    hpxml_bldg.hvac_distributions[0].ducts[1].duct_surface_area = 77.0
-
-    # Temporarily use effective R-values instead of nominal R-values to match the test specs.
-    hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
-      next if duct.duct_insulation_r_value.nil?
-
-      if duct.duct_insulation_r_value == 0
-        duct.duct_insulation_r_value = nil
-        duct.duct_effective_r_value = 1.5
-      elsif duct.duct_insulation_r_value == 6
-        duct.duct_insulation_r_value = nil
-        duct.duct_effective_r_value = 7
-      else
-        fail 'Unexpected error.'
-      end
-    end
-  end
-end
-
-def apply_hpxml_modification_hers_hot_water(hpxml)
-  # Set detailed HPXML values for HERS Hot Water test files
-  hpxml.header.eri_calculation_versions = ['2022CE']
-  hpxml_bldg = hpxml.buildings[0]
-
-  hpxml.header.xml_generated_by = 'tasks.rb'
-  hpxml.header.created_date_and_time = Time.new(2000, 1, 1, 0, 0, 0, '-07:00').strftime('%Y-%m-%dT%H:%M:%S%:z') # Hard-code to prevent diffs
-
-  hpxml_bldg.hvac_distributions.clear
-  hpxml_bldg.hvac_distributions.add(id: 'HVACDistribution1',
-                                    distribution_system_type: HPXML::HVACDistributionTypeDSE,
-                                    annual_heating_dse: 1.0,
-                                    annual_cooling_dse: 1.0)
 end
 
 def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
@@ -3742,9 +3558,9 @@ if ARGV[0].to_sym == :update_hpxmls
     XMLHelper.write_file(hpxml.to_doc, hpxml_path)
   end
 
-  # Reformat ACCA_Examples HPXMLs
-  puts 'Reformatting ACCA_Examples HPXMLs...'
-  Dir['workflow/tests/ACCA_Examples/*.xml'].each do |hpxml_path|
+  # Reformat test HPXMLs
+  puts 'Reformatting test HPXMLs...'
+  Dir['workflow/tests/**/*.xml'].each do |hpxml_path|
     hpxml = HPXML.new(hpxml_path: hpxml_path)
     XMLHelper.write_file(hpxml.to_doc, hpxml_path)
   end
