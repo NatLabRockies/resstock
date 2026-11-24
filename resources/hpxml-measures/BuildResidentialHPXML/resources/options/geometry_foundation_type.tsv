@@ -11,8 +11,6 @@ Above Apartment	AboveApartment	0	0	0
 "Belly and Wing, With Skirt"	BellyAndWingWithSkirt	4	1	9.25
 "Belly and Wing, No Skirt"	BellyAndWingNoSkirt	4	1	9.25
 "Detailed Example: Crawlspace, Vented, Above-Grade"	VentedCrawlspace	4	4	9.25
-"ASHRAE 140 Tests: Basement, Conditioned"	ConditionedBasement	7.25	0.667	9
-"ASHRAE 140 Tests: Basement, Unconditioned"	UnconditionedBasement	7.25	0.667	9
 				
 # Type: The foundation type of the building. Garages are assumed to be over slab-on-grade.				
 # Height: The height of the foundation.				

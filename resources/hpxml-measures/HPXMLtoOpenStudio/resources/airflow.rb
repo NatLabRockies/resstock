@@ -1505,6 +1505,30 @@ module Airflow
     duct_program.addLine("Set #{ra_w_var.name} = #{ra_w_sensor.name}")
     duct_program.addLine("Set #{dz_t_var.name} = #{dz_t_sensor.name}")
     duct_program.addLine("Set #{dz_w_var.name} = #{dz_w}")
+
+    # If a heat pump, work around an EnergyPlus bug where the fan RTF=1 even if
+    # there's no supplemental coil or the supplemental coil is cycling. TODO: Remove
+    # this when https://github.com/NatLabRockies/EnergyPlus/issues/11903 is fixed.
+    supply_fan = fan_data[:supply_fan][object]
+    if not supply_fan.nil?
+      global_var_supp_only_cyc_rtf = model.getEnergyManagementSystemGlobalVariables.find { |var| var.name.get.include? Model.ems_friendly_name("#{supply_fan.name} supp only cycl rtf global") }
+      if not global_var_supp_only_cyc_rtf.nil?
+        # Need to adjust E+ fan RTF, flow rates, and supply temperature to account for supplemental coil fan cycling
+        duct_program.addLine("If (#{global_var_supp_only_cyc_rtf.name} >= 0) && (#{global_var_supp_only_cyc_rtf.name} < 1)")
+        duct_program.addLine("  Set #{fan_data[:rtf_var][object].name} = #{global_var_supp_only_cyc_rtf.name}")
+        duct_program.addLine("  Set #{ah_mfr_var.name} = #{ah_mfr_var.name} * #{global_var_supp_only_cyc_rtf.name}")
+        duct_program.addLine("  Set #{ah_vfr_var.name} = #{ah_vfr_var.name} * #{global_var_supp_only_cyc_rtf.name}")
+        duct_program.addLine("  If #{global_var_supp_only_cyc_rtf.name} > 0")
+        duct_program.addLine("    Set AH_ref_h = @HFnTdbW #{ra_t_var.name} #{ra_w_var.name}")
+        duct_program.addLine("    Set AH_out_h = @HFnTdbW #{ah_tout_var.name} #{ah_wout_var.name}")
+        duct_program.addLine("    Set AH_on_h = AH_ref_h + (AH_out_h - AH_ref_h) / #{global_var_supp_only_cyc_rtf.name}")
+        duct_program.addLine("    Set #{ah_wout_var.name} = #{ra_w_var.name} + (#{ah_wout_var.name} - #{ra_w_var.name}) / #{global_var_supp_only_cyc_rtf.name}")
+        duct_program.addLine("    Set #{ah_tout_var.name} = @TdbFnHW AH_on_h #{ah_wout_var.name}")
+        duct_program.addLine('  EndIf')
+        duct_program.addLine('EndIf')
+      end
+    end
+
     duct_program.addLine("Run #{duct_subroutine.name}")
     duct_program.addLine("Set #{duct_actuators['supply_sens_lk_to_cond'].name} = #{duct_vars['supply_sens_lk_to_cond'].name}")
     duct_program.addLine("Set #{duct_actuators['supply_lat_lk_to_cond'].name} = #{duct_vars['supply_lat_lk_to_cond'].name}")

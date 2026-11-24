@@ -600,6 +600,15 @@ module HVAC
     geothermal_loop.loop_flow *= unit_multiplier
     geothermal_loop.num_bore_holes *= unit_multiplier
 
+    # Water flow for this heat pump's coils. When several heat pumps share the geothermal
+    # loop, each gets a share of the loop flow in proportion to its capacity.
+    hp_loop_flow = geothermal_loop.loop_flow
+    if geothermal_loop.heat_pumps.size > 1
+      total_capacity = geothermal_loop.heat_pumps.map { |hp| [hp.heating_capacity, hp.cooling_capacity].max }.sum
+      hp_loop_flow *= [heat_pump.heating_capacity, heat_pump.cooling_capacity].max / total_capacity
+    end
+    hp_loop_vfr = UnitConversions.convert(hp_loop_flow, 'gal/min', 'm^3/s')
+
     if [HPXML::GroundToAirHeatPumpModelTypeStandard].include? hpxml_header.ground_to_air_heat_pump_model_type
       # Cooling Coil
       clg_total_cap_curve = Model.add_curve_quad_linear(
@@ -623,7 +632,7 @@ module HVAC
       clg_coil.setNominalTimeforCondensateRemovaltoBegin(1000)
       clg_coil.setRatioofInitialMoistureEvaporationRateandSteadyStateLatentCapacity(1.5)
       clg_coil.setRatedAirFlowRate(clg_air_flow_rated)
-      clg_coil.setRatedWaterFlowRate(UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s'))
+      clg_coil.setRatedWaterFlowRate(hp_loop_vfr)
       clg_coil.setRatedEnteringWaterTemperature(UnitConversions.convert(80, 'F', 'C'))
       clg_coil.setRatedEnteringAirDryBulbTemperature(UnitConversions.convert(80, 'F', 'C'))
       clg_coil.setRatedEnteringAirWetBulbTemperature(UnitConversions.convert(67, 'F', 'C'))
@@ -645,7 +654,7 @@ module HVAC
       htg_coil.setName(obj_name + ' htg coil')
       htg_coil.setRatedHeatingCoefficientofPerformance(hp_ap.heat_rated_cops[0])
       htg_coil.setRatedAirFlowRate(htg_air_flow_rated)
-      htg_coil.setRatedWaterFlowRate(UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s'))
+      htg_coil.setRatedWaterFlowRate(hp_loop_vfr)
       htg_coil.setRatedEnteringWaterTemperature(UnitConversions.convert(60, 'F', 'C'))
       htg_coil.setRatedEnteringAirDryBulbTemperature(UnitConversions.convert(70, 'F', 'C'))
       # TODO: Add net to gross conversion after RESNET PR: https://github.com/NatLabRockies/OpenStudio-HPXML/pull/1879
@@ -674,7 +683,7 @@ module HVAC
       clg_coil.setInitialMoistureEvaporationRateDividedbySteadyStateACLatentCapacity(1.5)
       clg_coil.setNominalSpeedLevel(num_speeds)
       clg_coil.setRatedAirFlowRateAtSelectedNominalSpeedLevel(clg_air_flow_rated)
-      clg_coil.setRatedWaterFlowRateAtSelectedNominalSpeedLevel(UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s'))
+      clg_coil.setRatedWaterFlowRateAtSelectedNominalSpeedLevel(hp_loop_vfr)
       # TODO: Add net to gross conversion after RESNET PR: https://github.com/NatLabRockies/OpenStudio-HPXML/pull/1879
       clg_coil.setGrossRatedTotalCoolingCapacityAtSelectedNominalSpeedLevel(UnitConversions.convert(heat_pump.cooling_capacity, 'Btu/hr', 'W'))
       for i in 0..(num_speeds - 1)
@@ -726,7 +735,7 @@ module HVAC
         speed.setReferenceUnitGrossRatedSensibleHeatRatio(hp_ap.cool_rated_shr_gross)
         speed.setReferenceUnitGrossRatedCoolingCOP(hp_ap.cool_rated_cops[i])
         speed.setReferenceUnitRatedAirFlowRate(UnitConversions.convert(UnitConversions.convert(heat_pump.cooling_capacity, 'Btu/hr', 'ton') * hp_ap.cool_capacity_ratios[i] * hp_ap.cool_rated_cfm_per_ton, 'cfm', 'm^3/s'))
-        speed.setReferenceUnitRatedWaterFlowRate(UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s') * hp_ap.cool_capacity_ratios[i])
+        speed.setReferenceUnitRatedWaterFlowRate(hp_loop_vfr * hp_ap.cool_capacity_ratios[i])
         speed.setReferenceUnitWasteHeatFractionofInputPowerAtRatedConditions(0.0)
         clg_coil.addSpeed(speed)
       end
@@ -750,7 +759,7 @@ module HVAC
       htg_coil.setName(obj_name + ' htg coil')
       htg_coil.setNominalSpeedLevel(num_speeds)
       htg_coil.setRatedAirFlowRateAtSelectedNominalSpeedLevel(htg_air_flow_rated)
-      htg_coil.setRatedWaterFlowRateAtSelectedNominalSpeedLevel(UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s'))
+      htg_coil.setRatedWaterFlowRateAtSelectedNominalSpeedLevel(hp_loop_vfr)
       # TODO: Add net to gross conversion after RESNET PR: https://github.com/NatLabRockies/OpenStudio-HPXML/pull/1879
       htg_coil.setRatedHeatingCapacityAtSelectedNominalSpeedLevel(UnitConversions.convert(heat_pump.heating_capacity, 'Btu/hr', 'W'))
       for i in 0..(num_speeds - 1)
@@ -801,7 +810,7 @@ module HVAC
         speed.setReferenceUnitGrossRatedHeatingCapacity(UnitConversions.convert(heat_pump.heating_capacity, 'Btu/hr', 'W') * hp_ap.heat_capacity_ratios[i])
         speed.setReferenceUnitGrossRatedHeatingCOP(hp_ap.heat_rated_cops[i])
         speed.setReferenceUnitRatedAirFlow(UnitConversions.convert(UnitConversions.convert(heat_pump.heating_capacity, 'Btu/hr', 'ton') * hp_ap.heat_capacity_ratios[i] * hp_ap.heat_rated_cfm_per_ton, 'cfm', 'm^3/s'))
-        speed.setReferenceUnitRatedWaterFlowRate(UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s') * hp_ap.heat_capacity_ratios[i])
+        speed.setReferenceUnitRatedWaterFlowRate(hp_loop_vfr * hp_ap.heat_capacity_ratios[i])
         speed.setReferenceUnitWasteHeatFractionofInputPowerAtRatedConditions(0.0)
         htg_coil.addSpeed(speed)
       end
@@ -910,7 +919,7 @@ module HVAC
         glycol_concentration: (gl_ap.frac_glycol * 100).to_i,
         min_temp: UnitConversions.convert(gl_ap.design_hw, 'F', 'C'),
         max_temp: 48.88889,
-        max_flow_rate: UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s')
+        max_flow_rate: ground_heat_exch_vert.designFlowRate.get
       )
       plant_loop.additionalProperties.setFeature('HPXML_ID', geothermal_loop.id)
       plant_loop.addSupplyBranchForComponent(ground_heat_exch_vert)
@@ -958,7 +967,7 @@ module HVAC
       add_fan_pump_disaggregation_ems_program(model, pump, htg_coil, clg_coil, htg_supp_coil, heat_pump)
       add_pump_power_ems_program(model, pump, air_loop_unitary, heat_pump)
       if (heat_pump.compressor_type == HPXML::HVACCompressorTypeVariableSpeed) && (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::GroundToAirHeatPumpModelTypeExperimental)
-        add_ghp_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil)
+        add_ghp_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil, ground_heat_exch_vert.designFlowRate.get)
       end
 
       # Pipes
@@ -2018,7 +2027,7 @@ module HVAC
       pump_program.addLine('EndIf')
       # sum up to get the actual flow rate
       for i in 1..clg_coil.speeds.size
-        pump_program.addLine("Set clg_flow_rate = clg_flow_rate + cooling_fraction_time_#{i} * heating_pump_vfr_#{i}")
+        pump_program.addLine("Set clg_flow_rate = clg_flow_rate + cooling_fraction_time_#{i} * cooling_pump_vfr_#{i}")
       end
       pump_program.addLine('Set cooling_plr = clg_flow_rate / cooling_pump_vfr_max')
       pump_program.addLine('Set hvac_plr = @Max cooling_plr heating_plr')
@@ -2047,8 +2056,14 @@ module HVAC
   # @param control_zone [OpenStudio::Model::ThermalZone] Conditioned space thermal zone
   # @param htg_coil [OpenStudio::Model::CoilHeatingWaterToAirHeatPumpXXXEquationFit] Heating coil model object
   # @param clg_coil [OpenStudio::Model::CoilCoolingWaterToAirHeatPumpXXXEquationFit] Cooling coil model object
+  # @param loop_vfr [Double] Geothermal loop design flow rate (m^3/s)
   # @return [nil]
-  def self.add_ghp_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil)
+  def self.add_ghp_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil, loop_vfr)
+    # The pump serves the whole loop (which may be shared across GSHPs), while
+    # each coil's rated flow is its heat pump's share.
+    htg_flow_scale = loop_vfr / htg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel.get
+    clg_flow_scale = loop_vfr / clg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel.get
+
     # Sensors
     htg_load_sensor = Model.add_ems_sensor(
       model,
@@ -2080,9 +2095,9 @@ module HVAC
     pump_program.addLine("If #{htg_load_sensor.name} > 0.0 && #{clg_load_sensor.name} > 0.0") # Heating loads
     pump_program.addLine("  Set estimated_plr = (@ABS #{htg_load_sensor.name}) / #{htg_coil.ratedHeatingCapacityAtSelectedNominalSpeedLevel}") # Use nominal capacity for estimation
     pump_program.addLine('  Set estimated_plr = @Max estimated_plr 0.1') # Avoid small water flow rate, which causes E+ failures
-    pump_program.addLine("  Set max_vfr_htg = #{htg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel}")
+    pump_program.addLine("  Set max_vfr_htg = #{htg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel.get * htg_flow_scale}")
     pump_program.addLine('  Set estimated_vfr = estimated_plr * max_vfr_htg')
-    pump_program.addLine("  If estimated_vfr < #{htg_coil.speeds[0].referenceUnitRatedWaterFlowRate}") # Actuate the water flow rate below first stage
+    pump_program.addLine("  If estimated_vfr < #{htg_coil.speeds[0].referenceUnitRatedWaterFlowRate * htg_flow_scale}") # Actuate the water flow rate below first stage
     pump_program.addLine("    Set #{pump_mfr_act.name} = estimated_vfr * 1000.0")
     pump_program.addLine('  Else')
     pump_program.addLine("    Set #{pump_mfr_act.name} = NULL")
@@ -2090,9 +2105,9 @@ module HVAC
     pump_program.addLine("ElseIf #{htg_load_sensor.name} < 0.0 && #{clg_load_sensor.name} < 0.0") # Cooling loads
     pump_program.addLine("  Set estimated_plr = (@ABS #{clg_load_sensor.name}) / #{clg_coil.grossRatedTotalCoolingCapacityAtSelectedNominalSpeedLevel}") # Use nominal capacity for estimation
     pump_program.addLine('  Set estimated_plr = @Max estimated_plr 0.1') # Avoid small water flow rate, which causes E+ failures
-    pump_program.addLine("  Set max_vfr_clg = #{clg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel}")
+    pump_program.addLine("  Set max_vfr_clg = #{clg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel.get * clg_flow_scale}")
     pump_program.addLine('  Set estimated_vfr = estimated_plr * max_vfr_clg')
-    pump_program.addLine("  If estimated_vfr < #{clg_coil.speeds[0].referenceUnitRatedWaterFlowRate}") # Actuate the water flow rate below first stage
+    pump_program.addLine("  If estimated_vfr < #{clg_coil.speeds[0].referenceUnitRatedWaterFlowRate * clg_flow_scale}") # Actuate the water flow rate below first stage
     pump_program.addLine("    Set #{pump_mfr_act.name} = estimated_vfr * 1000.0")
     pump_program.addLine('  Else')
     pump_program.addLine("    Set #{pump_mfr_act.name} = NULL")

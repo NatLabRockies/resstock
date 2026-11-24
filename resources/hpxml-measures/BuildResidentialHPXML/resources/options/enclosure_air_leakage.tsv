@@ -37,7 +37,6 @@ Very Leaky	very leaky
 0.67 nACH		ACHnatural		0.67
 1.0 nACH		ACHnatural		1
 1.5 nACH		ACHnatural		1.5
-HERS Reference		SpecificLeakageArea		0.00036
 Detailed Example: 3.57 ACH50		ACH	50	3.57
 Detailed Example: 12.16 ACH50		ACH	50	12.16
 Detailed Example: 2.8 ACH45		ACH	45	2.8

@@ -1694,6 +1694,69 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     end
   end
 
+  def test_shared_geothermal_loop_ground_to_air_heat_pump_flow
+    # Test unequal-capacity heat pumps sharing a geothermal loop
+    hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop-multiple.xml')
+    heat_pump = hpxml_bldg.heat_pumps[1]
+    heat_pump.heating_capacity = 30000.0
+    heat_pump.cooling_capacity = 30000.0
+    heat_pump.geothermal_loop_idref = hpxml_bldg.geothermal_loops[0].id
+    hpxml_bldg.geothermal_loops[1].delete
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+
+    args_hash = {}
+    args_hash['hpxml_path'] = @tmp_hpxml_path
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+
+    # Check coil water flow rate
+    loop_flow = UnitConversions.convert(hpxml_bldg.geothermal_loops[0].loop_flow, 'gal/min', 'm^3/s')
+    total_capacity = hpxml_bldg.heat_pumps.sum { |hp| [hp.heating_capacity, hp.cooling_capacity].max }
+    [model.getCoilCoolingWaterToAirHeatPumpEquationFits,
+     model.getCoilHeatingWaterToAirHeatPumpEquationFits].each do |coils|
+      assert_equal(2, coils.size)
+      coils.each do |coil|
+        hp_id = coil.additionalProperties.getFeatureAsString('HPXML_ID').get
+        heat_pump = hpxml_bldg.heat_pumps.find { |hp| hp.id == hp_id }
+        capacity = [heat_pump.heating_capacity, heat_pump.cooling_capacity].max
+        expected_flow = loop_flow * capacity / total_capacity
+        assert_in_epsilon(expected_flow, coil.ratedWaterFlowRate.get, 0.01)
+      end
+      assert_in_epsilon(loop_flow, coils.sum { |coil| coil.ratedWaterFlowRate.get }, 0.01)
+    end
+
+    # Test experimental variable-speed model too
+    hpxml.header.ground_to_air_heat_pump_model_type = HPXML::GroundToAirHeatPumpModelTypeExperimental
+    hpxml_bldg.heat_pumps.each do |heat_pump|
+      heat_pump.compressor_type = HPXML::HVACCompressorTypeVariableSpeed
+    end
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+
+    loop_flow = UnitConversions.convert(hpxml_bldg.geothermal_loops[0].loop_flow, 'gal/min', 'm^3/s')
+    total_capacity = hpxml_bldg.heat_pumps.sum { |hp| [hp.heating_capacity, hp.cooling_capacity].max }
+    [model.getCoilCoolingWaterToAirHeatPumpVariableSpeedEquationFits,
+     model.getCoilHeatingWaterToAirHeatPumpVariableSpeedEquationFits].each do |coils|
+      assert_equal(2, coils.size)
+      coils.each do |coil|
+        hp_id = coil.additionalProperties.getFeatureAsString('HPXML_ID').get
+        heat_pump = hpxml_bldg.heat_pumps.find { |hp| hp.id == hp_id }
+        capacity = [heat_pump.heating_capacity, heat_pump.cooling_capacity].max
+        hp_flow = loop_flow * capacity / total_capacity
+        assert_in_epsilon(hp_flow, coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel.get, 0.01)
+
+        coil.speeds.each do |speed|
+          if coil.is_a? OpenStudio::Model::CoilCoolingWaterToAirHeatPumpVariableSpeedEquationFit
+            capacity_ratio = speed.referenceUnitGrossRatedTotalCoolingCapacity / coil.grossRatedTotalCoolingCapacityAtSelectedNominalSpeedLevel.get
+          elsif coil.is_a? OpenStudio::Model::CoilHeatingWaterToAirHeatPumpVariableSpeedEquationFit
+            capacity_ratio = speed.referenceUnitGrossRatedHeatingCapacity / coil.ratedHeatingCapacityAtSelectedNominalSpeedLevel.get
+          end
+          assert_in_epsilon(hp_flow * capacity_ratio, speed.referenceUnitRatedWaterFlowRate, 0.01)
+        end
+      end
+      assert_in_epsilon(loop_flow, coils.sum { |coil| coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel.get }, 0.01)
+    end
+  end
+
   def test_shared_chiller_baseboard
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-bldgtype-mf-unit-shared-chiller-only-baseboard.xml'))

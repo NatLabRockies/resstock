@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>9557c854-31d7-4cbc-9686-48d76bafbb16</version_id>
-  <version_modified>2026-10-22T18:56:17Z</version_modified>
+  <version_id>36ca88f7-a2e3-48bf-aa0e-ebe2eb4faf38</version_id>
+  <version_modified>2026-11-19T20:55:55Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -957,14 +957,6 @@
           <value>Detailed Example: Crawlspace, Vented, Above-Grade</value>
           <display_name>Detailed Example: Crawlspace, Vented, Above-Grade</display_name>
         </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Basement, Conditioned</value>
-          <display_name>ASHRAE 140 Tests: Basement, Conditioned</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Basement, Unconditioned</value>
-          <display_name>ASHRAE 140 Tests: Basement, Unconditioned</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -1354,18 +1346,6 @@
           <value>Wood Frame, IECC U-0.028</value>
           <display_name>Wood Frame, IECC U-0.028</display_name>
         </choice>
-        <choice>
-          <value>HERS DSE Tests: Wood Frame, R-11</value>
-          <display_name>HERS DSE Tests: Wood Frame, R-11</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Wood Frame, Uninsulated</value>
-          <display_name>ASHRAE 140 Tests: Wood Frame, Uninsulated</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Wood Frame, R-11</value>
-          <display_name>ASHRAE 140 Tests: Wood Frame, R-11</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -1542,14 +1522,6 @@
         <choice>
           <value>Exterior, R-20</value>
           <display_name>Exterior, R-20</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Uninsulated</value>
-          <display_name>ASHRAE 140 Tests: Uninsulated</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: R-11</value>
-          <display_name>ASHRAE 140 Tests: R-11</display_name>
         </choice>
       </choices>
     </argument>
@@ -1756,18 +1728,6 @@
           <value>IECC U-0.024</value>
           <display_name>IECC U-0.024</display_name>
         </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: R-11</value>
-          <display_name>ASHRAE 140 Tests: R-11</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: R-19</value>
-          <display_name>ASHRAE 140 Tests: R-19</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: R-19 + R-38</value>
-          <display_name>ASHRAE 140 Tests: R-19 + R-38</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -1822,10 +1782,6 @@
         <choice>
           <value>IECC U-0.024</value>
           <display_name>IECC U-0.024</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Uninsulated</value>
-          <display_name>ASHRAE 140 Tests: Uninsulated</display_name>
         </choice>
       </choices>
     </argument>
@@ -2062,18 +2018,6 @@
           <value>Concrete, Reflective</value>
           <display_name>Concrete, Reflective</display_name>
         </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Low Solar Absorptance</value>
-          <display_name>ASHRAE 140 Tests: Low Solar Absorptance</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Typical Solar Absorptance</value>
-          <display_name>ASHRAE 140 Tests: Typical Solar Absorptance</display_name>
-        </choice>
-        <choice>
-          <value>HERS Reference</value>
-          <display_name>HERS Reference</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -2308,18 +2252,6 @@
           <value>Wood Stud, IECC U-0.045</value>
           <display_name>Wood Stud, IECC U-0.045</display_name>
         </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Wood Stud, Uninsulated</value>
-          <display_name>ASHRAE 140 Tests: Wood Stud, Uninsulated</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Wood Stud, R-11</value>
-          <display_name>ASHRAE 140 Tests: Wood Stud, R-11</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Wood Stud, R-18</value>
-          <display_name>ASHRAE 140 Tests: Wood Stud, R-18</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -2374,10 +2306,6 @@
         <choice>
           <value>R-21</value>
           <display_name>R-21</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: R-7.2</value>
-          <display_name>ASHRAE 140 Tests: R-7.2</display_name>
         </choice>
       </choices>
     </argument>
@@ -2658,18 +2586,6 @@
           <value>Masonite, Reflective</value>
           <display_name>Masonite, Reflective</display_name>
         </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Low Solar Absorptance</value>
-          <display_name>ASHRAE 140 Tests: Low Solar Absorptance</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Typical Solar Absorptance</value>
-          <display_name>ASHRAE 140 Tests: Typical Solar Absorptance</display_name>
-        </choice>
-        <choice>
-          <value>HERS Reference</value>
-          <display_name>HERS Reference</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -2856,14 +2772,6 @@
         <choice>
           <value>EnergyStar, Southern</value>
           <display_name>EnergyStar, Southern</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Single, Clear</value>
-          <display_name>ASHRAE 140 Tests: Single, Clear</display_name>
-        </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Double, Low-E</value>
-          <display_name>ASHRAE 140 Tests: Double, Low-E</display_name>
         </choice>
       </choices>
     </argument>
@@ -3283,10 +3191,6 @@
           <value>Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height</value>
           <display_name>Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height</display_name>
         </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: 2.5ft, Front Windows</value>
-          <display_name>ASHRAE 140 Tests: 2.5ft, Front Windows</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -3457,10 +3361,6 @@
           <value>Detailed Example: Insulated Fiberglass/Steel, R-4.4</value>
           <display_name>Detailed Example: Insulated Fiberglass/Steel, R-4.4</display_name>
         </choice>
-        <choice>
-          <value>ASHRAE 140 Tests: Solid Wood</value>
-          <display_name>ASHRAE 140 Tests: Solid Wood</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -3623,10 +3523,6 @@
         <choice>
           <value>1.5 nACH</value>
           <display_name>1.5 nACH</display_name>
-        </choice>
-        <choice>
-          <value>HERS Reference</value>
-          <display_name>HERS Reference</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 3.57 ACH50</value>
@@ -4835,10 +4731,6 @@
         <choice>
           <value>Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance</value>
           <display_name>Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance</display_name>
-        </choice>
-        <choice>
-          <value>HERS HVAC Tests: Central HP, SEER2 12.4, HSPF2 8.4</value>
-          <display_name>HERS HVAC Tests: Central HP, SEER2 12.4, HSPF2 8.4</display_name>
         </choice>
       </choices>
     </argument>
@@ -6370,10 +6262,6 @@
           <value>Detailed Example: 400 CFM50 (75% Supply), R-6</value>
           <display_name>Detailed Example: 400 CFM50 (75% Supply), R-6</display_name>
         </choice>
-        <choice>
-          <value>HERS DSE Tests: 250 CFM25, R-6</value>
-          <display_name>HERS DSE Tests: 250 CFM25, R-6</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -6919,14 +6807,6 @@
           <value>Detailed Example: Natural Gas, Tankless, EF 0.95</value>
           <display_name>Detailed Example: Natural Gas, Tankless, EF 0.95</display_name>
         </choice>
-        <choice>
-          <value>HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.56</value>
-          <display_name>HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.56</display_name>
-        </choice>
-        <choice>
-          <value>HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.62</value>
-          <display_name>HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.62</display_name>
-        </choice>
       </choices>
     </argument>
     <argument>
@@ -7028,14 +6908,6 @@
         <choice>
           <value>Insulated, Recirc, Manual Demand Control</value>
           <display_name>Insulated, Recirc, Manual Demand Control</display_name>
-        </choice>
-        <choice>
-          <value>HERS Hot Water Tests: Insulated, Recirc, Uncontrolled</value>
-          <display_name>HERS Hot Water Tests: Insulated, Recirc, Uncontrolled</display_name>
-        </choice>
-        <choice>
-          <value>HERS Hot Water Tests: Insulated, Recirc, Manual Demand Control</value>
-          <display_name>HERS Hot Water Tests: Insulated, Recirc, Manual Demand Control</display_name>
         </choice>
       </choices>
     </argument>
@@ -7198,10 +7070,6 @@
         <choice>
           <value>55% Efficient, Preheats Hot and Cold, 1 Shower</value>
           <display_name>55% Efficient, Preheats Hot and Cold, 1 Shower</display_name>
-        </choice>
-        <choice>
-          <value>HERS Hot Water Tests: 54% Efficient, Preheats Hot and Cold, All Showers</value>
-          <display_name>HERS Hot Water Tests: 54% Efficient, Preheats Hot and Cold, All Showers</display_name>
         </choice>
       </choices>
     </argument>
@@ -8954,10 +8822,6 @@
           <display_name>CEE Tier II, 2018, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>HERS Reference</value>
-          <display_name>HERS Reference</display_name>
-        </choice>
-        <choice>
           <value>Detailed Example: MEF 1.65</value>
           <display_name>Detailed Example: MEF 1.65</display_name>
         </choice>
@@ -9109,14 +8973,6 @@
           <display_name>Propane, Standard, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>HERS Reference: Electricity</value>
-          <display_name>HERS Reference: Electricity</display_name>
-        </choice>
-        <choice>
-          <value>HERS Reference: Natural Gas</value>
-          <display_name>HERS Reference: Natural Gas</display_name>
-        </choice>
-        <choice>
           <value>Detailed Example: Electricity, EF 4.29</value>
           <display_name>Detailed Example: Electricity, EF 4.29</display_name>
         </choice>
@@ -9206,10 +9062,6 @@
         <choice>
           <value>EnergyStar, Compact, 200% Usage</value>
           <display_name>EnergyStar, Compact, 200% Usage</display_name>
-        </choice>
-        <choice>
-          <value>HERS Reference</value>
-          <display_name>HERS Reference</display_name>
         </choice>
         <choice>
           <value>Detailed Example: EF 0.7, Compact</value>
@@ -9373,18 +9225,6 @@
         <choice>
           <value>348 kWh/yr, 110% Usage</value>
           <display_name>348 kWh/yr, 110% Usage</display_name>
-        </choice>
-        <choice>
-          <value>HERS Reference: 2-Bedroom Home</value>
-          <display_name>HERS Reference: 2-Bedroom Home</display_name>
-        </choice>
-        <choice>
-          <value>HERS Reference: 3-Bedroom Home</value>
-          <display_name>HERS Reference: 3-Bedroom Home</display_name>
-        </choice>
-        <choice>
-          <value>HERS Reference: 4-Bedroom Home</value>
-          <display_name>HERS Reference: 4-Bedroom Home</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 650 kWh/yr, Conditioned Basement</value>
@@ -10143,10 +9983,6 @@
         <choice>
           <value>100% CFL, 200% Usage</value>
           <display_name>100% CFL, 200% Usage</display_name>
-        </choice>
-        <choice>
-          <value>HERS Reference</value>
-          <display_name>HERS Reference</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 40% CFL, 10% LFL, 25% LED</value>
@@ -11473,7 +11309,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>A500C120</checksum>
+      <checksum>3EF48987</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -11520,13 +11356,13 @@
       <filename>options/appliance_clothes_dryer.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9A37529E</checksum>
+      <checksum>09AA8ED7</checksum>
     </file>
     <file>
       <filename>options/appliance_clothes_washer.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4416CD5D</checksum>
+      <checksum>1DA17411</checksum>
     </file>
     <file>
       <filename>options/appliance_cooking_range_oven.tsv</filename>
@@ -11550,7 +11386,7 @@
       <filename>options/appliance_dishwasher.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7F717E22</checksum>
+      <checksum>E069319C</checksum>
     </file>
     <file>
       <filename>options/appliance_extra_refrigerator.tsv</filename>
@@ -11568,7 +11404,7 @@
       <filename>options/appliance_refrigerator.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D8629D28</checksum>
+      <checksum>1029284F</checksum>
     </file>
     <file>
       <filename>options/battery.tsv</filename>
@@ -11586,13 +11422,13 @@
       <filename>options/dhw_distribution.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9C48F27F</checksum>
+      <checksum>AAD0916D</checksum>
     </file>
     <file>
       <filename>options/dhw_drain_water_heat_recovery.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>93663C9E</checksum>
+      <checksum>93F37453</checksum>
     </file>
     <file>
       <filename>options/dhw_fixtures.tsv</filename>
@@ -11616,7 +11452,7 @@
       <filename>options/dhw_water_heater.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>5EB36803</checksum>
+      <checksum>2E0F2C5D</checksum>
     </file>
     <file>
       <filename>options/dhw_water_heater_location.tsv</filename>
@@ -11640,7 +11476,7 @@
       <filename>options/enclosure_air_leakage.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4C4B311E</checksum>
+      <checksum>BBFC891B</checksum>
     </file>
     <file>
       <filename>options/enclosure_carpet.tsv</filename>
@@ -11652,19 +11488,19 @@
       <filename>options/enclosure_ceiling.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6C539FDE</checksum>
+      <checksum>17C75373</checksum>
     </file>
     <file>
       <filename>options/enclosure_door.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>331B34C8</checksum>
+      <checksum>F2808452</checksum>
     </file>
     <file>
       <filename>options/enclosure_floor_over_foundation.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4B59ADBA</checksum>
+      <checksum>04D94379</checksum>
     </file>
     <file>
       <filename>options/enclosure_floor_over_garage.tsv</filename>
@@ -11682,7 +11518,7 @@
       <filename>options/enclosure_overhangs.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9E9DC7B6</checksum>
+      <checksum>C8C291CE</checksum>
     </file>
     <file>
       <filename>options/enclosure_radiant_barrier.tsv</filename>
@@ -11694,19 +11530,19 @@
       <filename>options/enclosure_rim_joist.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>12B279A9</checksum>
+      <checksum>9FF6251A</checksum>
     </file>
     <file>
       <filename>options/enclosure_roof.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>0B2C78B1</checksum>
+      <checksum>97A46647</checksum>
     </file>
     <file>
       <filename>options/enclosure_roof_material.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E3037192</checksum>
+      <checksum>D6C6338F</checksum>
     </file>
     <file>
       <filename>options/enclosure_skylight.tsv</filename>
@@ -11724,25 +11560,25 @@
       <filename>options/enclosure_wall.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8BB742BE</checksum>
+      <checksum>B910E0AB</checksum>
     </file>
     <file>
       <filename>options/enclosure_wall_continuous_insulation.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2E3A8497</checksum>
+      <checksum>AA5E46E6</checksum>
     </file>
     <file>
       <filename>options/enclosure_wall_siding.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E8CBF49F</checksum>
+      <checksum>4A020203</checksum>
     </file>
     <file>
       <filename>options/enclosure_window.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7B896F3B</checksum>
+      <checksum>AD796570</checksum>
     </file>
     <file>
       <filename>options/enclosure_window_exterior_shading.tsv</filename>
@@ -11802,7 +11638,7 @@
       <filename>options/geometry_foundation_type.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>647701C8</checksum>
+      <checksum>15FF3F7D</checksum>
     </file>
     <file>
       <filename>options/geometry_garage_type.tsv</filename>
@@ -11868,7 +11704,7 @@
       <filename>options/hvac_ducts.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>198499FE</checksum>
+      <checksum>7072FA34</checksum>
     </file>
     <file>
       <filename>options/hvac_ducts_return_location.tsv</filename>
@@ -11892,7 +11728,7 @@
       <filename>options/hvac_heat_pump.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>539ED6CF</checksum>
+      <checksum>C8DEA3E4</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_backup.tsv</filename>
@@ -11982,7 +11818,7 @@
       <filename>options/lighting.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7E433680</checksum>
+      <checksum>B793FDF8</checksum>
     </file>
     <file>
       <filename>options/location_site_type.tsv</filename>

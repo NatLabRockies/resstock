@@ -55,9 +55,6 @@ Option Name	Type	Color	Solar Absorptance	Emittance
 "Concrete, Light"	concrete	light		
 "Concrete, White"	concrete	white		
 "Concrete, Reflective"	concrete	reflective		
-ASHRAE 140 Tests: Low Solar Absorptance	asphalt or fiberglass shingles		0.2	0.9
-ASHRAE 140 Tests: Typical Solar Absorptance	asphalt or fiberglass shingles		0.6	0.9
-HERS Reference			0.75	0.9
 				
 # Type: The type of roof material.				
 # Color: The color of the roof.				
